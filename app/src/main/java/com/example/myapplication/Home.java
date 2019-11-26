@@ -24,6 +24,7 @@ import com.youth.banner.Transformer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,6 +41,7 @@ public class Home extends Fragment {
     ViewPager viewPager;
     private ArrayList<String> imagePath;
     private List<Fragment> myFragment;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -51,15 +53,16 @@ public class Home extends Fragment {
         myFragment.add(new icon3());
         myFragment.add(new icon4());
         myFragment.add(new icon5());
-        initView();
         initData();
         View();
+        initView();
         return view;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
     }
 
     public static Home newInstance() {
@@ -69,11 +72,15 @@ public class Home extends Fragment {
         return fragment;
     }
 
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
     }
+
+
+
 
     private void initData() {
 
@@ -105,16 +112,11 @@ public class Home extends Fragment {
 
     private void initView() {
 
-
-        viewPager.setAdapter(new FragmentPagerAdapter(getFragmentManager()) {
+        viewPager.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()){
 
             //选中的item
             @Override
             public Fragment getItem(int position) {
-                if(position > 4){
-                    Intent intent = new Intent(getContext(), Main2Activity.class);
-                    startActivity(intent);
-                }
                 return myFragment.get(position);
             }
 
@@ -131,7 +133,6 @@ public class Home extends Fragment {
 
         });
 
-
         viewPager.setCurrentItem(0, false);
 
         tabSegment.addTab(new QMUITabSegment.Tab("所有"));
@@ -147,11 +148,11 @@ public class Home extends Fragment {
         tabSegment.addOnTabSelectedListener(new QMUITabSegment.OnTabSelectedListener() {
             @Override
             public void onTabSelected(int index) {//当某个 Tab 被选中时会触发
-                /*Toast.makeText(getContext(), index+"", Toast.LENGTH_SHORT).show();
                 if(index == 4){
                     Intent intent = new Intent(getContext(), Main2Activity.class);
                     startActivity(intent);
-                }*/
+
+                }
                 Log.i("bqt", "【onTabSelected】" + index);
                 tabSegment.hideSignCountView(index);//根据 index 在对应的 Tab 上隐藏红点
             }

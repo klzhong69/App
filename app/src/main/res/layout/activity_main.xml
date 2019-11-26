@@ -9,7 +9,7 @@
     <com.ashokvarma.bottomnavigation.BottomNavigationBar
         android:id="@+id/navbar1"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_80"
+        android:layout_height="@dimen/dp_90"
         android:layout_gravity="bottom"
         android:background="@color/qmui_config_color_white"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -20,7 +20,7 @@
     <androidx.core.widget.NestedScrollView
         android:id="@+id/layout1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:fillViewport="true"
         app:layout_constraintBottom_toTopOf="@+id/navbar1"
         app:layout_constraintEnd_toEndOf="parent"

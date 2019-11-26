@@ -20,7 +20,7 @@ public class icon5 extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.papge, container, false);
+        View view = inflater.inflate(R.layout.head1, container, false);
         return view;
     }
 
