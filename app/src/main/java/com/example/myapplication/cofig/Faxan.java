@@ -1,15 +1,15 @@
-package com.example.myapplication;
+package com.example.myapplication.cofig;
 
 public class Faxan {
 
     private String name;
     private String txt;
     private String type;
-    private int popul;
-    private int collection;
+    private String popul;
+    private String collection;
     private String imagesrc;
 
-    public Faxan(String name, String txt, String type, int popul, int collection, String imagesrc) {
+    public Faxan(String name, String txt, String type, String popul, String collection, String imagesrc) {
         this.name = name;
         this.txt = txt;
         this.type = type;
@@ -42,19 +42,19 @@ public class Faxan {
         this.type = type;
     }
 
-    public int getPopul() {
+    public String getPopul() {
         return popul;
     }
 
-    public void setPopul(int popul) {
+    public void setPopul(String popul) {
         this.popul = popul;
     }
 
-    public int getCollection() {
+    public String getCollection() {
         return collection;
     }
 
-    public void setCollection(int collection) {
+    public void setCollection(String collection) {
         this.collection = collection;
     }
 

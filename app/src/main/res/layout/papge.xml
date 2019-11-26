@@ -6,12 +6,14 @@
     android:layout_height="match_parent">
 
 
-    <com.qmuiteam.qmui.widget.QMUIRadiusImageView
-        android:id="@+id/imageView37"
-        android:layout_width="@dimen/dp_50"
-        android:layout_height="@dimen/dp_50"
-        android:src="@drawable/toux2"
-        app:qmui_corner_radius="@dimen/dp_100"
-        app:srcCompat="@drawable/h3" />
+
+    <include layout="@layout/head2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <include
+        layout="@layout/head3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

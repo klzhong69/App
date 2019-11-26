@@ -6,9 +6,9 @@
 
 
     <RelativeLayout
-        android:id="@+id/head1"
+        android:id="@+id/head"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_220"
+        android:layout_height="@dimen/dp_422"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
@@ -17,6 +17,238 @@
         android:layout_marginStart="0dp"
         android:layout_marginLeft="0dp"
         android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginRight="0dp">
+
+        <com.qmuiteam.qmui.widget.QMUIRadiusImageView
+            android:id="@+id/imageViews2"
+            android:layout_width="@dimen/dp_250"
+            android:layout_height="@dimen/dp_200"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_20"
+            android:clickable="true"
+            android:src="@drawable/h1"
+            app:qmui_corner_radius="@dimen/dp_15" />
+
+        <ImageView
+            android:id="@+id/imageViews3"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_30"
+            android:layout_alignStart="@+id/imageViews2"
+            android:layout_alignLeft="@+id/imageViews2"
+            android:layout_alignEnd="@+id/imageViews2"
+            android:layout_alignRight="@+id/imageViews2"
+            android:layout_alignBottom="@+id/imageViews2"
+            android:layout_marginStart="0dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginRight="0dp"
+            android:layout_marginBottom="0dp"
+            app:srcCompat="@drawable/stear" />
+
+        <TextView
+            android:id="@+id/textViews4"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignStart="@+id/imageViews3"
+            android:layout_alignLeft="@+id/imageViews3"
+            android:layout_alignTop="@+id/imageViews3"
+            android:layout_alignEnd="@+id/imageViews3"
+            android:layout_alignRight="@+id/imageViews3"
+            android:layout_alignBottom="@+id/imageViews3"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginRight="0dp"
+            android:layout_marginBottom="0dp"
+            android:gravity="center_vertical"
+            android:text="【歌神】响亮歌手全集"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/sp_16" />
+
+
+        <com.qmuiteam.qmui.widget.QMUIRadiusImageView
+            android:id="@+id/imageViews4"
+            android:layout_width="@dimen/dp_250"
+            android:layout_height="@dimen/dp_200"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_marginEnd="@dimen/dp_20"
+            android:layout_marginRight="@dimen/dp_20"
+            android:clickable="true"
+            android:src="@drawable/h2"
+            app:qmui_corner_radius="@dimen/dp_15" />
+
+        <ImageView
+            android:id="@+id/imageViews5"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_30"
+            android:layout_alignStart="@+id/imageViews4"
+            android:layout_alignLeft="@+id/imageViews4"
+            android:layout_alignEnd="@+id/imageViews4"
+            android:layout_alignRight="@+id/imageViews4"
+            android:layout_alignBottom="@+id/imageViews4"
+            android:layout_marginStart="0dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginRight="0dp"
+            android:layout_marginBottom="0dp"
+            app:srcCompat="@drawable/stear" />
+
+        <TextView
+            android:id="@+id/textViews5"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignStart="@+id/imageViews5"
+            android:layout_alignLeft="@+id/imageViews5"
+            android:layout_alignTop="@+id/imageViews5"
+            android:layout_alignEnd="@+id/imageViews5"
+            android:layout_alignRight="@+id/imageViews5"
+            android:layout_alignBottom="@+id/imageViews5"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginRight="0dp"
+            android:layout_marginBottom="0dp"
+            android:gravity="center_vertical"
+            android:text="【歌神】响亮歌手全集"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/sp_16" />
+
+
+        <com.qmuiteam.qmui.widget.QMUIRadiusImageView
+            android:id="@+id/imageViews6"
+            android:layout_width="@dimen/dp_250"
+            android:layout_height="@dimen/dp_200"
+            android:layout_below="@+id/imageViews2"
+            android:layout_alignStart="@+id/imageViews2"
+            android:layout_alignLeft="@+id/imageViews2"
+            android:layout_alignEnd="@+id/imageViews2"
+            android:layout_alignRight="@+id/imageViews2"
+            android:layout_marginStart="0dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_marginEnd="0dp"
+            android:layout_marginRight="0dp"
+            android:clickable="true"
+            android:src="@drawable/h3"
+            app:qmui_corner_radius="@dimen/dp_15" />
+
+        <ImageView
+            android:id="@+id/imageViews7"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_30"
+            android:layout_alignStart="@+id/imageViews6"
+            android:layout_alignLeft="@+id/imageViews6"
+            android:layout_alignEnd="@+id/imageViews6"
+            android:layout_alignRight="@+id/imageViews6"
+            android:layout_alignBottom="@+id/imageViews6"
+            android:layout_marginStart="0dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginRight="0dp"
+            android:layout_marginBottom="0dp"
+            app:srcCompat="@drawable/stear" />
+
+        <TextView
+            android:id="@+id/textViews6"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignStart="@+id/imageViews7"
+            android:layout_alignLeft="@+id/imageViews7"
+            android:layout_alignTop="@+id/imageViews7"
+            android:layout_alignEnd="@+id/imageViews7"
+            android:layout_alignRight="@+id/imageViews7"
+            android:layout_alignBottom="@+id/imageViews7"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginRight="0dp"
+            android:layout_marginBottom="0dp"
+            android:gravity="center_vertical"
+            android:text="【歌神】响亮歌手全集"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/sp_16" />
+
+
+        <com.qmuiteam.qmui.widget.QMUIRadiusImageView
+            android:id="@+id/imageViews8"
+            android:layout_width="@dimen/dp_250"
+            android:layout_height="@dimen/dp_200"
+            android:layout_below="@+id/imageViews5"
+            android:layout_alignStart="@+id/imageViews4"
+            android:layout_alignLeft="@+id/imageViews4"
+            android:layout_alignEnd="@+id/imageViews4"
+            android:layout_alignRight="@+id/imageViews4"
+            android:layout_marginStart="0dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_marginEnd="0dp"
+            android:layout_marginRight="0dp"
+            android:clickable="true"
+            android:src="@drawable/h4"
+            app:qmui_corner_radius="@dimen/dp_15" />
+
+        <ImageView
+            android:id="@+id/imageViews9"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_30"
+            android:layout_alignStart="@+id/imageViews8"
+            android:layout_alignLeft="@+id/imageViews8"
+            android:layout_alignEnd="@+id/imageViews8"
+            android:layout_alignRight="@+id/imageViews8"
+            android:layout_alignBottom="@+id/imageViews8"
+            android:layout_marginStart="0dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginRight="0dp"
+            android:layout_marginBottom="0dp"
+            app:srcCompat="@drawable/stear" />
+
+        <TextView
+            android:id="@+id/textViews7"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignStart="@+id/imageViews9"
+            android:layout_alignLeft="@+id/imageViews9"
+            android:layout_alignTop="@+id/imageViews9"
+            android:layout_alignEnd="@+id/imageViews9"
+            android:layout_alignRight="@+id/imageViews9"
+            android:layout_alignBottom="@+id/imageViews9"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginRight="0dp"
+            android:layout_marginBottom="0dp"
+            android:gravity="center_vertical"
+            android:text="【歌神】响亮歌手全集"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/sp_16" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/head1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_220"
+        android:layout_below="@+id/head"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="@dimen/dp_20"
         android:layout_marginEnd="0dp"
         android:layout_marginRight="0dp">
 
@@ -54,7 +286,7 @@
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/textView3"
             android:layout_alignBottom="@+id/textView3"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="@dimen/dp_5"
             android:layout_marginEnd="@dimen/dp_5"
             android:layout_marginRight="@dimen/dp_5"
             android:layout_marginBottom="@dimen/dp_5"
@@ -70,11 +302,12 @@
             android:layout_alignBottom="@+id/textView2"
             android:layout_marginStart="@dimen/dp_10"
             android:layout_marginLeft="@dimen/dp_10"
-            android:layout_marginTop="@dimen/dp_5"
+            android:layout_marginTop="@dimen/dp_2"
             android:layout_marginBottom="0dp"
             android:layout_toEndOf="@+id/textView2"
             android:layout_toRightOf="@+id/textView2"
-            android:text="广播" />
+            android:text="广播"
+            android:textSize="@dimen/sp_20" />
 
         <com.qmuiteam.qmui.widget.QMUIRadiusImageView
             android:id="@+id/imageView2"
@@ -289,7 +522,7 @@
         android:layout_alignParentRight="true"
         android:layout_marginStart="0dp"
         android:layout_marginLeft="0dp"
-        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_20"
         android:layout_marginEnd="0dp"
         android:layout_marginRight="0dp"
         android:background="@color/qmui_config_color_white">
@@ -344,11 +577,12 @@
             android:layout_alignBottom="@+id/textView13"
             android:layout_marginStart="@dimen/dp_10"
             android:layout_marginLeft="@dimen/dp_10"
-            android:layout_marginTop="@dimen/dp_5"
+            android:layout_marginTop="@dimen/dp_2"
             android:layout_marginBottom="0dp"
             android:layout_toEndOf="@+id/textView13"
             android:layout_toRightOf="@+id/textView13"
-            android:text="广播" />
+            android:text="广播"
+            android:textSize="@dimen/sp_20" />
 
 
         <com.qmuiteam.qmui.widget.QMUIRadiusImageView
@@ -493,7 +727,6 @@
 
     </RelativeLayout>
 
-
     <RelativeLayout
         android:id="@+id/head3"
         android:layout_width="match_parent"
@@ -505,7 +738,7 @@
         android:layout_alignParentRight="true"
         android:layout_marginStart="0dp"
         android:layout_marginLeft="0dp"
-        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_20"
         android:layout_marginEnd="0dp"
         android:layout_marginRight="0dp">
 
@@ -546,7 +779,7 @@
             android:layout_marginTop="@dimen/dp_5"
             android:layout_marginEnd="@dimen/dp_5"
             android:layout_marginRight="@dimen/dp_5"
-            android:layout_marginBottom="@dimen/dp_10"
+            android:layout_marginBottom="@dimen/dp_5"
             android:layout_toStartOf="@+id/textView22"
             android:layout_toLeftOf="@+id/textView22"
             app:srcCompat="@drawable/lw" />
@@ -559,11 +792,12 @@
             android:layout_alignBottom="@+id/textView21"
             android:layout_marginStart="@dimen/dp_10"
             android:layout_marginLeft="@dimen/dp_10"
-            android:layout_marginTop="@dimen/dp_5"
+            android:layout_marginTop="@dimen/dp_2"
             android:layout_marginBottom="0dp"
             android:layout_toEndOf="@+id/textView21"
             android:layout_toRightOf="@+id/textView21"
-            android:text="广播" />
+            android:text="广播"
+            android:textSize="@dimen/sp_20" />
 
         <com.qmuiteam.qmui.widget.QMUIRadiusImageView
             android:id="@+id/imageView22"
