@@ -103,6 +103,7 @@ public class Main2Activity extends AppCompatActivity {
             case R.id.button:
                 Intent intent = new Intent(Main2Activity.this, MainActivity.class);
                 startActivity(intent);
+                overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
                 break;
             case R.id.button2:
                 flipCard();

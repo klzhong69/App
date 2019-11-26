@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -151,6 +152,7 @@ public class Home extends Fragment {
                 if(index == 4){
                     Intent intent = new Intent(getContext(), Main2Activity.class);
                     startActivity(intent);
+                    ((Activity)getContext()).overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
 
                 }
                 Log.i("bqt", "【onTabSelected】" + index);
