@@ -5,12 +5,22 @@ import android.animation.AnimatorInflater;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.myapplication.cofig.Constants;
+
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,6 +37,12 @@ public class Main2Activity extends AppCompatActivity {
     ImageView imageView4;
     @BindView(R.id.imageView7)
     ImageView imageView7;
+    @BindView(R.id.textView5)
+    TextView textView5;
+    @BindView(R.id.button3)
+    Button button3;
+    @BindView(R.id.button4)
+    Button button4;
 
     private AnimatorSet mRightOutSet; // 右出动画
     private AnimatorSet mLeftInSet; // 左入动画
@@ -38,7 +54,7 @@ public class Main2Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
         ButterKnife.bind(this);
-
+        switchLanguage(Constants.langae);
         setAnimators(); // 设置动画
         setCameraDistance(); // 设置镜头距离
     }
@@ -97,7 +113,7 @@ public class Main2Activity extends AppCompatActivity {
         super.onDestroy();
     }
 
-    @OnClick({R.id.button, R.id.button2})
+    @OnClick({R.id.button, R.id.button2, R.id.button3, R.id.button4})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.button:
@@ -107,6 +123,53 @@ public class Main2Activity extends AppCompatActivity {
                 break;
             case R.id.button2:
                 flipCard();
+                break;
+            case R.id.button3:
+                if (Constants.langae.equals("zh")) {
+                    Constants.langae = "en";
+                } else {
+                    Constants.langae = "zh";
+                }
+                Locale locale = new Locale(Constants.langae);
+                Locale.setDefault(locale);
+                Configuration config = new Configuration();
+                config.locale = locale;
+                Resources resources = getResources();
+                resources.updateConfiguration(config, resources.getDisplayMetrics());
+
+                //让之前打开的所有界面全部彻底关闭
+                /*for (Activity activity : Constants.activityList) {
+                    activity.finish();
+                }*/
+                //回到应用的首页
+                //刷新
+                startActivity(new Intent(this, Main2Activity.class));
+
+                break;
+            case R.id.button4:
+
+
+                break;
+        }
+    }
+
+    //核心设置的代码
+    protected void switchLanguage(String language) {
+        Resources resources = getResources();
+        Configuration config = resources.getConfiguration();
+        DisplayMetrics dm = resources.getDisplayMetrics();
+        switch (language) {
+            case "zh":
+                config.locale = Locale.CHINESE;
+                resources.updateConfiguration(config, dm);
+                break;
+            case "en":
+                config.locale = Locale.ENGLISH;
+                resources.updateConfiguration(config, dm);
+                break;
+            default:
+                config.locale = Locale.US;
+                resources.updateConfiguration(config, dm);
                 break;
         }
     }
