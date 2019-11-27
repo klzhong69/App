@@ -51,7 +51,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
         ButterKnife.bind(this);
         init();
         setDefaultFragment();
-
+        layout1.setFocusable(true);
+        layout1.setFocusableInTouchMode(true);
+        layout1.requestFocus();
+        layout1.scrollTo(0,0);
 
     }
 
@@ -120,7 +123,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
         FragmentTransaction transaction = fm.beginTransaction();
         switch (position) {
             case 0:
-
                 if (home == null) {
                     home = Home.newInstance();
                 }

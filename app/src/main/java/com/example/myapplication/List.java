@@ -1,26 +1,18 @@
 package com.example.myapplication;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.view.ViewTreeObserver;
+import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
 
-import com.example.myapplication.cofig.MyImageLoader;
-import com.example.myapplication.cofig.ScreenSlidePagerAdapter;
-import com.qmuiteam.qmui.util.QMUIDisplayHelper;
-import com.qmuiteam.qmui.widget.QMUITabSegment;
-import com.youth.banner.Banner;
-import com.youth.banner.BannerConfig;
-import com.youth.banner.Transformer;
+import com.example.myapplication.cofig.MyApp;
 
-import java.util.ArrayList;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,6 +20,8 @@ import butterknife.Unbinder;
 
 public class List extends Fragment {
     Unbinder unbinder;
+
+
 
     @Nullable
     @Override
@@ -41,6 +35,8 @@ public class List extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        //这里接收到广播和数据，进行处理就是了
+
     }
 
     public static List newInstance() {
@@ -55,8 +51,6 @@ public class List extends Fragment {
         super.onDestroyView();
         unbinder.unbind();
     }
-
-
 
 
 }

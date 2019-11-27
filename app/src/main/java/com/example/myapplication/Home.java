@@ -1,23 +1,29 @@
 package com.example.myapplication;
 
-import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.view.ViewTreeObserver;
 
 import androidx.annotation.Nullable;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.viewpager.widget.ViewPager;
 
+import com.bumptech.glide.load.engine.Resource;
+import com.example.myapplication.cofig.MyApp;
 import com.example.myapplication.cofig.MyImageLoader;
-import com.example.myapplication.cofig.ScreenSlidePagerAdapter;
 import com.qmuiteam.qmui.util.QMUIDisplayHelper;
+import com.qmuiteam.qmui.util.QMUIResHelper;
 import com.qmuiteam.qmui.widget.QMUITabSegment;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
@@ -25,21 +31,27 @@ import com.youth.banner.Transformer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
+import static androidx.constraintlayout.widget.Constraints.TAG;
+
 public class Home extends Fragment {
+
+
+    public static final String AD_DOWNLOAD_ACTION = "det";
+    private ViewPager viewPager;
+
 
     private Unbinder unbinder;
     @BindView(R.id.banner)
     Banner banner;
-    @BindView(R.id.tabSegments)
-    QMUITabSegment tabSegment;
-    @BindView(R.id.viewpagers)
-    ViewPager viewPager;
+    LocalBroadcastManager broadcastManager;
+    private QMUITabSegment tabSegment;
     private ArrayList<String> imagePath;
     private List<Fragment> myFragment;
 
@@ -48,22 +60,81 @@ public class Home extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.home, container, false);
         unbinder = ButterKnife.bind(this, view);
+
+        tabSegment = view.findViewById(R.id.tabSegments);
+
+        viewPager = view.findViewById(R.id.viewpagers);
+        //tabSegment1.setVisibility(View.VISIBLE);//使控件可见
+
         myFragment = new ArrayList<>();
         myFragment.add(new icon1());
         myFragment.add(new icon2());
         myFragment.add(new icon3());
         myFragment.add(new icon4());
         myFragment.add(new icon5());
+        viewPager.setFocusable(false);
+        viewPager.setOffscreenPageLimit(1);
+
+
         initData();
         View();
         initView();
         return view;
+
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+
+
+
+        /*scroll.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+
+                Log.e(TAG, "onScrollChange: " + scrollX +"---" + scrollY + "----" +oldScrollX + "---" + oldScrollY );
+
+                if (scrollY > oldScrollY) {//向下滚动
+                    Log.i(TAG, "Scroll DOWN");
+                    System.out.println("Scroll DOWN");
+                }
+                if (scrollY < oldScrollY) {//向上滚动
+                    Log.i(TAG, "Scroll UP");
+                    System.out.println("Scroll UP");
+                }
+
+                if (scrollY == 0) {// 滚动到顶
+                    Log.i(TAG, "TOP SCROLL");
+                }
+                // 滚动到底
+                if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
+                    Log.i(TAG, "BOTTOM SCROLL");
+                }
+
+                //判断某个控件是否可见
+                Rect scrollBounds = new Rect();
+                tabSegment.getHitRect(scrollBounds);
+                if (tabSegment.getLocalVisibleRect(scrollBounds)) {//可见
+                    Log.e(TAG, "onScrollChange:  第3个可见");
+                } else {//完全不可见
+                    Log.e(TAG, "onScrollChange:  第3个不可见");
+                }
+
+
+                Log.e(TAG, "onScrollChange: ------------" + scrollY +"------"+ tabSegment.getTop() );
+                //判断某个控件是否滚到顶部
+                if (scrollY == tabSegment.getTop()){
+                    Log.i(TAG, "onScrollChange: ------top-------" );
+                    System.out.println("onScrollChange UP");
+                }
+
+                Log.e(TAG, "onScrollChange: bottmo" + scrollY +"-----"+ (tabSegment.getTop() + tabSegment.getHeight()) );
+
+
+            }
+        });*/
     }
 
     public static Home newInstance() {
@@ -73,15 +144,43 @@ public class Home extends Fragment {
         return fragment;
     }
 
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        receiveAdDownload();
+    }
 
+    /**
+     * 注册广播接收器
+     */
+    private void receiveAdDownload() {
+        broadcastManager = LocalBroadcastManager.getInstance(getActivity());
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(AD_DOWNLOAD_ACTION);
+        broadcastManager.registerReceiver(mAdDownLoadReceiver, intentFilter);
+    }
 
+    BroadcastReceiver mAdDownLoadReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            int resource = (int)intent.getSerializableExtra("det");
+                ViewGroup.LayoutParams layoutParams = viewPager.getLayoutParams();
+                layoutParams.height = resource;
+                viewPager.setLayoutParams(layoutParams);
+        }
+    };
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        broadcastManager.unregisterReceiver(mAdDownLoadReceiver);
+    }
 
     private void initData() {
 
@@ -89,6 +188,7 @@ public class Home extends Fragment {
         imagePath.add("https://momeak.oss-cn-shenzhen.aliyuncs.com/b1.png");
         imagePath.add("https://momeak.oss-cn-shenzhen.aliyuncs.com/b1.png");
         imagePath.add("https://momeak.oss-cn-shenzhen.aliyuncs.com/b1.png");
+
 
     }
 
@@ -113,7 +213,8 @@ public class Home extends Fragment {
 
     private void initView() {
 
-        viewPager.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()){
+
+        viewPager.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
 
             //选中的item
             @Override
@@ -136,6 +237,13 @@ public class Home extends Fragment {
 
         viewPager.setCurrentItem(0, false);
 
+
+        int normalColor = QMUIResHelper.getAttrColor(getContext(), R.attr.qmui_config_color_gray_6);
+
+        int selectColor = QMUIResHelper.getAttrColor(getContext(), R.attr.qmui_config_color_blue);
+
+        tabSegment.setDefaultNormalColor(normalColor);
+        tabSegment.setDefaultSelectedColor(selectColor);
         tabSegment.addTab(new QMUITabSegment.Tab("所有"));
         tabSegment.addTab(new QMUITabSegment.Tab("音乐"));
         tabSegment.addTab(new QMUITabSegment.Tab("CV"));
@@ -144,16 +252,27 @@ public class Home extends Fragment {
         tabSegment.setupWithViewPager(viewPager, false);
         tabSegment.setMode(QMUITabSegment.MODE_FIXED);
         tabSegment.setMode(QMUITabSegment.MODE_SCROLLABLE);
-        tabSegment.setItemSpaceInScrollMode(QMUIDisplayHelper.dp2px(getContext(), 16));
+        tabSegment.setHasIndicator(true);  //是否需要显示indicator
+        tabSegment.setIndicatorPosition(false);//true 时表示 indicator 位置在 Tab 的上方, false 时表示在下方
+        tabSegment.setIndicatorWidthAdjustContent(true);
+
+        tabSegment.setItemSpaceInScrollMode(QMUIDisplayHelper.dp2px(Objects.requireNonNull(getContext()), 16));
 
         tabSegment.addOnTabSelectedListener(new QMUITabSegment.OnTabSelectedListener() {
             @Override
             public void onTabSelected(int index) {//当某个 Tab 被选中时会触发
-                if(index == 4){
+                if (index == 4) {
+                    getActivity().onBackPressed();
                     Intent intent = new Intent(getContext(), Main2Activity.class);
                     startActivity(intent);
-                    ((Activity)getContext()).overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
 
+                } else {
+                    //这里接收到广播和数据，进行处理就是了
+                    ViewGroup.LayoutParams layoutParams = viewPager.getLayoutParams();
+                    MyApp application = ((MyApp) getContext().getApplicationContext());
+                    Map<Integer,Integer> a = application.getScores();
+                    layoutParams.height = a.get(index);
+                    viewPager.setLayoutParams(layoutParams);
                 }
                 Log.i("bqt", "【onTabSelected】" + index);
                 tabSegment.hideSignCountView(index);//根据 index 在对应的 Tab 上隐藏红点

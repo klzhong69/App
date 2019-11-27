@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scroll"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
@@ -69,7 +71,7 @@
         <RelativeLayout
             android:id="@+id/head2"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_260">
+            android:layout_height="@dimen/dp_280">
 
             <TextView
                 android:id="@+id/textView21"
@@ -349,55 +351,38 @@
 
         </RelativeLayout>
 
-        <RelativeLayout
-            android:id="@+id/head3"
+        <com.qmuiteam.qmui.widget.QMUITabSegment
+            android:id="@+id/tabSegments"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="40dp"
+            android:layout_marginStart="0dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginRight="0dp"
+            android:background="@color/qmui_config_color_white"
+            android:paddingLeft="@dimen/dp_20"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <com.qmuiteam.qmui.widget.QMUITabSegment
-                android:id="@+id/tabSegments"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginStart="0dp"
-                android:layout_marginLeft="0dp"
-                android:layout_marginTop="@dimen/dp_10"
-                android:layout_marginEnd="0dp"
-                android:layout_marginRight="0dp"
-                android:paddingLeft="@dimen/dp_20"
-                android:background="@color/qmui_config_color_white"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <androidx.viewpager.widget.ViewPager
-                android:id="@+id/viewpagers"
-                android:layout_width="match_parent"
-                android:layout_height="1200dp"
-                android:layout_below="@+id/tabSegments"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginStart="0dp"
-                android:layout_marginLeft="0dp"
-                android:layout_marginTop="0dp"
-                android:layout_marginEnd="0dp"
-                android:layout_marginRight="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tabSegments"
-                app:layout_constraintVertical_bias="0.0">
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewpagers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="0dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginRight="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tabSegments"
+            app:layout_constraintVertical_bias="0.0">
 
 
-            </androidx.viewpager.widget.ViewPager>
-
-        </RelativeLayout>
+        </androidx.viewpager.widget.ViewPager>
     </LinearLayout>
 
 </androidx.core.widget.NestedScrollView>
