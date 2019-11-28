@@ -1,21 +1,15 @@
 package com.example.myapplication;
 
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.myapplication.cofig.MyApp;
+import com.example.myapplication.utils.MyApp;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 public class icon5 extends Fragment {

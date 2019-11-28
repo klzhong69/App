@@ -4,11 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:descendantFocusability="blocksDescendants"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     tools:context=".chat">
 
     <RelativeLayout
         android:id="@+id/bears"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="@dimen/dp_80"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
@@ -44,22 +47,41 @@
             android:layout_marginTop="0dp"
             android:layout_marginEnd="0dp"
             android:layout_marginBottom="0dp"
-            app:srcCompat="@drawable/qmui_icon_checkbox_normal" />
+            android:scaleType="centerInside"
+            app:srcCompat="@drawable/add" />
     </RelativeLayout>
 
+
+    <include
+        android:id="@+id/include"
+
+        layout="@layout/head"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollmess"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:fillViewport="true"
         app:layout_constraintBottom_toTopOf="@+id/bears"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/include">
 
         <LinearLayout
+            android:id="@+id/layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" />
+            android:background="@drawable/girl"
+            android:scaleType="fitXY"
+            android:orientation="vertical">
+
+        </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

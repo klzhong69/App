@@ -31,6 +31,7 @@
             android:layout_marginLeft="@dimen/dp_20"
             android:layout_marginTop="@dimen/dp_20"
             android:clickable="true"
+            app:qmui_border_width="0dp"
             android:src="@drawable/h1"
             app:qmui_corner_radius="@dimen/dp_15" />
 
@@ -82,6 +83,7 @@
             android:layout_marginTop="@dimen/dp_20"
             android:layout_marginEnd="@dimen/dp_20"
             android:layout_marginRight="@dimen/dp_20"
+            app:qmui_border_width="0dp"
             android:clickable="true"
             android:src="@drawable/h2"
             app:qmui_corner_radius="@dimen/dp_15" />
@@ -136,6 +138,7 @@
             android:layout_marginStart="0dp"
             android:layout_marginLeft="0dp"
             android:layout_marginTop="@dimen/dp_20"
+            app:qmui_border_width="0dp"
             android:layout_marginEnd="0dp"
             android:layout_marginRight="0dp"
             android:clickable="true"
@@ -191,6 +194,7 @@
             android:layout_alignRight="@+id/imageViews4"
             android:layout_marginStart="0dp"
             android:layout_marginLeft="0dp"
+            app:qmui_border_width="0dp"
             android:layout_marginTop="@dimen/dp_20"
             android:layout_marginEnd="0dp"
             android:layout_marginRight="0dp"
@@ -318,6 +322,7 @@
             android:layout_alignParentLeft="true"
             android:layout_marginStart="@dimen/dp_20"
             android:layout_marginLeft="@dimen/dp_20"
+            app:qmui_border_width="0dp"
             android:layout_marginTop="@dimen/dp_20"
             android:clickable="true"
             android:src="@drawable/d1"
@@ -381,6 +386,7 @@
             android:layout_below="@+id/imageView"
             android:layout_marginStart="@dimen/dp_20"
             android:layout_marginLeft="0dp"
+            app:qmui_border_width="0dp"
             android:layout_marginTop="@dimen/dp_20"
             android:layout_marginEnd="@dimen/dp_20"
             android:layout_marginRight="@dimen/dp_20"
@@ -453,6 +459,7 @@
             android:layout_marginTop="@dimen/dp_20"
             android:layout_marginEnd="@dimen/dp_20"
             android:layout_marginRight="@dimen/dp_20"
+            app:qmui_border_width="0dp"
             android:clickable="true"
             android:src="@drawable/d3"
             app:qmui_corner_radius="15dp" />
@@ -594,6 +601,7 @@
             android:layout_alignParentLeft="true"
             android:layout_marginStart="@dimen/dp_20"
             android:layout_marginLeft="@dimen/dp_20"
+            app:qmui_border_width="0dp"
             android:layout_marginTop="@dimen/dp_20"
             android:clickable="true"
             android:src="@drawable/c1"
@@ -638,6 +646,7 @@
             android:layout_marginStart="@dimen/dp_20"
             android:layout_marginLeft="@dimen/dp_20"
             android:layout_marginTop="@dimen/dp_20"
+            app:qmui_border_width="0dp"
             android:layout_marginEnd="@dimen/dp_20"
             android:layout_marginRight="@dimen/dp_20"
             android:layout_toStartOf="@+id/imageView19"
@@ -690,6 +699,7 @@
             android:layout_marginTop="@dimen/dp_20"
             android:layout_marginEnd="@dimen/dp_20"
             android:layout_marginRight="@dimen/dp_20"
+            app:qmui_border_width="0dp"
             android:clickable="true"
             android:src="@drawable/c3"
             app:qmui_corner_radius="15dp" />
@@ -810,6 +820,7 @@
             android:layout_marginLeft="@dimen/dp_20"
             android:layout_marginTop="@dimen/dp_20"
             android:clickable="true"
+            app:qmui_border_width="0dp"
             android:src="@drawable/a1"
             app:qmui_corner_radius="15dp" />
 
@@ -872,6 +883,7 @@
             android:layout_marginTop="@dimen/dp_20"
             android:layout_marginEnd="@dimen/dp_20"
             android:layout_marginRight="@dimen/dp_20"
+            app:qmui_border_width="0dp"
             android:layout_toStartOf="@+id/imageView28"
             android:layout_toLeftOf="@+id/imageView28"
             android:layout_toEndOf="@+id/imageView22"
@@ -941,6 +953,7 @@
             android:layout_marginTop="@dimen/dp_20"
             android:layout_marginEnd="@dimen/dp_20"
             android:layout_marginRight="@dimen/dp_20"
+            app:qmui_border_width="0dp"
             android:clickable="true"
             android:src="@drawable/a3"
             app:qmui_corner_radius="15dp" />

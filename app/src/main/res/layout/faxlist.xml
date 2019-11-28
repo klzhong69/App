@@ -24,6 +24,7 @@
             android:layout_width="@dimen/dp_160"
             android:layout_height="@dimen/dp_160"
             android:layout_below="@+id/imageView"
+            app:qmui_border_width="0dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
             android:layout_marginStart="@dimen/dp_20"

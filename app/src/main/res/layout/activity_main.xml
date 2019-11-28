@@ -8,7 +8,7 @@
 
     <com.ashokvarma.bottomnavigation.BottomNavigationBar
         android:id="@+id/navbar1"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="@dimen/dp_90"
         android:layout_gravity="bottom"
         android:background="@color/qmui_config_color_white"

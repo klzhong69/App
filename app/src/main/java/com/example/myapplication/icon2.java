@@ -1,23 +1,20 @@
 package com.example.myapplication;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-import com.example.myapplication.cofig.Faxan;
+import com.example.myapplication.utils.Faxan;
 import com.example.myapplication.cofig.ListViewAdapter;
-import com.example.myapplication.cofig.MyApp;
+import com.example.myapplication.utils.MyApp;
 
 import java.util.ArrayList;
 import java.util.List;

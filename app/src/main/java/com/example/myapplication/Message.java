@@ -1,19 +1,25 @@
 package com.example.myapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 public class Message extends Fragment {
 
     Unbinder unbinder;
+    @BindView(R.id.button5)
+    Button button5;
 
     @Nullable
     @Override
@@ -40,5 +46,11 @@ public class Message extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @OnClick(R.id.button5)
+    public void onViewClicked() {
+        Intent intent = new Intent(getContext(), chat.class);
+        startActivity(intent);
     }
 }

@@ -1,4 +1,4 @@
-package com.example.myapplication.cofig;
+package com.example.myapplication.utils;
 
 import android.app.Activity;
 

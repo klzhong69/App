@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.myapplication.R;
+import com.example.myapplication.utils.Faxan;
 
 import java.util.List;
 
@@ -46,7 +47,7 @@ public class ListViewAdapter extends BaseAdapter {
 
         if (convertView == null){
             viewHolder = new ViewHolder();
-            convertView = inflater.inflate(R.layout.list, null);
+            convertView = inflater.inflate(R.layout.faxlist, null);
             viewHolder.name=(TextView) convertView.findViewById(R.id.textView8);
             viewHolder.txt=(TextView) convertView.findViewById(R.id.textView15);
             viewHolder.type=(TextView) convertView.findViewById(R.id.textView19);
