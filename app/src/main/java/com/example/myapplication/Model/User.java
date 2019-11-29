@@ -1,4 +1,4 @@
-package com.example.myapplication.utils;
+package com.example.myapplication.Model;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
@@ -12,15 +12,17 @@ public class User {
     private int memberSex;//性别
     private String memberNickname;//昵称
     private String memberIcon;//头像地址链接
+    private Boolean state;//是否为当前账户
 
-    @Generated(hash = 786268235)
+    @Generated(hash = 1411810760)
     public User(Long id, Long memberId, int memberSex, String memberNickname,
-            String memberIcon) {
+            String memberIcon, Boolean state) {
         this.id = id;
         this.memberId = memberId;
         this.memberSex = memberSex;
         this.memberNickname = memberNickname;
         this.memberIcon = memberIcon;
+        this.state = state;
     }
 
     @Generated(hash = 586692638)
@@ -56,5 +58,13 @@ public class User {
     public void setMemberIcon(String memberIcon) {
         this.memberIcon = memberIcon;
     }
+    public Boolean getState() {
+        return this.state;
+    }
+    public void setState(Boolean state) {
+        this.state = state;
+    }
+
+
     
 }

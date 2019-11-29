@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.example.myapplication.utils.Faxan;
 import com.example.myapplication.cofig.ListViewAdapter;
@@ -24,6 +26,7 @@ public class icon3 extends Fragment {
 
     private List<Faxan> mArrayList ;
     private int layoutParamsHeight =0;
+    public static final String AD_DOWNLOAD_ACTION3 = "det3";
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -70,11 +73,10 @@ public class icon3 extends Fragment {
         double b = 155*are;
         layoutParamsHeight = (int) (h+3*b+60);
         System.out.println("height"+layoutParamsHeight);
-        MyApp application = ((MyApp) getContext().getApplicationContext());
-        Map<Integer,Integer> a = application.getScores();
-        a.put(2,layoutParamsHeight);
-        application.setScores(a);
 
+        Intent intent = new Intent(AD_DOWNLOAD_ACTION3);
+        intent.putExtra("det", layoutParamsHeight);
+        LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(intent);
 
     }
 }

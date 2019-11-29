@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.android.application'
+apply plugin: 'org.greenrobot.greendao' // apply plugin
 
 android {
     compileSdkVersion 29
@@ -23,8 +25,6 @@ android {
     }
 }
 
-apply plugin: 'com.android.application'
-apply plugin: 'org.greenrobot.greendao' // apply plugin
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -47,6 +47,8 @@ dependencies {
 
     implementation 'io.agora.rtc:full-sdk:2.9.2'
     implementation 'org.greenrobot:greendao:3.2.2' // add library
+    implementation 'com.google.code.gson:gson:2.8.6'
+    implementation 'com.github.yyued:SVGAPlayer-Android:2.0.0'
 }
 
 greendao {

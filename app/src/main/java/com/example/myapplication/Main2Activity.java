@@ -7,6 +7,7 @@ import android.animation.AnimatorSet;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -17,7 +18,16 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication.utils.Constants;
+import com.opensource.svgaplayer.SVGADrawable;
+import com.opensource.svgaplayer.SVGADynamicEntity;
+import com.opensource.svgaplayer.SVGAImageView;
+import com.opensource.svgaplayer.SVGAParser;
+import com.opensource.svgaplayer.SVGAVideoEntity;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Locale;
 
 import butterknife.BindView;
@@ -55,7 +65,9 @@ public class Main2Activity extends AppCompatActivity {
         switchLanguage(Constants.langae);
         setAnimators(); // 设置动画
         setCameraDistance(); // 设置镜头距离
+
     }
+
 
 
     // 设置动画
@@ -116,6 +128,10 @@ public class Main2Activity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.button:
                 Intent intent = new Intent(Main2Activity.this, MainActivity.class);
+                int id = 1;
+                String a = "ads";
+                intent.putExtra("id", id);
+                intent.putExtra("ids", a);
                 startActivity(intent);
                 overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
                 break;
@@ -138,8 +154,11 @@ public class Main2Activity extends AppCompatActivity {
                 //让之前打开的所有界面全部彻底关闭
                 /*for (Activity activity : Constants.activityList) {
                     activity.finish();
-                }*/
+                }
                 //回到应用的首页
+                Intent intent = new Intent(Main2Activity.this, MainActivity.class);
+                startActivity(intent);
+                 */
                 //刷新
                 startActivity(new Intent(this, Main2Activity.class));
 

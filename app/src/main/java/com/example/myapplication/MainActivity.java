@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.animation.ObjectAnimator;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -99,7 +100,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
         bottomNavigationBar.hide(true);//隐藏是否启动动画，这里并不能自定义动画
         bottomNavigationBar.unHide();//显示
         bottomNavigationBar.hide(true);//隐藏是否启动动画，这里并不能自定义动画*/
-        bader();
+        LayoutInflater inflater = LayoutInflater.from(this);
+        //获取 bar 的 所对应的子 view 控件，方便扩展动画
+        View parentView = inflater.inflate(com.ashokvarma.bottomnavigation.R.layout.bottom_navigation_bar_container, navbar1, true);
+        LinearLayout mTabContainer = (LinearLayout) parentView.findViewById(com.ashokvarma.bottomnavigation.R.id.bottom_navigation_bar_item_container);
+        //购物车标签是对应位置是 mTabContainer 的2
+        mIconView = (ImageView) mTabContainer.getChildAt(2).findViewById(com.ashokvarma.bottomnavigation.R.id.fixed_bottom_navigation_icon);
 
 
     }
@@ -115,6 +121,22 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
         transaction.commit();
         setBadgeNum(num);
     }
+
+
+    /**
+     *  Activity创建或者从后台重新回到前台时被调用
+     */
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Intent intent =getIntent();
+        String a = intent.getStringExtra("ids");
+        int id= intent.getIntExtra("id",0);
+        System.out.println("id"+id+"a"+a);
+        onTabSelected(id);
+        onTabUnselected(id);
+    }
+
 
     @Override
     public void onTabSelected(int position) {
@@ -179,15 +201,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
 
     }
 
-    private void bader() {
-
-        LayoutInflater inflater = LayoutInflater.from(this);
-        //获取 bar 的 所对应的子 view 控件，方便扩展动画
-        View parentView = inflater.inflate(com.ashokvarma.bottomnavigation.R.layout.bottom_navigation_bar_container, navbar1, true);
-        LinearLayout mTabContainer = (LinearLayout) parentView.findViewById(com.ashokvarma.bottomnavigation.R.id.bottom_navigation_bar_item_container);
-        //购物车标签是对应位置是 mTabContainer 的2
-        mIconView = (ImageView) mTabContainer.getChildAt(2).findViewById(com.ashokvarma.bottomnavigation.R.id.fixed_bottom_navigation_icon);
-    }
 
     /**
      * 设置tab数字提示加缩放动画

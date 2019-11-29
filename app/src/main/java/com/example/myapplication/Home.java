@@ -69,7 +69,6 @@ public class Home extends Fragment {
         viewPager.setFocusable(false);
         viewPager.setOffscreenPageLimit(1);
 
-
         initData();
         View();
         initView();
@@ -80,9 +79,6 @@ public class Home extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-
-
 
         /*scroll.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
@@ -147,16 +143,16 @@ public class Home extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        receiveAdDownload();
+        receiveAdDownload(icon1.AD_DOWNLOAD_ACTION1);
     }
 
     /**
      * 注册广播接收器
      */
-    private void receiveAdDownload() {
+    private void receiveAdDownload(String action) {
         broadcastManager = LocalBroadcastManager.getInstance(getActivity());
         IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(AD_DOWNLOAD_ACTION);
+        intentFilter.addAction(action);
         broadcastManager.registerReceiver(mAdDownLoadReceiver, intentFilter);
     }
 
@@ -170,9 +166,10 @@ public class Home extends Fragment {
         }
     };
 
+
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onPause() {
+        super.onPause();
         broadcastManager.unregisterReceiver(mAdDownLoadReceiver);
     }
 
@@ -262,11 +259,20 @@ public class Home extends Fragment {
 
                 } else {
                     //这里接收到广播和数据，进行处理就是了
-                    ViewGroup.LayoutParams layoutParams = viewPager.getLayoutParams();
-                    MyApp application = ((MyApp) getContext().getApplicationContext());
-                    Map<Integer,Integer> a = application.getScores();
-                    layoutParams.height = a.get(index);
-                    viewPager.setLayoutParams(layoutParams);
+                    switch (index){
+                        case 0:
+                            receiveAdDownload(icon1.AD_DOWNLOAD_ACTION1);
+                            break;
+                        case 1:
+                            receiveAdDownload(icon2.AD_DOWNLOAD_ACTION2);
+                            break;
+                        case 2:
+                            receiveAdDownload(icon3.AD_DOWNLOAD_ACTION3);
+                            break;
+                        case 3:
+                            receiveAdDownload(icon4.AD_DOWNLOAD_ACTION4);
+                            break;
+                    }
                 }
                 Log.i("bqt", "【onTabSelected】" + index);
                 tabSegment.hideSignCountView(index);//根据 index 在对应的 Tab 上隐藏红点

@@ -27,6 +27,7 @@ public class icon1 extends Fragment {
 
     private List<Faxan> mArrayList;
     private int layoutParamsHeight =0;
+    public static final String AD_DOWNLOAD_ACTION1 = "det1";
 
     @Nullable
     @Override
@@ -74,11 +75,8 @@ public class icon1 extends Fragment {
         double b = 155*are;
         layoutParamsHeight = (int) (h+3*b+60);
         System.out.println("height"+layoutParamsHeight);
-        MyApp application = ((MyApp) getContext().getApplicationContext());
-        Map<Integer,Integer> a = application.getScores();
-        a.put(0,layoutParamsHeight);
-        application.setScores(a);
-        Intent intent = new Intent(Home.AD_DOWNLOAD_ACTION);
+
+        Intent intent = new Intent(AD_DOWNLOAD_ACTION1);
         intent.putExtra("det", layoutParamsHeight);
         LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(intent);
     }

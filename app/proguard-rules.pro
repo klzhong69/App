@@ -20,3 +20,5 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 -keep class io.agora.**{*;}
+-keep class com.squareup.wire.** { *; }
+-keep class com.opensource.svgaplayer.proto.** { *; }

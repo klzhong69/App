@@ -4,13 +4,11 @@
     <!-- if you want to load images from the internet -->
     <uses-permission android:name="android.permission.INTERNET" /> <!-- if you want to load images from a file OR from the internet -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <!-- The Agora SDK requires Bluetooth permissions in case users are using Bluetooth devices.-->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- The Agora SDK requires Bluetooth permissions in case users are using Bluetooth devices. -->
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
@@ -22,11 +20,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".chat"></activity>
-        <activity android:name=".Main3Activity">
-
-        </activity>
-        <activity android:name=".Main2Activity"></activity>
+        <activity android:name=".switchUser"></activity>
+        <activity android:name=".chat" />
+        <activity android:name=".Main3Activity"></activity>
+        <activity android:name=".Main2Activity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
