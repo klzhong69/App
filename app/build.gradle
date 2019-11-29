@@ -23,6 +23,9 @@ android {
     }
 }
 
+apply plugin: 'com.android.application'
+apply plugin: 'org.greenrobot.greendao' // apply plugin
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.1.0'
@@ -43,4 +46,11 @@ dependencies {
     implementation 'com.github.bigdongdong:ChatView:1.2' //添加依赖
 
     implementation 'io.agora.rtc:full-sdk:2.9.2'
+    implementation 'org.greenrobot:greendao:3.2.2' // add library
+}
+
+greendao {
+    schemaVersion 1
+    daoPackage 'com.example.myapplication.gen'
+    targetGenDir 'src/main/java'
 }
