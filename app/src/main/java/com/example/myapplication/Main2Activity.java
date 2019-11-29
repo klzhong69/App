@@ -145,8 +145,8 @@ public class Main2Activity extends AppCompatActivity {
 
                 break;
             case R.id.button4:
-
-
+                Intent intent1 = new Intent(Main2Activity.this, Main3Activity.class);
+                startActivity(intent1);
                 break;
         }
     }

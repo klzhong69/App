@@ -22,6 +22,7 @@ public class User {
         this.memberNickname = memberNickname;
         this.memberIcon = memberIcon;
     }
+
     @Generated(hash = 586692638)
     public User() {
     }
@@ -55,5 +56,5 @@ public class User {
     public void setMemberIcon(String memberIcon) {
         this.memberIcon = memberIcon;
     }
-
+    
 }
