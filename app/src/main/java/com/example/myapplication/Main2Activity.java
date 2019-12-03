@@ -24,8 +24,6 @@ import com.opensource.svgaplayer.SVGAImageView;
 import com.opensource.svgaplayer.SVGAParser;
 import com.opensource.svgaplayer.SVGAVideoEntity;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Locale;
@@ -128,10 +126,7 @@ public class Main2Activity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.button:
                 Intent intent = new Intent(Main2Activity.this, MainActivity.class);
-                int id = 1;
-                String a = "ads";
-                intent.putExtra("id", id);
-                intent.putExtra("ids", a);
+                intent.putExtra("id", 0);
                 startActivity(intent);
                 overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
                 break;

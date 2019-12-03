@@ -38,12 +38,13 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
     private ArrayList<Fragment> fragments;
     private Home home;
     private List list;
-    private Message message;
+    private Messages messages;
     private My my;
 
     private TextBadgeItem mBadgeItem;
     private int num = 1;
     private ImageView mIconView;
+    private BottomNavigationBar bottomNavigationBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
     }
 
     private void init() {
-        BottomNavigationBar bottomNavigationBar = (BottomNavigationBar) findViewById(R.id.navbar1);
+        bottomNavigationBar = (BottomNavigationBar) findViewById(R.id.navbar1);
         bottomNavigationBar.setMode(BottomNavigationBar.MODE_FIXED);
         bottomNavigationBar
                 .setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC
@@ -130,11 +131,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
     protected void onStart() {
         super.onStart();
         Intent intent =getIntent();
-        String a = intent.getStringExtra("ids");
         int id= intent.getIntExtra("id",0);
-        System.out.println("id"+id+"a"+a);
+        bottomNavigationBar.setFirstSelectedPosition(id).initialise();
         onTabSelected(id);
-        onTabUnselected(id);
     }
 
 
@@ -161,10 +160,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
                 break;
             case 2:
 
-                if (message == null) {
-                    message = Message.newInstance();
+                if (messages == null) {
+                    messages = Messages.newInstance();
                 }
-                transaction.replace(R.id.layout1, message);
+                transaction.replace(R.id.layout1, messages);
                 num = 0;
                 setBadgeNum(num);
                 break;

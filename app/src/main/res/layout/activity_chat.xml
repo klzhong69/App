@@ -4,52 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:descendantFocusability="blocksDescendants"
-    android:focusable="true"
-    android:focusableInTouchMode="true"
     tools:context=".chat">
 
-    <RelativeLayout
-        android:id="@+id/bears"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/dp_80"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:background="@color/qmui_config_color_10_white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
 
-        <EditText
-            android:id="@+id/editText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="@dimen/dp_10"
-            android:layout_marginTop="@dimen/dp_10"
-            android:layout_marginEnd="@dimen/dp_10"
-            android:layout_marginBottom="@dimen/dp_10"
-            android:layout_toStartOf="@+id/imageView45"
-            android:background="@android:color/white"
-            android:ems="10"
-            android:inputType="textPersonName" />
-
-        <ImageView
-            android:id="@+id/imageView45"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginTop="0dp"
-            android:layout_marginEnd="0dp"
-            android:layout_marginBottom="0dp"
-            android:scaleType="centerInside"
-            app:srcCompat="@drawable/add" />
-    </RelativeLayout>
 
 
     <include
@@ -78,9 +35,79 @@
             android:layout_height="wrap_content"
             android:background="@drawable/girl"
             android:scaleType="fitXY"
-            android:orientation="vertical">
-
-        </LinearLayout>
+            android:orientation="vertical"/>
     </androidx.core.widget.NestedScrollView>
+
+    <RelativeLayout
+        android:id="@+id/bears"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_80"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:background="@color/qmui_config_color_10_white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+
+        <com.qmuiteam.qmui.layout.QMUIPriorityLinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/editText"
+                android:layout_width="@dimen/dp_460"
+                android:layout_height="match_parent"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="@dimen/dp_20"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:layout_marginBottom="@dimen/dp_10"
+                android:layout_toStartOf="@+id/imageView45"
+                android:background="@drawable/bg_edittext_selector"
+                android:inputType="textPersonName"
+                android:paddingStart="@dimen/dp_10"
+                android:paddingTop="@dimen/dp_10"
+                android:paddingEnd="@dimen/dp_10"
+                android:paddingBottom="@dimen/dp_20"
+                android:textColorHint="#AAAAAA"
+                android:textSize="@dimen/sp_20" />
+
+            <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
+                android:id="@+id/but"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_50"
+                android:layout_centerInParent="true"
+                android:layout_marginStart="@dimen/dp_5"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginEnd="@dimen/dp_5"
+                android:gravity="center"
+                android:padding="@dimen/dp_5"
+                android:text="发送"
+                android:visibility="gone"
+                android:textColor="@color/qmui_s_link_color"
+                app:qmui_borderColor="@color/qmui_s_link_color" />
+
+            <ImageView
+                android:id="@+id/imageView45"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_40"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_20"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:layout_weight="1"
+
+                app:srcCompat="@drawable/add" />
+        </com.qmuiteam.qmui.layout.QMUIPriorityLinearLayout>
+
+    </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

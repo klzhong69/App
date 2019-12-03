@@ -60,7 +60,6 @@ public class My extends Fragment {
         } catch (Exception ignored) {
             textView38.setText("当前无用户,请登录");
         }
-
         setupDatabase();
         return view;
     }
@@ -68,6 +67,7 @@ public class My extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
     }
 
     public static My newInstance() {
@@ -82,6 +82,12 @@ public class My extends Fragment {
         super.onDestroyView();
         unbinder.unbind();
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
+
 
     /**
      * 配置数据库
@@ -108,13 +114,13 @@ public class My extends Fragment {
             case R.id.button8:
                 User user = new User();
                 user.setState(true);
-                user.setId(3L);
+                user.setId(1L);
                 user.setMemberId(134507L);
                 user.setMemberIcon("https://momeak.oss-cn-shenzhen.aliyuncs.com/dear1.png");
-                user.setMemberNickname("周润发3");
+                user.setMemberNickname("周润发");
                 user.setMemberSex(0);
                 mUserDao.insert(user);
-                sp.edit().putLong("userid", 3L).apply();
+                sp.edit().putLong("userid", 1L).apply();
                 Intent intent = new Intent(getContext(), MainActivity.class);
                 intent.putExtra("id", 3);
                 startActivity(intent);
@@ -126,10 +132,7 @@ public class My extends Fragment {
             case R.id.button7:
                 sp.edit().putLong("userid", 1L).apply();
                 Intent intent2= new Intent(this.getContext(), MainActivity.class);
-                int id = 3;
-                String a = "ads";
-                intent2.putExtra("id", id);
-                intent2.putExtra("ids", a);
+                intent2.putExtra("id", 3);
                 startActivity(intent2);
                 break;
         }

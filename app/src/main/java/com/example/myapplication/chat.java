@@ -1,9 +1,14 @@
 package com.example.myapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -16,6 +21,7 @@ import androidx.core.widget.NestedScrollView;
 
 import com.bumptech.glide.Glide;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
+import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,6 +47,8 @@ public class chat extends AppCompatActivity {
     TextView textView6;
     @BindView(R.id.bear)
     RelativeLayout bear;
+    @BindView(R.id.but)
+    QMUIRoundButton but;
     private View convertView;
     private ViewHolder viewHolder;
     private LayoutInflater inflater;
@@ -63,6 +71,7 @@ public class chat extends AppCompatActivity {
             }
         });
         initData();
+
 
     }
 
@@ -119,15 +128,64 @@ public class chat extends AppCompatActivity {
         return convertView;
     }
 
-    @OnClick({R.id.editText, R.id.imageView40, R.id.imageView41})
+
+    @OnClick({R.id.editText,R.id.imageView40, R.id.imageView41, R.id.imageView45, R.id.but})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.editText:
+              /*  editText.setFocusable(true);
+                editText.setFocusableInTouchMode(true);
+                editText.requestFocus();*/
+                editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+                    @Override
+                    public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                        if (i == EditorInfo.IME_ACTION_DONE) {   // 按下完成按钮，这里和上面imeOptions对应
+                            layout.addView(add(editText.getText().toString(), "https://momeak.oss-cn-shenzhen.aliyuncs.com/dear1.png", "", 0, 1));
+                            editText.setText("");
+                            but.setVisibility(View.GONE);
+                            imageView45.setVisibility(View.VISIBLE);
+                            return true;   //返回true，保留软键盘。false，隐藏软键盘
+                        }
+                        return false;
+                    }
+                });
+                TextWatcher watcher = new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                    }
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        if(s==null){
+                            but.setVisibility(View.GONE);
+                            imageView45.setVisibility(View.VISIBLE);
+                        }else{
+                            but.setVisibility(View.VISIBLE);
+                            imageView45.setVisibility(View.GONE);
+                        }
+                    }
+                };
+                editText.addTextChangedListener(watcher);
                 break;
             case R.id.imageView40:
-                this.fileList();
+                Intent intent = new Intent(chat.this, MainActivity.class);
+                intent.putExtra("id", 2);
+                startActivity(intent);
                 break;
             case R.id.imageView41:
+                break;
+            case R.id.imageView45:
+                showSimpleBottomSheetGrid();
+                break;
+            case R.id.but:
+                layout.addView(add(editText.getText().toString(), "https://momeak.oss-cn-shenzhen.aliyuncs.com/dear1.png", "", 0, 1));
+                editText.setText("");
+                but.setVisibility(View.GONE);
+                imageView45.setVisibility(View.VISIBLE);
                 break;
         }
     }
@@ -136,12 +194,6 @@ public class chat extends AppCompatActivity {
         private TextView txt;
         private ImageView imagesrc;
         private ImageView head;
-    }
-
-
-    @OnClick(R.id.imageView45)
-    public void onViewClicked() {
-        showSimpleBottomSheetGrid();
     }
 
     private void showSimpleBottomSheetGrid() {

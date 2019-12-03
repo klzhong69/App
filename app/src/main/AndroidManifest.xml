@@ -20,9 +20,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".switchUser"></activity>
+        <activity android:name=".chatroom"></activity>
+        <activity android:name=".switchUser" />
         <activity android:name=".chat" />
-        <activity android:name=".Main3Activity"></activity>
+        <activity android:name=".Main3Activity" />
         <activity android:name=".Main2Activity" />
         <activity android:name=".MainActivity">
             <intent-filter>

@@ -74,10 +74,11 @@ public class icon1 extends Fragment {
         double h = (350+170+190*2)*are;
         double b = 155*are;
         layoutParamsHeight = (int) (h+3*b+60);
-        System.out.println("height"+layoutParamsHeight);
 
+        MyApp application = ((MyApp) getContext().getApplicationContext());
+        application.setH1(layoutParamsHeight);
         Intent intent = new Intent(AD_DOWNLOAD_ACTION1);
-        intent.putExtra("det", layoutParamsHeight);
+        intent.putExtra("det1", layoutParamsHeight);
         LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(intent);
     }
 }

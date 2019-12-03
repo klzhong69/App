@@ -56,9 +56,7 @@ public class Home extends Fragment {
         unbinder = ButterKnife.bind(this, view);
 
         tabSegment = view.findViewById(R.id.tabSegments);
-
         viewPager = view.findViewById(R.id.viewpagers);
-        //tabSegment1.setVisibility(View.VISIBLE);//使控件可见
 
         myFragment = new ArrayList<>();
         myFragment.add(new icon1());
@@ -79,52 +77,7 @@ public class Home extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        /*scroll.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-
-                Log.e(TAG, "onScrollChange: " + scrollX +"---" + scrollY + "----" +oldScrollX + "---" + oldScrollY );
-
-                if (scrollY > oldScrollY) {//向下滚动
-                    Log.i(TAG, "Scroll DOWN");
-                    System.out.println("Scroll DOWN");
-                }
-                if (scrollY < oldScrollY) {//向上滚动
-                    Log.i(TAG, "Scroll UP");
-                    System.out.println("Scroll UP");
-                }
-
-                if (scrollY == 0) {// 滚动到顶
-                    Log.i(TAG, "TOP SCROLL");
-                }
-                // 滚动到底
-                if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
-                    Log.i(TAG, "BOTTOM SCROLL");
-                }
-
-                //判断某个控件是否可见
-                Rect scrollBounds = new Rect();
-                tabSegment.getHitRect(scrollBounds);
-                if (tabSegment.getLocalVisibleRect(scrollBounds)) {//可见
-                    Log.e(TAG, "onScrollChange:  第3个可见");
-                } else {//完全不可见
-                    Log.e(TAG, "onScrollChange:  第3个不可见");
-                }
-
-
-                Log.e(TAG, "onScrollChange: ------------" + scrollY +"------"+ tabSegment.getTop() );
-                //判断某个控件是否滚到顶部
-                if (scrollY == tabSegment.getTop()){
-                    Log.i(TAG, "onScrollChange: ------top-------" );
-                    System.out.println("onScrollChange UP");
-                }
-
-                Log.e(TAG, "onScrollChange: bottmo" + scrollY +"-----"+ (tabSegment.getTop() + tabSegment.getHeight()) );
-
-
-            }
-        });*/
+        receiveAdDownload();
     }
 
     public static Home newInstance() {
@@ -140,32 +93,26 @@ public class Home extends Fragment {
         unbinder.unbind();
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        receiveAdDownload(icon1.AD_DOWNLOAD_ACTION1);
-    }
-
     /**
      * 注册广播接收器
      */
-    private void receiveAdDownload(String action) {
+    private void receiveAdDownload() {
         broadcastManager = LocalBroadcastManager.getInstance(getActivity());
         IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(action);
+        intentFilter.addAction(icon1.AD_DOWNLOAD_ACTION1);
+
         broadcastManager.registerReceiver(mAdDownLoadReceiver, intentFilter);
     }
 
     BroadcastReceiver mAdDownLoadReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            int resource = (int)intent.getSerializableExtra("det");
-                ViewGroup.LayoutParams layoutParams = viewPager.getLayoutParams();
-                layoutParams.height = resource;
-                viewPager.setLayoutParams(layoutParams);
+            int resource = (int) intent.getSerializableExtra("det1");
+            ViewGroup.LayoutParams layoutParams = viewPager.getLayoutParams();
+            layoutParams.height = resource;
+            viewPager.setLayoutParams(layoutParams);
         }
     };
-
 
     @Override
     public void onPause() {
@@ -213,7 +160,6 @@ public class Home extends Fragment {
                 return myFragment.get(position);
             }
 
-
             @Override
             public int getCount() {
                 if (myFragment == null) {
@@ -252,28 +198,32 @@ public class Home extends Fragment {
         tabSegment.addOnTabSelectedListener(new QMUITabSegment.OnTabSelectedListener() {
             @Override
             public void onTabSelected(int index) {//当某个 Tab 被选中时会触发
-                if (index == 4) {
-                    getActivity().onBackPressed();
-                    Intent intent = new Intent(getContext(), Main2Activity.class);
-                    startActivity(intent);
-
-                } else {
-                    //这里接收到广播和数据，进行处理就是了
-                    switch (index){
-                        case 0:
-                            receiveAdDownload(icon1.AD_DOWNLOAD_ACTION1);
-                            break;
-                        case 1:
-                            receiveAdDownload(icon2.AD_DOWNLOAD_ACTION2);
-                            break;
-                        case 2:
-                            receiveAdDownload(icon3.AD_DOWNLOAD_ACTION3);
-                            break;
-                        case 3:
-                            receiveAdDownload(icon4.AD_DOWNLOAD_ACTION4);
-                            break;
-                    }
+                System.out.println("bbb" + index);
+                MyApp application = ((MyApp) getContext().getApplicationContext());
+                int height = 0;
+                switch (index) {
+                    case 0:
+                        height = application.getH1();
+                        break;
+                    case 1:
+                        height = application.getH2();
+                        break;
+                    case 2:
+                        height = application.getH3();
+                        break;
+                    case 3:
+                        height = application.getH4();
+                        break;
+                    case 4:
+                        getActivity().onBackPressed();
+                        Intent intent = new Intent(getContext(), Main2Activity.class);
+                        startActivity(intent);
+                        break;
                 }
+                System.out.println(height);
+                ViewGroup.LayoutParams layoutParams = viewPager.getLayoutParams();
+                layoutParams.height = height;
+                viewPager.setLayoutParams(layoutParams);
                 Log.i("bqt", "【onTabSelected】" + index);
                 tabSegment.hideSignCountView(index);//根据 index 在对应的 Tab 上隐藏红点
             }

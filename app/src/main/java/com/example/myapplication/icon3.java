@@ -63,20 +63,16 @@ public class icon3 extends Fragment {
         mArrayList.add(i1);
         Faxan i2 = new Faxan("芭比Uki宝贝祝大叔生日快乐", "[主持]芭比uu3号小可", "热门", "288", "635", "https://momeak.oss-cn-shenzhen.aliyuncs.com/dear2.png");
         mArrayList.add(i2);
-        Faxan i3 = new Faxan("芭比Uki宝贝祝大叔生日快乐", "[主持]芭比uu3号小可", "热门", "288", "635","https://momeak.oss-cn-shenzhen.aliyuncs.com/dear3.png");
-        mArrayList.add(i3);
 
         DisplayMetrics dm = getResources().getDisplayMetrics();
         int width = dm.widthPixels;
         double are = (double) width/430;
         double h = (350+170+190*2)*are;
         double b = 155*are;
-        layoutParamsHeight = (int) (h+3*b+60);
-        System.out.println("height"+layoutParamsHeight);
+        layoutParamsHeight = (int) (h+2*b+60);
 
-        Intent intent = new Intent(AD_DOWNLOAD_ACTION3);
-        intent.putExtra("det", layoutParamsHeight);
-        LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(intent);
+        MyApp application = ((MyApp) getContext().getApplicationContext());
+        application.setH3(layoutParamsHeight);
 
     }
 }
