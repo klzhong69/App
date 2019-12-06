@@ -1,4 +1,4 @@
-package com.example.myapplication.cofig;
+package com.example.myapplication.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,18 +12,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.myapplication.R;
-import com.example.myapplication.utils.BaseEntity;
-import com.example.myapplication.utils.LiwuBase;
+import com.example.myapplication.entity.Chatroom;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class LiRecyclerViewAdapter extends RecyclerView.Adapter{
 
+public class GridViewAdapter  extends RecyclerView.Adapter {
     private Context mContext;
-    private List<LiwuBase> mEntityList;
-    private LiRecyclerViewAdapter.OnItemClickListener mOnItemClickListener;
-    public LiRecyclerViewAdapter(Context context, List<LiwuBase> entityList){
+    private List<Chatroom> mEntityList;
+    private GridViewAdapter.OnItemClickListener mOnItemClickListener;
+    public GridViewAdapter (Context context, List<Chatroom> entityList){
         this.mContext = context;
         this.mEntityList = entityList;
     }
@@ -32,8 +30,8 @@ public class LiRecyclerViewAdapter extends RecyclerView.Adapter{
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.liwu, parent, false);
-        return new LiRecyclerViewAdapter.DemoViewHolder(view);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.chatroome1, parent, false);
+        return new GridViewAdapter.DemoViewHolder(view);
     }
 
     public interface OnItemClickListener {
@@ -42,17 +40,31 @@ public class LiRecyclerViewAdapter extends RecyclerView.Adapter{
     }
 
 
-    public void setOnItemClickListener(LiRecyclerViewAdapter.OnItemClickListener onItemClickListener) {
+    public void setOnItemClickListener(GridViewAdapter.OnItemClickListener onItemClickListener) {
         mOnItemClickListener = onItemClickListener;
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        LiwuBase entity = mEntityList.get(position);
-        ((LiRecyclerViewAdapter.DemoViewHolder)holder).mText.setText(entity.getText());
+        Chatroom entity = mEntityList.get(position);
+        if(entity.getUsersrc().equals("")){
+            Glide.with(mContext).load(entity.getUsersrc()).into(((GridViewAdapter.DemoViewHolder)holder).mUserSrc);
+        }else{
+            Glide.with(mContext).load(entity.getUsersrc()).into(((GridViewAdapter.DemoViewHolder)holder).mUserSrc);
+        }
+        if(entity.getName().equals("")){
+            ((DemoViewHolder)holder).mName.setVisibility(View.GONE);
+        }else{
+            ((GridViewAdapter.DemoViewHolder)holder).mName.setText(entity.getName());
+        }
+        if(entity.getIma().equals("")){
+            ((DemoViewHolder)holder).mIma.setVisibility(View.GONE);
+        }else{
+            Glide.with(mContext).load(entity.getIma()).into(((GridViewAdapter.DemoViewHolder)holder).mIma);
+        }
+
         if (mOnItemClickListener != null)
         {
-
             holder.itemView.setOnClickListener(new View.OnClickListener()
             {
                 @Override
@@ -68,9 +80,10 @@ public class LiRecyclerViewAdapter extends RecyclerView.Adapter{
                 @Override
                 public boolean onLongClick(View v)
                 {
+
                     int pos = holder.getLayoutPosition();
                     mOnItemClickListener.onItemLongClick(holder.itemView, pos);
-                    return false;
+                    return true;
                 }
             });
         }
@@ -83,16 +96,20 @@ public class LiRecyclerViewAdapter extends RecyclerView.Adapter{
 
     private class DemoViewHolder extends RecyclerView.ViewHolder{
 
-        private TextView mText;
+        private ImageView mUserSrc;
+        private TextView mName;
+        private ImageView mIma;
 
         public DemoViewHolder(View itemView) {
             super(itemView);
-            mText = (TextView) itemView.findViewById(R.id.textView29);
+            mUserSrc = (ImageView) itemView.findViewById(R.id.imageView2);
+            mName = (TextView) itemView.findViewById(R.id.textView39);
+            mIma = (ImageView) itemView.findViewById(R.id.imageView46);
         }
     }
 
 
-    public void addData(int position,LiwuBase entity) {
+    public void addData(int position,Chatroom entity) {
         mEntityList.add(position,entity);
         notifyItemInserted(position);
     }
@@ -101,5 +118,6 @@ public class LiRecyclerViewAdapter extends RecyclerView.Adapter{
         mEntityList.remove(position);
         notifyItemRemoved(position);
     }
+
 
 }

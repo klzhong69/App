@@ -63,21 +63,21 @@
         android:text="更多"
         android:textSize="@dimen/sp_20" />
 
-    <ListView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/textView21"
         android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="0dp"
         android:layout_marginLeft="0dp"
         android:layout_marginTop="@dimen/dp_10"
         android:layout_marginEnd="0dp"
         android:layout_marginRight="0dp"
-        android:layout_marginBottom="0dp" />
+        android:layout_marginBottom="0dp" >
+
+    </androidx.recyclerview.widget.RecyclerView>
 
 </RelativeLayout>

@@ -1,8 +1,8 @@
-package com.example.myapplication.Dao;
+package com.example.myapplication.dao;
 
 import com.example.myapplication.My;
+import com.example.myapplication.entity.User;
 import com.example.myapplication.gen.UserDao;
-import com.example.myapplication.Model.User;
 
 import java.util.List;
 
@@ -79,7 +79,7 @@ public class mUserDao {
 
     public static List<User> queryBuilder() {
         // 正序
-       return My.getDaoInstant().getUserDao().queryBuilder().orderAsc(UserDao.Properties.State).list();
+        return My.getDaoInstant().getUserDao().queryBuilder().orderAsc(UserDao.Properties.State).list();
 
         // 反序
         //My.getDaoInstant().getUserDao().queryBuilder().orderDesc(UserDao.Properties.Id).list();
@@ -88,5 +88,4 @@ public class mUserDao {
         //My.getDaoInstant().getUserDao().queryBuilder().orderAsc(UserDao.Properties.Id).orderDesc(UserDao.Properties.MemberSex).list();
 
     }
-
 }

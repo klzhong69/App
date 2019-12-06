@@ -1,6 +1,10 @@
-package com.example.myapplication.utils;
+package com.example.myapplication.entity;
 
+/**
+ * 礼物数量实体类.
+ */
 public class LiwuBase {
+
     private String text;
 
     public String getText() {

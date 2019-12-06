@@ -1,117 +1,207 @@
 package com.example.myapplication;
 
 import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.net.http.HttpResponseCache;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.text.TextPaint;
+import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.myapplication.cofig.PathImageBit;
-import com.opensource.svgaplayer.SVGADrawable;
-import com.opensource.svgaplayer.SVGADynamicEntity;
-import com.opensource.svgaplayer.SVGAImageView;
-import com.opensource.svgaplayer.SVGAParser;
-import com.opensource.svgaplayer.SVGAVideoEntity;
+import com.example.myapplication.Adapter.GridViewAdapter;
+import com.example.myapplication.Adapter.RecyclerViewAdapter;
+import com.example.myapplication.entity.BaseEntity;
+import com.example.myapplication.entity.Chatroom;
 
-import org.greenrobot.greendao.annotation.NotNull;
-
-import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Predicate;
 
 public class chatroom extends AppCompatActivity {
 
-    @BindView(R.id.imageView46)
-    ImageView imageView46;
-    @BindView(R.id.svgaima)
-    SVGAImageView svgaima;
-    SVGAParser parser;
+    @BindView(R.id.relativeLayout2)
+    RelativeLayout relativeLayout2;
+    @BindView(R.id.recyclerview)
+    RecyclerView mRecyclerView;
+    @BindView(R.id.relativeLayout)
+    RelativeLayout relativeLayout;
+    @BindView(R.id.imageView4)
+    ImageView imageView4;
+    @BindView(R.id.gridview)
+    RecyclerView gridview;
     private Bitmap bitmap;
+    private List<Chatroom> mData;
+    private GridLayoutManager mLayoutManager;
+    private RecyclerViewAdapter mAdapter;//适配器
+    private GridViewAdapter mAdapters;//适配器
+    private List<BaseEntity> mEntityList;
+    private Disposable disposable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chatroom);
         ButterKnife.bind(this);
-        parser = new SVGAParser(this);
+        mEntityList = new ArrayList<>();
+        //初始化数据
+        init();
+        initrecycler();
+    }
+
+    private void init() {
+        mData = new ArrayList<Chatroom>();
+        Chatroom i1 = new Chatroom("https://momeak.oss-cn-shenzhen.aliyuncs.com/dear1.png", "陌生人1", "https://momeak.oss-cn-shenzhen.aliyuncs.com/dear3.png");
+        mData.add(i1);
+        Chatroom i2 = new Chatroom("https://momeak.oss-cn-shenzhen.aliyuncs.com/dear2.png", "陌生人2", "");
+        mData.add(i2);
+        Chatroom i3 = new Chatroom("https://momeak.oss-cn-shenzhen.aliyuncs.com/dear3.png", "陌生人3", "");
+        mData.add(i3);
+        Chatroom i4 = new Chatroom("https://momeak.oss-cn-shenzhen.aliyuncs.com/dear3.png", "陌生人4", "");
+        mData.add(i4);
+        Chatroom i5 = new Chatroom("https://momeak.oss-cn-shenzhen.aliyuncs.com/dear3.png", "陌生人5", "");
+        mData.add(i5);
+        Chatroom i6 = new Chatroom("https://momeak.oss-cn-shenzhen.aliyuncs.com/dear3.png", "陌生人6", "");
+        mData.add(i6);
+        Chatroom i7 = new Chatroom("https://momeak.oss-cn-shenzhen.aliyuncs.com/dear3.png", "陌生人7", "");
+        mData.add(i7);
+        Chatroom i8 = new Chatroom("https://momeak.oss-cn-shenzhen.aliyuncs.com/dear3.png", "", "");
+        mData.add(i8);
+
+        //创建适配器，将数据传递给适配器
+        mAdapters = new GridViewAdapter(this, mData);
+        //设置适配器adapter
+        gridview.setAdapter(mAdapters);
+
+        //多列布局
+        mLayoutManager = new GridLayoutManager(this,4);
+        gridview.setLayoutManager(mLayoutManager);
 
 
-        File cacheDir = new File(this.getCacheDir(), "https://data.meitehudong.com/52hertz/svga/posche.svga");
-        System.out.println(cacheDir);
-        try {
-            HttpResponseCache.install(cacheDir, 1024 * 1024 * 128);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Thread thread=new Thread(new Runnable(){
+        gridview.setItemAnimator(new DefaultItemAnimator());
+
+        mAdapters.setOnItemClickListener(new GridViewAdapter.OnItemClickListener() {
             @Override
-            public void run()
-            {
-                bitmap = PathImageBit.fetchBitmapByUrl(chatroom.this,"https://momeak.oss-cn-shenzhen.aliyuncs.com/dear1.png");
-                // TODO Auto-generated method stub
-                Message message =new Message();
-                message.what=1;
-                mHandler.sendMessage(message);
+            public void onItemClick(View view, int position) {
+                Toast.makeText(chatroom.this, position + " click", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onItemLongClick(View view, int position) {
+                Toast.makeText(chatroom.this, position + " Long click", Toast.LENGTH_SHORT).show();
             }
         });
-        thread.start();
+
+        /**
+         * 既然是动画，就会有时间，我们把动画执行时间变大一点来看一看效果
+         */
+        DefaultItemAnimator defaultItemAnimator = new DefaultItemAnimator();
+        defaultItemAnimator.setAddDuration(200);
+        defaultItemAnimator.setRemoveDuration(200);
+        mRecyclerView.setItemAnimator(defaultItemAnimator);
     }
 
-    private void loadAnimation() {
-        // new URL needs try catch.
+    private void initrecycler() {
+        //创建适配器，将数据传递给适配器
+        mAdapter = new RecyclerViewAdapter(this, mEntityList);
+        //设置适配器adapter
+        mRecyclerView.setAdapter(mAdapter);
 
-        try {
-            parser.parse(new URL("https://data.meitehudong.com/52hertz/svga/posche.svga"), new SVGAParser.ParseCompletion() {
-                @Override
-                public void onComplete(@NotNull SVGAVideoEntity videoItem) {
-                    SVGADynamicEntity dynamicEntity = new SVGADynamicEntity();
+       /* //创建布局管理器，垂直设置LinearLayoutManager.VERTICAL，水平设置LinearLayoutManager.HORIZONTAL
+        mLinearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        mRecyclerView.setLayoutManager(mLinearLayoutManager);*/
 
-                    if (bitmap != null) {
-                        dynamicEntity.setDynamicImage(bitmap, "99"); // Here is the KEY implementation.
-                        TextPaint textPaint = new TextPaint();
-                        textPaint.setColor(Color.WHITE);
-                        textPaint.setTextSize(28);
-                        dynamicEntity.setDynamicText("Pony send Kitty flowers.", textPaint, "banner");
+        /*//多列布局
+        mLayoutManager = new GridLayoutManager(this,4);
+        mRecyclerView.setLayoutManager(mLayoutManager);*/
+
+
+        //布局管理器
+        LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(this);
+        mLinearLayoutManager.setStackFromEnd(true);
+        if (mAdapter.getItemCount() > 0) {
+            mLinearLayoutManager.scrollToPositionWithOffset(mAdapter.getItemCount() - 1, Integer.MIN_VALUE);
+        }
+
+
+        mRecyclerView.setLayoutManager(mLinearLayoutManager);
+
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        mAdapter.setOnItemClickListener(new RecyclerViewAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Toast.makeText(chatroom.this, position + " click", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onItemLongClick(View view, int position) {
+                Toast.makeText(chatroom.this, position + " Long click", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        /**
+         * 既然是动画，就会有时间，我们把动画执行时间变大一点来看一看效果
+         */
+        DefaultItemAnimator defaultItemAnimator = new DefaultItemAnimator();
+        defaultItemAnimator.setAddDuration(200);
+        defaultItemAnimator.setRemoveDuration(200);
+        mRecyclerView.setItemAnimator(defaultItemAnimator);
+
+
+    }
+
+    @OnClick(R.id.imageView4)
+    public void onViewClicked() {
+        Observable.interval(1, TimeUnit.SECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer< Long >() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        disposable = d;
+                    }
+
+                    @Override
+                    public void onNext(Long aLong) {
+                        Log.i("bqt", "【订阅】" + aLong);
+                        BaseEntity entity = new BaseEntity("周润发", "进入房间打赏流附近的司法所的飞机但是减肥i哦" + aLong, "https://momeak.oss-cn-shenzhen.aliyuncs.com/dear3.png");
+                        mAdapter.addData(mEntityList.size(), entity);
+                        mRecyclerView.smoothScrollToPosition(mEntityList.size());
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
 
                     }
-                    SVGADrawable drawable = new SVGADrawable(videoItem, dynamicEntity);
-                    svgaima.setImageDrawable(drawable);
-                    svgaima.startAnimation();
-                }
 
-                @Override
-                public void onError() {
+                    @Override
+                    public void onComplete() {
 
-                }
-            });
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
+                    }
+                });
+
     }
 
-    public Handler mHandler=new Handler()
-    {
-        public void handleMessage(Message msg)
-        {
-            switch(msg.what)
-            {
-                case 1:
-                    loadAnimation();
-                    break;
-                default:
-                    break;
-            }
-            super.handleMessage(msg);
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (disposable != null && !disposable.isDisposed()) {
+            disposable.dispose();
+            disposable = null;
         }
-    };
-
+    }
 }

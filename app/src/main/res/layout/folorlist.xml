@@ -10,7 +10,7 @@
 
         <ImageView
             android:id="@+id/imageView42"
-            android:layout_width="@dimen/dp_100"
+            android:layout_width="wrap_content"
             android:layout_height="@dimen/dp_30"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
@@ -27,23 +27,24 @@
             android:id="@+id/textView34"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/imageView42"
             android:layout_alignBottom="@+id/imageView42"
+            android:layout_alignParentTop="true"
             android:layout_marginStart="@dimen/dp_20"
-            android:layout_marginTop="0dp"
+            android:layout_marginTop="@dimen/dp_10"
             android:layout_marginBottom="0dp"
-            android:gravity="center"
             android:layout_toEndOf="@+id/imageView42"
+            android:gravity="center"
             android:text="TextView" />
 
         <TextView
             android:id="@+id/textView35"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/textView34"
-            android:layout_alignBottom="@+id/textView34"
+            android:layout_below="@+id/textView34"
+            android:layout_alignParentStart="true"
             android:layout_marginStart="@dimen/dp_20"
-            android:layout_toEndOf="@+id/textView34"
-            android:gravity="center"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginBottom="0dp"
+            android:gravity="center_vertical"
             android:text="TextView" />
 </RelativeLayout>

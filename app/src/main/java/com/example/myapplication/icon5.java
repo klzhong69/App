@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.myapplication.utils.MyApp;
+import com.example.myapplication.entity.MyApp;
 
 import java.util.Map;
 

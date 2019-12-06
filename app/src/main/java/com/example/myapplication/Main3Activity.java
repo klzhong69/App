@@ -5,31 +5,23 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
-import android.os.Message;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
-import android.view.animation.DecelerateInterpolator;
 import android.view.animation.LayoutAnimationController;
-import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.ViewPropertyAnimatorCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.myapplication.cofig.LiRecyclerViewAdapter;
-import com.example.myapplication.cofig.PathImageBit;
-import com.example.myapplication.cofig.RecyclerViewAdapter;
-import com.example.myapplication.utils.BaseEntity;
-import com.example.myapplication.utils.LiwuBase;
+import com.example.myapplication.Adapter.LiRecyclerViewAdapter;
+import com.example.myapplication.Adapter.RecyclerViewAdapter;
+import com.example.myapplication.entity.BaseEntity;
+import com.example.myapplication.entity.LiwuBase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,8 +29,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
-import static java.security.AccessController.getContext;
 
 
 public class Main3Activity extends AppCompatActivity {
@@ -93,9 +83,9 @@ public class Main3Activity extends AppCompatActivity {
         mLinearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);*/
 
-        /*//多列布局
+        //多列布局
         mLayoutManager = new GridLayoutManager(this,4);
-        mRecyclerView.setLayoutManager(mLayoutManager);*/
+        mRecyclerView.setLayoutManager(mLayoutManager);
 
 
         //布局管理器

@@ -1,11 +1,15 @@
-package com.example.myapplication.Model;
+package com.example.myapplication.entity;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Generated;
 
+/**
+ * 本地数据库账户实体类
+ */
 @Entity
 public class User {
+
     @Id(autoincrement = true)
     private Long id;
     private Long memberId;//用户ID

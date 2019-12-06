@@ -6,4 +6,6 @@
     <color name="tabbarcolor">#ef6598</color>
     <color name="cardFront">#434850</color>
     <color name="cardBack">#bc4c4a</color>
+    <color name="red_normal">#FF0000</color>
+    <color name="red_pressed">#FF6666</color>
 </resources>

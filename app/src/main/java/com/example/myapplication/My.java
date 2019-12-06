@@ -15,8 +15,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
-import com.example.myapplication.Dao.mUserDao;
-import com.example.myapplication.Model.User;
+import com.example.myapplication.dao.mUserDao;
+import com.example.myapplication.entity.User;
 import com.example.myapplication.gen.DaoMaster;
 import com.example.myapplication.gen.DaoSession;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;

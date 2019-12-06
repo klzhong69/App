@@ -1,4 +1,4 @@
-package com.example.myapplication.cofig;
+package com.example.myapplication.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,11 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.transition.Transition;
 import com.example.myapplication.R;
-import com.example.myapplication.utils.BaseEntity;
+import com.example.myapplication.entity.BaseEntity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -49,9 +47,18 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         BaseEntity entity = mEntityList.get(position);
+        if(entity.getName().equals("")){
+            ((DemoViewHolder)holder).mName.setVisibility(View.GONE);
+        }else{
+            ((DemoViewHolder)holder).mName.setText(entity.getName());
+        }
+        if(entity.getIma().equals("")){
+            ((DemoViewHolder)holder).mIma.setVisibility(View.GONE);
+        }else{
+            Glide.with(mContext).load(entity.getIma()).into(((DemoViewHolder)holder).mIma);
+        }
         ((DemoViewHolder)holder).mText.setText(entity.getText());
-        ((DemoViewHolder)holder).mName.setText(entity.getName());
-        Glide.with(mContext).load(entity.getIma()).into(((DemoViewHolder)holder).mIma);
+
         if (mOnItemClickListener != null)
         {
             holder.itemView.setOnClickListener(new View.OnClickListener()

@@ -1,4 +1,4 @@
-package com.example.myapplication.cofig;
+package com.example.myapplication.Adapter;
 
 import android.content.Context;
 import android.util.Log;
@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.myapplication.Model.User;
+import com.example.myapplication.entity.User;
 import com.example.myapplication.R;
 
 import java.util.List;

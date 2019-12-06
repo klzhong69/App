@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.drawable.Icon;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,7 +17,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.viewpager.widget.ViewPager;
 
-import com.example.myapplication.utils.MyApp;
+import com.example.myapplication.entity.MyApp;
 import com.example.myapplication.cofig.MyImageLoader;
 import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 import com.qmuiteam.qmui.util.QMUIResHelper;
@@ -27,17 +28,22 @@ import com.youth.banner.Transformer;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 
 public class Home extends Fragment {
 
 
     public static final String AD_DOWNLOAD_ACTION = "det";
+    public static Observer<Integer> observer;
     private ViewPager viewPager;
 
 
@@ -48,6 +54,7 @@ public class Home extends Fragment {
     private QMUITabSegment tabSegment;
     private ArrayList<String> imagePath;
     private List<Fragment> myFragment;
+    private Disposable mdisposble;
 
     @Nullable
     @Override
@@ -77,7 +84,31 @@ public class Home extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        receiveAdDownload();
+         observer = new Observer<Integer>()
+         {
+            @Override
+            public void onSubscribe(Disposable d) {
+                mdisposble = d;
+            }
+
+            @Override
+            public void onNext(Integer integer) {
+                ViewGroup.LayoutParams layoutParams = viewPager.getLayoutParams();
+                layoutParams.height = integer;
+                viewPager.setLayoutParams(layoutParams);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        };
+
     }
 
     public static Home newInstance() {
@@ -93,31 +124,11 @@ public class Home extends Fragment {
         unbinder.unbind();
     }
 
-    /**
-     * 注册广播接收器
-     */
-    private void receiveAdDownload() {
-        broadcastManager = LocalBroadcastManager.getInstance(getActivity());
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(icon1.AD_DOWNLOAD_ACTION1);
-
-        broadcastManager.registerReceiver(mAdDownLoadReceiver, intentFilter);
-    }
-
-    BroadcastReceiver mAdDownLoadReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            int resource = (int) intent.getSerializableExtra("det1");
-            ViewGroup.LayoutParams layoutParams = viewPager.getLayoutParams();
-            layoutParams.height = resource;
-            viewPager.setLayoutParams(layoutParams);
-        }
-    };
 
     @Override
     public void onPause() {
         super.onPause();
-        broadcastManager.unregisterReceiver(mAdDownLoadReceiver);
+
     }
 
     private void initData() {
@@ -168,8 +179,6 @@ public class Home extends Fragment {
                     return myFragment.size();
                 }
             }
-
-
         });
 
         viewPager.setCurrentItem(0, false);
@@ -198,32 +207,50 @@ public class Home extends Fragment {
         tabSegment.addOnTabSelectedListener(new QMUITabSegment.OnTabSelectedListener() {
             @Override
             public void onTabSelected(int index) {//当某个 Tab 被选中时会触发
-                System.out.println("bbb" + index);
-                MyApp application = ((MyApp) getContext().getApplicationContext());
-                int height = 0;
+                Observer<Integer> observer1 = new Observer<Integer>()
+                {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        mdisposble = d;
+                    }
+
+                    @Override
+                    public void onNext(Integer integer) {
+                        ViewGroup.LayoutParams layoutParams = viewPager.getLayoutParams();
+                        layoutParams.height = integer;
+                        viewPager.setLayoutParams(layoutParams);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                };
                 switch (index) {
                     case 0:
-                        height = application.getH1();
+                        icon1.observable.subscribe(observer1);
                         break;
                     case 1:
-                        height = application.getH2();
+                        icon2.observable.subscribe(observer1);
                         break;
                     case 2:
-                        height = application.getH3();
+                        icon3.observable.subscribe(observer1);
                         break;
                     case 3:
-                        height = application.getH4();
+                        icon4.observable.subscribe(observer1);
                         break;
                     case 4:
-                        getActivity().onBackPressed();
+                        Objects.requireNonNull(getActivity()).onBackPressed();
                         Intent intent = new Intent(getContext(), Main2Activity.class);
                         startActivity(intent);
                         break;
                 }
-                System.out.println(height);
-                ViewGroup.LayoutParams layoutParams = viewPager.getLayoutParams();
-                layoutParams.height = height;
-                viewPager.setLayoutParams(layoutParams);
+
                 Log.i("bqt", "【onTabSelected】" + index);
                 tabSegment.hideSignCountView(index);//根据 index 在对应的 Tab 上隐藏红点
             }

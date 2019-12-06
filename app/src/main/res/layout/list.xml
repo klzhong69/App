@@ -10,16 +10,27 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
+
+
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fillViewport="true">
 
-            <ListView
-                android:id="@+id/listMode"
+            <LinearLayout
+                android:id="@+id/largeLabel"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" >
-            </ListView>
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <com.yanzhenjie.recyclerview.SwipeRecyclerView
+                    android:id="@+id/listMode"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" >
+
+                </com.yanzhenjie.recyclerview.SwipeRecyclerView>
+
+            </LinearLayout>
         </androidx.core.widget.NestedScrollView>
 
 

@@ -10,16 +10,12 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.myapplication.Dao.mUserDao;
-import com.example.myapplication.Model.User;
-import com.example.myapplication.cofig.UserListAdapter;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
+import com.example.myapplication.dao.mUserDao;
+import com.example.myapplication.entity.User;
+import com.example.myapplication.Adapter.UserListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

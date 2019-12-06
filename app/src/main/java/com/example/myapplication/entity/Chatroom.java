@@ -1,20 +1,20 @@
-package com.example.myapplication.utils;
+package com.example.myapplication.entity;
 
-import android.widget.ImageView;
-import android.widget.TextView;
+/**
+ * 聊天室坑位实体类.
+ */
+public class Chatroom {
 
-public class BaseEntity {
-
-    private String text;
+    private String usersrc;
     private String name;
     private String ima;
 
-    public String getText() {
-        return text;
+    public String getUsersrc() {
+        return usersrc;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setUsersrc(String usersrc) {
+        this.usersrc = usersrc;
     }
 
     public String getName() {
@@ -33,9 +33,9 @@ public class BaseEntity {
         this.ima = ima;
     }
 
-    public BaseEntity(String name, String text, String ima) {
+    public Chatroom(String usersrc, String name, String ima) {
+        this.usersrc = usersrc;
         this.name = name;
-        this.text = text;
         this.ima = ima;
     }
 }

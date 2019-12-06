@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.android.application'
 apply plugin: 'org.greenrobot.greendao' // apply plugin
 
 android {
@@ -33,30 +32,83 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    implementation 'com.qmuiteam:qmui:1.4.0'
-    implementation 'com.youth.banner:banner:1.4.10'  //最新版本
-    implementation 'com.github.bumptech.glide:glide:4.10.0'
+
+    implementation 'com.qmuiteam:qmui:1.4.0'//QMUI
+
+    implementation 'com.youth.banner:banner:1.4.10'  //轮播图
+
+    implementation 'com.github.bumptech.glide:glide:4.10.0'//glide图片加载
     annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'com.jakewharton:butterknife:10.1.0'
+
+
+    implementation 'com.jakewharton:butterknife:10.1.0'//butterknife注解框架
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
+
     implementation 'com.android.support:support-v4:29.0.0'
-    implementation 'com.ashokvarma.android:bottom-navigation-bar:2.1.0'
+
+    implementation 'com.ashokvarma.android:bottom-navigation-bar:2.1.0'//底部tabbar框架
+
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'//AndroidX
     implementation 'androidx.gridlayout:gridlayout:1.0.0'
-    implementation 'com.github.bigdongdong:ChatView:1.2' //添加依赖
 
-    implementation 'io.agora.rtc:full-sdk:2.9.2'
-    implementation 'org.greenrobot:greendao:3.2.2' // add library
-    implementation 'com.google.code.gson:gson:2.8.6'
-    implementation 'com.github.yyued:SVGAPlayer-Android:2.0.0'
-    implementation 'com.github.Yuphee:RewardLayout:1.0.6.2'
+    implementation 'com.github.bigdongdong:ChatView:1.2' //聊天气泡
+
+    implementation 'io.agora.rtc:full-sdk:2.9.2'//声望sdk
+
+    implementation 'org.greenrobot:greendao:3.2.2' // GreenDao本地数据库
+
+    implementation 'com.google.code.gson:gson:2.8.6'//Gson
+
+    implementation 'com.github.yyued:SVGAPlayer-Android:2.0.0'//SVGA
 
 
-    implementation  'com.scwang.smart:refresh-layout-kernel:2.0.0-alpha-1'      //核心必须依赖
-    implementation  'com.scwang.smart:refresh-header-classics:2.0.0-alpha-1'    //经典刷新头
-    implementation  'com.scwang.smart:refresh-header-falsify:2.0.0-alpha-1'     //虚拟刷新头
-    implementation  'com.scwang.smart:refresh-header-material:2.0.0-alpha-1'    //谷歌刷新头
-    implementation  'com.scwang.smart:refresh-footer-classics:2.0.0-alpha-1'    //经典加载
+    implementation 'com.squareup.retrofit2:retrofit:2.6.2'
+    implementation 'com.squareup.okhttp3:okhttp:3.12.1'
+    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava:2.0.2'//retrofit2网络请求
+
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'//Rxjava
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+
+    implementation 'com.scwang.smart:refresh-layout-kernel:2.0.0-alpha-1'      //核心必须依赖
+    implementation 'com.scwang.smart:refresh-header-classics:2.0.0-alpha-1'    //经典刷新头
+    implementation 'com.scwang.smart:refresh-header-falsify:2.0.0-alpha-1'     //虚拟刷新头
+    implementation 'com.scwang.smart:refresh-header-material:2.0.0-alpha-1'    //谷歌刷新头
+    implementation 'com.scwang.smart:refresh-footer-classics:2.0.0-alpha-1'    //经典加载
+
+
+    debugImplementation 'com.didichuxing.doraemonkit:doraemonkit:2.0.1'//DoraemonKit 线下测试
+    releaseImplementation 'com.didichuxing.doraemonkit:doraemonkit-no-op:2.0.2'
+
+    implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:5.5.8'//微信支付
+
+
+    implementation 'cn.yc:WebViewLib:1.2.0'//webview库
+
+    implementation 'com.yanzhenjie.recyclerview:support:1.3.2'//侧滑
+
+
+    //必须使用
+    implementation 'com.lzy.net:okgo:3.0.4' //okgo网络请求
+    implementation 'com.lzy.net:okrx2:2.0.2'//okga+RxJava
+    implementation 'com.lzy.net:okserver:2.0.5'//上传下载
+
+
+    // Litho
+    implementation 'com.facebook.litho:litho-core:0.32.0'
+    implementation 'com.facebook.litho:litho-widget:0.32.0'
+
+    annotationProcessor 'com.facebook.litho:litho-processor:0.32.0'
+
+    // SoLoader
+    implementation 'com.facebook.soloader:soloader:0.5.1'
+
+    // For integration with Fresco
+    implementation 'com.facebook.litho:litho-fresco:0.32.0'
+
+    // For testing
+    testImplementation 'com.facebook.litho:litho-testing:0.32.0'
+
 }
 
 greendao {

@@ -21,6 +21,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.ashokvarma.bottomnavigation.TextBadgeItem;
+import com.didichuxing.doraemonkit.DoraemonKit;
 
 import java.util.ArrayList;
 
@@ -213,5 +214,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
             ObjectAnimator.ofFloat(mIconView, "translationX", 2000, 0).start();
         }
     }
+
+
+
 
 }

@@ -1,5 +1,8 @@
-package com.example.myapplication.utils;
+package com.example.myapplication.entity;
 
+/**
+ * 排行榜实体类.
+ */
 public class Faxan {
 
     private String name;

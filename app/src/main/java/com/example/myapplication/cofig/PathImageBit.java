@@ -14,6 +14,10 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.ExecutionException;
 
+
+/**
+ * SVGA动画图片加载器.
+ */
 public class PathImageBit {
 
     public static Bitmap fetchBitmapByFilePath(Context context,String path) {
