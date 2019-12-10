@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">My Application</string>
-    <string name="private_app_id">5aa2ecd164904741b8fdcd5a85457575</string>
-    <string name="agora_access_token">0065aa2ecd164904741b8fdcd5a85457575IAArSHOoyDXjOfsVGA2HknW2sjt0tBw8Ym1ffIoNj4EBp2izADsAAAAAEAClpsGbLMbgXQEAAQAsxuBd</string>
-
-
+    <string name="app_name">App</string>
+    <string name="notifyTitle">提示</string>
+    <string name="notifyMsg">当前应用缺少必要权限。\n\n请点击\"设置\"-\"权限\"-打开所需权限。</string>
+    <string name="setting">设置</string>
+    <string name="cancel">取消</string>
 </resources>

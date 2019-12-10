@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".my_realname">
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/head"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_60"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView97"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_20"
+        android:text="温馨提示："
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include" />
+
+
+    <TextView
+        android:id="@+id/textView98"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:padding="@dimen/dp_15"
+        android:text="1、根据2010年8月1日实施的 《网络游戏管理暂行办法》，
+网络游戏用户需使用有效身份证件进行实名认证。为保证
+流畅游戏体验，享受健康游戏生活，请广大腾讯游戏的玩
+家尽快完成实名认证。"
+        android:textSize="@dimen/sp_20"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView97" />
+
+    <TextView
+        android:id="@+id/textView99"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp_15"
+        android:text="2、为保护未成年人身心健康，未满18岁的用户都将受到
+健康系统(目前覆盖手机游戏、部分热门电脑游戏)、防沉
+迷系统（目前覆盖部分电脑端游戏）的限制："
+        android:textSize="@dimen/sp_20"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView98" />
+
+    <TextView
+        android:id="@+id/textView100"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp_15"
+        android:text="健康系统（目前覆盖手机游戏、部分热门电脑游戏）：
+未满13周岁未成年用户：游戏帐号累计登录游戏时长达1个
+小时后，在对局结束后，将被强制下线，且当日不能再登
+录游戏。同时，在每日21:00-次日8:00时间段，将无法登
+录游戏。
+13周岁及以上未成年用户：游戏帐号累计登录游戏时长达
+2个小时后，在对局结束后，将被强制下线，且当日不能再
+登录游戏。"
+        android:textSize="@dimen/sp_20"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView99" />
+
+    <TextView
+        android:id="@+id/textView101"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp_15"
+        android:text="防沉迷系统（目前覆盖部分电脑端游戏）：
+在游戏过程中，系统会提示你的累计在线时间累计游戏时
+间如超过3小时，游戏内的收益（经验、金钱）减半。累计
+游戏时间如超过5小时 ，游戏内的收益直接为0。
+因游戏玩法各不相同，部分游戏内健康系统/防沉迷系统也
+会进行相应的调整，请以游戏内的实际规则为准。"
+        android:textSize="@dimen/sp_20"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView100" />
+
+
+    <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
+        android:id="@+id/but"
+        android:layout_width="@dimen/dp_300"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="64dp"
+        android:clickable="true"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="同意协议并开始认证"
+        android:textColor="@color/qmui_config_color_pure_black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView101"
+        app:qmui_backgroundColor="@color/qmui_config_color_gray_9"
+        app:qmui_borderWidth="0px"
+        app:qmui_radius="@dimen/dp_20" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

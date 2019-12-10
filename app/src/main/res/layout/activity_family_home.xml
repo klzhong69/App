@@ -1,0 +1,429 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".family_home">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    <RelativeLayout
+        android:id="@+id/largeLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/include"
+            layout="@layout/head"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_60"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <RelativeLayout
+            android:id="@+id/relative1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_50"
+            android:layout_below="@+id/include"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginEnd="0dp"
+            android:background="@color/qmui_config_color_white">
+
+            <TextView
+                android:id="@+id/textView39"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="@dimen/dp_15"
+                android:gravity="center_vertical"
+                android:text="家族名称" />
+
+            <TextView
+                android:id="@+id/textView40"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:layout_toStartOf="@+id/imageView39"
+                android:gravity="center_vertical"
+                android:text="【爱乐】AL粉丝团"
+                android:textColor="@color/backs"
+                android:textSize="@dimen/sp_14" />
+
+            <ImageView
+                android:id="@+id/imageView39"
+                android:layout_width="@dimen/dp_30"
+                android:layout_height="@dimen/dp_30"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="@dimen/dp_15"
+                android:layout_marginEnd="@dimen/dp_20"
+                android:layout_marginBottom="@dimen/dp_15"
+                app:srcCompat="@drawable/dk_arrow_right" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relative2"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_100"
+            android:layout_below="@+id/relative1"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/dp_10"
+            android:background="@color/qmui_config_color_white">
+
+
+            <TextView
+                android:id="@+id/textView41"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="@dimen/dp_15"
+                android:layout_marginTop="@dimen/dp_20"
+                android:text="家族口号" />
+
+            <TextView
+                android:id="@+id/textView42"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView41"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="@dimen/dp_15"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginEnd="@dimen/dp_20"
+                android:layout_toStartOf="@+id/imageView2"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="爱了粉丝团欢迎你，我们来自北京杭州，爱唱歌的一起哇"
+                android:textSize="@dimen/sp_14"/>
+
+            <com.qmuiteam.qmui.widget.QMUIRadiusImageView
+                android:id="@+id/imageView2"
+                android:layout_width="@dimen/dp_60"
+                android:layout_height="@dimen/dp_60"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="14dp"
+                android:layout_marginEnd="15dp"
+                android:src="@drawable/back2"
+                app:layout_constraintBottom_toTopOf="@+id/imageView3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:qmui_border_width="0dp"
+                app:qmui_corner_radius="@dimen/dp_50" />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/relative3"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_280"
+            android:layout_below="@+id/relative2"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="@dimen/dp_10">
+
+            <TextView
+                android:id="@+id/textView43"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="@dimen/dp_15"
+                android:layout_marginTop="@dimen/dp_10"
+                android:text="家族房间" />
+
+
+            <com.qmuiteam.qmui.widget.QMUIRadiusImageView
+                android:id="@+id/imageView17"
+                android:layout_width="@dimen/dp_160"
+                android:layout_height="@dimen/dp_210"
+                android:layout_below="@+id/textView43"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="@dimen/dp_20"
+                android:layout_marginTop="@dimen/dp_20"
+                android:src="@color/qmui_config_color_white"
+                app:qmui_border_width="0dp"
+                app:qmui_corner_radius="15dp" />
+
+            <com.qmuiteam.qmui.widget.QMUIRadiusImageView
+                android:id="@+id/imageView18"
+                android:layout_width="@dimen/dp_160"
+                android:layout_height="@dimen/dp_160"
+                android:layout_alignStart="@+id/imageView17"
+                android:layout_alignTop="@+id/imageView17"
+                android:layout_alignEnd="@+id/imageView17"
+                android:src="@drawable/back2"
+                app:qmui_border_width="0dp"
+                app:qmui_corner_radius="15dp" />
+
+            <ImageView
+                android:id="@+id/imageView42"
+                android:layout_width="@dimen/dp_30"
+                android:layout_height="@dimen/dp_30"
+                android:layout_below="@+id/imageView18"
+                android:layout_alignStart="@+id/imageView17"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_10"
+                app:srcCompat="@android:drawable/btn_star_big_on" />
+
+            <TextView
+                android:id="@+id/textView44"
+                android:layout_width="144dp"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/imageView42"
+                android:layout_alignEnd="@+id/imageView17"
+                android:layout_alignBottom="@+id/imageView42"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:layout_toEndOf="@+id/imageView42"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:singleLine="true"
+                android:text="冰封好迷人冠以"
+                android:textSize="@dimen/sp_16" />
+
+
+            <com.qmuiteam.qmui.widget.QMUIRadiusImageView
+                android:id="@+id/imageView19"
+                android:layout_width="@dimen/dp_160"
+                android:layout_height="@dimen/dp_210"
+                android:layout_alignTop="@+id/imageView17"
+                android:layout_alignBottom="@+id/imageView17"
+                android:layout_marginStart="@dimen/dp_20"
+                android:layout_toEndOf="@+id/imageView17"
+                android:src="@color/qmui_config_color_white"
+                app:qmui_border_width="0dp"
+                app:qmui_corner_radius="15dp" />
+
+            <com.qmuiteam.qmui.widget.QMUIRadiusImageView
+                android:id="@+id/imageView20"
+                android:layout_width="@dimen/dp_160"
+                android:layout_height="@dimen/dp_160"
+                android:layout_alignStart="@+id/imageView19"
+                android:layout_alignTop="@+id/imageView19"
+                android:layout_alignEnd="@+id/imageView19"
+                android:src="@drawable/back2"
+                app:qmui_border_width="0dp"
+                app:qmui_corner_radius="15dp" />
+
+            <ImageView
+                android:id="@+id/imageView43"
+                android:layout_width="@dimen/dp_30"
+                android:layout_height="@dimen/dp_30"
+                android:layout_below="@+id/imageView20"
+                android:layout_alignStart="@+id/imageView19"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_10"
+                app:srcCompat="@android:drawable/btn_star_big_on" />
+
+            <TextView
+                android:id="@+id/textView45"
+                android:layout_width="144dp"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/imageView43"
+                android:layout_alignEnd="@+id/imageView19"
+                android:layout_alignBottom="@+id/imageView43"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:layout_toEndOf="@+id/imageView43"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:singleLine="true"
+                android:text="冰封好迷人冠以"
+                android:textSize="@dimen/sp_16" />
+
+            <com.qmuiteam.qmui.widget.QMUIRadiusImageView
+                android:id="@+id/imageView21"
+                android:layout_width="@dimen/dp_160"
+                android:layout_height="@dimen/dp_210"
+                android:layout_alignTop="@+id/imageView19"
+                android:layout_alignBottom="@+id/imageView19"
+                android:layout_marginStart="@dimen/dp_20"
+                android:layout_toEndOf="@+id/imageView19"
+                android:src="@color/qmui_config_color_white"
+                app:qmui_border_width="0dp"
+                app:qmui_corner_radius="15dp" />
+
+            <com.qmuiteam.qmui.widget.QMUIRadiusImageView
+                android:id="@+id/imageView22"
+                android:layout_width="@dimen/dp_160"
+                android:layout_height="@dimen/dp_160"
+                android:layout_alignStart="@+id/imageView21"
+                android:layout_alignTop="@+id/imageView21"
+                android:layout_alignEnd="@+id/imageView21"
+                android:src="@drawable/back2"
+                app:qmui_border_width="0dp"
+                app:qmui_corner_radius="15dp" />
+
+            <ImageView
+                android:id="@+id/imageView44"
+                android:layout_width="@dimen/dp_30"
+                android:layout_height="@dimen/dp_30"
+                android:layout_below="@+id/imageView22"
+                android:layout_alignStart="@+id/imageView21"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_10"
+                app:srcCompat="@android:drawable/btn_star_big_on" />
+
+            <TextView
+                android:id="@+id/textView46"
+                android:layout_width="144dp"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/imageView44"
+                android:layout_alignEnd="@+id/imageView21"
+                android:layout_alignBottom="@+id/imageView44"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:layout_toEndOf="@+id/imageView44"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:singleLine="true"
+                android:text="冰封好迷人冠以"
+                android:textSize="@dimen/sp_16" />
+
+            <ImageView
+                android:id="@+id/imageView45"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/imageView17"
+                android:layout_alignTop="@+id/imageView17"
+                android:layout_marginStart="@dimen/dp_55"
+                android:layout_marginTop="@dimen/dp_60"
+                app:srcCompat="@drawable/qmui_icon_tip_new" />
+
+            <ImageView
+                android:id="@+id/imageView46"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/imageView19"
+                android:layout_alignTop="@+id/imageView19"
+                android:layout_marginStart="@dimen/dp_55"
+                android:layout_marginTop="@dimen/dp_60"
+                app:srcCompat="@drawable/qmui_icon_tip_new" />
+
+            <ImageView
+                android:id="@+id/imageView47"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/imageView21"
+                android:layout_alignTop="@+id/imageView21"
+                android:layout_marginStart="@dimen/dp_55"
+                android:layout_marginTop="@dimen/dp_60"
+                app:srcCompat="@drawable/qmui_icon_tip_new" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relative4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/relative3"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="@dimen/dp_10">
+
+            <TextView
+                android:id="@+id/textView47"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="@dimen/dp_15"
+                android:layout_marginTop="@dimen/dp_10"
+                android:text="家族成员" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView47"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="@dimen/dp_10" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relative5"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_80"
+            android:layout_below="@+id/relative4"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="@dimen/dp_10"
+            android:background="@color/qmui_config_color_white">
+
+            <ImageView
+                android:id="@+id/imageView48"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="@dimen/dp_15"
+                android:layout_marginTop="@dimen/dp_15"
+                app:srcCompat="@drawable/dk_cpu" />
+
+            <TextView
+                android:id="@+id/textView49"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/imageView48"
+                android:layout_alignBottom="@+id/imageView48"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_toEndOf="@+id/imageView48"
+                android:gravity="center_vertical"
+                android:text="管理家族" />
+
+            <ImageView
+                android:id="@+id/imageView49"
+                android:layout_width="@dimen/dp_30"
+                android:layout_height="@dimen/dp_30"
+                android:layout_alignTop="@+id/imageView48"
+                android:layout_alignBottom="@+id/imageView48"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginEnd="@dimen/dp_20"
+                android:layout_marginBottom="@dimen/dp_10"
+                app:srcCompat="@drawable/dk_arrow_right" />
+
+            <TextView
+                android:id="@+id/textView50"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/imageView49"
+                android:layout_alignBottom="@+id/imageView49"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:layout_toStartOf="@+id/imageView49"
+                android:gravity="center_vertical"
+                android:text="扫一扫" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_10"
+            android:layout_below="@+id/relative5">
+
+        </RelativeLayout>
+    </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.myapplication">
+    package="com.example.app">
     <!-- if you want to load images from the internet -->
     <uses-permission android:name="android.permission.INTERNET" /> <!-- if you want to load images from a file OR from the internet -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -14,23 +14,28 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
-        android:name=".entity.MyApp"
+        android:name=".Entity.MyApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SVGA"></activity>
-        <activity android:name=".search" />
-        <activity android:name=".web" />
-        <activity android:name=".alipay" />
-        <activity android:name=".wechat" />
-        <activity android:name=".chatroom" />
-        <activity android:name=".switchUser" />
-        <activity android:name=".chat" />
-        <activity android:name=".Main3Activity" />
-        <activity android:name=".Main2Activity" />
+        <activity android:name=".my_favorite"></activity>
+        <activity android:name=".my_realname" />
+        <activity android:name=".my_package" />
+        <activity android:name=".my_footprint" />
+        <activity android:name=".my_playlist" />
+        <activity android:name=".my_music" />
+        <activity android:name=".my_gold" />
+        <activity android:name=".my_wallet" />
+        <activity android:name=".my_grade" />
+        <activity android:name=".application" />
+        <activity android:name=".friends_card" />
+        <activity android:name=".family_home" />
+        <activity android:name=".family_search" />
+        <activity android:name=".modify_information" />
+        <activity android:name=".homepage" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

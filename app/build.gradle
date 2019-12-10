@@ -5,8 +5,8 @@ android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
     defaultConfig {
-        applicationId "com.example.myapplication"
-        minSdkVersion 24
+        applicationId "com.example.app"
+        minSdkVersion 23
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -93,21 +93,6 @@ dependencies {
     implementation 'com.lzy.net:okrx2:2.0.2'//okga+RxJava
     implementation 'com.lzy.net:okserver:2.0.5'//上传下载
 
-
-    // Litho
-    implementation 'com.facebook.litho:litho-core:0.32.0'
-    implementation 'com.facebook.litho:litho-widget:0.32.0'
-
-    annotationProcessor 'com.facebook.litho:litho-processor:0.32.0'
-
-    // SoLoader
-    implementation 'com.facebook.soloader:soloader:0.5.1'
-
-    // For integration with Fresco
-    implementation 'com.facebook.litho:litho-fresco:0.32.0'
-
-    // For testing
-    testImplementation 'com.facebook.litho:litho-testing:0.32.0'
 
 }
 
