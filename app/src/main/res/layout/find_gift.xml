@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_130"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_120"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_5"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:background="@drawable/viewback">
+
+        <com.qmuiteam.qmui.widget.QMUIRadiusImageView
+            android:id="@+id/imageView18"
+            android:layout_width="@dimen/dp_70"
+            android:layout_height="@dimen/dp_70"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="11dp"
+            android:src="@drawable/back2"
+            app:qmui_border_width="0dp"
+            app:qmui_corner_radius="@dimen/dp_50" />
+
+        <ImageView
+            android:id="@+id/imageView31"
+            android:layout_width="@dimen/dp_20"
+            android:layout_height="@dimen/dp_20"
+            android:layout_alignEnd="@+id/imageView18"
+            android:layout_alignBottom="@+id/imageView18"
+            app:srcCompat="@drawable/dk_perform_data_background" />
+
+
+        <com.qmuiteam.qmui.widget.QMUIRadiusImageView
+            android:id="@+id/imageView19"
+            android:layout_width="@dimen/dp_70"
+            android:layout_height="@dimen/dp_70"
+            android:layout_alignTop="@+id/imageView18"
+            android:layout_alignBottom="@+id/imageView18"
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_toEndOf="@+id/textView8"
+            android:src="@drawable/back2"
+            app:qmui_border_width="0dp"
+            app:qmui_corner_radius="@dimen/dp_50" />
+
+        <ImageView
+            android:id="@+id/imageView32"
+            android:layout_width="@dimen/dp_20"
+            android:layout_height="@dimen/dp_20"
+            android:layout_alignEnd="@+id/imageView19"
+            android:layout_alignBottom="@+id/imageView19"
+            app:srcCompat="@drawable/dk_perform_data_background" />
+
+        <TextView
+            android:id="@+id/textView66"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/textView114"
+            android:layout_alignStart="@+id/textView114"
+            android:layout_alignEnd="@+id/textView114"
+            android:layout_marginBottom="@dimen/dp_5"
+            android:text="围观"
+            android:gravity="center"
+            android:textSize="@dimen/sp_20" />
+
+
+
+        <TextView
+            android:id="@+id/textView114"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="@dimen/dp_20"
+            android:layout_marginBottom="@dimen/dp_40"
+            android:gravity="center_vertical"
+            android:text="ID2563487" />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/imageView18"
+            android:layout_alignBottom="@+id/imageView18"
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_toEndOf="@+id/imageView18"
+            android:gravity="center"
+            android:text="赠送" />
+
+        <TextView
+            android:id="@+id/textView15"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/imageView19"
+            android:layout_alignBottom="@+id/imageView19"
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_toEndOf="@+id/imageView19"
+            android:gravity="center"
+            android:text="x50"
+            android:textSize="@dimen/sp_24" />
+
+        <ImageView
+            android:id="@+id/imageView66"
+            android:layout_width="@dimen/dp_40"
+            android:layout_height="@dimen/dp_40"
+            android:layout_alignTop="@+id/textView15"
+            android:layout_alignBottom="@+id/textView15"
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_toEndOf="@+id/textView15"
+            app:srcCompat="@drawable/back" />
+
+        <TextView
+            android:id="@+id/textView17"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imageView18"
+            android:layout_alignStart="@+id/imageView18"
+            android:layout_alignEnd="@+id/imageView18"
+            android:gravity="center"
+            android:text="苗苗"
+            android:textSize="@dimen/sp_18"/>
+
+        <TextView
+            android:id="@+id/textView18"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imageView19"
+            android:layout_alignStart="@+id/imageView19"
+            android:layout_alignEnd="@+id/imageView19"
+            android:gravity="center"
+            android:text="苗苗"
+            android:textSize="@dimen/sp_18" />
+    </RelativeLayout>
+
+</RelativeLayout>

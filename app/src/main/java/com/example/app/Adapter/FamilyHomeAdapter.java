@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.app.Entity.Familyhome;
-import com.example.app.Entity.Familyhome;
 import com.example.app.R;
 
 import java.util.List;
@@ -33,7 +32,7 @@ public class FamilyHomeAdapter extends RecyclerView.Adapter {
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.familyhome, parent, false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.family_home, parent, false);
         return new FamilyHomeAdapter.DemoViewHolder(view);
     }
 

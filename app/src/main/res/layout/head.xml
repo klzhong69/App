@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/dp_60"
+    android:layout_height="@dimen/dp_80"
     android:background="@color/qmui_config_color_white">
 
     <ImageView
@@ -28,7 +28,7 @@
         android:layout_toEndOf="@+id/imageView40"
         android:gravity="center"
         android:text="主页"
-        android:textSize="@dimen/sp_22" />
+        android:textSize="@dimen/sp_24" />
 
     <TextView
         android:id="@+id/textView"

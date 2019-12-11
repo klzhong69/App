@@ -14,9 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.app.Adapter.FamilyViewAdapter;
-import com.example.app.Adapter.ListViewAdapter;
 import com.example.app.Entity.Familysea;
-import com.example.app.Entity.Faxan;
 
 import java.util.ArrayList;
 import java.util.List;

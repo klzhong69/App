@@ -1,11 +1,13 @@
 package com.example.app;
 
-import android.graphics.Color;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -13,38 +15,21 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.app.Adapter.ListViewAdapter;
-import com.example.app.Entity.Faxan;
-import com.scwang.smart.refresh.footer.ClassicsFooter;
+import com.example.app.Adapter.ListLeaderAdapter;
+import com.example.app.Entity.Listleader;
+import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.scwang.smart.refresh.header.MaterialHeader;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
-import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
-import com.yanzhenjie.recyclerview.OnItemMenuClickListener;
-import com.yanzhenjie.recyclerview.SwipeMenu;
-import com.yanzhenjie.recyclerview.SwipeMenuBridge;
-import com.yanzhenjie.recyclerview.SwipeMenuCreator;
-import com.yanzhenjie.recyclerview.SwipeMenuItem;
-import com.yanzhenjie.recyclerview.SwipeRecyclerView;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
-import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class List extends Fragment {
     Unbinder unbinder;
@@ -57,114 +42,141 @@ public class List extends Fragment {
     private static final String REFRESH_HEADER_FAILED = "刷新失败";
     private static final String REFRESH_HEADER_SECONDARY = "释放进入二楼";
     private static final String REFRESH_HEADER_LASTTIME = "上次更新 M-d HH:mm";
+    @BindView(R.id.imageView86)
+    ImageView imageView86;
+    @BindView(R.id.imageView28)
+    QMUIRadiusImageView imageView28;
+    @BindView(R.id.imageView87)
+    QMUIRadiusImageView imageView87;
+    @BindView(R.id.imageView88)
+    QMUIRadiusImageView imageView88;
+    @BindView(R.id.imageView89)
+    ImageView imageView89;
+    @BindView(R.id.imageView90)
+    ImageView imageView90;
+    @BindView(R.id.imageView91)
+    ImageView imageView91;
+    @BindView(R.id.textView102)
+    TextView textView102;
+    @BindView(R.id.imageView92)
+    ImageView imageView92;
+    @BindView(R.id.textView103)
+    TextView textView103;
+    @BindView(R.id.textView104)
+    TextView textView104;
+    @BindView(R.id.imageView93)
+    ImageView imageView93;
+    @BindView(R.id.textView105)
+    TextView textView105;
+    @BindView(R.id.textView106)
+    TextView textView106;
+    @BindView(R.id.imageView94)
+    ImageView imageView94;
+    @BindView(R.id.textView107)
+    TextView textView107;
+    @BindView(R.id.textView108)
+    TextView textView108;
+    @BindView(R.id.textView109)
+    TextView textView109;
+    @BindView(R.id.imageView18)
+    QMUIRadiusImageView imageView18;
+    @BindView(R.id.imageView19)
+    QMUIRadiusImageView imageView19;
+    @BindView(R.id.largeLabel2)
+    RelativeLayout largeLabel2;
+    @BindView(R.id.textView110)
+    TextView textView110;
+    @BindView(R.id.textView111)
+    TextView textView111;
+    @BindView(R.id.textView112)
+    TextView textView112;
+    @BindView(R.id.relative8)
+    RelativeLayout relative8;
+    @BindView(R.id.textView67)
+    TextView textView67;
+    @BindView(R.id.imageView21)
+    QMUIRadiusImageView imageView21;
+    @BindView(R.id.textView66)
+    TextView textView66;
+    @BindView(R.id.textView68)
+    TextView textView68;
+    @BindView(R.id.imageView66)
+    ImageView imageView66;
+    @BindView(R.id.textView113)
+    TextView textView113;
+    @BindView(R.id.textView114)
+    TextView textView114;
+    @BindView(R.id.recycler13)
+    RecyclerView recycler13;
+    @BindView(R.id.relative10)
+    RelativeLayout relative10;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
-    @BindView(R.id.largeLabel)
-    LinearLayout largeLabel;
 
-    private Disposable mDisposable;
-    private LinearLayoutManager mLinearLayoutManager;
-    private ListViewAdapter mAdapter;
-    private java.util.List<Faxan> mArrayList;
+    private ArrayList<Listleader> mArrayList;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.list, container, false);
+        View view = inflater.inflate(R.layout.list_leaderboard, container, false);
         unbinder = ButterKnife.bind(this, view);
 
         refreshLayout.setRefreshHeader(new MaterialHeader(getContext()).setScrollableWhenRefreshing(true));
-
-        refreshLayout.setRefreshFooter(new ClassicsFooter(getContext()));
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshlayout) {
                 //refreshlayout.autoRefresh();
-                refreshlayout.finishRefresh();
-            }
-        });
-        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
-            @Override
-            public void onLoadMore(@NonNull RefreshLayout refreshlayout) {
-                refreshlayout.autoLoadMore();
-                //创建Retrofit对象
-                Observable.create(new ObservableOnSubscribe<Faxan>() {
+                refreshlayout.finishRefresh(2000);
+
+             /*   //创建Retrofit对象
+                Observable.create(new ObservableOnSubscribe<Listleader>() {
                     @Override
-                    public void subscribe(ObservableEmitter<Faxan> emitter) throws Exception {
-                        for (int i = mArrayList.size(); i < mArrayList.size()+10; i++) {
-                            Faxan i1 = new Faxan("芭比Uki宝贝祝大叔生日快乐"+i, "[主持]芭比uu3号小可", "热门", "288", "635", "https://momeak.oss-cn-shenzhen.aliyuncs.com/dear1.png");
-                            emitter.onNext(i1);
-                        }
+                    public void subscribe(ObservableEmitter<Listleader> emitter) throws Exception {
+
 
                     }
                 }).observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Consumer<Faxan>() {
+                        .subscribe(new Consumer<Listleader>() {
                             @Override
-                            public void accept(Faxan entity) throws Exception {
+                            public void accept(Listleader entity) throws Exception {
                                 //回调后在UI界面上展示出来
                                 mAdapter.addData(mArrayList.size(), entity);
                                 refreshlayout.finishLoadMore();
                             }
-                        });
-
+                        });*/
             }
         });
 
+        initData();
         //初始化数据
         init();
 
-        SwipeRecyclerView listMode = view.findViewById(R.id.listMode);
-        //创建适配器，将数据传递给适配器
-        mAdapter = new ListViewAdapter(getContext(), mArrayList);
+        return view;
+    }
 
-        listMode.setItemViewSwipeEnabled(false);// 开启滑动删除。默认关闭。
-        listMode.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-
-        // 创建菜单：
-        SwipeMenuCreator mSwipeMenuCreator = new SwipeMenuCreator() {
-            @Override
-            public void onCreateMenu(SwipeMenu leftMenu, SwipeMenu rightMenu, int viewType) {
-
-                // 在Item右侧添加一个菜单。
-                SwipeMenuItem deleteItem = new SwipeMenuItem(getContext());
-                deleteItem.setText("删除")
-                        .setBackgroundColor(getResources().getColor(R.color.red_normal))
-                        .setTextColor(Color.WHITE) // 文字颜色。
-                        .setTextSize(15) // 文字大小。
-                        .setWidth(140)
-                        .setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
-
-                rightMenu.addMenuItem(deleteItem);
-
-                // 注意：哪边不想要菜单，那么不要添加即可。
-            }
-        };
-        // 设置监听器。
-        listMode.setSwipeMenuCreator(mSwipeMenuCreator);
-
-        OnItemMenuClickListener mMenuItemClickListener = new OnItemMenuClickListener() {
-            @Override
-            public void onItemClick(SwipeMenuBridge menuBridge, int adapterPosition) {
-                menuBridge.closeMenu();
-                mAdapter.removeData(adapterPosition);
-            }
-        };
-
-        // 菜单点击监听。
-        listMode.setOnItemMenuClickListener(mMenuItemClickListener);
-
-
+    private void init() {
+        //适配器
+        ListLeaderAdapter mAdapter = new ListLeaderAdapter(getContext(), mArrayList);
         //设置适配器adapter
-        listMode.setAdapter(mAdapter);
+        recycler13.setAdapter(mAdapter);
 
-        mLinearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-        listMode.setLayoutManager(mLinearLayoutManager);
-        listMode.setItemAnimator(new DefaultItemAnimator());
+        /*LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        mListView.setLayoutManager(mLinearLayoutManager);*/
 
-        mAdapter.setOnItemClickListener(new ListViewAdapter.OnItemClickListener() {
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext()) {
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        };
+        recycler13.setLayoutManager(layoutManager);
+        recycler13.setItemAnimator(new DefaultItemAnimator());
+
+        mAdapter.setOnItemClickListener(new ListLeaderAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Toast.makeText(getContext(), position + " click", Toast.LENGTH_SHORT).show();
+                Intent intent2 = new Intent(getContext(), chat.class);
+                startActivity(intent2);
             }
 
             @Override
@@ -174,18 +186,14 @@ public class List extends Fragment {
             }
         });
 
-
         /**
          * 既然是动画，就会有时间，我们把动画执行时间变大一点来看一看效果
          */
         DefaultItemAnimator defaultItemAnimator = new DefaultItemAnimator();
         defaultItemAnimator.setAddDuration(200);
         defaultItemAnimator.setRemoveDuration(200);
-        listMode.setItemAnimator(defaultItemAnimator);
-        return view;
+        recycler13.setItemAnimator(defaultItemAnimator);
     }
-
-
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -194,10 +202,11 @@ public class List extends Fragment {
 
     }
 
-    private void init() {
-        mArrayList = new ArrayList<Faxan>();
+    private void initData() {
+        mArrayList = new ArrayList<Listleader>();
         for (int i = 0; i < 10; i++) {
-            Faxan i1 = new Faxan("芭比Uki宝贝祝大叔生日快乐" + i, "[主持]芭比uu3号小可", "热门", "288", "635", "https://momeak.oss-cn-shenzhen.aliyuncs.com/dear1.png");
+            int sum = i + 4;
+            Listleader i1 = new Listleader(sum + "", "https://momeak.oss-cn-shenzhen.aliyuncs.com/h5.jpg", "胡楠", "", "财富值", "18630");
             mArrayList.add(i1);
         }
     }

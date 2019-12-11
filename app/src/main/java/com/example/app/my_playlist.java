@@ -38,6 +38,7 @@ public class my_playlist extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_playlist);
         ButterKnife.bind(this);
+
         initData();
         //适配器
         PlaylistAdapter mAdapter = new PlaylistAdapter(this, mArrayList);

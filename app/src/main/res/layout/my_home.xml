@@ -16,7 +16,7 @@
         android:layout_marginTop="0dp"
         android:layout_marginEnd="0dp"
         android:scaleType="centerCrop"
-        app:srcCompat="@drawable/back" />
+        app:srcCompat="@drawable/back12" />
 
     <TextView
         android:id="@+id/textView74"
@@ -51,7 +51,7 @@
         android:layout_marginStart="25dp"
         android:layout_marginTop="@dimen/dp_80"
         android:layout_marginBottom="@dimen/dp_80"
-        android:src="@drawable/back2"
+        android:src="@drawable/h1"
         app:layout_constraintEnd_toEndOf="parent"
         app:qmui_border_width="0dp"
         app:qmui_corner_radius="@dimen/dp_50" />
@@ -351,7 +351,7 @@
         android:layout_alignTop="@+id/imageView40"
         android:layout_marginStart="@dimen/dp_80"
         android:layout_marginTop="@dimen/dp_20"
-        app:srcCompat="@drawable/dk_perform_data_background" />
+        app:srcCompat="@drawable/room" />
 
     <TextView
         android:id="@+id/textView84"
@@ -371,7 +371,7 @@
         android:layout_alignTop="@+id/imageView73"
         android:layout_marginStart="@dimen/dp_80"
         android:layout_toEndOf="@+id/imageView72"
-        app:srcCompat="@drawable/dk_perform_data_background" />
+        app:srcCompat="@drawable/people" />
 
     <TextView
         android:id="@+id/textView85"

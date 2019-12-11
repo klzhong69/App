@@ -26,7 +26,7 @@
         android:layout_marginStart="@dimen/dp_20"
         android:layout_marginEnd="@dimen/dp_20"
         android:layout_toEndOf="@+id/imageView37"
-        android:background="#E9E9E9"
+        android:background="@drawable/rounded"
         android:queryBackground="@null"
         android:submitBackground="@null">
 

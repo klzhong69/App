@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:id="@+id/rect_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_60"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:background="@color/qmui_config_color_white">
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:gravity="center"
+            android:text="消息"
+            android:textSize="@dimen/sp_22" />
+
+        <ImageView
+            android:id="@+id/imageView78"
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="@dimen/dp_20"
+            app:srcCompat="@drawable/back" />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/rect_views"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_100"
+        android:layout_below="@+id/rect_view"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        android:background="@color/qmui_config_color_white">
+
+        <com.qmuiteam.qmui.widget.QMUIRadiusImageView
+            android:id="@+id/imageView18"
+            android:layout_width="@dimen/dp_60"
+            android:layout_height="@dimen/dp_60"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_20"
+            android:src="@drawable/back2"
+            app:qmui_border_width="0dp"
+            app:qmui_corner_radius="@dimen/dp_50" />
+
+        <TextView
+            android:id="@+id/textView66"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/imageView18"
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_5"
+            android:layout_toEndOf="@+id/imageView18"
+            android:text="Ema90"
+            android:textSize="@dimen/sp_20" />
+
+        <TextView
+            android:id="@+id/textView67"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView66"
+            android:layout_alignStart="@+id/textView66"
+            android:layout_alignBottom="@+id/imageView18"
+            android:gravity="center_vertical"
+            android:text="hi伙伴，明天一起直播吗"
+            android:textSize="@dimen/sp_14" />
+
+        <ImageView
+            android:id="@+id/imageView67"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_20"
+            android:layout_alignStart="@+id/textView68"
+            android:layout_alignTop="@+id/textView66"
+            android:layout_alignEnd="@+id/textView68"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginEnd="@dimen/dp_10"
+            app:srcCompat="@drawable/back2" />
+
+        <TextView
+            android:id="@+id/textView68"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/textView67"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/dp_20"
+            android:gravity="center_vertical"
+            android:text="今天15:20"
+            android:textSize="@dimen/sp_14" />
+
+        <TextView
+            android:id="@+id/textView96"
+            android:layout_width="@dimen/dp_25"
+            android:layout_height="@dimen/dp_25"
+            android:layout_alignStart="@+id/imageView18"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="@dimen/dp_40"
+            android:layout_marginTop="@dimen/dp_10"
+            android:background="@drawable/subscript"
+            android:gravity="center"
+            android:text="9"
+            android:textStyle="bold"
+            android:textColor="@color/qmui_config_color_white"
+            android:textSize="@dimen/sp_16"/>
+
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rect_views"
+        android:layout_marginTop="@dimen/dp_10" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler11"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/recycler10"
+        android:layout_marginTop="@dimen/dp_10" />
+</RelativeLayout>

@@ -29,7 +29,6 @@ import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.ashokvarma.bottomnavigation.TextBadgeItem;
 
-import java.io.File;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -44,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
     NestedScrollView layout1;
     private ArrayList<Fragment> fragments;
     private Home home;
+    private Find find;
     private List list;
     private Messages messages;
     private My my;
@@ -113,6 +113,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
 
         bottomNavigationBar
                 .addItem(new BottomNavigationItem(R.drawable.back, "首页").setActiveColorResource(R.color.colorAccent))
+                .addItem(new BottomNavigationItem(R.drawable.back, "发现").setActiveColorResource(R.color.colorAccent))
                 .addItem(new BottomNavigationItem(R.drawable.back, "排名榜").setActiveColorResource(R.color.colorAccent))
                 .addItem(new BottomNavigationItem(R.drawable.back, "消息").setActiveColorResource(R.color.colorAccent).setBadgeItem(mBadgeItem))
                 .addItem(new BottomNavigationItem(R.drawable.back, "我的").setActiveColorResource(R.color.colorAccent))
@@ -174,13 +175,21 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
                 break;
             case 1:
 
+                if (find == null) {
+                    find = Find.newInstance();
+                }
+                transaction.replace(R.id.layout1, find);
+                setBadgeNum(num);
+                break;
+            case 2:
+
                 if (list == null) {
                     list = List.newInstance();
                 }
                 transaction.replace(R.id.layout1, list);
                 setBadgeNum(num);
                 break;
-            case 2:
+            case 3:
 
                 if (messages == null) {
                     messages = Messages.newInstance();
@@ -189,7 +198,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
                 num = 0;
                 setBadgeNum(num);
                 break;
-            case 3:
+            case 4:
 
                 if (my == null) {
                     my = My.newInstance();

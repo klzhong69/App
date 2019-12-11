@@ -30,7 +30,7 @@ public class GridViewAdapter extends RecyclerView.Adapter {
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.homepage, parent, false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.my_homepage, parent, false);
         return new GridViewAdapter.DemoViewHolder(view);
     }
 
