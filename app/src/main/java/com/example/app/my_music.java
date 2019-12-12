@@ -11,9 +11,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.app.Adapter.FamilyViewAdapter;
 import com.example.app.Adapter.MusicViewAdapter;
-import com.example.app.Entity.Familysea;
 import com.example.app.Entity.Mymusic;
 
 import java.util.ArrayList;
@@ -21,17 +19,19 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class my_music extends AppCompatActivity {
 
-    @BindView(R.id.imageView40)
-    ImageView imageView40;
-    @BindView(R.id.textView6)
-    TextView textView6;
-    @BindView(R.id.textView)
-    TextView textView;
+
     @BindView(R.id.recycler5)
     RecyclerView recycler5;
+    @BindView(R.id.fold)
+    ImageView fold;
+    @BindView(R.id.title)
+    TextView title;
+    @BindView(R.id.subtitle)
+    TextView subtitle;
     private List<Mymusic> mArrayList;
 
     @Override
@@ -82,11 +82,26 @@ public class my_music extends AppCompatActivity {
 
     private void initData() {
         mArrayList = new ArrayList<Mymusic>();
-        for(int i=0;i<6;i++){
-            Mymusic i1 = new Mymusic("https://momeak.oss-cn-shenzhen.aliyuncs.com/dear1.png", "星坠-天空的幻想-林晓夜","03.00", "0");
+        for (int i = 0; i < 6; i++) {
+            Mymusic i1 = new Mymusic("https://momeak.oss-cn-shenzhen.aliyuncs.com/dear1.png", "星坠-天空的幻想-林晓夜", "03.00", "0");
             mArrayList.add(i1);
         }
 
 
+    }
+
+    @OnClick({R.id.fold, R.id.title, R.id.subtitle})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.fold:
+                this.finish();
+                break;
+            case R.id.title:
+                title.setText("我的音乐");
+                break;
+            case R.id.subtitle:
+                subtitle.setText("");
+                break;
+        }
     }
 }

@@ -75,6 +75,9 @@ public class Find extends Fragment {
         mAdapter.setOnItemClickListener(new FindListAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
+                Intent intent = new Intent(getContext(), chatroom_chat.class);
+                startActivity(intent);
+
             }
 
             @Override

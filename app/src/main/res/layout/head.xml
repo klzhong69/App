@@ -7,7 +7,7 @@
     android:background="@color/qmui_config_color_white">
 
     <ImageView
-        android:id="@+id/imageView40"
+        android:id="@+id/fold"
         android:layout_width="@dimen/dp_30"
         android:layout_height="@dimen/dp_30"
         android:layout_alignParentStart="true"
@@ -19,19 +19,19 @@
         app:srcCompat="@drawable/flot" />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentBottom="true"
-        android:layout_toStartOf="@+id/textView"
-        android:layout_toEndOf="@+id/imageView40"
+        android:layout_toStartOf="@+id/subtitle"
+        android:layout_toEndOf="@+id/fold"
         android:gravity="center"
         android:text="主页"
         android:textSize="@dimen/sp_24" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/subtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"

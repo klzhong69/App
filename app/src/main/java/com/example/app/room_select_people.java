@@ -6,14 +6,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
+import androidx.recyclerview.widget.RecyclerView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class my_realname extends AppCompatActivity {
+public class room_select_people extends AppCompatActivity {
 
     @BindView(R.id.fold)
     ImageView fold;
@@ -21,23 +20,13 @@ public class my_realname extends AppCompatActivity {
     TextView title;
     @BindView(R.id.subtitle)
     TextView subtitle;
-    @BindView(R.id.textView97)
-    TextView textView97;
-    @BindView(R.id.textView98)
-    TextView textView98;
-    @BindView(R.id.textView99)
-    TextView textView99;
-    @BindView(R.id.textView100)
-    TextView textView100;
-    @BindView(R.id.textView101)
-    TextView textView101;
-    @BindView(R.id.but)
-    QMUIRoundButton but;
+    @BindView(R.id.recycler16)
+    RecyclerView recycler16;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_realname);
+        setContentView(R.layout.activity_room_select_people);
         ButterKnife.bind(this);
     }
 
@@ -48,7 +37,7 @@ public class my_realname extends AppCompatActivity {
                 this.finish();
                 break;
             case R.id.title:
-                title.setText("实名认证");
+                title.setText("选择成员");
                 break;
             case R.id.subtitle:
                 subtitle.setText("");

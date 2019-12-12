@@ -1,5 +1,6 @@
 package com.example.app;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -16,6 +17,8 @@ import com.example.app.Adapter.FriendsAdapter;
 import com.example.app.Adapter.MessageAdapter;
 import com.example.app.Entity.Friends;
 import com.example.app.Entity.Message;
+import com.example.app.Model.ListModel;
+import com.example.app.Model.MessFriendsModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,58 +47,11 @@ public class mess_friends extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mess_friends);
         ButterKnife.bind(this);
-        initData();
-
-        init();
-
-    }
-
-    private void init() {
-        //适配器
-        FriendsAdapter mAdapter = new FriendsAdapter(this, mArrayList);
-        //设置适配器adapter
-        recycler12.setAdapter(mAdapter);
-
-        /*LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-        mListView.setLayoutManager(mLinearLayoutManager);*/
-
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this) {
-            @Override
-            public boolean canScrollVertically() {
-                return false;
-            }
-        };
-        recycler12.setLayoutManager(layoutManager);
-        recycler12.setItemAnimator(new DefaultItemAnimator());
-
-        mAdapter.setOnItemClickListener(new FriendsAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                Toast.makeText(mess_friends.this, position + " click", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onItemLongClick(View view, int position) {
-
-                Toast.makeText(mess_friends.this, position + " Long click", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        /**
-         * 既然是动画，就会有时间，我们把动画执行时间变大一点来看一看效果
-         */
-        DefaultItemAnimator defaultItemAnimator = new DefaultItemAnimator();
-        defaultItemAnimator.setAddDuration(200);
-        defaultItemAnimator.setRemoveDuration(200);
-        recycler12.setItemAnimator(defaultItemAnimator);
-    }
-
-    private void initData() {
-        mArrayList = new ArrayList<Friends>();
-        for (int i = 0; i < 4; i++) {
-            Friends i1 = new Friends("Ema90", "hi伙伴，明天一起直播吗",  "https://momeak.oss-cn-shenzhen.aliyuncs.com/dear1.png", "");
-            mArrayList.add(i1);
-        }
+        Context context = this;
+        MessFriendsModel.initData();
+        MessFriendsModel.initrecycler(context,recycler12);
 
     }
+
+
 }

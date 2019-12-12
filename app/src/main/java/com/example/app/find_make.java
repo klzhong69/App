@@ -163,16 +163,23 @@ public class find_make extends AppCompatActivity {
 
     }
 
-    @OnClick({R.id.textView2, R.id.textView6, R.id.but})
+    @OnClick({R.id.imageView40,R.id.textView2, R.id.textView6, R.id.but})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.imageView40:
+                this.finish();
+                break;
             case R.id.textView2:
                 initData();
                 init();
+                textView2.setTextSize(R.dimen.sp_24);
+                textView6.setTextSize(R.dimen.sp_20);
                 break;
             case R.id.textView6:
                 initDatas();
                 inits();
+                textView2.setTextSize(R.dimen.sp_20);
+                textView6.setTextSize(R.dimen.sp_24);
                 break;
             case R.id.but:
                 break;

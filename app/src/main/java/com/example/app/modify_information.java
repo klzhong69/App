@@ -2,6 +2,9 @@ package com.example.app;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,17 +15,44 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.app.Adapter.GridViewAdapter;
 import com.example.app.Adapter.ModifyViewAdapter;
 import com.example.app.Entity.Modify;
-import com.example.app.Entity.Page;
+import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class modify_information extends AppCompatActivity {
 
     @BindView(R.id.recycler2)
     RecyclerView recycler2;
+    @BindView(R.id.fold)
+    ImageView fold;
+    @BindView(R.id.title)
+    TextView title;
+    @BindView(R.id.subtitle)
+    TextView subtitle;
+    @BindView(R.id.textView33)
+    TextView textView33;
+    @BindView(R.id.imageView2)
+    QMUIRadiusImageView imageView2;
+    @BindView(R.id.relativeLayout6)
+    RelativeLayout relativeLayout6;
+    @BindView(R.id.textView34)
+    TextView textView34;
+    @BindView(R.id.textView35)
+    TextView textView35;
+    @BindView(R.id.relativeLayout7)
+    RelativeLayout relativeLayout7;
+    @BindView(R.id.textView36)
+    TextView textView36;
+    @BindView(R.id.textView37)
+    TextView textView37;
+    @BindView(R.id.relativeLayout8)
+    RelativeLayout relativeLayout8;
+    @BindView(R.id.textView38)
+    TextView textView38;
     private ArrayList<Modify> mData;
     private ModifyViewAdapter mAdapters;
     private GridLayoutManager mLayoutManager;
@@ -50,10 +80,10 @@ public class modify_information extends AppCompatActivity {
         mAdapters.setOnItemClickListener(new GridViewAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                int del = mData.size()-1;
-                if(position == del){
+                int del = mData.size() - 1;
+                if (position == del) {
                     Toast.makeText(modify_information.this, "添加图片", Toast.LENGTH_SHORT).show();
-                }else{
+                } else {
                     Toast.makeText(modify_information.this, position + " click", Toast.LENGTH_SHORT).show();
                 }
 
@@ -82,8 +112,23 @@ public class modify_information extends AppCompatActivity {
         }
 
         Modify i1 = new Modify("https://momeak.oss-cn-shenzhen.aliyuncs.com/dear2.png");
-        mData.add(mData.size(),i1);
+        mData.add(mData.size(), i1);
 
 
+    }
+
+    @OnClick({R.id.fold, R.id.title, R.id.subtitle})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.fold:
+                this.finish();
+                break;
+            case R.id.title:
+                title.setText("修改信息");
+                break;
+            case R.id.subtitle:
+                subtitle.setText("");
+                break;
+        }
     }
 }

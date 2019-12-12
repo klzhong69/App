@@ -10,8 +10,6 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.ashokvarma.bottomnavigation.TextBadgeItem;
-import com.bumptech.glide.Glide;
 import com.example.app.Adapter.GoldViewAdapter;
 import com.example.app.Entity.Mygold;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
@@ -22,15 +20,17 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class my_gold extends AppCompatActivity {
 
-    @BindView(R.id.imageView40)
-    ImageView imageView40;
-    @BindView(R.id.textView6)
-    TextView textView6;
-    @BindView(R.id.textView)
-    TextView textView;
+
+    @BindView(R.id.fold)
+    ImageView fold;
+    @BindView(R.id.title)
+    TextView title;
+    @BindView(R.id.subtitle)
+    TextView subtitle;
     @BindView(R.id.imageView19)
     QMUIRadiusImageView imageView19;
     @BindView(R.id.textView58)
@@ -47,7 +47,10 @@ public class my_gold extends AppCompatActivity {
     ImageView imageView63;
     @BindView(R.id.textView63)
     TextView textView63;
-
+    @BindView(R.id.but)
+    QMUIRoundButton but;
+    @BindView(R.id.buts)
+    QMUIRoundButton buts;
     private List<Mygold> mData;
     private GoldViewAdapter mAdapters;
     private GridLayoutManager mLayoutManager;
@@ -110,5 +113,20 @@ public class my_gold extends AppCompatActivity {
             mData.add(i1);
         }
 
+    }
+
+    @OnClick({R.id.fold, R.id.title, R.id.subtitle})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.fold:
+                this.finish();
+                break;
+            case R.id.title:
+                title.setText("我的金币");
+                break;
+            case R.id.subtitle:
+                subtitle.setText("");
+                break;
+        }
     }
 }

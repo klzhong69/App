@@ -1,33 +1,99 @@
 package com.example.app;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.app.Adapter.FamilyHomeAdapter;
-import com.example.app.Adapter.GridViewAdapter;
-import com.example.app.Adapter.ModifyViewAdapter;
-import com.example.app.Entity.Familyhome;
-import com.example.app.Entity.Modify;
-
-import java.util.ArrayList;
+import com.example.app.Model.FamilyHomeModel;
+import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class family_home extends AppCompatActivity {
 
 
     @BindView(R.id.recycler4)
     RecyclerView recycler4;
-    private ArrayList<Familyhome> mData;
-    private FamilyHomeAdapter mAdapters;
-    private GridLayoutManager mLayoutManager;
+    @BindView(R.id.fold)
+    ImageView fold;
+    @BindView(R.id.title)
+    TextView title;
+    @BindView(R.id.subtitle)
+    TextView subtitle;
+    @BindView(R.id.textView39)
+    TextView textView39;
+    @BindView(R.id.textView40)
+    TextView textView40;
+    @BindView(R.id.imageView39)
+    ImageView imageView39;
+    @BindView(R.id.relative1)
+    RelativeLayout relative1;
+    @BindView(R.id.textView41)
+    TextView textView41;
+    @BindView(R.id.textView42)
+    TextView textView42;
+    @BindView(R.id.imageView2)
+    QMUIRadiusImageView imageView2;
+    @BindView(R.id.relative2)
+    RelativeLayout relative2;
+    @BindView(R.id.textView43)
+    TextView textView43;
+    @BindView(R.id.imageView17)
+    QMUIRadiusImageView imageView17;
+    @BindView(R.id.imageView18)
+    QMUIRadiusImageView imageView18;
+    @BindView(R.id.imageView42)
+    ImageView imageView42;
+    @BindView(R.id.textView44)
+    TextView textView44;
+    @BindView(R.id.imageView19)
+    QMUIRadiusImageView imageView19;
+    @BindView(R.id.imageView20)
+    QMUIRadiusImageView imageView20;
+    @BindView(R.id.imageView43)
+    ImageView imageView43;
+    @BindView(R.id.textView45)
+    TextView textView45;
+    @BindView(R.id.imageView21)
+    QMUIRadiusImageView imageView21;
+    @BindView(R.id.imageView22)
+    QMUIRadiusImageView imageView22;
+    @BindView(R.id.imageView44)
+    ImageView imageView44;
+    @BindView(R.id.textView46)
+    TextView textView46;
+    @BindView(R.id.imageView45)
+    ImageView imageView45;
+    @BindView(R.id.imageView46)
+    ImageView imageView46;
+    @BindView(R.id.imageView47)
+    ImageView imageView47;
+    @BindView(R.id.relative3)
+    RelativeLayout relative3;
+    @BindView(R.id.textView47)
+    TextView textView47;
+    @BindView(R.id.relative4)
+    RelativeLayout relative4;
+    @BindView(R.id.imageView48)
+    ImageView imageView48;
+    @BindView(R.id.textView49)
+    TextView textView49;
+    @BindView(R.id.imageView49)
+    ImageView imageView49;
+    @BindView(R.id.textView50)
+    TextView textView50;
+    @BindView(R.id.relative5)
+    RelativeLayout relative5;
+    @BindView(R.id.largeLabel)
+    RelativeLayout largeLabel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,47 +101,25 @@ public class family_home extends AppCompatActivity {
         setContentView(R.layout.activity_family_home);
         ButterKnife.bind(this);
 
-        init();
-
-        //创建适配器，将数据传递给适配器
-        mAdapters = new FamilyHomeAdapter(this, mData);
-        //设置适配器adapter
-        recycler4.setAdapter(mAdapters);
-
-        //多列布局
-        mLayoutManager = new GridLayoutManager(this, 5);
-        recycler4.setLayoutManager(mLayoutManager);
+        Context context = this;
+        FamilyHomeModel.initData();
+        FamilyHomeModel.initrecycler(context, recycler4);
 
 
-        recycler4.setItemAnimator(new DefaultItemAnimator());
-
-        mAdapters.setOnItemClickListener(new FamilyHomeAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                Toast.makeText(family_home.this, position + " click", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onItemLongClick(View view, int position) {
-
-            }
-        });
-
-        /**
-         * 既然是动画，就会有时间，我们把动画执行时间变大一点来看一看效果
-         */
-        DefaultItemAnimator defaultItemAnimator = new DefaultItemAnimator();
-        defaultItemAnimator.setAddDuration(200);
-        defaultItemAnimator.setRemoveDuration(200);
-        recycler4.setItemAnimator(defaultItemAnimator);
     }
 
-    private void init() {
-        mData = new ArrayList<Familyhome>();
-        for (int i = 0; i < 12; i++) {
-            Familyhome i1 = new Familyhome("芭比uu","https://momeak.oss-cn-shenzhen.aliyuncs.com/dear1.png");
-            mData.add(i1);
+    @OnClick({R.id.fold, R.id.title, R.id.subtitle})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.fold:
+                this.finish();
+                break;
+            case R.id.title:
+                title.setText("【爱乐】AL粉丝团");
+                break;
+            case R.id.subtitle:
+                subtitle.setText("");
+                break;
         }
-
     }
 }

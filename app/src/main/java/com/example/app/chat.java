@@ -20,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
 
 import com.bumptech.glide.Glide;
+import com.qmuiteam.qmui.layout.QMUIPriorityLinearLayout;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
@@ -29,22 +30,25 @@ import butterknife.OnClick;
 
 public class chat extends AppCompatActivity {
 
-    @BindView(R.id.imageView40)
-    ImageView imageView40;
-    @BindView(R.id.textView6)
-    TextView textView6;
-    @BindView(R.id.textView)
-    TextView textView;
-    @BindView(R.id.layout)
-    LinearLayout layout;
-    @BindView(R.id.scrollmess)
-    NestedScrollView scrollview;
+
+    @BindView(R.id.fold)
+    ImageView fold;
+    @BindView(R.id.title)
+    TextView title;
+    @BindView(R.id.subtitle)
+    TextView subtitle;
     @BindView(R.id.editText)
     EditText editText;
     @BindView(R.id.but)
     QMUIRoundButton but;
     @BindView(R.id.imageView45)
     ImageView imageView45;
+    @BindView(R.id.priority)
+    QMUIPriorityLinearLayout priority;
+    @BindView(R.id.layout)
+    LinearLayout layout;
+    @BindView(R.id.scrollmess)
+    NestedScrollView scrollview;
     @BindView(R.id.bears)
     RelativeLayout bears;
     private View convertView;
@@ -163,7 +167,7 @@ public class chat extends AppCompatActivity {
     }
 
 
-    @OnClick({R.id.imageView40, R.id.imageView45, R.id.but})
+    @OnClick({R.id.imageView40, R.id.imageView45, R.id.but,R.id.fold, R.id.title, R.id.subtitle})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.imageView40:
@@ -180,8 +184,18 @@ public class chat extends AppCompatActivity {
                 but.setVisibility(View.GONE);
                 imageView45.setVisibility(View.VISIBLE);
                 break;
+            case R.id.fold:
+                this.finish();
+                break;
+            case R.id.title:
+                title.setText("Emg00");
+                break;
+            case R.id.subtitle:
+                subtitle.setText("");
+                break;
         }
     }
+
 
     static class ViewHolder {
         private TextView txt;

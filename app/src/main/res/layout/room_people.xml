@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#88000000">
+
+    <com.qmuiteam.qmui.widget.QMUIRadiusImageView
+        android:id="@+id/imageView19"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_200"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="@dimen/dp_40"
+        android:layout_marginTop="@dimen/dp_20"
+        android:layout_marginEnd="@dimen/dp_40"
+        android:layout_marginBottom="@dimen/dp_200"
+        android:src="@drawable/back2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include"
+        app:qmui_border_width="0dp"
+        app:qmui_corner_radius="15dp" />
+
+    <com.qmuiteam.qmui.widget.QMUIRadiusImageView
+        android:id="@+id/imageView18"
+        android:layout_width="@dimen/dp_70"
+        android:layout_height="@dimen/dp_70"
+        android:layout_alignStart="@+id/imageView19"
+        android:layout_alignTop="@+id/imageView19"
+        android:layout_marginStart="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_20"
+        android:src="@drawable/h1"
+        app:qmui_border_width="0dp"
+        app:qmui_corner_radius="@dimen/dp_50" />
+
+    <TextView
+        android:id="@+id/textView66"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/imageView18"
+        android:layout_marginStart="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_5"
+        android:layout_toEndOf="@+id/imageView18"
+        android:text="邂逅交友"
+        android:textColor="#ffffff"
+        android:textSize="@dimen/sp_20" />
+
+    <ImageView
+        android:id="@+id/imageView66"
+        android:layout_width="@dimen/dp_40"
+        android:layout_height="@dimen/dp_20"
+        android:layout_alignTop="@+id/textView66"
+        android:layout_marginStart="@dimen/dp_5"
+        android:layout_toEndOf="@+id/textView66"
+        app:srcCompat="@drawable/l3" />
+
+    <TextView
+        android:id="@+id/textView114"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView66"
+        android:layout_alignStart="@+id/textView66"
+        android:layout_marginTop="@dimen/dp_5"
+        android:gravity="center_vertical"
+        android:textColor="#aaffffff"
+        android:text="ID2634589"
+        android:textSize="@dimen/sp_16" />
+
+
+
+    <TextView
+        android:id="@+id/textView130"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/textView114"
+        android:layout_marginStart="@dimen/dp_40"
+        android:layout_toEndOf="@+id/textView114"
+        android:gravity="center_vertical"
+        android:text="粉丝"
+        android:textColor="#aaffffff"
+        android:textSize="@dimen/sp_16" />
+
+    <TextView
+        android:id="@+id/textView131"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/textView130"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_toEndOf="@+id/textView130"
+        android:gravity="center_vertical"
+        android:text="66"
+        android:textColor="#aaffffff"
+        android:textSize="@dimen/sp_16" />
+
+    <ImageView
+        android:id="@+id/imageView111"
+        android:layout_width="@dimen/dp_30"
+        android:layout_height="@dimen/dp_30"
+        android:layout_alignTop="@+id/imageView19"
+        android:layout_alignEnd="@+id/imageView19"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginEnd="@dimen/dp_20"
+        app:srcCompat="@drawable/dk_frame_hist" />
+
+    <ImageView
+        android:id="@+id/imageView112"
+        android:layout_width="@dimen/dp_30"
+        android:layout_height="@dimen/dp_30"
+        android:layout_alignTop="@+id/imageView111"
+        android:layout_marginEnd="@dimen/dp_20"
+        android:layout_toStartOf="@+id/imageView111"
+        app:srcCompat="@drawable/dk_network_bar" />
+
+    <ImageView
+        android:id="@+id/imageView113"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_1"
+        android:layout_alignStart="@+id/imageView19"
+        android:layout_alignTop="@+id/imageView19"
+        android:layout_alignEnd="@+id/imageView19"
+        android:layout_marginStart="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_120"
+        android:layout_marginEnd="@dimen/dp_20"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/back" />
+
+    <ImageView
+        android:id="@+id/imageView114"
+        android:layout_width="@dimen/dp_30"
+        android:layout_height="@dimen/dp_30"
+        android:layout_below="@+id/textView114"
+        android:layout_alignStart="@+id/textView114"
+        android:layout_marginTop="@dimen/dp_10"
+        app:srcCompat="@android:drawable/btn_star_big_on" />
+
+    <TextView
+        android:id="@+id/textView132"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/imageView114"
+        android:layout_alignBottom="@+id/imageView114"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_toEndOf="@+id/imageView114"
+        android:gravity="center_vertical"
+        android:text="今日推荐"
+        android:textColor="#aaffffff"
+        android:textSize="@dimen/sp_16" />
+
+    <ImageView
+        android:id="@+id/imageView115"
+        android:layout_width="@dimen/dp_40"
+        android:layout_height="@dimen/dp_40"
+        android:layout_below="@+id/imageView113"
+        android:layout_alignStart="@+id/imageView19"
+        android:layout_marginStart="@dimen/dp_70"
+        android:layout_marginTop="@dimen/dp_20"
+        app:srcCompat="@drawable/dk_float_button" />
+
+    <ImageView
+        android:id="@+id/imageView116"
+        android:layout_width="@dimen/dp_40"
+        android:layout_height="@dimen/dp_40"
+        android:layout_alignTop="@+id/imageView115"
+        android:layout_marginStart="@dimen/dp_60"
+        android:layout_toEndOf="@+id/imageView115"
+        app:srcCompat="@drawable/dk_float_button" />
+
+    <ImageView
+        android:id="@+id/imageView117"
+        android:layout_width="@dimen/dp_40"
+        android:layout_height="@dimen/dp_40"
+        android:layout_alignTop="@+id/imageView116"
+        android:layout_marginStart="@dimen/dp_60"
+        android:layout_toEndOf="@+id/imageView116"
+        app:srcCompat="@drawable/dk_float_button" />
+
+    <ImageView
+        android:id="@+id/imageView118"
+        android:layout_width="@dimen/dp_40"
+        android:layout_height="@dimen/dp_40"
+        android:layout_alignTop="@+id/imageView117"
+        android:layout_marginStart="@dimen/dp_60"
+        android:layout_toEndOf="@+id/imageView117"
+        app:srcCompat="@drawable/dk_float_button" />
+
+</RelativeLayout>

@@ -1,12 +1,10 @@
 package com.example.app;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.method.KeyListener;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -18,18 +16,17 @@ import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class application extends AppCompatActivity {
 
-    @BindView(R.id.imageView40)
-    ImageView imageView40;
 
-    @BindView(R.id.but)
-    QMUIRoundButton but;
-    @BindView(R.id.textView6)
-    TextView textView6;
-    @BindView(R.id.textView)
-    TextView textView;
+    @BindView(R.id.fold)
+    ImageView fold;
+    @BindView(R.id.title)
+    TextView title;
+    @BindView(R.id.subtitle)
+    TextView subtitle;
     @BindView(R.id.imageView18)
     QMUIRadiusImageView imageView18;
     @BindView(R.id.textView2)
@@ -48,6 +45,8 @@ public class application extends AppCompatActivity {
     TextView textView24;
     @BindView(R.id.textView25)
     TextView textView25;
+    @BindView(R.id.but)
+    QMUIRoundButton but;
     private KeyListener storedKeylistener;
     private CharSequence txt;
 
@@ -61,17 +60,17 @@ public class application extends AppCompatActivity {
         TextWatcher watcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                int sum = start+1;
+                int sum = start + 1;
                 if (sum <= 150) {
                     txt = s;
-                    if(after == 1){
-                        textView24.setText(sum+"");
-                    }else if(after == 0){
-                        textView24.setText(start+"");
+                    if (after == 1) {
+                        textView24.setText(sum + "");
+                    } else if (after == 0) {
+                        textView24.setText(start + "");
                     }
 
                 } else {
-                    textView24.setText(150+"");
+                    textView24.setText(150 + "");
                     editText.setText("");
                     editText.setText(txt);
                     editText.setSelection(editText.getText().length());
@@ -89,5 +88,20 @@ public class application extends AppCompatActivity {
             }
         };
         editText.addTextChangedListener(watcher);
+    }
+
+    @OnClick({R.id.fold, R.id.title, R.id.subtitle})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.fold:
+                this.finish();
+                break;
+            case R.id.title:
+                title.setText("申请理由");
+                break;
+            case R.id.subtitle:
+                subtitle.setText("");
+                break;
+        }
     }
 }

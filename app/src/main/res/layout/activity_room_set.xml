@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".room_set">
+
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/head"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_80"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="@dimen/dp_460"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:layout_toStartOf="@+id/imageView45"
+        android:background="@drawable/roundwhite"
+        android:gravity="center_vertical"
+        android:hint="请输入房间名称"
+        android:imeOptions="actionSend"
+        android:inputType="textPersonName"
+        android:paddingStart="@dimen/dp_20"
+        android:paddingTop="@dimen/dp_10"
+        android:paddingEnd="@dimen/dp_20"
+        android:paddingBottom="@dimen/dp_10"
+        android:textColorHint="#66000000"
+        android:textSize="@dimen/sp_20"
+        app:layout_constraintBottom_toBottomOf="@+id/textView133"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView133"
+        app:layout_constraintTop_toTopOf="@+id/textView133"
+        app:layout_constraintVertical_bias="0.562" />
+
+    <EditText
+        android:id="@+id/editText2"
+        android:layout_width="@dimen/dp_460"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:layout_toStartOf="@+id/imageView45"
+        android:background="@drawable/roundwhite"
+        android:gravity="center_vertical"
+        android:hint="请输入房间密码，只允许输入数字"
+        android:imeOptions="actionSend"
+        android:inputType="number"
+        android:paddingStart="@dimen/dp_20"
+        android:paddingTop="@dimen/dp_10"
+        android:paddingEnd="@dimen/dp_20"
+        android:paddingBottom="@dimen/dp_10"
+        android:textColorHint="#66000000"
+        android:textSize="@dimen/sp_20"
+        app:layout_constraintBottom_toBottomOf="@+id/textView134"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView134"
+        app:layout_constraintTop_toTopOf="@+id/textView134" />
+
+    <EditText
+        android:id="@+id/editText3"
+        android:layout_width="@dimen/dp_460"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:layout_toStartOf="@+id/imageView45"
+        android:background="@drawable/roundwhite"
+        android:gravity="center_vertical"
+        android:hint="请输入公告"
+        android:imeOptions="actionSend"
+        android:inputType="textMultiLine"
+        android:minLines="1"
+        android:paddingStart="@dimen/dp_20"
+        android:paddingTop="@dimen/dp_10"
+        android:paddingEnd="@dimen/dp_20"
+        android:paddingBottom="@dimen/dp_10"
+        android:textColorHint="#66000000"
+        android:textSize="@dimen/sp_20"
+        app:layout_constraintBottom_toBottomOf="@+id/textView135"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView135"
+        app:layout_constraintTop_toTopOf="@+id/textView135" />
+
+    <TextView
+        android:id="@+id/textView133"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_30"
+        android:text="名称"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include" />
+
+    <TextView
+        android:id="@+id/textView134"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_40"
+        android:text="密码"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView133" />
+
+    <TextView
+        android:id="@+id/textView135"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_40"
+        android:text="公告"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView134" />
+
+    <TextView
+        android:id="@+id/textView136"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_40"
+        android:text="房间模式"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView135" />
+
+    <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
+        android:id="@+id/but"
+        android:layout_width="@dimen/dp_120"
+        android:layout_height="@dimen/dp_50"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="@dimen/dp_20"
+        android:layout_marginTop="20dp"
+        android:clickable="true"
+        android:gravity="center"
+        android:padding="@dimen/dp_10"
+        android:text="娱乐模式"
+        android:textColor="@color/qmui_config_color_white"
+        android:textSize="@dimen/sp_20"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView136"
+        app:qmui_backgroundColor="@color/tabbarcolor"
+        app:qmui_borderWidth="0px"
+        app:qmui_radius="@dimen/dp_30" />
+
+    <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
+        android:id="@+id/but2"
+        android:layout_width="@dimen/dp_120"
+        android:layout_height="@dimen/dp_50"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="@dimen/dp_15"
+        android:clickable="true"
+        android:gravity="center"
+        android:padding="@dimen/dp_10"
+        android:text="KTV模式"
+        android:textColor="@color/qmui_config_color_white"
+        android:textSize="@dimen/sp_20"
+        app:layout_constraintStart_toEndOf="@+id/but"
+        app:layout_constraintTop_toTopOf="@+id/but"
+        app:qmui_backgroundColor="@color/colorPrimaryDark"
+        app:qmui_borderWidth="0px"
+        app:qmui_radius="@dimen/dp_30" />
+
+    <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
+        android:id="@+id/but3"
+        android:layout_width="@dimen/dp_120"
+        android:layout_height="@dimen/dp_50"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="@dimen/dp_15"
+        android:clickable="true"
+        android:gravity="center"
+        android:padding="@dimen/dp_10"
+        android:text="聊天模式"
+        android:textColor="@color/qmui_config_color_white"
+        android:textSize="@dimen/sp_20"
+        app:layout_constraintStart_toEndOf="@+id/but2"
+        app:layout_constraintTop_toTopOf="@+id/but2"
+        app:qmui_backgroundColor="@color/colorPrimaryDark"
+        app:qmui_borderWidth="0px"
+        app:qmui_radius="@dimen/dp_30" />
+
+    <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
+        android:id="@+id/but4"
+        android:layout_width="@dimen/dp_120"
+        android:layout_height="@dimen/dp_50"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="@dimen/dp_15"
+        android:clickable="true"
+        android:gravity="center"
+        android:padding="@dimen/dp_10"
+        android:text="挚友模式"
+        android:textColor="@color/qmui_config_color_white"
+        android:textSize="@dimen/sp_20"
+        app:layout_constraintStart_toEndOf="@+id/but3"
+        app:layout_constraintTop_toTopOf="@+id/but3"
+        app:qmui_backgroundColor="@color/colorPrimaryDark"
+        app:qmui_borderWidth="0px"
+        app:qmui_radius="@dimen/dp_30" />
+
+    <ImageView
+        android:id="@+id/imageView119"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_60"
+        android:layout_marginTop="@dimen/dp_30"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/but"
+        app:srcCompat="@color/qmui_config_color_white" />
+
+
+
+    <TextView
+        android:id="@+id/textView137"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_20"
+        android:text="主题背景"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView119"
+        app:layout_constraintStart_toStartOf="@+id/imageView119"
+        app:layout_constraintTop_toTopOf="@+id/imageView119" />
+
+    <ImageView
+        android:id="@+id/imageView120"
+        android:layout_width="@dimen/dp_30"
+        android:layout_height="@dimen/dp_30"
+        android:layout_marginEnd="@dimen/dp_20"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView119"
+        app:layout_constraintEnd_toEndOf="@+id/imageView119"
+        app:layout_constraintTop_toTopOf="@+id/imageView119"
+        app:srcCompat="@drawable/dk_more_icon" />
+
+
+    <ImageView
+        android:id="@+id/imageView121"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_60"
+        android:layout_marginTop="@dimen/dp_2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView119"
+        app:srcCompat="@color/qmui_config_color_white" />
+
+
+    <TextView
+        android:id="@+id/textView138"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_20"
+        android:text="管理员"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView121"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView119" />
+
+    <ImageView
+        android:id="@+id/imageView122"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_60"
+        android:layout_marginTop="@dimen/dp_2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView121"
+        app:srcCompat="@color/qmui_config_color_white" />
+
+
+    <TextView
+        android:id="@+id/textView139"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_20"
+        android:text="黑名单"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView122"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView121" />
+
+    <ImageView
+        android:id="@+id/imageView123"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_60"
+        android:layout_marginTop="@dimen/dp_2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView122"
+        app:srcCompat="@color/qmui_config_color_white" />
+
+    <TextView
+        android:id="@+id/textView140"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_20"
+        android:text="后台管理"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView123"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView122" />
+
+    <ImageView
+        android:id="@+id/imageView124"
+        android:layout_width="@dimen/dp_30"
+        android:layout_height="@dimen/dp_30"
+        android:layout_marginEnd="@dimen/dp_20"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView121"
+        app:layout_constraintEnd_toEndOf="@+id/imageView121"
+        app:layout_constraintTop_toBottomOf="@+id/imageView119"
+        app:srcCompat="@drawable/dk_more_icon" />
+
+    <ImageView
+        android:id="@+id/imageView125"
+        android:layout_width="@dimen/dp_30"
+        android:layout_height="@dimen/dp_30"
+        android:layout_marginEnd="@dimen/dp_20"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView122"
+        app:layout_constraintEnd_toEndOf="@+id/imageView122"
+        app:layout_constraintTop_toBottomOf="@+id/imageView121"
+        app:srcCompat="@drawable/dk_more_icon" />
+
+    <ImageView
+        android:id="@+id/imageView126"
+        android:layout_width="@dimen/dp_30"
+        android:layout_height="@dimen/dp_30"
+        android:layout_marginEnd="@dimen/dp_20"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView123"
+        app:layout_constraintEnd_toEndOf="@+id/imageView123"
+        app:layout_constraintTop_toBottomOf="@+id/imageView122"
+        app:srcCompat="@drawable/dk_more_icon" />
+</androidx.constraintlayout.widget.ConstraintLayout>

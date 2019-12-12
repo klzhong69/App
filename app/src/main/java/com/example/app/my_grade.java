@@ -1,6 +1,7 @@
 package com.example.app;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -11,15 +12,17 @@ import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class my_grade extends AppCompatActivity {
 
-    @BindView(R.id.imageView40)
-    ImageView imageView40;
-    @BindView(R.id.textView6)
-    TextView textView6;
-    @BindView(R.id.textView)
-    TextView textView;
+
+    @BindView(R.id.fold)
+    ImageView fold;
+    @BindView(R.id.title)
+    TextView title;
+    @BindView(R.id.subtitle)
+    TextView subtitle;
     @BindView(R.id.imageView17)
     QMUIRadiusImageView imageView17;
     @BindView(R.id.imageView59)
@@ -78,5 +81,20 @@ public class my_grade extends AppCompatActivity {
                 return 100 * value / maxValue + "%";
             }
         });
+    }
+
+    @OnClick({R.id.fold, R.id.title, R.id.subtitle})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.fold:
+                this.finish();
+                break;
+            case R.id.title:
+                title.setText("我的等级");
+                break;
+            case R.id.subtitle:
+                subtitle.setText("");
+                break;
+        }
     }
 }

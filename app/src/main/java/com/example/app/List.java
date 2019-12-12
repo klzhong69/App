@@ -1,5 +1,6 @@
 package com.example.app;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -19,6 +20,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.app.Adapter.ListLeaderAdapter;
 import com.example.app.Entity.Listleader;
+import com.example.app.Model.HomePageModel;
+import com.example.app.Model.ListModel;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.scwang.smart.refresh.header.MaterialHeader;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
@@ -121,6 +124,10 @@ public class List extends Fragment {
         View view = inflater.inflate(R.layout.list_leaderboard, container, false);
         unbinder = ButterKnife.bind(this, view);
 
+        Context context = getContext();
+        ListModel.initData();
+        ListModel.initrecycler(context,recycler13);
+
         refreshLayout.setRefreshHeader(new MaterialHeader(getContext()).setScrollableWhenRefreshing(true));
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
@@ -147,52 +154,9 @@ public class List extends Fragment {
             }
         });
 
-        initData();
-        //初始化数据
-        init();
+
 
         return view;
-    }
-
-    private void init() {
-        //适配器
-        ListLeaderAdapter mAdapter = new ListLeaderAdapter(getContext(), mArrayList);
-        //设置适配器adapter
-        recycler13.setAdapter(mAdapter);
-
-        /*LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-        mListView.setLayoutManager(mLinearLayoutManager);*/
-
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext()) {
-            @Override
-            public boolean canScrollVertically() {
-                return false;
-            }
-        };
-        recycler13.setLayoutManager(layoutManager);
-        recycler13.setItemAnimator(new DefaultItemAnimator());
-
-        mAdapter.setOnItemClickListener(new ListLeaderAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                Intent intent2 = new Intent(getContext(), chat.class);
-                startActivity(intent2);
-            }
-
-            @Override
-            public void onItemLongClick(View view, int position) {
-
-                Toast.makeText(getContext(), position + " Long click", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        /**
-         * 既然是动画，就会有时间，我们把动画执行时间变大一点来看一看效果
-         */
-        DefaultItemAnimator defaultItemAnimator = new DefaultItemAnimator();
-        defaultItemAnimator.setAddDuration(200);
-        defaultItemAnimator.setRemoveDuration(200);
-        recycler13.setItemAnimator(defaultItemAnimator);
     }
 
     @Override
@@ -200,15 +164,6 @@ public class List extends Fragment {
         super.onActivityCreated(savedInstanceState);
         //这里接收到广播和数据，进行处理就是了
 
-    }
-
-    private void initData() {
-        mArrayList = new ArrayList<Listleader>();
-        for (int i = 0; i < 10; i++) {
-            int sum = i + 4;
-            Listleader i1 = new Listleader(sum + "", "https://momeak.oss-cn-shenzhen.aliyuncs.com/h5.jpg", "胡楠", "", "财富值", "18630");
-            mArrayList.add(i1);
-        }
     }
 
 

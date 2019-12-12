@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.app.Adapter.Package1Adapter;
 import com.example.app.Adapter.Package2Adapter;
-import com.example.app.Entity.Modify;
 import com.example.app.Entity.Package1;
 import com.example.app.Entity.Package2;
 
@@ -22,15 +21,19 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class my_package extends AppCompatActivity {
 
-    @BindView(R.id.imageView40)
-    ImageView imageView40;
-    @BindView(R.id.textView6)
-    TextView textView6;
-    @BindView(R.id.textView)
-    TextView textView;
+
+    @BindView(R.id.recycler9)
+    RecyclerView recycler9;
+    @BindView(R.id.fold)
+    ImageView fold;
+    @BindView(R.id.title)
+    TextView title;
+    @BindView(R.id.subtitle)
+    TextView subtitle;
     @BindView(R.id.textView71)
     TextView textView71;
     @BindView(R.id.recycler8)
@@ -39,8 +42,6 @@ public class my_package extends AppCompatActivity {
     RelativeLayout relativeLayout9;
     @BindView(R.id.textView72)
     TextView textView72;
-    @BindView(R.id.recycler9)
-    RecyclerView recycler9;
     private ArrayList<Package1> mData;
     private Package1Adapter mAdapter;
     private Package2Adapter mAdapters;
@@ -93,7 +94,7 @@ public class my_package extends AppCompatActivity {
         recycler8.setItemAnimator(defaultItemAnimator);
     }
 
-    private void init(){
+    private void init() {
         //创建适配器，将数据传递给适配器
         mAdapters = new Package2Adapter(this, mDatas);
         //设置适配器adapter
@@ -132,24 +133,40 @@ public class my_package extends AppCompatActivity {
         defaultItemAnimator.setRemoveDuration(200);
         recycler9.setItemAnimator(defaultItemAnimator);
     }
+
     private void initData() {
         mData = new ArrayList<Package1>();
         mDatas = new ArrayList<Package2>();
 
         for (int i = 0; i < 5; i++) {
-            Package1 i1 = new Package1("https://momeak.oss-cn-shenzhen.aliyuncs.com/dear1.png","苗苗");
+            Package1 i1 = new Package1("https://momeak.oss-cn-shenzhen.aliyuncs.com/dear1.png", "苗苗");
             mData.add(i1);
         }
 
-        Package1 i1 = new Package1("https://momeak.oss-cn-shenzhen.aliyuncs.com/dear2.png","");
+        Package1 i1 = new Package1("https://momeak.oss-cn-shenzhen.aliyuncs.com/dear2.png", "");
         mData.add(mData.size(), i1);
 
         for (int i = 0; i < 4; i++) {
-            Package2 i2 = new Package2("https://momeak.oss-cn-shenzhen.aliyuncs.com/dear1.png","苗苗","有效期:2019-12-30");
+            Package2 i2 = new Package2("https://momeak.oss-cn-shenzhen.aliyuncs.com/dear1.png", "苗苗", "有效期:2019-12-30");
             mDatas.add(i2);
         }
 
-        Package2 i2 = new Package2("https://momeak.oss-cn-shenzhen.aliyuncs.com/dear2.png","","");
+        Package2 i2 = new Package2("https://momeak.oss-cn-shenzhen.aliyuncs.com/dear2.png", "", "");
         mDatas.add(mDatas.size(), i2);
+    }
+
+    @OnClick({R.id.fold, R.id.title, R.id.subtitle})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.fold:
+                this.finish();
+                break;
+            case R.id.title:
+                title.setText("我的包裹");
+                break;
+            case R.id.subtitle:
+                subtitle.setText("");
+                break;
+        }
     }
 }

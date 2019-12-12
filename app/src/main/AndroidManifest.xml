@@ -21,7 +21,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".find_make"></activity>
+        <activity android:name=".room_select_people"></activity>
+        <activity android:name=".room_set" />
+        <activity android:name=".chatroom_chat" />
+        <activity android:name=".find_make" />
         <activity android:name=".chatroom" />
         <activity android:name=".chat" />
         <activity android:name=".mess_friends" />
@@ -29,7 +32,6 @@
         <activity android:name=".my_realname" />
         <activity android:name=".my_package" />
         <activity android:name=".my_footprint" />
-        <activity android:name=".my_playlist" />
         <activity android:name=".my_music" />
         <activity android:name=".my_gold" />
         <activity android:name=".my_wallet" />
