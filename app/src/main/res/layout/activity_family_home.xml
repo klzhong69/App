@@ -124,7 +124,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="14dp"
                 android:layout_marginEnd="15dp"
-                android:src="@drawable/back2"
+                android:src="@drawable/h4"
                 app:layout_constraintBottom_toTopOf="@+id/imageView3"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:qmui_border_width="0dp"
@@ -170,7 +170,7 @@
                 android:layout_alignStart="@+id/imageView17"
                 android:layout_alignTop="@+id/imageView17"
                 android:layout_alignEnd="@+id/imageView17"
-                android:src="@drawable/back2"
+                android:src="@drawable/a1"
                 app:qmui_border_width="0dp"
                 app:qmui_corner_radius="15dp" />
 
@@ -221,7 +221,7 @@
                 android:layout_alignStart="@+id/imageView19"
                 android:layout_alignTop="@+id/imageView19"
                 android:layout_alignEnd="@+id/imageView19"
-                android:src="@drawable/back2"
+                android:src="@drawable/a2"
                 app:qmui_border_width="0dp"
                 app:qmui_corner_radius="15dp" />
 
@@ -271,7 +271,7 @@
                 android:layout_alignStart="@+id/imageView21"
                 android:layout_alignTop="@+id/imageView21"
                 android:layout_alignEnd="@+id/imageView21"
-                android:src="@drawable/back2"
+                android:src="@color/qmui_config_color_white"
                 app:qmui_border_width="0dp"
                 app:qmui_corner_radius="15dp" />
 

@@ -52,7 +52,7 @@
                     android:scaleType="centerCrop"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:srcCompat="@drawable/back" />
+                    app:srcCompat="@drawable/beijin" />
 
                 <TextView
                     android:id="@+id/textView2"
@@ -103,7 +103,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_marginTop="@dimen/dp_40"
                     android:layout_marginEnd="@dimen/dp_30"
-                    android:src="@drawable/back2"
+                    android:src="@drawable/h4"
                     app:layout_constraintBottom_toTopOf="@+id/imageView3"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:qmui_border_width="0dp"
@@ -413,7 +413,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_marginStart="@dimen/dp_20"
                     android:layout_marginTop="@dimen/dp_20"
-                    android:src="@drawable/back"
+                    android:src="@drawable/h1"
                     app:qmui_border_width="0dp"
                     app:qmui_corner_radius="15dp" />
 
@@ -425,7 +425,7 @@
                     android:layout_alignBottom="@+id/imageView14"
                     android:layout_marginStart="@dimen/dp_12"
                     android:layout_toEndOf="@+id/imageView14"
-                    android:src="@drawable/back"
+                    android:src="@drawable/h2"
                     app:qmui_border_width="0dp"
                     app:qmui_corner_radius="15dp" />
 
@@ -437,7 +437,7 @@
                     android:layout_alignBottom="@+id/imageView15"
                     android:layout_marginStart="@dimen/dp_12"
                     android:layout_toEndOf="@+id/imageView15"
-                    android:src="@drawable/back"
+                    android:src="@drawable/h3"
                     app:qmui_border_width="0dp"
                     app:qmui_corner_radius="15dp" />
 
@@ -449,7 +449,7 @@
                     android:layout_alignBottom="@+id/imageView16"
                     android:layout_marginStart="@dimen/dp_12"
                     android:layout_toEndOf="@+id/imageView16"
-                    android:src="@drawable/back"
+                    android:src="@drawable/h4"
                     app:qmui_border_width="0dp"
                     app:qmui_corner_radius="15dp" />
 
@@ -461,7 +461,7 @@
                     android:layout_alignBottom="@+id/imageView18"
                     android:layout_marginStart="@dimen/dp_12"
                     android:layout_toEndOf="@+id/imageView18"
-                    android:src="@drawable/back"
+                    android:src="@drawable/h2"
                     app:qmui_border_width="0dp"
                     app:qmui_corner_radius="15dp" />
 
@@ -494,115 +494,96 @@
                     android:scaleType="centerCrop"
                     app:srcCompat="@drawable/back2" />
 
-                <ImageView
-                    android:id="@+id/imageView21"
+                <com.qmuiteam.qmui.widget.QMUIRadiusImageView
+                    android:id="@+id/imageView22"
                     android:layout_width="@dimen/dp_160"
-                    android:layout_height="@dimen/dp_50"
+                    android:layout_height="@dimen/dp_220"
                     android:layout_below="@+id/imageView20"
                     android:layout_alignParentStart="true"
                     android:layout_marginStart="@dimen/dp_20"
-                    android:layout_marginTop="@dimen/dp_20"
+                    android:layout_marginTop="@dimen/dp_10"
                     android:scaleType="centerCrop"
-                    app:srcCompat="@drawable/back2" />
+                    android:src="@drawable/card1"
+                    app:qmui_border_width="0dp"
+                    app:qmui_corner_radius="15dp"/>
 
-                <ImageView
-                    android:id="@+id/imageView23"
-                    android:layout_width="@dimen/dp_160"
-                    android:layout_height="@dimen/dp_50"
-                    android:layout_alignTop="@+id/imageView21"
-                    android:layout_alignBottom="@+id/imageView21"
-                    android:layout_marginStart="@dimen/dp_20"
-                    android:layout_toEndOf="@+id/imageView21"
-                    android:scaleType="centerCrop"
-                    app:srcCompat="@drawable/back2" />
 
-                <ImageView
-                    android:id="@+id/imageView25"
-                    android:layout_width="@dimen/dp_160"
-                    android:layout_height="@dimen/dp_50"
-                    android:layout_alignTop="@+id/imageView23"
-                    android:layout_alignBottom="@+id/imageView23"
-                    android:layout_marginStart="@dimen/dp_20"
-                    android:layout_toEndOf="@+id/imageView23"
-                    android:scaleType="centerCrop"
-                    app:srcCompat="@drawable/back2" />
-
-                <ImageView
-                    android:id="@+id/imageView22"
-                    android:layout_width="@dimen/dp_160"
-                    android:layout_height="@dimen/dp_180"
-                    android:layout_below="@+id/imageView21"
-                    android:layout_alignStart="@+id/imageView21"
-                    android:layout_alignEnd="@+id/imageView21"
-                    android:layout_marginStart="0dp"
-                    android:layout_marginEnd="0dp"
-                    android:scaleType="centerCrop"
-                    app:srcCompat="@drawable/back" />
-
-                <ImageView
+                <com.qmuiteam.qmui.widget.QMUIRadiusImageView
                     android:id="@+id/imageView26"
                     android:layout_width="@dimen/dp_160"
-                    android:layout_height="@dimen/dp_180"
-                    android:layout_below="@+id/imageView23"
-                    android:layout_alignStart="@+id/imageView23"
-                    android:layout_alignEnd="@+id/imageView23"
+                    android:layout_height="@dimen/dp_220"
+                    android:layout_alignTop="@+id/imageView22"
+                    android:layout_marginStart="@dimen/dp_20"
+                    android:layout_toEndOf="@+id/imageView22"
                     android:scaleType="centerCrop"
-                    app:srcCompat="@drawable/back" />
+                    android:src="@drawable/card3"
+                    app:qmui_border_width="0dp"
+                    app:qmui_corner_radius="15dp"/>
 
 
-                <ImageView
+                <com.qmuiteam.qmui.widget.QMUIRadiusImageView
                     android:id="@+id/imageView27"
                     android:layout_width="@dimen/dp_160"
-                    android:layout_height="@dimen/dp_180"
-                    android:layout_below="@+id/imageView25"
-                    android:layout_alignStart="@+id/imageView25"
-                    android:layout_alignEnd="@+id/imageView25"
+                    android:layout_height="@dimen/dp_220"
+                    android:layout_alignTop="@+id/imageView26"
+                    android:layout_marginStart="@dimen/dp_20"
+                    android:layout_toEndOf="@+id/imageView26"
                     android:scaleType="centerCrop"
-                    app:srcCompat="@drawable/back" />
+                    android:src="@drawable/card2"
+                    app:qmui_border_width="0dp"
+                    app:qmui_corner_radius="15dp"/>
 
                 <TextView
                     android:id="@+id/textView12"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignStart="@+id/imageView21"
-                    android:layout_alignTop="@+id/imageView21"
-                    android:layout_alignEnd="@+id/imageView21"
-                    android:layout_alignBottom="@+id/imageView21"
+                    android:layout_below="@+id/imageView22"
+                    android:layout_alignStart="@+id/imageView22"
+                    android:layout_alignTop="@+id/imageView22"
+                    android:layout_alignEnd="@+id/imageView22"
+                    android:layout_marginTop="@dimen/dp_10"
                     android:gravity="center"
-                    android:text="闺蜜挚友Lv6" />
+                    android:text="闺蜜挚友Lv6"
+                    android:textColor="#CDE91E63"
+                    android:textSize="@dimen/sp_18" />
 
                 <TextView
                     android:id="@+id/textView13"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignStart="@+id/imageView23"
-                    android:layout_alignTop="@+id/imageView23"
-                    android:layout_alignEnd="@+id/imageView23"
-                    android:layout_alignBottom="@+id/imageView23"
+                    android:layout_alignStart="@+id/imageView26"
+                    android:layout_alignTop="@+id/imageView26"
+                    android:layout_alignEnd="@+id/imageView26"
+                    android:layout_marginTop="@dimen/dp_10"
                     android:gravity="center"
-                    android:text="闺蜜挚友Lv6" />
+                    android:text="闺蜜挚友Lv6"
+                    android:textColor="#D29C27B0"
+                    android:textSize="@dimen/sp_18" />
 
                 <TextView
                     android:id="@+id/textView14"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignStart="@+id/imageView25"
-                    android:layout_alignTop="@+id/imageView25"
-                    android:layout_alignEnd="@+id/imageView25"
-                    android:layout_alignBottom="@+id/imageView25"
+                    android:layout_alignStart="@+id/imageView27"
+                    android:layout_alignTop="@+id/imageView27"
+                    android:layout_alignEnd="@+id/imageView27"
+                    android:layout_marginTop="@dimen/dp_10"
                     android:gravity="center"
-                    android:text="闺蜜挚友Lv6" />
-
+                    android:text="闺蜜挚友Lv6"
+                    android:textColor="#C6FF9800"
+                    android:textSize="@dimen/sp_18" />
 
                 <com.qmuiteam.qmui.widget.QMUIRadiusImageView
                     android:id="@+id/imageView28"
                     android:layout_width="@dimen/dp_70"
                     android:layout_height="@dimen/dp_70"
-                    android:layout_below="@+id/imageView21"
+                    android:layout_below="@+id/textView12"
                     android:layout_alignStart="@+id/imageView22"
+                    android:layout_alignEnd="@+id/imageView22"
                     android:layout_marginStart="@dimen/dp_45"
-                    android:layout_marginTop="@dimen/dp_20"
-                    android:src="@drawable/back2"
+                    android:layout_marginTop="@dimen/dp_30"
+                    android:layout_marginEnd="@dimen/dp_45"
+                    android:src="@drawable/h2"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:qmui_border_width="0dp"
                     app:qmui_corner_radius="@dimen/dp_50" />
@@ -611,11 +592,13 @@
                     android:id="@+id/imageView24"
                     android:layout_width="@dimen/dp_70"
                     android:layout_height="@dimen/dp_70"
-                    android:layout_below="@+id/imageView21"
+                    android:layout_below="@+id/textView13"
                     android:layout_alignStart="@+id/imageView26"
+                    android:layout_alignEnd="@+id/imageView26"
                     android:layout_marginStart="@dimen/dp_45"
-                    android:layout_marginTop="@dimen/dp_20"
-                    android:src="@drawable/back2"
+                    android:layout_marginTop="@dimen/dp_30"
+                    android:layout_marginEnd="@dimen/dp_45"
+                    android:src="@drawable/h3"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:qmui_border_width="0dp"
                     app:qmui_corner_radius="@dimen/dp_50" />
@@ -624,11 +607,13 @@
                     android:id="@+id/imageView29"
                     android:layout_width="@dimen/dp_70"
                     android:layout_height="@dimen/dp_70"
-                    android:layout_below="@+id/imageView21"
+                    android:layout_below="@+id/textView14"
                     android:layout_alignStart="@+id/imageView27"
+                    android:layout_alignEnd="@+id/imageView27"
                     android:layout_marginStart="@dimen/dp_45"
-                    android:layout_marginTop="@dimen/dp_20"
-                    android:src="@drawable/back2"
+                    android:layout_marginTop="@dimen/dp_30"
+                    android:layout_marginEnd="@dimen/dp_45"
+                    android:src="@drawable/h1"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:qmui_border_width="0dp"
                     app:qmui_corner_radius="@dimen/dp_50" />
@@ -643,7 +628,7 @@
                     android:layout_marginTop="@dimen/dp_10"
                     android:gravity="center"
                     android:text="MI-草药"
-                    android:textSize="@dimen/sp_18" />
+                    android:textSize="@dimen/sp_16" />
 
                 <TextView
                     android:id="@+id/textView20"
@@ -667,7 +652,8 @@
                     android:layout_marginTop="@dimen/dp_5"
                     android:gravity="center"
                     android:text="62天"
-                    android:textSize="@dimen/sp_16" />
+                    android:textColor="#CDE91E63"
+                    android:textSize="@dimen/sp_14" />
 
 
                 <TextView
@@ -677,20 +663,20 @@
                     android:layout_below="@+id/imageView24"
                     android:layout_alignStart="@+id/imageView26"
                     android:layout_alignEnd="@+id/imageView26"
-                    android:layout_marginTop="7dp"
+                    android:layout_marginTop="@dimen/dp_10"
                     android:gravity="center"
                     android:text="MI-草药"
-                    android:textSize="@dimen/sp_18" />
+                    android:textSize="@dimen/sp_16" />
 
 
                 <TextView
                     android:id="@+id/textView26"
                     android:layout_width="79dp"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/textView16"
+                    android:layout_below="@+id/textView22"
                     android:layout_alignStart="@+id/imageView26"
                     android:layout_alignEnd="@+id/imageView26"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginTop="@dimen/dp_5"
                     android:gravity="center"
                     android:text="2019.08.16至今"
                     android:textSize="@dimen/sp_14" />
@@ -699,13 +685,14 @@
                     android:id="@+id/textView27"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/textView20"
+                    android:layout_below="@+id/textView26"
                     android:layout_alignStart="@+id/imageView26"
                     android:layout_alignEnd="@+id/imageView26"
                     android:layout_marginTop="@dimen/dp_5"
                     android:gravity="center"
                     android:text="62天"
-                    android:textSize="@dimen/sp_16" />
+                    android:textColor="#D29C27B0"
+                    android:textSize="@dimen/sp_14" />
 
 
                 <TextView
@@ -718,7 +705,7 @@
                     android:layout_marginTop="@dimen/dp_10"
                     android:gravity="center"
                     android:text="MI-草药"
-                    android:textSize="@dimen/sp_18" />
+                    android:textSize="@dimen/sp_16" />
 
                 <TextView
                     android:id="@+id/textView29"
@@ -736,13 +723,14 @@
                     android:id="@+id/textView30"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/textView20"
+                    android:layout_below="@+id/textView29"
                     android:layout_alignStart="@+id/imageView27"
                     android:layout_alignEnd="@+id/imageView27"
                     android:layout_marginTop="@dimen/dp_5"
                     android:gravity="center"
                     android:text="62天"
-                    android:textSize="@dimen/sp_16" />
+                    android:textColor="#C6FF9800"
+                    android:textSize="@dimen/sp_14" />
 
             </RelativeLayout>
 
