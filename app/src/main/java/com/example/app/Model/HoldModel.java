@@ -9,34 +9,39 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.app.Adapter.FriendsAdapter;
+import com.example.app.Adapter.HoldpeopleAdapter;
 import com.example.app.Adapter.ListLeaderAdapter;
-import com.example.app.Entity.Friends;
+import com.example.app.Entity.Holdpeople;
 import com.example.app.Entity.Listleader;
 import com.example.app.chat;
-import com.example.app.mess_friends;
 
 import java.util.ArrayList;
 
-public class MessFriendsModel {
+public class HoldModel {
 
-    private static ArrayList<Friends> mArrayList;
-    private static FriendsAdapter mAdapter;
+    private static ArrayList<Holdpeople> mArrayList;
+    private static HoldpeopleAdapter mAdapter;
 
     public static void initData() {
-        mArrayList = new ArrayList<Friends>();
-        for (int i = 0; i < 4; i++) {
-            Friends i1 = new Friends("Ema90", "hi伙伴，明天一起直播吗",  "https://momeak.oss-cn-shenzhen.aliyuncs.com/dear1.png", "");
+        mArrayList = new ArrayList<Holdpeople>();
+        for (int i = 0; i < 10; i++) {
+            String type;
+            if(i==0){
+                type = "房主";
+            }else{
+                type = "0";
+            }
+            Holdpeople i1 = new Holdpeople("ID2698456", "https://momeak.oss-cn-shenzhen.aliyuncs.com/h5.jpg", "胡楠"+i, "", type);
             mArrayList.add(i1);
         }
 
     }
 
-    public static void initrecycler(Context context, RecyclerView recycler12,int a ) {
+    public static void initrecycler(Context context, RecyclerView recycler13) {
         //适配器
-         mAdapter = new FriendsAdapter(context, mArrayList);
+        mAdapter = new HoldpeopleAdapter(context, mArrayList);
         //设置适配器adapter
-        recycler12.setAdapter(mAdapter);
+        recycler13.setAdapter(mAdapter);
 
         /*LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         mListView.setLayoutManager(mLinearLayoutManager);*/
@@ -47,18 +52,13 @@ public class MessFriendsModel {
                 return false;
             }
         };
-        recycler12.setLayoutManager(layoutManager);
-        recycler12.setItemAnimator(new DefaultItemAnimator());
+        recycler13.setLayoutManager(layoutManager);
+        recycler13.setItemAnimator(new DefaultItemAnimator());
 
-        mAdapter.setOnItemClickListener(new FriendsAdapter.OnItemClickListener() {
+        mAdapter.setOnItemClickListener(new HoldpeopleAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                if(a==0){
 
-                }else{
-
-                }
-                Toast.makeText(context, position + " click", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -74,15 +74,14 @@ public class MessFriendsModel {
         DefaultItemAnimator defaultItemAnimator = new DefaultItemAnimator();
         defaultItemAnimator.setAddDuration(200);
         defaultItemAnimator.setRemoveDuration(200);
-        recycler12.setItemAnimator(defaultItemAnimator);
+        recycler13.setItemAnimator(defaultItemAnimator);
 
 
     }
 
 
-    public static void Add(RecyclerView mRecyclerView,Friends entity){
+    public static void Add(RecyclerView mRecyclerView,Holdpeople entity){
         mAdapter.addData(mArrayList.size(), entity);
         mRecyclerView.smoothScrollToPosition(mArrayList.size());
     }
-
 }

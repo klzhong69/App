@@ -3,13 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/component2"
     android:background="#88000000">
 
     <RelativeLayout
-        android:id="@+id/recyclerbut"
+        android:id="@+id/recyclerbutc2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/imageView109"
+        android:layout_above="@+id/imageViewc2"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
@@ -20,20 +21,20 @@
     </RelativeLayout>
 
     <ImageView
-        android:id="@+id/imageView109"
+        android:id="@+id/imageViewc2"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_60"
-        android:layout_above="@+id/relative11"
+        android:layout_above="@+id/relativec2"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:background="@drawable/ima" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/textViewc2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/recyclerbut"
-        android:layout_alignBottom="@+id/imageView109"
+        android:layout_below="@+id/recyclerbutc2"
+        android:layout_alignBottom="@+id/imageViewc2"
         android:layout_alignParentStart="true"
         android:layout_marginStart="@dimen/dp_200"
         android:gravity="center"
@@ -42,11 +43,11 @@
         android:textSize="@dimen/sp_24" />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/textViewc2s"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_below="@+id/recyclerbut"
-        android:layout_alignBottom="@+id/imageView109"
+        android:layout_below="@+id/recyclerbutc2"
+        android:layout_alignBottom="@+id/imageViewc2"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="@dimen/dp_240"
@@ -57,11 +58,11 @@
         android:textSize="@dimen/sp_20" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/textViewc2t"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/recyclerbut"
-        android:layout_alignBottom="@+id/imageView109"
+        android:layout_below="@+id/recyclerbutc2"
+        android:layout_alignBottom="@+id/imageViewc2"
         android:layout_alignParentStart="true"
         android:layout_marginStart="@dimen/dp_320"
         android:gravity="center"
@@ -70,26 +71,45 @@
         android:textSize="@dimen/sp_20" />
 
     <RelativeLayout
-        android:id="@+id/relative11"
+        android:id="@+id/relativec2"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_500"
+        android:layout_height="@dimen/dp_600"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="0dp"
         android:background="@color/qmui_config_color_white">
 
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler12"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_20"
+            android:orientation="vertical" >
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerc2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/relativeLayout10" />
+            app:layout_constraintStart_toStartOf="parent" />
+        </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
     </RelativeLayout>
 
+
+    <ImageView
+        android:id="@+id/imageViewc2t"
+        android:layout_width="@dimen/dp_30"
+        android:layout_height="@dimen/dp_30"
+        android:layout_below="@+id/recyclerbutc2"
+        android:layout_alignBottom="@+id/imageViewc2"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="@dimen/dp_10"
+        app:srcCompat="@drawable/fold_white" />
 
 </RelativeLayout>

@@ -3,7 +3,7 @@
     <color name="colorPrimary">#ffffff</color>
     <color name="colorPrimaryDark">#ABABAB</color>
     <color name="colorAccent">#D81B60</color>
-    <color name="tabbarcolor">#FDEF6598</color>
+    <color name="tabbarcolor">#DFEF6598</color>
     <color name="cardFront">#434850</color>
     <color name="red_normal">#FF0000</color>
     <color name="red_pressed">#FF6666</color>

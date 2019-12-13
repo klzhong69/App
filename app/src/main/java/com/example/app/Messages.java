@@ -9,15 +9,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.app.Adapter.MessageAdapter;
 import com.example.app.Entity.Message;
 import com.example.app.Model.MessModel;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
@@ -56,6 +52,7 @@ public class Messages extends Fragment {
     RecyclerView recycler10;
     @BindView(R.id.recycler11)
     RecyclerView recycler11;
+
     private ArrayList<Message> mArrayList;
     private ArrayList<Message> mArrayLists;
 
@@ -67,13 +64,12 @@ public class Messages extends Fragment {
         unbinder = ButterKnife.bind(this, view);
         Context context = getContext();
         MessModel.initData();
-        MessModel.initrecycler(context,recycler10);
-        MessModel.initrecyclers(context,recycler11);
+        MessModel.initrecycler(context, recycler10,0);
+        MessModel.initrecyclers(context, recycler11,0);
 
         return view;
 
     }
-
 
 
     @Override
@@ -93,8 +89,6 @@ public class Messages extends Fragment {
         super.onDestroyView();
         unbinder.unbind();
     }
-
-
 
 
     @OnClick({R.id.imageView78, R.id.rect_views})

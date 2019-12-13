@@ -112,7 +112,7 @@
             android:layout_alignBottom="@+id/textView15"
             android:layout_marginStart="@dimen/dp_20"
             android:layout_toEndOf="@+id/textView15"
-            app:srcCompat="@drawable/back" />
+            app:srcCompat="@drawable/lw2" />
 
         <TextView
             android:id="@+id/textView17"

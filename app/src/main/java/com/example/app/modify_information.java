@@ -25,8 +25,7 @@ import butterknife.OnClick;
 
 public class modify_information extends AppCompatActivity {
 
-    @BindView(R.id.recycler2)
-    RecyclerView recycler2;
+
     @BindView(R.id.fold)
     ImageView fold;
     @BindView(R.id.title)
@@ -53,6 +52,8 @@ public class modify_information extends AppCompatActivity {
     RelativeLayout relativeLayout8;
     @BindView(R.id.textView38)
     TextView textView38;
+    @BindView(R.id.recycler2)
+    RecyclerView recycler2;
     private ArrayList<Modify> mData;
     private ModifyViewAdapter mAdapters;
     private GridLayoutManager mLayoutManager;

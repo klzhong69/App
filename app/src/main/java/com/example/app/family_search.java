@@ -24,6 +24,7 @@ import butterknife.ButterKnife;
 
 public class family_search extends AppCompatActivity {
 
+
     @BindView(R.id.imageView37)
     ImageView imageView37;
     @BindView(R.id.search_view)
@@ -80,7 +81,7 @@ public class family_search extends AppCompatActivity {
         recycler3.setItemAnimator(defaultItemAnimator);
     }
 
-    private void init(){
+    private void init() {
 
         searchView.setIconifiedByDefault(false);
         if (searchView == null) {
@@ -118,13 +119,13 @@ public class family_search extends AppCompatActivity {
 
     }
 
-    private void initData(){
+    private void initData() {
         mArrayList = new ArrayList<Familysea>();
-        Familysea i1 = new Familysea("芭比UU王国", "ID"+"25634896", "0", "R.drawable.l3", "https://momeak.oss-cn-shenzhen.aliyuncs.com/dear1.png");
+        Familysea i1 = new Familysea("芭比UU王国", "ID" + "25634896", "0", "R.drawable.l3", "https://momeak.oss-cn-shenzhen.aliyuncs.com/dear1.png");
         mArrayList.add(i1);
-        Familysea i2 = new Familysea("芭比UU王国", "ID"+"25634896", "0", "R.drawable.l3", "https://momeak.oss-cn-shenzhen.aliyuncs.com/dear2.png");
+        Familysea i2 = new Familysea("芭比UU王国", "ID" + "25634896", "0", "R.drawable.l3", "https://momeak.oss-cn-shenzhen.aliyuncs.com/dear2.png");
         mArrayList.add(i2);
-        Familysea i3 = new Familysea("芭比UU王国", "ID"+"25634896", "1", "R.drawable.l3", "https://momeak.oss-cn-shenzhen.aliyuncs.com/dear3.png");
+        Familysea i3 = new Familysea("芭比UU王国", "ID" + "25634896", "1", "R.drawable.l3", "https://momeak.oss-cn-shenzhen.aliyuncs.com/dear3.png");
         mArrayList.add(i3);
     }
 }

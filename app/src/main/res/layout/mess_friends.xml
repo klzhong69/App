@@ -58,7 +58,7 @@
         android:layout_alignBottom="@+id/imageView18"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="@dimen/dp_20"
-        app:srcCompat="@drawable/dk_hint_bg" />
+        app:srcCompat="@drawable/l_liaotian" />
 
 
 </RelativeLayout>

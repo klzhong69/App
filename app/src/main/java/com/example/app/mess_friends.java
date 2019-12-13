@@ -28,16 +28,7 @@ import butterknife.ButterKnife;
 
 public class mess_friends extends AppCompatActivity {
 
-    @BindView(R.id.imageView40)
-    ImageView imageView40;
-    @BindView(R.id.textView2)
-    TextView textView2;
-    @BindView(R.id.textView6)
-    TextView textView6;
-    @BindView(R.id.textView)
-    TextView textView;
-    @BindView(R.id.relativeLayout10)
-    RelativeLayout relativeLayout10;
+
     @BindView(R.id.recycler12)
     RecyclerView recycler12;
     private List<Friends> mArrayList;
@@ -49,7 +40,7 @@ public class mess_friends extends AppCompatActivity {
         ButterKnife.bind(this);
         Context context = this;
         MessFriendsModel.initData();
-        MessFriendsModel.initrecycler(context,recycler12);
+        MessFriendsModel.initrecycler(context,recycler12,0);
 
     }
 

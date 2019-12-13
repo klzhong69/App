@@ -39,7 +39,7 @@
         android:layout_alignBottom="@+id/textView74"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="@dimen/dp_20"
-        app:srcCompat="@drawable/dk_float_button" />
+        app:srcCompat="@drawable/me_shezhi" />
 
     <com.qmuiteam.qmui.widget.QMUIRadiusImageView
         android:id="@+id/imageView28"

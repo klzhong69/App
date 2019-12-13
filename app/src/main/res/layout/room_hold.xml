@@ -3,13 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/component3"
     android:background="#88000000">
 
     <RelativeLayout
-        android:id="@+id/recyclerbut"
+        android:id="@+id/recyclerbutc3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/imageView109"
+        android:layout_above="@+id/imageViewc3"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
@@ -20,20 +21,20 @@
     </RelativeLayout>
 
     <ImageView
-        android:id="@+id/imageView109"
+        android:id="@+id/imageViewc3"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_60"
-        android:layout_above="@+id/relative11"
+        android:layout_above="@+id/relativec3"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:background="@drawable/ima" />
 
     <TextView
-        android:id="@+id/textView128"
+        android:id="@+id/textViewc3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/imageView109"
-        android:layout_alignBottom="@+id/imageView109"
+        android:layout_alignTop="@+id/imageViewc3"
+        android:layout_alignBottom="@+id/imageViewc3"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:gravity="center"
@@ -41,11 +42,11 @@
         android:textColor="#ffffff" />
 
     <TextView
-        android:id="@+id/textView129"
+        android:id="@+id/textViewc3s"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/imageView109"
-        android:layout_alignBottom="@+id/imageView109"
+        android:layout_alignTop="@+id/imageViewc3"
+        android:layout_alignBottom="@+id/imageViewc3"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="@dimen/dp_15"
         android:layout_marginEnd="@dimen/dp_20"
@@ -58,23 +59,32 @@
         android:textColor="#F7B500" />
 
     <RelativeLayout
-        android:id="@+id/relative11"
+        android:id="@+id/relativec3"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_500"
+        android:layout_height="@dimen/dp_600"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="0dp"
         android:background="@color/qmui_config_color_white">
 
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler16"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true" />
+            android:orientation="vertical" >
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerc3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
     </RelativeLayout>
 
 

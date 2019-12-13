@@ -28,6 +28,7 @@ import butterknife.Unbinder;
 
 public class Find extends Fragment {
 
+
     @BindView(R.id.textView115)
     TextView textView115;
     @BindView(R.id.textView116)
@@ -40,7 +41,6 @@ public class Find extends Fragment {
     SmartRefreshLayout refreshLayout;
     private Unbinder unbinder;
     private ArrayList<Findlist> mArrayList;
-    Integer[] item = {R.drawable.addpic, R.drawable.back};
 
     @Nullable
     @Override
@@ -75,7 +75,7 @@ public class Find extends Fragment {
         mAdapter.setOnItemClickListener(new FindListAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Intent intent = new Intent(getContext(), chatroom_chat.class);
+                Intent intent = new Intent(getContext(), chatroom.class);
                 startActivity(intent);
 
             }

@@ -20,8 +20,6 @@ import butterknife.OnClick;
 public class family_home extends AppCompatActivity {
 
 
-    @BindView(R.id.recycler4)
-    RecyclerView recycler4;
     @BindView(R.id.fold)
     ImageView fold;
     @BindView(R.id.title)
@@ -80,6 +78,8 @@ public class family_home extends AppCompatActivity {
     RelativeLayout relative3;
     @BindView(R.id.textView47)
     TextView textView47;
+    @BindView(R.id.recycler4)
+    RecyclerView recycler4;
     @BindView(R.id.relative4)
     RelativeLayout relative4;
     @BindView(R.id.imageView48)

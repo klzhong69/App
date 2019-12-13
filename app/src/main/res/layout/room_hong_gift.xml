@@ -3,13 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/component4"
     android:background="#88000000">
 
     <RelativeLayout
-        android:id="@+id/recyclerbut"
+        android:id="@+id/recyclerbutc4"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/imageView109"
+        android:layout_above="@+id/imageViewc4"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
@@ -21,21 +22,21 @@
     </RelativeLayout>
 
     <ImageView
-        android:id="@+id/imageView109"
+        android:id="@+id/imageViewc4"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_80"
-        android:layout_above="@+id/relative11"
+        android:layout_above="@+id/relativec4"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:background="@drawable/ima" />
 
 
     <com.qmuiteam.qmui.widget.QMUIRadiusImageView
-        android:id="@+id/imageView18"
+        android:id="@+id/imageViewc4s"
         android:layout_width="@dimen/dp_50"
         android:layout_height="@dimen/dp_50"
-        android:layout_below="@+id/recyclerbut"
-        android:layout_alignBottom="@+id/imageView109"
+        android:layout_below="@+id/recyclerbutc4"
+        android:layout_alignBottom="@+id/imageViewc4"
         android:layout_alignParentStart="true"
         android:layout_marginStart="@dimen/dp_20"
         android:layout_marginTop="@dimen/dp_15"
@@ -45,23 +46,21 @@
         app:qmui_corner_radius="@dimen/dp_50" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/gridview"
+        android:id="@+id/gridviewc4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/recyclerbut"
-        android:layout_alignBottom="@+id/imageView109"
+        android:layout_below="@+id/recyclerbutc4"
+        android:layout_alignBottom="@+id/imageViewc4"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="0dp"
-        android:layout_marginEnd="@dimen/dp_20"
-        android:layout_marginBottom="0dp"
-        android:layout_toEndOf="@+id/imageView18"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:layout_toEndOf="@+id/imageViewc4s"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <RelativeLayout
-        android:id="@+id/relative11"
+        android:id="@+id/relativec4"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_400"
+        android:layout_height="@dimen/dp_450"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
@@ -70,7 +69,7 @@
 
 
         <TextView
-            android:id="@+id/textView122"
+            android:id="@+id/textViewc4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
@@ -87,12 +86,12 @@
             android:textSize="@dimen/sp_18" />
 
         <TextView
-            android:id="@+id/textView142"
+            android:id="@+id/textViewc4s"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/textView122"
+            android:layout_alignTop="@+id/textViewc4"
             android:layout_marginStart="@dimen/dp_10"
-            android:layout_toEndOf="@+id/textView122"
+            android:layout_toEndOf="@+id/textViewc4"
             android:paddingStart="@dimen/dp_10"
             android:paddingTop="@dimen/dp_2"
             android:paddingEnd="@dimen/dp_10"
@@ -102,12 +101,12 @@
             android:textSize="@dimen/sp_18" />
 
         <TextView
-            android:id="@+id/textView143"
+            android:id="@+id/textViewc4t"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/textView142"
+            android:layout_alignTop="@+id/textViewc4s"
             android:layout_marginStart="@dimen/dp_10"
-            android:layout_toEndOf="@+id/textView142"
+            android:layout_toEndOf="@+id/textViewc4s"
             android:paddingStart="@dimen/dp_10"
             android:paddingTop="@dimen/dp_2"
             android:paddingEnd="@dimen/dp_10"
@@ -117,18 +116,18 @@
             android:textSize="@dimen/sp_18" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler18"
+            android:id="@+id/recyclerc4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/imageView131"
-            android:layout_below="@+id/textView122"
+            android:layout_above="@+id/imageViewc4t"
+            android:layout_below="@+id/textViewc4"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="@dimen/dp_20"
             android:layout_marginBottom="@dimen/dp_10" />
 
         <com.qmuiteam.qmui.widget.QMUIRadiusImageView
-            android:id="@+id/imageView130"
+            android:id="@+id/imageViewc4t"
             android:layout_width="@dimen/dp_80"
             android:layout_height="@dimen/dp_40"
             android:layout_alignParentEnd="true"
@@ -140,55 +139,55 @@
             app:qmui_corner_radius="@dimen/dp_20" />
 
         <TextView
-            android:id="@+id/textView144"
+            android:id="@+id/textViewc4a"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/imageView130"
-            android:layout_alignTop="@+id/imageView130"
-            android:layout_alignEnd="@+id/imageView130"
-            android:layout_alignBottom="@+id/imageView130"
+            android:layout_alignStart="@+id/imageViewc4t"
+            android:layout_alignTop="@+id/imageViewc4t"
+            android:layout_alignEnd="@+id/imageViewc4t"
+            android:layout_alignBottom="@+id/imageViewc4t"
             android:gravity="center"
             android:text="赠送"
             android:textColor="@color/dk_color_0099dd" />
 
         <com.qmuiteam.qmui.widget.QMUIRadiusImageView
-            android:id="@+id/imageView131"
+            android:id="@+id/imageViewc4a"
             android:layout_width="@dimen/dp_80"
             android:layout_height="@dimen/dp_40"
             android:layout_alignParentBottom="true"
             android:layout_marginEnd="@dimen/dp_10"
             android:layout_marginBottom="@dimen/dp_10"
-            android:layout_toStartOf="@+id/imageView130"
+            android:layout_toStartOf="@+id/imageViewc4t"
             android:src="@color/backs"
             app:qmui_border_width="0dp"
             app:qmui_corner_radius="@dimen/dp_20"/>
 
         <TextView
-            android:id="@+id/textView145"
+            android:id="@+id/textViewc4b"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/imageView131"
-            android:layout_alignTop="@+id/imageView131"
-            android:layout_alignBottom="@+id/imageView131"
+            android:layout_alignStart="@+id/imageViewc4a"
+            android:layout_alignTop="@+id/imageViewc4a"
+            android:layout_alignBottom="@+id/imageViewc4a"
             android:layout_marginStart="@dimen/dp_20"
             android:gravity="center"
             android:text="1"
             android:textColor="#ffffff" />
 
         <ImageView
-            android:id="@+id/imageView132"
-            android:layout_width="@dimen/dp_30"
-            android:layout_height="@dimen/dp_30"
-            android:layout_alignTop="@+id/imageView131"
-            android:layout_alignEnd="@+id/imageView131"
-            android:layout_alignBottom="@+id/imageView131"
-            android:layout_marginTop="@dimen/dp_5"
+            android:id="@+id/imageViewc4b"
+            android:layout_width="@dimen/dp_20"
+            android:layout_height="@dimen/dp_20"
+            android:layout_alignTop="@+id/imageViewc4a"
+            android:layout_alignEnd="@+id/imageViewc4a"
+            android:layout_alignBottom="@+id/imageViewc4a"
+            android:layout_marginTop="@dimen/dp_10"
             android:layout_marginEnd="@dimen/dp_10"
-            android:layout_marginBottom="@dimen/dp_5"
-            app:srcCompat="@drawable/dk_arrow_right" />
+            android:layout_marginBottom="@dimen/dp_10"
+            app:srcCompat="@drawable/qmui_icon_chevron" />
 
         <com.qmuiteam.qmui.widget.QMUIRadiusImageView
-            android:id="@+id/imageView128"
+            android:id="@+id/imageViewc4c"
             android:layout_width="@dimen/dp_100"
             android:layout_height="@dimen/dp_40"
             android:layout_alignParentStart="true"
@@ -201,25 +200,25 @@
             app:qmui_corner_radius="@dimen/dp_20" />
 
         <ImageView
-            android:id="@+id/imageView129"
+            android:id="@+id/imageViewc4d"
             android:layout_width="@dimen/dp_30"
             android:layout_height="@dimen/dp_30"
-            android:layout_alignStart="@+id/imageView128"
-            android:layout_alignTop="@+id/imageView128"
-            android:layout_alignBottom="@+id/imageView128"
+            android:layout_alignStart="@+id/imageViewc4c"
+            android:layout_alignTop="@+id/imageViewc4c"
+            android:layout_alignBottom="@+id/imageViewc4c"
             android:layout_marginStart="@dimen/dp_10"
             android:layout_marginTop="@dimen/dp_5"
             android:layout_marginBottom="@dimen/dp_5"
             app:srcCompat="@drawable/dk_network_pie" />
 
         <TextView
-            android:id="@+id/textView141"
+            android:id="@+id/textViewc4c"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/imageView128"
-            android:layout_alignBottom="@+id/imageView128"
+            android:layout_alignTop="@+id/imageViewc4c"
+            android:layout_alignBottom="@+id/imageViewc4c"
             android:layout_marginStart="@dimen/dp_5"
-            android:layout_toEndOf="@+id/imageView129"
+            android:layout_toEndOf="@+id/imageViewc4d"
             android:gravity="center"
             android:text="充值"
             android:textColor="#F7B500"

@@ -15,14 +15,13 @@ import butterknife.OnClick;
 
 public class friends_card extends AppCompatActivity {
 
+
     @BindView(R.id.fold)
     ImageView fold;
     @BindView(R.id.title)
     TextView title;
     @BindView(R.id.subtitle)
     TextView subtitle;
-    @BindView(R.id.imageView23)
-    ImageView imageView23;
     @BindView(R.id.imageView22)
     ImageView imageView22;
     @BindView(R.id.textView12)
@@ -39,8 +38,6 @@ public class friends_card extends AppCompatActivity {
     TextView textView23;
     @BindView(R.id.textView32)
     TextView textView32;
-    @BindView(R.id.imageView51)
-    ImageView imageView51;
     @BindView(R.id.imageView52)
     ImageView imageView52;
     @BindView(R.id.textView33)
@@ -49,16 +46,12 @@ public class friends_card extends AppCompatActivity {
     QMUIRadiusImageView imageView53;
     @BindView(R.id.textView34)
     TextView textView34;
-    @BindView(R.id.textView35)
-    TextView textView35;
     @BindView(R.id.imageView54)
     ImageView imageView54;
     @BindView(R.id.textView36)
     TextView textView36;
     @BindView(R.id.textView37)
     TextView textView37;
-    @BindView(R.id.imageView55)
-    ImageView imageView55;
     @BindView(R.id.imageView56)
     ImageView imageView56;
     @BindView(R.id.textView38)
@@ -67,8 +60,6 @@ public class friends_card extends AppCompatActivity {
     QMUIRadiusImageView imageView57;
     @BindView(R.id.textView39)
     TextView textView39;
-    @BindView(R.id.textView40)
-    TextView textView40;
     @BindView(R.id.imageView58)
     ImageView imageView58;
     @BindView(R.id.textView41)

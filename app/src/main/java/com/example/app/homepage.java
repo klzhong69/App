@@ -24,8 +24,7 @@ import butterknife.OnClick;
 
 public class homepage extends AppCompatActivity {
 
-    @BindView(R.id.recycler)
-    RecyclerView gridview;
+
     @BindView(R.id.fold)
     ImageView fold;
     @BindView(R.id.title)
@@ -98,18 +97,12 @@ public class homepage extends AppCompatActivity {
     RelativeLayout relativeLayout2;
     @BindView(R.id.imageView20)
     ImageView imageView20;
-    @BindView(R.id.imageView21)
-    ImageView imageView21;
-    @BindView(R.id.imageView23)
-    ImageView imageView23;
-    @BindView(R.id.imageView25)
-    ImageView imageView25;
     @BindView(R.id.imageView22)
-    ImageView imageView22;
+    QMUIRadiusImageView imageView22;
     @BindView(R.id.imageView26)
-    ImageView imageView26;
+    QMUIRadiusImageView imageView26;
     @BindView(R.id.imageView27)
-    ImageView imageView27;
+    QMUIRadiusImageView imageView27;
     @BindView(R.id.textView12)
     TextView textView12;
     @BindView(R.id.textView13)
@@ -144,6 +137,8 @@ public class homepage extends AppCompatActivity {
     RelativeLayout relativeLayout3;
     @BindView(R.id.imageView30)
     ImageView imageView30;
+    @BindView(R.id.recycler)
+    RecyclerView recycler;
     @BindView(R.id.relativeLayout4)
     RelativeLayout relativeLayout4;
     @BindView(R.id.imageView34)
@@ -158,9 +153,6 @@ public class homepage extends AppCompatActivity {
     RelativeLayout relativeLayout5;
     @BindView(R.id.largeLabel)
     RelativeLayout largeLabel;
-    private GridViewAdapter mAdapters;//适配器
-    private ArrayList<Page> mData;
-    private GridLayoutManager mLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -170,7 +162,7 @@ public class homepage extends AppCompatActivity {
 
         Context context = this;
         HomePageModel.initData();
-        HomePageModel.initrecycler(context, gridview);
+        HomePageModel.initrecycler(context, recycler);
     }
 
 

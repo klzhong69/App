@@ -47,16 +47,6 @@
             android:layout_toEndOf="@+id/textView66"
             app:srcCompat="@drawable/l3" />
 
-        <TextView
-            android:id="@+id/textView113"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/imageView18"
-            android:layout_alignBottom="@+id/imageView18"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="@dimen/dp_20"
-            android:gravity="center_vertical"
-            android:text="房主" />
 
         <TextView
             android:id="@+id/textView114"
@@ -69,17 +59,25 @@
             android:text="ID2634589"
             android:textSize="@dimen/sp_16" />
 
-        <RadioButton
-            android:id="@+id/radioButton"
-            android:layout_width="@dimen/dp_40"
+        <TextView
+            android:id="@+id/textView115"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
+            android:layout_marginTop="@dimen/dp_35"
             android:layout_marginEnd="@dimen/dp_20"
-            android:button="@drawable/radio"
-            android:checked="false" />
-
+            android:layout_marginBottom="@dimen/dp_35"
+            android:background="@drawable/txtframeblue"
+            android:paddingStart="@dimen/dp_10"
+            android:paddingTop="@dimen/dp_2"
+            android:paddingEnd="@dimen/dp_10"
+            android:paddingBottom="@dimen/dp_2"
+            android:gravity="center"
+            android:text="管理员"
+            android:textColor="#1b88ee"
+            android:textSize="@dimen/sp_16" />
 
     </RelativeLayout>
 

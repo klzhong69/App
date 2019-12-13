@@ -3,13 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/component5"
     android:background="#88000000">
 
     <RelativeLayout
-        android:id="@+id/recyclerbut"
+        android:id="@+id/recyclerbutc5"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/imageView109"
+        android:layout_above="@+id/imageViewc5"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
@@ -21,20 +22,20 @@
 
 
     <ImageView
-        android:id="@+id/imageView109"
+        android:id="@+id/imageViewc5"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_60"
-        android:layout_above="@+id/relative11"
+        android:layout_above="@+id/relativec5"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:background="@drawable/ima" />
 
     <TextView
-        android:id="@+id/textView128"
+        android:id="@+id/textViewc5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/imageView109"
-        android:layout_alignBottom="@+id/imageView109"
+        android:layout_alignTop="@+id/imageViewc5"
+        android:layout_alignBottom="@+id/imageViewc5"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:gravity="center"
@@ -42,40 +43,52 @@
         android:textColor="#ffffff" />
 
     <ImageView
-        android:id="@+id/imageView110"
+        android:id="@+id/imageViewc5s"
         android:layout_width="@dimen/dp_30"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/imageView109"
-        android:layout_alignBottom="@+id/imageView109"
+        android:layout_alignTop="@+id/imageViewc5"
+        android:layout_alignBottom="@+id/imageViewc5"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="26dp"
-        app:srcCompat="@drawable/dk_btn_pause_style" />
+        app:srcCompat="@drawable/people" />
 
 
     <RelativeLayout
-        android:id="@+id/relative11"
+        android:id="@+id/relativec5"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_500"
+        android:layout_height="@dimen/dp_600"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="0dp"
         android:background="@color/qmui_config_color_white">
 
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler10"
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/rect_views"
-            android:layout_marginTop="@dimen/dp_10" />
+            android:layout_height="match_parent"
+            android:fillViewport="true">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler11"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/recycler10"
-            android:layout_marginTop="@dimen/dp_10" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerc5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_marginEnd="0dp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerc5s"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_marginEnd="0dp" />
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
     </RelativeLayout>
 
 

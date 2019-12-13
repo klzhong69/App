@@ -28,6 +28,7 @@ import butterknife.OnClick;
 
 public class find_make extends AppCompatActivity {
 
+
     @BindView(R.id.imageView40)
     ImageView imageView40;
     @BindView(R.id.textView2)
@@ -163,7 +164,7 @@ public class find_make extends AppCompatActivity {
 
     }
 
-    @OnClick({R.id.imageView40,R.id.textView2, R.id.textView6, R.id.but})
+    @OnClick({R.id.imageView40, R.id.textView2, R.id.textView6, R.id.but})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.imageView40:

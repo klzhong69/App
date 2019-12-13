@@ -13,9 +13,14 @@ import com.example.app.Adapter.MessageAdapter;
 import com.example.app.Entity.Message;
 import com.example.app.Messages;
 import com.example.app.chat;
+import com.example.app.chatroom;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
+
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
 
 public class MessModel {
 
@@ -41,7 +46,7 @@ public class MessModel {
 
     }
 
-    public static void initrecycler(Context context, RecyclerView recycler10) {
+    public static void initrecycler(Context context, RecyclerView recycler10,int a) {
         //适配器
         MessageAdapter mAdapter = new MessageAdapter(context, mArrayList);
         //设置适配器adapter
@@ -62,8 +67,19 @@ public class MessModel {
         mAdapter.setOnItemClickListener(new MessageAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Intent intent2 = new Intent(context, chat.class);
-                context.startActivity(intent2);
+                if(a==0){
+                    Intent intent2 = new Intent(context, chat.class);
+                    context.startActivity(intent2);
+                }else{
+                    Observable<Integer> observable = Observable.defer(new Callable<ObservableSource<? extends Integer>>() {
+                        @Override
+                        public ObservableSource<? extends Integer> call() throws Exception {
+                            return Observable.just(5);
+                        }
+                    });
+                    observable.subscribe(chatroom.observer);
+                }
+
             }
 
             @Override
@@ -82,7 +98,7 @@ public class MessModel {
         recycler10.setItemAnimator(defaultItemAnimator);
     }
 
-    public static void initrecyclers(Context context, RecyclerView recycler11) {
+    public static void initrecyclers(Context context, RecyclerView recycler11,int a) {
         //适配器
         MessageAdapter mAdapter = new MessageAdapter(context, mArrayLists);
         //设置适配器adapter

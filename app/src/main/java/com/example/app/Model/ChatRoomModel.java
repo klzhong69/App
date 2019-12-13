@@ -1,7 +1,11 @@
 package com.example.app.Model;
 
+import android.app.DialogFragment;
 import android.content.Context;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -13,9 +17,21 @@ import com.example.app.Adapter.RoomheadAdapter;
 import com.example.app.Adapter.RoomtxtAdapter;
 import com.example.app.Entity.Roomhead;
 import com.example.app.Entity.Roomtxt;
+import com.example.app.R;
 import com.example.app.chatroom;
+import com.qmuiteam.qmui.util.QMUIDisplayHelper;
+import com.qmuiteam.qmui.widget.popup.QMUIPopup;
+import com.qmuiteam.qmui.widget.popup.QMUIPopups;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.concurrent.Callable;
+
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+
+import static java.security.AccessController.getContext;
 
 public class ChatRoomModel {
 
@@ -76,12 +92,12 @@ public class ChatRoomModel {
         mAdapter.setOnItemClickListener(new RoomtxtAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Toast.makeText(context, position + " click", Toast.LENGTH_SHORT).show();
+
             }
 
             @Override
             public void onItemLongClick(View view, int position) {
-                Toast.makeText(context, position + " Long click", Toast.LENGTH_SHORT).show();
+
             }
         });
 
@@ -113,12 +129,20 @@ public class ChatRoomModel {
         mAdapters.setOnItemClickListener(new RoomheadAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Toast.makeText(context, position + " click", Toast.LENGTH_SHORT).show();
+                Observable<View> observable = Observable.defer(new Callable<ObservableSource<? extends View>>() {
+                    @Override
+                    public ObservableSource<? extends View> call() throws Exception {
+                        return Observable.just(view);
+                    }
+                });
+                observable.subscribe(chatroom.observers);
             }
 
             @Override
             public void onItemLongClick(View view, int position) {
-                Toast.makeText(context, position + " Long click", Toast.LENGTH_SHORT).show();
+
+
+
             }
         });
 

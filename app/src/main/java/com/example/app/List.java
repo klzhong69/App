@@ -1,7 +1,6 @@
 package com.example.app;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,18 +8,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.app.Adapter.ListLeaderAdapter;
-import com.example.app.Entity.Listleader;
-import com.example.app.Model.HomePageModel;
 import com.example.app.Model.ListModel;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.scwang.smart.refresh.header.MaterialHeader;
@@ -28,23 +21,12 @@ import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
 
-import java.util.ArrayList;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 public class List extends Fragment {
     Unbinder unbinder;
-
-    private static final String REFRESH_HEADER_PULLDOWN = "下拉可以刷新";
-    private static final String REFRESH_HEADER_REFRESHING = "正在刷新...";
-    private static final String REFRESH_HEADER_LOADING = "正在加载...";
-    private static final String REFRESH_HEADER_RELEASE = "释放立即刷新";
-    private static final String REFRESH_HEADER_FINISH = "刷新完成";
-    private static final String REFRESH_HEADER_FAILED = "刷新失败";
-    private static final String REFRESH_HEADER_SECONDARY = "释放进入二楼";
-    private static final String REFRESH_HEADER_LASTTIME = "上次更新 M-d HH:mm";
     @BindView(R.id.imageView86)
     ImageView imageView86;
     @BindView(R.id.imageView28)
@@ -95,6 +77,8 @@ public class List extends Fragment {
     TextView textView112;
     @BindView(R.id.relative8)
     RelativeLayout relative8;
+    @BindView(R.id.recycler13)
+    RecyclerView recycler13;
     @BindView(R.id.textView67)
     TextView textView67;
     @BindView(R.id.imageView21)
@@ -109,14 +93,11 @@ public class List extends Fragment {
     TextView textView113;
     @BindView(R.id.textView114)
     TextView textView114;
-    @BindView(R.id.recycler13)
-    RecyclerView recycler13;
     @BindView(R.id.relative10)
     RelativeLayout relative10;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
 
-    private ArrayList<Listleader> mArrayList;
 
     @Nullable
     @Override
@@ -126,7 +107,7 @@ public class List extends Fragment {
 
         Context context = getContext();
         ListModel.initData();
-        ListModel.initrecycler(context,recycler13);
+        ListModel.initrecycler(context, recycler13);
 
         refreshLayout.setRefreshHeader(new MaterialHeader(getContext()).setScrollableWhenRefreshing(true));
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
@@ -153,7 +134,6 @@ public class List extends Fragment {
                         });*/
             }
         });
-
 
 
         return view;
