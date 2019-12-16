@@ -40,6 +40,8 @@ public class my_footprint extends AppCompatActivity {
         setContentView(R.layout.activity_my_footprint);
         ButterKnife.bind(this);
         initData();
+        title.setText("我的足迹");
+        subtitle.setText("");
         //适配器
         FootprintAdapter mAdapter = new FootprintAdapter(this, mArrayList);
         //设置适配器adapter

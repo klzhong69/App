@@ -60,7 +60,8 @@ public class my_gold extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_gold);
         ButterKnife.bind(this);
-
+        title.setText("我的金币");
+        subtitle.setText("");
         init();
 
         //创建适配器，将数据传递给适配器

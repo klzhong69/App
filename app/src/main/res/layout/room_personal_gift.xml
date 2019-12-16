@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/component9"
-    android:background="#88000000">
+    android:background="#aa000000">
 
     <RelativeLayout
         android:id="@+id/recyclerbutc9"
@@ -111,7 +111,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="0dp"
-        android:background="@color/qmui_config_color_25_pure_black">
+        android:background="#666666">
 
 
         <TextView
@@ -128,7 +128,7 @@
             android:paddingEnd="@dimen/dp_10"
             android:paddingBottom="@dimen/dp_2"
             android:text="礼物"
-            android:textColor="#1b88ee"
+            android:textColor="@color/design_default_color_secondary"
             android:textSize="@dimen/sp_18" />
 
         <TextView
@@ -194,7 +194,7 @@
             android:layout_alignBottom="@+id/imageViewc9b"
             android:gravity="center"
             android:text="赠送"
-            android:textColor="@color/dk_color_0099dd" />
+            android:textColor="@color/design_default_color_secondary" />
 
         <com.qmuiteam.qmui.widget.QMUIRadiusImageView
             android:id="@+id/imageViewc9c"

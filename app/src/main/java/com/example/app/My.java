@@ -125,6 +125,7 @@ public class My extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.my_home, container, false);
         unbinder = ButterKnife.bind(this, view);
+        textView88.setText("未认证");
         return view;
     }
 
@@ -157,6 +158,8 @@ public class My extends Fragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.imageView68:
+                Intent intent1 = new Intent(getContext(), my_set.class);
+                startActivity(intent1);
                 break;
             case R.id.imageView36:
             case R.id.textView11:

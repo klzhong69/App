@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".my_set">
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/head"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_80"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <ImageView
+        android:id="@+id/imageView119"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_70"
+        android:layout_marginTop="@dimen/dp_10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include"
+        app:srcCompat="@color/qmui_config_color_white" />
+
+    <TextView
+        android:id="@+id/textView137"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_20"
+        android:text="修改密码"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView119"
+        app:layout_constraintStart_toStartOf="@+id/imageView119"
+        app:layout_constraintTop_toTopOf="@+id/imageView119" />
+
+    <ImageView
+        android:id="@+id/imageView120"
+        android:layout_width="@dimen/dp_20"
+        android:layout_height="@dimen/dp_20"
+        android:layout_marginEnd="@dimen/dp_20"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView119"
+        app:layout_constraintEnd_toEndOf="@+id/imageView119"
+        app:layout_constraintTop_toTopOf="@+id/imageView119"
+        app:srcCompat="@drawable/dk_more_icon" />
+
+    <ImageView
+        android:id="@+id/imageView121"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_70"
+        android:layout_marginTop="@dimen/dp_5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView119"
+        app:srcCompat="@color/qmui_config_color_white" />
+
+    <TextView
+        android:id="@+id/textView138"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_20"
+        android:text="换绑手机号"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView121"
+        app:layout_constraintStart_toStartOf="@+id/imageView121"
+        app:layout_constraintTop_toTopOf="@+id/imageView121" />
+
+    <ImageView
+        android:id="@+id/imageView122"
+        android:layout_width="@dimen/dp_20"
+        android:layout_height="@dimen/dp_20"
+        android:layout_marginEnd="@dimen/dp_20"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView121"
+        app:layout_constraintEnd_toEndOf="@+id/imageView121"
+        app:layout_constraintTop_toTopOf="@+id/imageView121"
+        app:srcCompat="@drawable/dk_more_icon" />
+
+    <ImageView
+        android:id="@+id/imageView123"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_70"
+        android:layout_marginTop="@dimen/dp_10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView121"
+        app:srcCompat="@color/qmui_config_color_white" />
+
+    <TextView
+        android:id="@+id/textView139"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_20"
+        android:text="推送通知设置"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView123"
+        app:layout_constraintStart_toStartOf="@+id/imageView123"
+        app:layout_constraintTop_toTopOf="@+id/imageView123" />
+
+    <ImageView
+        android:id="@+id/imageView124"
+        android:layout_width="@dimen/dp_20"
+        android:layout_height="@dimen/dp_20"
+        android:layout_marginEnd="@dimen/dp_20"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView123"
+        app:layout_constraintEnd_toEndOf="@+id/imageView123"
+        app:layout_constraintTop_toTopOf="@+id/imageView123"
+        app:srcCompat="@drawable/dk_more_icon" />
+
+    <ImageView
+        android:id="@+id/imageView125"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_70"
+        android:layout_marginTop="@dimen/dp_5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView123"
+        app:srcCompat="@color/qmui_config_color_white" />
+
+    <TextView
+        android:id="@+id/textView140"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_20"
+        android:text="反馈建议"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView125"
+        app:layout_constraintStart_toStartOf="@+id/imageView125"
+        app:layout_constraintTop_toTopOf="@+id/imageView125" />
+
+    <ImageView
+        android:id="@+id/imageView126"
+        android:layout_width="@dimen/dp_20"
+        android:layout_height="@dimen/dp_20"
+        android:layout_marginEnd="@dimen/dp_20"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView125"
+        app:layout_constraintEnd_toEndOf="@+id/imageView125"
+        app:layout_constraintTop_toTopOf="@+id/imageView125"
+        app:srcCompat="@drawable/dk_more_icon" />
+
+    <ImageView
+        android:id="@+id/imageView127"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_70"
+        android:layout_marginTop="@dimen/dp_10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView125"
+        app:srcCompat="@color/qmui_config_color_white" />
+
+    <TextView
+        android:id="@+id/textView141"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_20"
+        android:text="切换账号"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView127"
+        app:layout_constraintStart_toStartOf="@+id/imageView127"
+        app:layout_constraintTop_toTopOf="@+id/imageView127" />
+
+    <ImageView
+        android:id="@+id/imageView128"
+        android:layout_width="@dimen/dp_20"
+        android:layout_height="@dimen/dp_20"
+        android:layout_marginEnd="@dimen/dp_20"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView127"
+        app:layout_constraintEnd_toEndOf="@+id/imageView127"
+        app:layout_constraintTop_toTopOf="@+id/imageView127"
+        app:srcCompat="@drawable/dk_more_icon" />
+
+    <ImageView
+        android:id="@+id/imageView129"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_70"
+        android:layout_marginTop="@dimen/dp_5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView127"
+        app:srcCompat="@color/qmui_config_color_white" />
+
+    <TextView
+        android:id="@+id/textView142"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_20"
+        android:text="清理内存"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView129"
+        app:layout_constraintStart_toStartOf="@+id/imageView129"
+        app:layout_constraintTop_toTopOf="@+id/imageView129" />
+
+    <ImageView
+        android:id="@+id/imageView130"
+        android:layout_width="@dimen/dp_20"
+        android:layout_height="@dimen/dp_20"
+        android:layout_marginEnd="@dimen/dp_20"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView129"
+        app:layout_constraintEnd_toEndOf="@+id/imageView129"
+        app:layout_constraintTop_toTopOf="@+id/imageView129"
+        app:srcCompat="@drawable/dk_more_icon" />
+
+    <ImageView
+        android:id="@+id/imageView131"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_70"
+        android:layout_marginTop="@dimen/dp_5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView129"
+        app:srcCompat="@color/qmui_config_color_white" />
+
+    <TextView
+        android:id="@+id/textView143"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_20"
+        android:text="关于我们"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView131"
+        app:layout_constraintStart_toStartOf="@+id/imageView131"
+        app:layout_constraintTop_toTopOf="@+id/imageView131" />
+
+    <ImageView
+        android:id="@+id/imageView132"
+        android:layout_width="@dimen/dp_20"
+        android:layout_height="@dimen/dp_20"
+        android:layout_marginEnd="@dimen/dp_20"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView131"
+        app:layout_constraintEnd_toEndOf="@+id/imageView131"
+        app:layout_constraintTop_toTopOf="@+id/imageView131"
+        app:srcCompat="@drawable/dk_more_icon" />
+
+
+    <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
+        android:id="@+id/but"
+        android:layout_width="@dimen/dp_240"
+        android:layout_height="@dimen/dp_50"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:padding="@dimen/dp_10"
+        android:text="退出登录"
+        android:textColor="@color/qmui_config_color_white"
+        android:textSize="@dimen/sp_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView131"
+        app:layout_constraintVertical_bias="0.7"
+        app:qmui_backgroundColor="@color/tabbarcolor"
+        app:qmui_borderWidth="0px"
+        app:qmui_radius="@dimen/dp_30" />
+</androidx.constraintlayout.widget.ConstraintLayout>

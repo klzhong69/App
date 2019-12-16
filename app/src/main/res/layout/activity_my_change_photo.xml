@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".my_change_photo">
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/head"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_80"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <com.qmuiteam.qmui.widget.QMUIRadiusImageView
+        android:id="@+id/imageView18"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_60"
+        android:layout_marginStart="@dimen/dp_20"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="@dimen/dp_20"
+        android:src="@color/qmui_config_color_white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include"
+        app:qmui_border_width="0dp"
+        app:qmui_corner_radius="15dp" />
+
+    <EditText
+        android:id="@+id/editText4"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:background="@color/qmui_config_color_white"
+        android:gravity="center_vertical"
+        android:hint="请输入当前手机号"
+        android:imeOptions="actionSend"
+        android:inputType="textPassword"
+        android:minLines="1"
+        android:paddingStart="@dimen/dp_20"
+        android:paddingTop="@dimen/dp_10"
+        android:paddingEnd="@dimen/dp_20"
+        android:paddingBottom="@dimen/dp_10"
+        android:textColorHint="#66000000"
+        android:textSize="@dimen/sp_18"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView18"
+        app:layout_constraintEnd_toEndOf="@+id/imageView18"
+        app:layout_constraintStart_toStartOf="@+id/imageView18"
+        app:layout_constraintTop_toTopOf="@+id/imageView18" />
+
+    <com.qmuiteam.qmui.widget.QMUIRadiusImageView
+        android:id="@+id/imageView20"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_60"
+        android:layout_marginStart="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_5"
+        android:layout_marginEnd="@dimen/dp_20"
+        android:src="@color/qmui_config_color_white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView18"
+        app:qmui_border_width="0dp"
+        app:qmui_corner_radius="15dp" />
+
+    <EditText
+        android:id="@+id/editText5"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:background="@color/qmui_config_color_white"
+        android:gravity="center_vertical"
+        android:hint="请输入手机验证"
+        android:imeOptions="actionSend"
+        android:inputType="textPassword"
+        android:minLines="1"
+        android:paddingStart="@dimen/dp_20"
+        android:paddingTop="@dimen/dp_10"
+        android:paddingEnd="@dimen/dp_20"
+        android:paddingBottom="@dimen/dp_10"
+        android:textColorHint="#66000000"
+        android:textSize="@dimen/sp_18"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView20"
+        app:layout_constraintEnd_toStartOf="@+id/textView150"
+        app:layout_constraintStart_toStartOf="@+id/imageView20"
+        app:layout_constraintTop_toTopOf="@+id/imageView20" />
+
+    <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
+        android:id="@+id/but"
+        android:layout_width="@dimen/dp_240"
+        android:layout_height="@dimen/dp_50"
+        android:layout_centerInParent="true"
+        android:clickable="true"
+        android:gravity="center"
+        android:padding="@dimen/dp_10"
+        android:text="确认解绑"
+        android:textColor="@color/qmui_config_color_white"
+        android:textSize="@dimen/sp_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView20"
+        app:layout_constraintVertical_bias="0.2"
+        app:qmui_backgroundColor="@color/tabbarcolor"
+        app:qmui_borderWidth="0px"
+        app:qmui_radius="@dimen/dp_30" />
+
+    <TextView
+        android:id="@+id/textView150"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dp_20"
+        android:background="@drawable/rounded"
+        android:paddingStart="@dimen/dp_10"
+        android:paddingTop="@dimen/dp_5"
+        android:paddingEnd="@dimen/dp_10"
+        android:paddingBottom="@dimen/dp_5"
+        android:text="获取验证码"
+        android:textSize="@dimen/sp_16"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView20"
+        app:layout_constraintEnd_toEndOf="@+id/imageView20"
+        app:layout_constraintTop_toTopOf="@+id/imageView20"
+        app:layout_constraintVertical_bias="0.48" />
+
+    <ImageView
+        android:id="@+id/imageView111"
+        android:layout_width="@dimen/dp_100"
+        android:layout_height="0dp"
+        android:layout_marginEnd="@dimen/dp_20"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView20"
+        app:layout_constraintEnd_toEndOf="@+id/imageView20"
+        app:layout_constraintTop_toBottomOf="@+id/imageView18"
+        app:srcCompat="@drawable/back2" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

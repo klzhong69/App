@@ -51,6 +51,10 @@ public class find_make extends AppCompatActivity {
     QMUIPriorityLinearLayout priority;
     @BindView(R.id.relativeLayout11)
     RelativeLayout relativeLayout11;
+    @BindView(R.id.textView3)
+    TextView textView3;
+    @BindView(R.id.textView7)
+    TextView textView7;
     private ArrayList<Findmake> mArrayList;
     private ArrayList<Findgift> mArrayLists;
 
@@ -61,6 +65,10 @@ public class find_make extends AppCompatActivity {
         ButterKnife.bind(this);
         initData();
         init();
+        textView2.setVisibility(View.GONE);
+        textView3.setVisibility(View.VISIBLE);
+        textView6.setVisibility(View.VISIBLE);
+        textView7.setVisibility(View.GONE);
     }
 
     private void init() {
@@ -164,7 +172,7 @@ public class find_make extends AppCompatActivity {
 
     }
 
-    @OnClick({R.id.imageView40, R.id.textView2, R.id.textView6, R.id.but})
+    @OnClick({R.id.imageView40, R.id.textView2, R.id.textView3,R.id.textView7,R.id.textView6, R.id.but})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.imageView40:
@@ -173,17 +181,31 @@ public class find_make extends AppCompatActivity {
             case R.id.textView2:
                 initData();
                 init();
-                textView2.setTextSize(R.dimen.sp_24);
-                textView6.setTextSize(R.dimen.sp_20);
+                textView2.setVisibility(View.GONE);
+                textView3.setVisibility(View.VISIBLE);
+                textView6.setVisibility(View.VISIBLE);
+                textView7.setVisibility(View.GONE);
                 break;
             case R.id.textView6:
                 initDatas();
                 inits();
-                textView2.setTextSize(R.dimen.sp_20);
-                textView6.setTextSize(R.dimen.sp_24);
+                textView2.setVisibility(View.VISIBLE);
+                textView3.setVisibility(View.GONE);
+                textView6.setVisibility(View.GONE);
+                textView7.setVisibility(View.VISIBLE);
+                break;
+            case R.id.textView3:
+                initData();
+                init();
+                break;
+            case R.id.textView7:
+                initDatas();
+                inits();
                 break;
             case R.id.but:
                 break;
         }
     }
+
+
 }

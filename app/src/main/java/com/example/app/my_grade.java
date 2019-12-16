@@ -61,7 +61,8 @@ public class my_grade extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_grade);
         ButterKnife.bind(this);
-
+        title.setText("我的等级");
+        subtitle.setText("");
         circleProgressBar.setMaxValue(100);
         circleProgressBar2.setMaxValue(100);
 

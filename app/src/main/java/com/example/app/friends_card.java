@@ -72,6 +72,8 @@ public class friends_card extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friends_card);
         ButterKnife.bind(this);
+        title.setText("购买挚友卡");
+        subtitle.setText("");
     }
 
     @OnClick({R.id.fold, R.id.title, R.id.subtitle})

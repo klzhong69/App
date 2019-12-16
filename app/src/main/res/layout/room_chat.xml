@@ -4,7 +4,7 @@
     android:id="@+id/component1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#88000000">
+    android:background="#aa000000">
 
     <RelativeLayout
         android:id="@+id/recyclerbutc1"

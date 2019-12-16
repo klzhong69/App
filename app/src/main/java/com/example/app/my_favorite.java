@@ -39,6 +39,8 @@ public class my_favorite extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_favorite);
         ButterKnife.bind(this);
+        title.setText("我的收藏");
+        subtitle.setText("");
         initData();
         //适配器
         FootprintAdapter mAdapter = new FootprintAdapter(this, mArrayList);
@@ -89,17 +91,13 @@ public class my_favorite extends AppCompatActivity {
 
     }
 
-    @OnClick({R.id.fold, R.id.title, R.id.subtitle})
+    @OnClick({R.id.fold, R.id.subtitle})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fold:
                 this.finish();
                 break;
-            case R.id.title:
-                title.setText("我的收藏");
-                break;
             case R.id.subtitle:
-                subtitle.setText("");
                 break;
         }
     }

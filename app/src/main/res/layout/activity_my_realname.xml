@@ -64,15 +64,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="@dimen/dp_15"
-        android:text="健康系统（目前覆盖手机游戏、部分热门电脑游戏）：
-未满13周岁未成年用户：游戏帐号累计登录游戏时长达1个
-小时后，在对局结束后，将被强制下线，且当日不能再登
-录游戏。同时，在每日21:00-次日8:00时间段，将无法登
-录游戏。
-13周岁及以上未成年用户：游戏帐号累计登录游戏时长达
-2个小时后，在对局结束后，将被强制下线，且当日不能再
-登录游戏。"
+        android:text="健康系统（目前覆盖手机游戏、部分热门电脑游戏）："
         android:textSize="@dimen/sp_20"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -83,8 +77,39 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="@dimen/dp_15"
-        android:text="防沉迷系统（目前覆盖部分电脑端游戏）：
-在游戏过程中，系统会提示你的累计在线时间累计游戏时
+        android:text="未满13周岁未成年用户：游戏帐号累计登录游戏时长达1个
+小时后，在对局结束后，将被强制下线，且当日不能再登
+录游戏。同时，在每日21:00-次日8:00时间段，将无法登
+录游戏。
+13周岁及以上未成年用户：游戏帐号累计登录游戏时长达
+2个小时后，在对局结束后，将被强制下线，且当日不能再
+登录游戏。"
+        android:textSize="@dimen/sp_20"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView100" />
+
+    <TextView
+        android:id="@+id/textView102"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp_15"
+        android:textStyle="bold"
+        android:text="防沉迷系统（目前覆盖部分电脑端游戏）："
+        android:textSize="@dimen/sp_20"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView101" />
+
+    <TextView
+        android:id="@+id/textView103"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp_15"
+
+        android:text="在游戏过程中，系统会提示你的累计在线时间累计游戏时
 间如超过3小时，游戏内的收益（经验、金钱）减半。累计
 游戏时间如超过5小时 ，游戏内的收益直接为0。
 因游戏玩法各不相同，部分游戏内健康系统/防沉迷系统也
@@ -93,26 +118,24 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView100" />
-
+        app:layout_constraintTop_toBottomOf="@+id/textView102" />
 
     <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
         android:id="@+id/but"
-        android:layout_width="@dimen/dp_300"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/dp_240"
+        android:layout_height="@dimen/dp_50"
         android:layout_centerInParent="true"
-        android:layout_marginTop="64dp"
         android:clickable="true"
         android:gravity="center"
-        android:padding="10dp"
+        android:padding="@dimen/dp_10"
         android:text="同意协议并开始认证"
-        android:textColor="@color/qmui_config_color_pure_black"
+        android:textColor="@color/qmui_config_color_white"
+        android:textSize="@dimen/sp_20"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView101"
-        app:qmui_backgroundColor="@color/qmui_config_color_gray_9"
+        app:layout_constraintTop_toBottomOf="@+id/textView103"
+        app:qmui_backgroundColor="@color/tabbarcolor"
         app:qmui_borderWidth="0px"
-        app:qmui_radius="@dimen/dp_20" />
-
+        app:qmui_radius="@dimen/dp_30" />
 </androidx.constraintlayout.widget.ConstraintLayout>

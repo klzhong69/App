@@ -28,6 +28,8 @@ public class room_select_people extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_room_select_people);
         ButterKnife.bind(this);
+        title.setText("选择成员");
+        subtitle.setText("");
     }
 
     @OnClick({R.id.fold, R.id.title, R.id.subtitle})

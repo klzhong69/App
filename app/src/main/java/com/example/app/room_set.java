@@ -74,6 +74,8 @@ public class room_set extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_room_set);
         ButterKnife.bind(this);
+        title.setText("房间设置");
+        subtitle.setText("");
     }
 
     @OnClick({R.id.fold, R.id.title, R.id.subtitle})

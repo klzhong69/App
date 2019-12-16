@@ -242,30 +242,56 @@
                     android:layout_marginTop="@dimen/dp_10"
                     android:gravity="center"
                     android:text="财富榜"
-                    android:textColor="#ffffff"
-                    android:textSize="@dimen/sp_24" />
+                    android:textColor="#B62555"
+                    android:textSize="@dimen/sp_20" />
 
                 <TextView
                     android:id="@+id/textView109"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignTop="@+id/textView108"
                     android:layout_alignBottom="@+id/textView108"
+                    android:layout_alignParentTop="true"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginTop="0dp"
+                    android:layout_marginTop="@dimen/dp_10"
                     android:layout_marginEnd="@dimen/dp_200"
                     android:gravity="center"
                     android:text="魅力榜"
                     android:textColor="#B62555"
                     android:textSize="@dimen/sp_20" />
 
+                <TextView
+                    android:id="@+id/textView118"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="@dimen/dp_200"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:gravity="center"
+                    android:text="财富榜"
+                    android:textColor="#ffffff"
+                    android:textSize="@dimen/sp_24" />
+
+                <TextView
+                    android:id="@+id/textView119"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_marginEnd="@dimen/dp_200"
+                    android:gravity="center"
+                    android:text="魅力榜"
+                    android:textColor="#ffffff"
+                    android:textSize="@dimen/sp_24" />
+
                 <com.qmuiteam.qmui.widget.QMUIRadiusImageView
                     android:id="@+id/imageView18"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/dp_5"
-                    android:layout_below="@+id/textView108"
-                    android:layout_alignStart="@+id/textView108"
-                    android:layout_alignEnd="@+id/textView108"
+                    android:layout_below="@+id/textView118"
+                    android:layout_alignStart="@+id/textView118"
+                    android:layout_alignEnd="@+id/textView118"
                     android:layout_marginStart="@dimen/dp_15"
                     android:layout_marginEnd="@dimen/dp_15"
                     android:src="@color/qmui_config_color_white"
@@ -276,13 +302,12 @@
                     android:id="@+id/imageView19"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/dp_5"
-                    android:layout_below="@+id/textView109"
-                    android:layout_alignStart="@+id/textView109"
-                    android:layout_alignEnd="@+id/textView109"
-                    android:layout_marginStart="@dimen/dp_15"
-                    android:layout_marginEnd="@dimen/dp_15"
+                    android:layout_below="@+id/textView119"
+                    android:layout_alignStart="@+id/textView119"
+                    android:layout_alignEnd="@+id/textView119"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="10dp"
                     android:src="@color/qmui_config_color_white"
-                    android:visibility="gone"
                     app:qmui_border_width="0dp"
                     app:qmui_corner_radius="@dimen/dp_5" />
 
@@ -305,7 +330,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginStart="@dimen/dp_190"
+                    android:layout_marginStart="@dimen/dp_200"
                     android:gravity="center"
                     android:text="日榜"
                     android:textSize="@dimen/sp_20" />
@@ -314,26 +339,65 @@
                     android:id="@+id/textView111"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginStart="@dimen/dp_30"
-                    android:layout_toEndOf="@+id/textView110"
+                    android:layout_marginStart="@dimen/dp_260"
+                    android:layout_toEndOf="@+id/textView120"
+                    android:gravity="center"
+                    android:text="周榜"
+                    android:textSize="@dimen/sp_20" />
+
+                <TextView
+                    android:id="@+id/textView112"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="@dimen/dp_320"
+                    android:gravity="center"
+                    android:text="总榜"
+                    android:textSize="@dimen/sp_20" />
+
+                <TextView
+                    android:id="@+id/textView120"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="@dimen/dp_200"
+                    android:gravity="center"
+                    android:textColor="#D81B60"
+                    android:text="日榜"
+                    android:textSize="@dimen/sp_24" />
+
+                <TextView
+                    android:id="@+id/textView121"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="@dimen/dp_260"
                     android:gravity="center"
                     android:text="周榜"
                     android:textColor="#D81B60"
                     android:textSize="@dimen/sp_24" />
 
                 <TextView
-                    android:id="@+id/textView112"
+                    android:id="@+id/textView122"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginStart="@dimen/dp_30"
-                    android:layout_toEndOf="@+id/textView111"
+                    android:layout_marginStart="@dimen/dp_320"
                     android:gravity="center"
                     android:text="总榜"
-                    android:textSize="@dimen/sp_20" />
+                    android:textColor="#D81B60"
+                    android:textSize="@dimen/sp_24" />
 
             </RelativeLayout>
 

@@ -55,7 +55,8 @@ public class application extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_application);
         ButterKnife.bind(this);
-
+        title.setText("申请理由");
+        subtitle.setText("");
         storedKeylistener = editText.getKeyListener();
         TextWatcher watcher = new TextWatcher() {
             @Override

@@ -63,7 +63,8 @@ public class modify_information extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modify_information);
         ButterKnife.bind(this);
-
+        title.setText("修改信息");
+        subtitle.setText("");
         init();
 
         //创建适配器，将数据传递给适配器
@@ -107,7 +108,7 @@ public class modify_information extends AppCompatActivity {
 
     private void init() {
         mData = new ArrayList<Modify>();
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 12; i++) {
             Modify i1 = new Modify("https://momeak.oss-cn-shenzhen.aliyuncs.com/dear1.png");
             mData.add(i1);
         }

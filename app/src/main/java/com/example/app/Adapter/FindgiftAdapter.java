@@ -60,7 +60,6 @@ public class FindgiftAdapter extends RecyclerView.Adapter {
         Glide.with(mContext).load(entity.getUserima2()).into(((FindgiftAdapter.DemoViewHolder)holder).userima2);
         Glide.with(mContext).load(entity.getGrade1()).into(((FindgiftAdapter.DemoViewHolder)holder).grade1);
         Glide.with(mContext).load(entity.getGrade2()).into(((FindgiftAdapter.DemoViewHolder)holder).grade2);
-        Glide.with(mContext).load(entity.getGift()).into(((FindgiftAdapter.DemoViewHolder)holder).gift);
         if (mOnItemClickListener != null) {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -95,7 +94,6 @@ public class FindgiftAdapter extends RecyclerView.Adapter {
         private ImageView grade1;
         private ImageView grade2;
         private TextView num;
-        private ImageView gift;
         private TextView roomid;
 
 
@@ -110,7 +108,6 @@ public class FindgiftAdapter extends RecyclerView.Adapter {
             userima2 = (ImageView) itemView.findViewById(R.id.imageView19);
             grade1 = (ImageView) itemView.findViewById(R.id.imageView31);
             grade2 = (ImageView) itemView.findViewById(R.id.imageView32);
-            gift = (ImageView) itemView.findViewById(R.id.imageView66);
 
         }
     }

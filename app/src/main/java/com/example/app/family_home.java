@@ -100,7 +100,8 @@ public class family_home extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_family_home);
         ButterKnife.bind(this);
-
+        title.setText("【爱乐】AL粉丝团");
+        subtitle.setText("");
         Context context = this;
         FamilyHomeModel.initData();
         FamilyHomeModel.initrecycler(context, recycler4);
@@ -108,14 +109,11 @@ public class family_home extends AppCompatActivity {
 
     }
 
-    @OnClick({R.id.fold, R.id.title, R.id.subtitle})
+    @OnClick({R.id.fold,  R.id.subtitle})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fold:
                 this.finish();
-                break;
-            case R.id.title:
-                title.setText("【爱乐】AL粉丝团");
                 break;
             case R.id.subtitle:
                 subtitle.setText("");

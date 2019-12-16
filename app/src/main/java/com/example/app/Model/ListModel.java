@@ -24,7 +24,7 @@ public class ListModel {
     private static ArrayList<Listleader> mArrayList;
     private static ListLeaderAdapter mAdapter;
 
-    public static void initData() {
+    public static void initData(int a,int b) {
         mArrayList = new ArrayList<Listleader>();
         for (int i = 0; i < 10; i++) {
             int sum = i + 4;

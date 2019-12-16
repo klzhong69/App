@@ -1,5 +1,6 @@
 package com.example.app;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -39,19 +40,19 @@ public class my_realname extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_realname);
         ButterKnife.bind(this);
+        title.setText("实名认证");
+        subtitle.setText("");
     }
 
-    @OnClick({R.id.fold, R.id.title, R.id.subtitle})
+    @OnClick({R.id.fold,  R.id.but})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fold:
                 this.finish();
                 break;
-            case R.id.title:
-                title.setText("实名认证");
-                break;
-            case R.id.subtitle:
-                subtitle.setText("");
+            case R.id.but:
+                Intent intent2 = new Intent(my_realname.this, my_realname_name.class);
+                startActivity(intent2);
                 break;
         }
     }

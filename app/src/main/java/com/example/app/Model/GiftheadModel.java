@@ -2,38 +2,48 @@ package com.example.app.Model;
 
 import android.content.Context;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.app.Adapter.GiftheadAdapter;
 import com.example.app.Adapter.RoomheadchatAdapter;
 import com.example.app.Entity.Gifthead;
 import com.example.app.Entity.Roomheadchat;
 import com.example.app.Entity.Roomtxt;
+import com.example.app.R;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GiftheadModel {
 
     private static ArrayList<Gifthead> mData;
     private static GiftheadAdapter mAdapters;
 
+    private static Map<Integer, Boolean> map;
+    private static int a = 0;
+
     public static void initData() {
 
         mData = new ArrayList<Gifthead>();
-
-        for(int i=0;i<10;i++){
-            Gifthead i1 = new Gifthead("https://momeak.oss-cn-shenzhen.aliyuncs.com/h2.jpg","");
+        map = new HashMap<Integer, Boolean>();
+        for (int i = 0; i < 10; i++) {
+            Gifthead i1 = new Gifthead("https://momeak.oss-cn-shenzhen.aliyuncs.com/h2.jpg", "");
             mData.add(i1);
+            map.put(i, false);
         }
 
     }
 
-    public static void initrecyclers(Context context, RecyclerView gridview) {
-         mAdapters = new GiftheadAdapter(context, mData);
+    public static void initrecyclers(Context context, RecyclerView gridview, TextView txt) {
+        mAdapters = new GiftheadAdapter(context, mData);
         //设置适配器adapter
         gridview.setAdapter(mAdapters);
 
@@ -46,7 +56,29 @@ public class GiftheadModel {
         mAdapters.setOnItemClickListener(new GiftheadAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Toast.makeText(context, position + " click", Toast.LENGTH_SHORT).show();
+                ImageView imageView = view.findViewById(R.id.imageView107);
+                if (map.get(position)) {
+                    map.put(position, false);
+                    Glide.with(context).load("").into(imageView);
+                    a--;
+                    txt.setText(a + "");
+                    if (a == 0) {
+                        txt.setVisibility(View.GONE);
+                    } else {
+                        txt.setVisibility(View.VISIBLE);
+                    }
+                } else {
+                    map.put(position, true);
+                    Glide.with(context).load(R.drawable.qmui_icon_checkbox_checked).into(imageView);
+                    a++;
+                    txt.setText(a + "");
+                    if (a == 0) {
+                        txt.setVisibility(View.GONE);
+                    } else {
+                        txt.setVisibility(View.VISIBLE);
+                    }
+                }
+
             }
 
             @Override
@@ -66,7 +98,7 @@ public class GiftheadModel {
 
     }
 
-    public static void Add(RecyclerView mRecyclerView, Gifthead entity){
+    public static void Add(RecyclerView mRecyclerView, Gifthead entity) {
         mAdapters.addData(mData.size(), entity);
         mRecyclerView.smoothScrollToPosition(mData.size());
     }

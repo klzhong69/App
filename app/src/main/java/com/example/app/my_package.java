@@ -53,7 +53,8 @@ public class my_package extends AppCompatActivity {
         setContentView(R.layout.activity_my_package);
         ButterKnife.bind(this);
         initData();
-
+        title.setText("我的包裹");
+        subtitle.setText("");
         init();
         //创建适配器，将数据传递给适配器
         mAdapter = new Package1Adapter(this, mData);

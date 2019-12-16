@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".my_push">
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/head"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_80"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <ImageView
+        android:id="@+id/imageView119"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_70"
+        android:layout_marginTop="@dimen/dp_10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include"
+        app:srcCompat="@color/qmui_config_color_white" />
+
+    <ImageView
+        android:id="@+id/imageView112"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_70"
+        android:layout_marginTop="@dimen/dp_10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView119"
+        app:srcCompat="@color/qmui_config_color_white" />
+
+    <TextView
+        android:id="@+id/textView137"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_20"
+        android:text="声音"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView119"
+        app:layout_constraintStart_toStartOf="@+id/imageView119"
+        app:layout_constraintTop_toTopOf="@+id/imageView119" />
+
+    <TextView
+        android:id="@+id/textView138"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_20"
+        android:text="房间开播提醒"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView112"
+        app:layout_constraintStart_toStartOf="@+id/imageView112"
+        app:layout_constraintTop_toTopOf="@+id/imageView112" />
+
+    <Switch
+        android:id="@+id/switch2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dp_20"
+        android:checked="false"
+        android:thumb="@drawable/thumb"
+        android:track="@drawable/track"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView119"
+        app:layout_constraintEnd_toEndOf="@+id/imageView119"
+        app:layout_constraintTop_toTopOf="@+id/imageView119" />
+
+
+    <Switch
+        android:id="@+id/switch3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dp_20"
+        android:checked="false"
+        android:thumb="@drawable/thumb"
+        android:track="@drawable/track"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView112"
+        app:layout_constraintEnd_toEndOf="@+id/imageView112"
+        app:layout_constraintTop_toTopOf="@+id/imageView112" />
+
+    <TextView
+        android:id="@+id/textView151"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="关注的主播开播，将会收到提醒"
+        app:layout_constraintStart_toStartOf="@+id/textView138"
+        app:layout_constraintTop_toBottomOf="@+id/imageView112" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

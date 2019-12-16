@@ -129,6 +129,18 @@ public class ChatRoomModel {
         mAdapters.setOnItemClickListener(new RoomheadAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
+                Observable<Integer> observable = Observable.defer(new Callable<ObservableSource<? extends Integer>>() {
+                    @Override
+                    public ObservableSource<? extends Integer> call() throws Exception {
+                        return Observable.just(8);
+                    }
+                });
+                observable.subscribe(chatroom.observer);
+            }
+
+            @Override
+            public void onItemLongClick(View view, int position) {
+
                 Observable<View> observable = Observable.defer(new Callable<ObservableSource<? extends View>>() {
                     @Override
                     public ObservableSource<? extends View> call() throws Exception {
@@ -136,11 +148,6 @@ public class ChatRoomModel {
                     }
                 });
                 observable.subscribe(chatroom.observers);
-            }
-
-            @Override
-            public void onItemLongClick(View view, int position) {
-
 
 
             }

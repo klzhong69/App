@@ -39,7 +39,8 @@ public class my_music extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_music);
         ButterKnife.bind(this);
-
+        title.setText("我的音乐");
+        subtitle.setText("");
         initData();
         //适配器
         MusicViewAdapter mAdapter = new MusicViewAdapter(this, mArrayList);

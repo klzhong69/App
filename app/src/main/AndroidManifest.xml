@@ -21,7 +21,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".room_select_people"></activity>
+        <activity android:name=".my_feedback"></activity>
+        <activity android:name=".my_push" />
+        <activity android:name=".my_change_photo" />
+        <activity android:name=".my_change_pass" />
+        <activity android:name=".my_set" />
+        <activity android:name=".my_realname_pic" />
+        <activity android:name=".my_realnames" />
+        <activity android:name=".my_realname_name" />
+        <activity android:name=".room_select_people" />
         <activity android:name=".room_set" />
         <activity android:name=".chatroom_chat" />
         <activity android:name=".find_make" />

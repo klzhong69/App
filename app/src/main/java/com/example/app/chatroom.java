@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.app.Model.ChatModel;
 import com.example.app.Model.ChatRoomModel;
 import com.example.app.Model.GiftModel;
+import com.example.app.Model.GiftheadModel;
 import com.example.app.Model.HoldModel;
 import com.example.app.Model.MessFriendsModel;
 import com.example.app.Model.MessModel;
@@ -28,6 +29,7 @@ import com.example.app.Model.OnlineModel;
 import com.qmuiteam.qmui.layout.QMUIPriorityLinearLayout;
 import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
+import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
 import com.qmuiteam.qmui.widget.popup.QMUIPopup;
 import com.qmuiteam.qmui.widget.popup.QMUIPopups;
 import com.qmuiteam.qmui.widget.popup.QMUIQuickAction;
@@ -44,6 +46,7 @@ import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
 public class chatroom extends AppCompatActivity {
+
 
     @BindView(R.id.imageView4)
     ImageView imageView4;
@@ -113,6 +116,8 @@ public class chatroom extends AppCompatActivity {
     ImageView imageViewc1;
     @BindView(R.id.textViewc1)
     TextView textViewc1;
+    @BindView(R.id.imageViewc1t)
+    ImageView imageViewc1t;
     @BindView(R.id.editTextc1)
     EditText editTextc1;
     @BindView(R.id.butc1)
@@ -127,8 +132,6 @@ public class chatroom extends AppCompatActivity {
     NestedScrollView scrollmessc1;
     @BindView(R.id.relativec1)
     RelativeLayout relativec1;
-    @BindView(R.id.imageViewc1t)
-    ImageView imageViewc1t;
     @BindView(R.id.component1)
     RelativeLayout component1;
     @BindView(R.id.recyclerbutc2)
@@ -169,6 +172,8 @@ public class chatroom extends AppCompatActivity {
     ImageView imageViewc4;
     @BindView(R.id.imageViewc4s)
     QMUIRadiusImageView imageViewc4s;
+    @BindView(R.id.textViewc4d)
+    TextView textViewc4d;
     @BindView(R.id.gridviewc4)
     RecyclerView gridviewc4;
     @BindView(R.id.textViewc4)
@@ -177,6 +182,8 @@ public class chatroom extends AppCompatActivity {
     TextView textViewc4s;
     @BindView(R.id.textViewc4t)
     TextView textViewc4t;
+    @BindView(R.id.recyclerc4)
+    RecyclerView recyclerc4;
     @BindView(R.id.imageViewc4t)
     QMUIRadiusImageView imageViewc4t;
     @BindView(R.id.textViewc4a)
@@ -223,8 +230,6 @@ public class chatroom extends AppCompatActivity {
     RecyclerView recyclerc6;
     @BindView(R.id.relativec6)
     RelativeLayout relativec6;
-    @BindView(R.id.imageViewc6t)
-    ImageView imageViewc6t;
     @BindView(R.id.component6)
     RelativeLayout component6;
     @BindView(R.id.recyclerbutc7)
@@ -239,8 +244,6 @@ public class chatroom extends AppCompatActivity {
     RecyclerView recyclerc7;
     @BindView(R.id.relativec7)
     RelativeLayout relativec7;
-    @BindView(R.id.imageViewc7t)
-    ImageView imageViewc7t;
     @BindView(R.id.component7)
     RelativeLayout component7;
     @BindView(R.id.imageViewc8)
@@ -315,8 +318,18 @@ public class chatroom extends AppCompatActivity {
     RelativeLayout relativec9;
     @BindView(R.id.component9)
     RelativeLayout component9;
-    @BindView(R.id.recyclerc4)
-    RecyclerView recyclerc4;
+    @BindView(R.id.recyclerbutc10)
+    RelativeLayout recyclerbutc10;
+    @BindView(R.id.recyclerbutc8)
+    RelativeLayout recyclerbutc8;
+    @BindView(R.id.recyclerbutc8s)
+    RelativeLayout recyclerbutc8s;
+    @BindView(R.id.recyclerbutc10s)
+    RelativeLayout recyclerbutc10s;
+    @BindView(R.id.recyclerc10)
+    RelativeLayout recyclerc10;
+    @BindView(R.id.recyclerc8)
+    RelativeLayout recyclerc8;
     private Bitmap bitmap;
     private Disposable disposable;
     private chatroom context;
@@ -373,7 +386,7 @@ public class chatroom extends AppCompatActivity {
         }
     }
 
-    @OnClick({R.id.imageView101, R.id.imageView102, R.id.imageView103, R.id.imageView99, R.id.textView124, R.id.imageView104, R.id.imageView105, R.id.recyclerbutc5, R.id.butc1, R.id.imageViewc1t, R.id.imageViewc2t, R.id.imageViewc5s, R.id.recyclerbutc2})
+    @OnClick({R.id.imageView101, R.id.imageView102, R.id.imageView103, R.id.imageView99, R.id.textView124, R.id.imageView104, R.id.imageView105, R.id.butc1, R.id.butc10, R.id.imageView4, R.id.imageViewc1t, R.id.imageViewc2t, R.id.imageViewc5s, R.id.recyclerbutc1, R.id.recyclerbutc2, R.id.recyclerbutc3, R.id.recyclerbutc4, R.id.recyclerbutc5, R.id.recyclerbutc6, R.id.recyclerbutc7, R.id.recyclerbutc8, R.id.recyclerbutc8s, R.id.recyclerbutc9, R.id.recyclerbutc10, R.id.recyclerbutc10s, R.id.imageViewc1, R.id.imageViewc2, R.id.imageViewc3, R.id.imageViewc4, R.id.imageViewc5, R.id.imageViewc6, R.id.imageViewc7, R.id.recyclerc8, R.id.imageViewc9, R.id.recyclerc10})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.imageView101:
@@ -418,11 +431,16 @@ public class chatroom extends AppCompatActivity {
                 MessModel.initrecyclers(context, recyclerc5s, 1);
                 break;
             case R.id.imageView103:
-
+                component10.setVisibility(View.VISIBLE);
                 break;
             case R.id.imageView104:
                 break;
             case R.id.imageView105:
+                component4.setVisibility(View.VISIBLE);
+                GiftModel.initData();
+                GiftheadModel.initData();
+                GiftModel.initrecycler(context, recyclerc4);
+                GiftheadModel.initrecyclers(context, gridviewc4, textViewc4d);
                 break;
             case R.id.imageView99:
             case R.id.textView124:
@@ -430,9 +448,7 @@ public class chatroom extends AppCompatActivity {
                 OnlineModel.initData();
                 OnlineModel.initrecycler(context, recyclerc6);
                 break;
-            case R.id.recyclerbutc5:
-                component5.setVisibility(View.GONE);
-                break;
+
             case R.id.imageViewc1t:
                 component1.setVisibility(View.GONE);
                 component5.setVisibility(View.VISIBLE);
@@ -445,14 +461,64 @@ public class chatroom extends AppCompatActivity {
                 layoutc1.addView(ChatModel.add(editTextc1.getText().toString(), "https://momeak.oss-cn-shenzhen.aliyuncs.com/dear1.png", "", 0, 1));
                 editTextc1.setText("");
                 break;
+            case R.id.butc10:
+                component10.setVisibility(View.GONE);
+                break;
             case R.id.imageViewc5s:
                 component5.setVisibility(View.GONE);
                 component2.setVisibility(View.VISIBLE);
-                MessFriendsModel.initData();
+                MessFriendsModel.initData(0);
                 MessFriendsModel.initrecycler(context, recyclerc2, 1);
+                break;
+            case R.id.imageView4:
+                showSimpleBottomSheetList(
+                        true, true, false, "您确定要离开房间吗？",
+                        2, true, false);
+                break;
+
+
+            case R.id.recyclerbutc1:
+                component1.setVisibility(View.GONE);
                 break;
             case R.id.recyclerbutc2:
                 component5.setVisibility(View.GONE);
+                break;
+            case R.id.recyclerbutc3:
+                component3.setVisibility(View.GONE);
+                break;
+            case R.id.recyclerbutc4:
+                component4.setVisibility(View.GONE);
+                break;
+            case R.id.recyclerbutc5:
+                component5.setVisibility(View.GONE);
+                break;
+            case R.id.recyclerbutc6:
+                component6.setVisibility(View.GONE);
+                break;
+            case R.id.recyclerbutc7:
+                component7.setVisibility(View.GONE);
+                break;
+            case R.id.recyclerbutc8:
+            case R.id.recyclerbutc8s:
+                component8.setVisibility(View.GONE);
+                break;
+            case R.id.recyclerbutc9:
+                component9.setVisibility(View.GONE);
+                break;
+            case R.id.recyclerbutc10:
+            case R.id.recyclerbutc10s:
+                break;
+
+            case R.id.imageViewc1:
+            case R.id.imageViewc2:
+            case R.id.imageViewc3:
+            case R.id.imageViewc4:
+            case R.id.imageViewc5:
+            case R.id.imageViewc6:
+            case R.id.imageViewc7:
+            case R.id.recyclerc8:
+            case R.id.imageViewc9:
+            case R.id.recyclerc10:
                 break;
         }
     }
@@ -488,6 +554,7 @@ public class chatroom extends AppCompatActivity {
                     case 7:
                         break;
                     case 8:
+                        component8.setVisibility(View.VISIBLE);
                         break;
                     case 9:
                         break;
@@ -542,6 +609,7 @@ public class chatroom extends AppCompatActivity {
                             case 1:
                                 break;
                             case 2:
+
                                 break;
                             case 3:
                                 break;
@@ -584,6 +652,82 @@ public class chatroom extends AppCompatActivity {
 
             }
         };
+    }
+
+    private void showSimpleBottomSheetList(boolean gravityCenter,
+                                           boolean addCancelBtn,
+                                           boolean withIcon,
+                                           CharSequence title,
+                                           int itemCount,
+                                           boolean allowDragDismiss,
+                                           boolean withMark) {
+        QMUIBottomSheet.BottomListSheetBuilder builder = new QMUIBottomSheet.BottomListSheetBuilder(this);
+        builder.setGravityCenter(gravityCenter)
+                .setTitle(title)
+                .setAddCancelBtn(addCancelBtn)
+                .setAllowDrag(allowDragDismiss)
+                .setNeedRightMark(withMark)
+                .setOnSheetItemClickListener(new QMUIBottomSheet.BottomListSheetBuilder.OnSheetItemClickListener() {
+                    @Override
+                    public void onClick(QMUIBottomSheet dialog, View itemView, int position, String tag) {
+                        dialog.dismiss();
+                        if(position==0){
+                            chatroom.this.finish();
+                        }else if(position==1){
+
+                        }
+                    }
+                });
+        if (withMark) {
+            builder.setCheckedIndex(40);
+        }
+        /*for (int i = 1; i <= itemCount; i++) {
+            if(withIcon){
+                builder.addItem(ContextCompat.getDrawable(this, R.mipmap.icon_tabbar_lab), "Item " + i);
+            }else{
+                builder.addItem("Item " + i);
+            }
+
+        }*/
+        builder.addItem("直接离开");
+        builder.addItem("悬浮窗模式");
+        builder.build().show();
+    }
+
+    private void showSimpleBottomSheetGrid() {
+        final int TAG_SHARE_WECHAT_FRIEND = 0;
+        final int TAG_SHARE_WECHAT_MOMENT = 1;
+        final int TAG_SHARE_WEIBO = 2;
+        final int TAG_SHARE_CHAT = 3;
+        QMUIBottomSheet.BottomGridSheetBuilder builder = new QMUIBottomSheet.BottomGridSheetBuilder(this);
+        builder.addItem(R.drawable.icon_more_operation_share_friend, "分享到微信", TAG_SHARE_WECHAT_FRIEND, QMUIBottomSheet.BottomGridSheetBuilder.FIRST_LINE)
+                .addItem(R.drawable.icon_more_operation_share_moment, "分享到朋友圈", TAG_SHARE_WECHAT_MOMENT, QMUIBottomSheet.BottomGridSheetBuilder.FIRST_LINE)
+                .addItem(R.drawable.icon_more_operation_share_weibo, "分享到微博", TAG_SHARE_WEIBO, QMUIBottomSheet.BottomGridSheetBuilder.FIRST_LINE)
+                .addItem(R.drawable.icon_more_operation_share_chat, "分享到私信", TAG_SHARE_CHAT, QMUIBottomSheet.BottomGridSheetBuilder.FIRST_LINE)
+                .setAddCancelBtn(true)
+                .setOnSheetItemClickListener(new QMUIBottomSheet.BottomGridSheetBuilder.OnSheetItemClickListener() {
+                    @Override
+                    public void onClick(QMUIBottomSheet dialog, View itemView) {
+                        dialog.dismiss();
+                        int tag = (int) itemView.getTag();
+                        switch (tag) {
+                            case TAG_SHARE_WECHAT_FRIEND:
+                                Toast.makeText(chatroom.this, "分享到微信", Toast.LENGTH_SHORT).show();
+                                break;
+                            case TAG_SHARE_WECHAT_MOMENT:
+                                Toast.makeText(chatroom.this, "分享到朋友圈", Toast.LENGTH_SHORT).show();
+                                break;
+                            case TAG_SHARE_WEIBO:
+                                Toast.makeText(chatroom.this, "分享到微博", Toast.LENGTH_SHORT).show();
+                                break;
+                            case TAG_SHARE_CHAT:
+                                Toast.makeText(chatroom.this, "分享到私信", Toast.LENGTH_SHORT).show();
+                                break;
+                        }
+                    }
+                }).build().show();
+
+
     }
 
 }

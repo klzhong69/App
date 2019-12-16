@@ -65,6 +65,8 @@ public class my_wallet extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_wallet);
         ButterKnife.bind(this);
+        title.setText("我的钱包");
+        subtitle.setText("");
     }
 
     @OnClick({R.id.fold, R.id.title, R.id.subtitle})

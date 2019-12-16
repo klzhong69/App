@@ -159,21 +159,19 @@ public class homepage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage);
         ButterKnife.bind(this);
-
+        title.setText("个人主页");
+        subtitle.setText("");
         Context context = this;
         HomePageModel.initData();
         HomePageModel.initrecycler(context, recycler);
     }
 
 
-    @OnClick({R.id.fold, R.id.title, R.id.subtitle})
+    @OnClick({R.id.fold,  R.id.subtitle})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fold:
                 this.finish();
-                break;
-            case R.id.title:
-                title.setText("个人主页");
                 break;
             case R.id.subtitle:
                 subtitle.setText("修改信息");

@@ -23,6 +23,7 @@ import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 public class List extends Fragment {
@@ -97,7 +98,18 @@ public class List extends Fragment {
     RelativeLayout relative10;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
-
+    @BindView(R.id.textView118)
+    TextView textView118;
+    @BindView(R.id.textView119)
+    TextView textView119;
+    @BindView(R.id.textView120)
+    TextView textView120;
+    @BindView(R.id.textView121)
+    TextView textView121;
+    @BindView(R.id.textView122)
+    TextView textView122;
+    private Context context;
+    private int a =0;
 
     @Nullable
     @Override
@@ -105,10 +117,20 @@ public class List extends Fragment {
         View view = inflater.inflate(R.layout.list_leaderboard, container, false);
         unbinder = ButterKnife.bind(this, view);
 
-        Context context = getContext();
-        ListModel.initData();
+        context = getContext();
+        ListModel.initData(0,0);
         ListModel.initrecycler(context, recycler13);
-
+        textView108.setVisibility(View.GONE);
+        textView109.setVisibility(View.VISIBLE);
+        textView118.setVisibility(View.VISIBLE);
+        textView119.setVisibility(View.GONE);
+        imageView18.setVisibility(View.VISIBLE);
+        textView110.setVisibility(View.GONE);
+        textView120.setVisibility(View.VISIBLE);
+        textView111.setVisibility(View.VISIBLE);
+        textView121.setVisibility(View.GONE);
+        textView112.setVisibility(View.VISIBLE);
+        textView122.setVisibility(View.GONE);
         refreshLayout.setRefreshHeader(new MaterialHeader(getContext()).setScrollableWhenRefreshing(true));
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
@@ -236,5 +258,84 @@ public class List extends Fragment {
                     }
                 });*/
 
+    }
+
+
+    @OnClick({R.id.textView108, R.id.textView109, R.id.textView118, R.id.textView119, R.id.textView110, R.id.textView111, R.id.textView112, R.id.textView120, R.id.textView121, R.id.textView122})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.textView108:
+                a=0;
+                ListModel.initData(0,0);
+                ListModel.initrecycler(context, recycler13);
+                textView108.setVisibility(View.GONE);
+                textView109.setVisibility(View.VISIBLE);
+                textView118.setVisibility(View.VISIBLE);
+                textView119.setVisibility(View.GONE);
+                imageView18.setVisibility(View.VISIBLE);
+                break;
+            case R.id.textView109:
+                a=1;
+                ListModel.initData(1,0);
+                ListModel.initrecycler(context, recycler13);
+                textView108.setVisibility(View.VISIBLE);
+                textView109.setVisibility(View.GONE);
+                textView118.setVisibility(View.GONE);
+                textView119.setVisibility(View.VISIBLE);
+                imageView19.setVisibility(View.VISIBLE);
+                break;
+            case R.id.textView118:
+                a=0;
+                ListModel.initData(0,0);
+                ListModel.initrecycler(context, recycler13);
+                break;
+            case R.id.textView119:
+                a=1;
+                ListModel.initData(1,0);
+                ListModel.initrecycler(context, recycler13);
+                break;
+            case R.id.textView110:
+                ListModel.initData(a,0);
+                ListModel.initrecycler(context, recycler13);
+                textView110.setVisibility(View.GONE);
+                textView120.setVisibility(View.VISIBLE);
+                textView111.setVisibility(View.VISIBLE);
+                textView121.setVisibility(View.GONE);
+                textView112.setVisibility(View.VISIBLE);
+                textView122.setVisibility(View.GONE);
+                break;
+            case R.id.textView111:
+                ListModel.initData(a,1);
+                ListModel.initrecycler(context, recycler13);
+                textView110.setVisibility(View.VISIBLE);
+                textView120.setVisibility(View.GONE);
+                textView111.setVisibility(View.GONE);
+                textView121.setVisibility(View.VISIBLE);
+                textView112.setVisibility(View.VISIBLE);
+                textView122.setVisibility(View.GONE);
+                break;
+            case R.id.textView112:
+                ListModel.initData(a,2);
+                ListModel.initrecycler(context, recycler13);
+                textView110.setVisibility(View.VISIBLE);
+                textView120.setVisibility(View.GONE);
+                textView111.setVisibility(View.VISIBLE);
+                textView121.setVisibility(View.GONE);
+                textView112.setVisibility(View.GONE);
+                textView122.setVisibility(View.VISIBLE);
+                break;
+            case R.id.textView120:
+                ListModel.initData(a,0);
+                ListModel.initrecycler(context, recycler13);
+                break;
+            case R.id.textView121:
+                ListModel.initData(a,1);
+                ListModel.initrecycler(context, recycler13);
+                break;
+            case R.id.textView122:
+                ListModel.initData(a,2);
+                ListModel.initrecycler(context, recycler13);
+                break;
+        }
     }
 }
