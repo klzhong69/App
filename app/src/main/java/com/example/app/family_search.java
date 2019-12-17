@@ -1,10 +1,8 @@
 package com.example.app;
 
 import android.os.Bundle;
-import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,16 +19,29 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class family_search extends AppCompatActivity {
 
 
-    @BindView(R.id.imageView37)
-    ImageView imageView37;
-    @BindView(R.id.search_view)
-    SearchView searchView;
+    @BindView(R.id.fold)
+    ImageView fold;
+    @BindView(R.id.title)
+    TextView title;
+    @BindView(R.id.subtitle)
+    TextView subtitle;
     @BindView(R.id.recycler3)
     RecyclerView recycler3;
+    @BindView(R.id.imageView148)
+    ImageView imageView148;
+    @BindView(R.id.textView2)
+    TextView textView2;
+    @BindView(R.id.textView6)
+    TextView textView6;
+    @BindView(R.id.textView3)
+    TextView textView3;
+    @BindView(R.id.textView7)
+    TextView textView7;
     private List<Familysea> mArrayList;
 
     @Override
@@ -39,7 +50,10 @@ public class family_search extends AppCompatActivity {
         setContentView(R.layout.activity_family_search);
         ButterKnife.bind(this);
 
-        init();
+        textView2.setVisibility(View.GONE);
+        textView3.setVisibility(View.VISIBLE);
+        textView6.setVisibility(View.VISIBLE);
+        textView7.setVisibility(View.GONE);
 
         initData();
         //适配器
@@ -81,44 +95,6 @@ public class family_search extends AppCompatActivity {
         recycler3.setItemAnimator(defaultItemAnimator);
     }
 
-    private void init() {
-
-        searchView.setIconifiedByDefault(false);
-        if (searchView == null) {
-            return;
-        } else {
-            //获取到TextView的ID
-            int id = searchView.getContext().getResources().getIdentifier("android:id/search_src_text", null, null);
-            //获取到TextView的控件
-            TextView textView = (TextView) searchView.findViewById(id);
-            //设置字体大小为14sp
-            textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);//14sp
-            //设置提示文字颜色
-            textView.setHintTextColor(getResources().getColor(R.color.back));
-
-        }
-        searchView.setFocusable(false);
-        searchView.clearFocus();
-        searchView.setIconifiedByDefault(false);
-        searchView.setQueryHint("搜索家族名称、ID");//设置查询提示字符串
-
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextChange(String queryText) {
-                System.out.println("onQueryTextChange:" + queryText);
-                return true;
-            }
-
-            @Override
-            public boolean onQueryTextSubmit(String queryText) {
-                //点击搜索
-                System.out.println("onQueryTextSubmit:" + queryText);
-                return true;
-            }
-        });
-
-    }
-
     private void initData() {
         mArrayList = new ArrayList<Familysea>();
         Familysea i1 = new Familysea("芭比UU王国", "ID" + "25634896", "0", "R.drawable.l3", "https://momeak.oss-cn-shenzhen.aliyuncs.com/dear1.png");
@@ -127,5 +103,31 @@ public class family_search extends AppCompatActivity {
         mArrayList.add(i2);
         Familysea i3 = new Familysea("芭比UU王国", "ID" + "25634896", "1", "R.drawable.l3", "https://momeak.oss-cn-shenzhen.aliyuncs.com/dear3.png");
         mArrayList.add(i3);
+    }
+
+
+    @OnClick({R.id.fold, R.id.textView2, R.id.textView6, R.id.textView3, R.id.textView7})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.fold:
+                this.finish();
+                break;
+            case R.id.textView2:
+                textView2.setVisibility(View.GONE);
+                textView3.setVisibility(View.VISIBLE);
+                textView6.setVisibility(View.VISIBLE);
+                textView7.setVisibility(View.GONE);
+                break;
+            case R.id.textView6:
+                textView2.setVisibility(View.VISIBLE);
+                textView3.setVisibility(View.GONE);
+                textView6.setVisibility(View.GONE);
+                textView7.setVisibility(View.VISIBLE);
+                break;
+            case R.id.textView3:
+                break;
+            case R.id.textView7:
+                break;
+        }
     }
 }

@@ -16,12 +16,12 @@ public class User {
 
     private String name;//人员姓名
 
-    private String usersrc;//人员姓名
+    private String usersrc;//人员头像
 
-    private String state;//是否为当前账户
+    private int state;//是否为当前账户
 
-    @Generated(hash = 924699730)
-    public User(Long id, String userId, String name, String usersrc, String state) {
+    @Generated(hash = 482959625)
+    public User(Long id, String userId, String name, String usersrc, int state) {
         this.id = id;
         this.userId = userId;
         this.name = name;
@@ -65,13 +65,14 @@ public class User {
         this.usersrc = usersrc;
     }
 
-    public String getState() {
+    public int getState() {
         return this.state;
     }
 
-    public void setState(String state) {
+    public void setState(int state) {
         this.state = state;
     }
+
 
 
 }

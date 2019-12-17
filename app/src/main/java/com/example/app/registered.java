@@ -66,6 +66,8 @@ public class registered extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registered);
         ButterKnife.bind(this);
+        title.setText("立即注册");
+        subtitle.setText("");
     }
 
     @OnClick({R.id.fold, R.id.textView150, R.id.imageView111, R.id.but, R.id.textView159})
@@ -85,6 +87,7 @@ public class registered extends AppCompatActivity {
                 break;
             case R.id.textView159:
                 Intent intent4 = new Intent(registered.this, agreement.class);
+                intent4.putExtra("about",0);
                 startActivity(intent4);
                 break;
         }

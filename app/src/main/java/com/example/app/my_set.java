@@ -5,9 +5,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
 import butterknife.BindView;
@@ -72,6 +75,8 @@ public class my_set extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_set);
         ButterKnife.bind(this);
+        title.setText("设置");
+        subtitle.setText("");
     }
 
     @OnClick({R.id.fold, R.id.imageView119, R.id.textView137, R.id.imageView120, R.id.imageView121, R.id.textView138, R.id.imageView122, R.id.imageView123, R.id.textView139, R.id.imageView124, R.id.imageView125, R.id.textView140, R.id.imageView126, R.id.imageView127, R.id.textView141, R.id.imageView128, R.id.imageView129, R.id.textView142, R.id.imageView130, R.id.imageView131, R.id.textView143, R.id.imageView132, R.id.but})
@@ -96,25 +101,55 @@ public class my_set extends AppCompatActivity {
             case R.id.imageView123:
             case R.id.textView139:
             case R.id.imageView124:
+                Intent intent3 = new Intent(my_set.this, my_push.class);
+                startActivity(intent3);
                 break;
             case R.id.imageView125:
             case R.id.textView140:
             case R.id.imageView126:
+                Intent intent4 = new Intent(my_set.this, my_feedback.class);
+                startActivity(intent4);
                 break;
             case R.id.imageView127:
             case R.id.textView141:
             case R.id.imageView128:
+                Intent intent5 = new Intent(my_set.this, my_switch.class);
+                startActivity(intent5);
                 break;
             case R.id.imageView129:
             case R.id.textView142:
             case R.id.imageView130:
+                showMessagePositiveDialog();
                 break;
             case R.id.imageView131:
             case R.id.textView143:
             case R.id.imageView132:
+                Intent intent6 = new Intent(my_set.this, my_about.class);
+                startActivity(intent6);
                 break;
             case R.id.but:
                 break;
         }
+    }
+
+    private void showMessagePositiveDialog() {
+        int mCurrentDialogStyle = R.style.QMUI_Dialog;
+        new QMUIDialog.MessageDialogBuilder(this)
+                .setTitle("提示")
+                .setMessage("清除缓存包括：图片、视频")
+                .addAction("取消", new QMUIDialogAction.ActionListener() {
+                    @Override
+                    public void onClick(QMUIDialog dialog, int index) {
+                        dialog.dismiss();
+                    }
+                })
+                .addAction(0, "确定", QMUIDialogAction.ACTION_PROP_POSITIVE, new QMUIDialogAction.ActionListener() {
+                    @Override
+                    public void onClick(QMUIDialog dialog, int index) {
+                        dialog.dismiss();
+                        Toast.makeText(my_set.this, "清理成功", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .create(mCurrentDialogStyle).show();
     }
 }

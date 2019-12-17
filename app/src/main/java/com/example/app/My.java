@@ -1,6 +1,8 @@
 package com.example.app;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +13,13 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
+import com.example.app.Sqlentity.User;
+import com.example.app.dao.mUserDao;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
+
+import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -126,6 +134,23 @@ public class My extends Fragment {
         View view = inflater.inflate(R.layout.my_home, container, false);
         unbinder = ButterKnife.bind(this, view);
         textView88.setText("未认证");
+        try {
+            SharedPreferences sp = Objects.requireNonNull(getContext()).getSharedPreferences("User", Context.MODE_PRIVATE);
+            long userid = sp.getLong("userid", 0);
+            if(userid!=0){
+                imageView36.setVisibility(View.GONE);
+                textView11.setVisibility(View.GONE);
+                textView75.setVisibility(View.GONE);
+                textView92.setVisibility(View.VISIBLE);
+                textView93.setVisibility(View.VISIBLE);
+                textView94.setVisibility(View.VISIBLE);
+                textView95.setVisibility(View.VISIBLE);
+                imageView37.setVisibility(View.VISIBLE);
+                imageView75.setVisibility(View.VISIBLE);
+            }
+
+        } catch (Exception ignored) {
+        }
         return view;
     }
 
@@ -158,21 +183,14 @@ public class My extends Fragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.imageView68:
-                Intent intent1 = new Intent(getContext(), my_set.class);
-                startActivity(intent1);
+                Intent intent = new Intent(getContext(), my_set.class);
+                startActivity(intent);
                 break;
             case R.id.imageView36:
             case R.id.textView11:
                 //登陆
-                imageView36.setVisibility(View.GONE);
-                textView11.setVisibility(View.GONE);
-                textView75.setVisibility(View.GONE);
-                textView92.setVisibility(View.VISIBLE);
-                textView93.setVisibility(View.VISIBLE);
-                textView94.setVisibility(View.VISIBLE);
-                textView95.setVisibility(View.VISIBLE);
-                imageView37.setVisibility(View.VISIBLE);
-                imageView75.setVisibility(View.VISIBLE);
+                Intent intent1 = new Intent(getContext(), login.class);
+                startActivity(intent1);
                 break;
             case R.id.imageView37:
                 Intent intent2 = new Intent(getContext(), modify_information.class);

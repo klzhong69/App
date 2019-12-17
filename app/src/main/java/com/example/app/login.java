@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -75,9 +76,11 @@ public class login extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.but:
-                List<User> list =  mUserDao.querys(156156L);
                 SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
-                sp.edit().putLong("userid", list.get(0).getId()).apply();
+                sp.edit().putLong("userid", 1L).apply();
+                Intent intent1 = new Intent(login.this, MainActivity.class);
+                intent1.putExtra("id",4);
+                startActivity(intent1);
                 break;
             case R.id.textView156:
                 Intent intent2 = new Intent(login.this, forget_password.class);
@@ -89,6 +92,7 @@ public class login extends AppCompatActivity {
                 break;
             case R.id.textView159:
                 Intent intent4 = new Intent(login.this, agreement.class);
+                intent4.putExtra("about",0);
                 startActivity(intent4);
                 break;
             case R.id.imageView132:

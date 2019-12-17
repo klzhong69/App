@@ -11,9 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.app.Entity.Listleader;
-import com.example.app.Entity.Switch;
 import com.example.app.R;
+import com.example.app.Sqlentity.User;
 
 import java.util.List;
 
@@ -21,10 +20,10 @@ public class SwitchAdapter extends RecyclerView.Adapter {
         private static final String TAG = SwitchAdapter.class.getSimpleName();
 
         private Context mContext;
-        private List<Switch> mEntityList;
+        private List<User> mEntityList;
         private SwitchAdapter.OnItemClickListener mOnItemClickListener;
 
-    public SwitchAdapter(Context context, List<Switch> entityList) {
+    public SwitchAdapter(Context context, List<User> entityList) {
             this.mContext = context;
             this.mEntityList = entityList;
         }
@@ -50,12 +49,12 @@ public class SwitchAdapter extends RecyclerView.Adapter {
 
         @Override
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-            Switch entity = mEntityList.get(position);
+            User entity = mEntityList.get(position);
 
             ((SwitchAdapter.DemoViewHolder) holder).name.setText(entity.getName());
-            ((SwitchAdapter.DemoViewHolder) holder).id.setText(entity.getId());
-            Glide.with(mContext).load(entity.getUserima()).into(((SwitchAdapter.DemoViewHolder)holder).userima);
-            if(entity.getType().equals("0")){
+            ((SwitchAdapter.DemoViewHolder) holder).id.setText(entity.getUserId());
+            Glide.with(mContext).load(entity.getUsersrc()).into(((SwitchAdapter.DemoViewHolder)holder).userima);
+            if(entity.getState()==1){
                 Glide.with(mContext).load(R.drawable.qmui_icon_checkmark).into(((DemoViewHolder)holder).type);
             }else{
                 Glide.with(mContext).load("").into(((DemoViewHolder)holder).type);
@@ -104,7 +103,7 @@ public class SwitchAdapter extends RecyclerView.Adapter {
         }
 
 
-        public void addData(int position, Switch entity) {
+        public void addData(int position, User entity) {
             mEntityList.add(position, entity);
             notifyItemInserted(position);
         }

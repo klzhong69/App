@@ -21,9 +21,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".information">
-
-        </activity>
+        <activity android:name=".search"></activity>
+        <activity android:name=".operation_record" />
+        <activity android:name=".add_account" />
+        <activity android:name=".account" />
+        <activity android:name=".withdraw" />
+        <activity android:name=".exchange_gold" />
+        <activity android:name=".my_diamond" />
+        <activity android:name=".my_music_search" />
+        <activity android:name=".my_about" />
+        <activity android:name=".information" />
         <activity android:name=".registered" />
         <activity android:name=".forget_password" />
         <activity android:name=".agreement" />

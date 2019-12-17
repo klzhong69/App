@@ -1,5 +1,6 @@
 package com.example.app;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -7,12 +8,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.app.Adapter.MusicViewAdapter;
 import com.example.app.Entity.Mymusic;
+import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +35,8 @@ public class my_music extends AppCompatActivity {
     TextView title;
     @BindView(R.id.subtitle)
     TextView subtitle;
+    @BindView(R.id.imageView141)
+    ImageView imageView141;
     private List<Mymusic> mArrayList;
 
     @Override
@@ -40,7 +45,7 @@ public class my_music extends AppCompatActivity {
         setContentView(R.layout.activity_my_music);
         ButterKnife.bind(this);
         title.setText("我的音乐");
-        subtitle.setText("");
+        subtitle.setText("添加");
         initData();
         //适配器
         MusicViewAdapter mAdapter = new MusicViewAdapter(this, mArrayList);
@@ -68,7 +73,9 @@ public class my_music extends AppCompatActivity {
             @Override
             public void onItemLongClick(View view, int position) {
 
-                Toast.makeText(my_music.this, position + " Long click", Toast.LENGTH_SHORT).show();
+                showSimpleBottomSheetList(
+                        true, true, false, "操作提示",
+                        3, true, false);
             }
         });
 
@@ -91,18 +98,49 @@ public class my_music extends AppCompatActivity {
 
     }
 
-    @OnClick({R.id.fold, R.id.title, R.id.subtitle})
+    @OnClick({R.id.fold, R.id.subtitle, R.id.imageView141})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fold:
                 this.finish();
                 break;
-            case R.id.title:
-                title.setText("我的音乐");
-                break;
             case R.id.subtitle:
-                subtitle.setText("");
+
+                break;
+            case R.id.imageView141:
+                Intent intent2 = new Intent(my_music.this, my_music_search.class);
+                startActivity(intent2);
                 break;
         }
+    }
+
+    private void showSimpleBottomSheetList(boolean gravityCenter,
+                                           boolean addCancelBtn,
+                                           boolean withIcon,
+                                           CharSequence title,
+                                           int itemCount,
+                                           boolean allowDragDismiss,
+                                           boolean withMark) {
+        QMUIBottomSheet.BottomListSheetBuilder builder = new QMUIBottomSheet.BottomListSheetBuilder(this);
+        builder.setGravityCenter(gravityCenter)
+                .setTitle(title)
+                .setAddCancelBtn(addCancelBtn)
+                .setAllowDrag(allowDragDismiss)
+                .setNeedRightMark(withMark)
+                .setOnSheetItemClickListener(new QMUIBottomSheet.BottomListSheetBuilder.OnSheetItemClickListener() {
+                    @Override
+                    public void onClick(QMUIBottomSheet dialog, View itemView, int position, String tag) {
+                        dialog.dismiss();
+                        Toast.makeText(my_music.this, "Item " + (position + 1), Toast.LENGTH_SHORT).show();
+                    }
+                });
+        if(withMark){
+            builder.setCheckedIndex(40);
+        }
+
+        builder.addItem("向上移");
+        builder.addItem("向下移 ");
+        builder.addItem("删除");
+        builder.build().show();
     }
 }

@@ -16,9 +16,12 @@ import com.ycbjie.webviewlib.WebProgress;
 import com.ycbjie.webviewlib.X5WebUtils;
 import com.ycbjie.webviewlib.X5WebView;
 
+import java.net.URL;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.http.Url;
 
 public class agreement extends AppCompatActivity {
 
@@ -39,24 +42,31 @@ public class agreement extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_agreement);
         ButterKnife.bind(this);
-        initData();
-        initView();
-    }
-
-    public void initData() {
-        Intent intent = getIntent();
-        if (intent != null) {
-            url = intent.getStringExtra("url");
+        subtitle.setText("");
+        Intent intent =getIntent();
+        int about= intent.getIntExtra("about",0);
+        switch (about){
+            case 0:
+                title.setText("用户协议");
+                break;
+            case 1:
+                title.setText("隐私条款");
+                break;
+            case 2:
+                title.setText("隐私政策");
+                break;
         }
+        url="https://www.baidu.com/";
+        initView(url);
     }
 
-    public void initView() {
+    public void initView(String url) {
         mWebView = findViewById(R.id.web_view);
         progress = findViewById(R.id.progress);
         progress.show();
         progress.setColor(this.getResources().getColor(R.color.colorAccent), this.getResources().getColor(R.color.colorPrimaryDark));
 
-        mWebView.loadUrl("https://github.com/yangchong211/LifeHelper");
+        mWebView.loadUrl(url);
         mWebView.getX5WebChromeClient().setWebListener(interWebListener);
         mWebView.getX5WebViewClient().setWebListener(interWebListener);
     }
@@ -148,6 +158,7 @@ public class agreement extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fold:
+                this.finish();
                 break;
             case R.id.web_view:
                 break;

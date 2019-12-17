@@ -100,13 +100,13 @@ public class information extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.but:
                 List<User> list =  mUserDao.queryAll();
-                Long lon = (long) list.size();
+                Long lon = (long) list.size()+1;
                 User user = new User();
                 user.setId(lon);
                 user.setUserId("1345078");
                 user.setUsersrc("https://momeak.oss-cn-shenzhen.aliyuncs.com/h4.png");
                 user.setName(editText.getText().toString());
-                user.setState("0");
+                user.setState(0);
                 mUserDao.insert(user);
                 break;
             case R.id.radioButton2:

@@ -1,5 +1,6 @@
 package com.example.app;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -66,20 +67,27 @@ public class my_wallet extends AppCompatActivity {
         setContentView(R.layout.activity_my_wallet);
         ButterKnife.bind(this);
         title.setText("我的钱包");
-        subtitle.setText("");
+        subtitle.setText("账单");
     }
 
-    @OnClick({R.id.fold, R.id.title, R.id.subtitle})
+
+    @OnClick({R.id.fold, R.id.subtitle, R.id.imageView35, R.id.textView10, R.id.imageView36, R.id.textView11})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fold:
                 this.finish();
                 break;
-            case R.id.title:
-                title.setText("我的钱包");
-                break;
             case R.id.subtitle:
-                subtitle.setText("");
+                break;
+            case R.id.imageView35:
+            case R.id.textView10:
+                Intent intent1 = new Intent(my_wallet.this, my_gold.class);
+                startActivity(intent1);
+                break;
+            case R.id.imageView36:
+            case R.id.textView11:
+                Intent intent2 = new Intent(my_wallet.this, withdraw.class);
+                startActivity(intent2);
                 break;
         }
     }

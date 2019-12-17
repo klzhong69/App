@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".my_music">
+    tools:context=".operation_record">
 
     <include
         android:id="@+id/include"
@@ -19,21 +19,12 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler5"
+        android:id="@+id/recyclerc11"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/include" />
-
-    <ImageView
-        android:id="@+id/imageView141"
-        android:layout_width="@dimen/dp_30"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/dp_80"
-        app:layout_constraintBottom_toBottomOf="@+id/include"
-        app:layout_constraintEnd_toEndOf="@+id/include"
-        app:layout_constraintTop_toTopOf="@+id/include"
-        app:srcCompat="@drawable/dk_search_icon" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
