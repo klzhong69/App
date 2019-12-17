@@ -21,7 +21,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".my_feedback"></activity>
+        <activity android:name=".information">
+
+        </activity>
+        <activity android:name=".registered" />
+        <activity android:name=".forget_password" />
+        <activity android:name=".agreement" />
+        <activity android:name=".login" />
+        <activity android:name=".my_switch" />
+        <activity android:name=".my_feedback" />
         <activity android:name=".my_push" />
         <activity android:name=".my_change_photo" />
         <activity android:name=".my_change_pass" />
