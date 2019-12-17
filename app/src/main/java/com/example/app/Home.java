@@ -1,18 +1,27 @@
 package com.example.app;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.Nullable;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 public class Home extends Fragment {
 
+    @BindView(R.id.button)
+    Button button;
+    @BindView(R.id.scroll)
+    NestedScrollView scroll;
     private Unbinder unbinder;
 
 
@@ -52,4 +61,9 @@ public class Home extends Fragment {
 
     }
 
+    @OnClick(R.id.button)
+    public void onViewClicked() {
+        Intent intent3 = new Intent(getContext(), search.class);
+        startActivity(intent3);
+    }
 }

@@ -1,5 +1,6 @@
 package com.example.app;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.View;
@@ -118,6 +119,8 @@ public class search extends AppCompatActivity {
             @Override
             public boolean onQueryTextSubmit(String queryText) {
                 //点击搜索
+                Intent intent3 = new Intent(search.this, family_search.class);
+                startActivity(intent3);
                 System.out.println("onQueryTextSubmit:" + queryText);
                 return true;
             }
