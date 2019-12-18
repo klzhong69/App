@@ -65,13 +65,26 @@
 
         <ImageView
             android:id="@+id/imageView38"
-            android:layout_width="@dimen/dp_60"
-            android:layout_height="@dimen/dp_30"
-            android:layout_alignTop="@+id/imageView28"
-            android:layout_alignBottom="@+id/imageView28"
+            android:layout_width="@dimen/dp_25"
+            android:layout_height="@dimen/dp_25"
+            android:layout_alignTop="@+id/textView179"
+            android:layout_alignBottom="@+id/textView179"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:layout_toStartOf="@+id/textView179"
+            app:srcCompat="@drawable/l_love" />
+
+        <TextView
+            android:id="@+id/textView179"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
             android:layout_marginEnd="@dimen/dp_20"
-            app:srcCompat="@drawable/back2" />
+            android:gravity="center"
+            android:text="9458"
+            android:textColor="#7A7A7A"
+            android:textSize="@dimen/sp_16" />
     </RelativeLayout>
 
 </RelativeLayout>

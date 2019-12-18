@@ -58,8 +58,18 @@ public class FindgiftAdapter extends RecyclerView.Adapter {
         ((FindgiftAdapter.DemoViewHolder) holder).roomid.setText(entity.getRoomid());
         Glide.with(mContext).load(entity.getUserima1()).into(((FindgiftAdapter.DemoViewHolder)holder).userima1);
         Glide.with(mContext).load(entity.getUserima2()).into(((FindgiftAdapter.DemoViewHolder)holder).userima2);
-        Glide.with(mContext).load(entity.getGrade1()).into(((FindgiftAdapter.DemoViewHolder)holder).grade1);
-        Glide.with(mContext).load(entity.getGrade2()).into(((FindgiftAdapter.DemoViewHolder)holder).grade2);
+        if(entity.getGrade1().equals("0")){
+            Glide.with(mContext).load(R.drawable.nan).into(((FindgiftAdapter.DemoViewHolder)holder).grade1);
+        }else{
+            Glide.with(mContext).load(R.drawable.nv).into(((FindgiftAdapter.DemoViewHolder)holder).grade1);
+        }
+        if(entity.getGrade2().equals("0")){
+            Glide.with(mContext).load(R.drawable.nan).into(((FindgiftAdapter.DemoViewHolder)holder).grade2);
+        }else{
+            Glide.with(mContext).load(R.drawable.nv).into(((FindgiftAdapter.DemoViewHolder)holder).grade2);
+        }
+
+
         if (mOnItemClickListener != null) {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

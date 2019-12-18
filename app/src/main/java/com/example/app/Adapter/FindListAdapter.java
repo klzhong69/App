@@ -56,7 +56,12 @@ public class FindListAdapter extends RecyclerView.Adapter {
         ((FindListAdapter.DemoViewHolder) holder).txt.setText(entity.getTxt());
         ((FindListAdapter.DemoViewHolder) holder).sum.setText(entity.getSum());
         Glide.with(mContext).load(entity.getImagesrc()).into(((FindListAdapter.DemoViewHolder)holder).imagesrc);
-        Glide.with(mContext).load(entity.getIcon()).into(((FindListAdapter.DemoViewHolder)holder).icon);
+        if(entity.getIcon().equals("0")){
+            Glide.with(mContext).load(R.drawable.remen).into(((FindListAdapter.DemoViewHolder)holder).icon);
+        }else{
+            Glide.with(mContext).load("").into(((FindListAdapter.DemoViewHolder)holder).icon);
+        }
+
         ((FindListAdapter.DemoViewHolder) holder).lab1.setText(entity.getLab1());
         ((FindListAdapter.DemoViewHolder) holder).lab2.setText(entity.getLab2());
         ((FindListAdapter.DemoViewHolder) holder).lab3.setText(entity.getLab3());

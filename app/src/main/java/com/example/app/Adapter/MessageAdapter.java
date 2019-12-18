@@ -57,7 +57,12 @@ public class MessageAdapter extends RecyclerView.Adapter {
         ((MessageAdapter.DemoViewHolder) holder).time.setText(entity.getTime());
         ((MessageAdapter.DemoViewHolder) holder).sum.setText(entity.getSum());
         Glide.with(mContext).load(entity.getImagesrc()).into(((MessageAdapter.DemoViewHolder)holder).imagesrc);
-        Glide.with(mContext).load(entity.getIcon()).into(((MessageAdapter.DemoViewHolder)holder).icon);
+        if(entity.getIcon().equals("0")){
+            Glide.with(mContext).load(R.drawable.zhiyou).into(((MessageAdapter.DemoViewHolder)holder).icon);
+        }else{
+            Glide.with(mContext).load("").into(((MessageAdapter.DemoViewHolder)holder).icon);
+        }
+
         if (mOnItemClickListener != null) {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

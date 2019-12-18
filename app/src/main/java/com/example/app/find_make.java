@@ -166,7 +166,7 @@ public class find_make extends AppCompatActivity {
         mArrayLists = new ArrayList<Findgift>();
 
         for (int i = 0; i < 4; i++) {
-            Findgift i2 = new Findgift("https://momeak.oss-cn-shenzhen.aliyuncs.com/h3.jpg", "https://momeak.oss-cn-shenzhen.aliyuncs.com/h4.jpg", "苗苗", "李描绘", "", "", "x50", "", "ID2563487");
+            Findgift i2 = new Findgift("https://momeak.oss-cn-shenzhen.aliyuncs.com/h3.jpg", "https://momeak.oss-cn-shenzhen.aliyuncs.com/h4.jpg", "苗苗", "李描绘", "0", "1", "x50", "", "ID2563487");
             mArrayLists.add(i2);
         }
 

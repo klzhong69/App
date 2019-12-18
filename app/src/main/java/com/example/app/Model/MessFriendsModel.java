@@ -26,7 +26,7 @@ public class MessFriendsModel {
     public static void initData(int a) {
         mArrayList = new ArrayList<Friends>();
         for (int i = 0; i < 4; i++) {
-            Friends i1 = new Friends("Ema90", "hi伙伴，明天一起直播吗",  "https://momeak.oss-cn-shenzhen.aliyuncs.com/dear1.png", "");
+            Friends i1 = new Friends("Ema90", "hi伙伴，明天一起直播吗",  "https://momeak.oss-cn-shenzhen.aliyuncs.com/dear1.png", i+"");
             mArrayList.add(i1);
         }
 

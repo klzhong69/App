@@ -23,17 +23,17 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginEnd="@dimen/dp_18"
+            android:layout_marginEnd="@dimen/dp_20"
             app:srcCompat="@drawable/l_fengxiang" />
 
         <TextView
             android:id="@+id/textView121"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginStart="@dimen/dp_20"
             android:layout_marginTop="@dimen/dp_10"
+            android:layout_toEndOf="@+id/fold"
             android:text="ID241625"
             android:textColor="#ffffff"
             android:textSize="@dimen/sp_18" />
@@ -97,6 +97,16 @@
             android:layout_marginEnd="@dimen/dp_20"
             android:layout_toStartOf="@+id/imageView4"
             app:srcCompat="@drawable/l_soucan" />
+
+        <ImageView
+            android:id="@+id/fold"
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="@dimen/dp_20"
+            app:srcCompat="@drawable/fold_white" />
     </RelativeLayout>
 
     <com.qmuiteam.qmui.widget.QMUIRadiusImageView

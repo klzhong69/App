@@ -25,14 +25,14 @@
         <com.qmuiteam.qmui.widget.QMUIRadiusImageView
             android:id="@+id/imageViewc8"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_200"
+            android:layout_height="@dimen/dp_240"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="@dimen/dp_30"
             android:layout_marginTop="@dimen/dp_20"
             android:layout_marginEnd="@dimen/dp_30"
-            android:src="@drawable/back2"
+            android:src="#505050"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -117,7 +117,7 @@
             android:layout_alignEnd="@+id/imageViewc8"
             android:layout_marginTop="@dimen/dp_10"
             android:layout_marginEnd="@dimen/dp_20"
-            app:srcCompat="@drawable/dk_frame_hist" />
+            app:srcCompat="@drawable/zhuye" />
 
         <ImageView
             android:id="@+id/imageViewc8b"
@@ -126,7 +126,7 @@
             android:layout_alignTop="@+id/imageViewc8a"
             android:layout_marginEnd="@dimen/dp_20"
             android:layout_toStartOf="@+id/imageViewc8a"
-            app:srcCompat="@drawable/dk_network_bar" />
+            app:srcCompat="@drawable/fangjian2" />
 
         <ImageView
             android:id="@+id/imageViewc8c"
@@ -136,19 +136,19 @@
             android:layout_alignTop="@+id/imageViewc8"
             android:layout_alignEnd="@+id/imageViewc8"
             android:layout_marginStart="@dimen/dp_20"
-            android:layout_marginTop="@dimen/dp_120"
+            android:layout_marginTop="@dimen/dp_140"
             android:layout_marginEnd="@dimen/dp_20"
             android:scaleType="centerCrop"
             app:srcCompat="@drawable/back" />
 
         <ImageView
             android:id="@+id/imageViewc8d"
-            android:layout_width="@dimen/dp_30"
-            android:layout_height="@dimen/dp_30"
+            android:layout_width="@dimen/dp_20"
+            android:layout_height="@dimen/dp_20"
             android:layout_below="@+id/textViewc8s"
             android:layout_alignStart="@+id/textViewc8s"
-            android:layout_marginTop="@dimen/dp_10"
-            app:srcCompat="@android:drawable/btn_star_big_on" />
+            android:layout_marginTop="@dimen/dp_20"
+            app:srcCompat="@drawable/s_xing" />
 
         <TextView
             android:id="@+id/textViewc8b"
@@ -180,7 +180,7 @@
             android:layout_alignTop="@+id/imageViewc8e"
             android:layout_marginStart="@dimen/dp_60"
             android:layout_toEndOf="@+id/imageViewc8e"
-            app:srcCompat="@drawable/dk_float_button" />
+            app:srcCompat="@drawable/guanzhupng" />
 
         <ImageView
             android:id="@+id/imageViewc8g"
@@ -189,7 +189,7 @@
             android:layout_alignTop="@+id/imageViewc8f"
             android:layout_marginStart="@dimen/dp_60"
             android:layout_toEndOf="@+id/imageViewc8f"
-            app:srcCompat="@drawable/dk_float_button" />
+            app:srcCompat="@drawable/haoyou" />
 
         <ImageView
             android:id="@+id/imageViewc8h"
@@ -199,6 +199,14 @@
             android:layout_marginStart="@dimen/dp_60"
             android:layout_toEndOf="@+id/imageViewc8g"
             app:srcCompat="@drawable/gift1" />
+
+        <ImageView
+            android:id="@+id/imageView12"
+            android:layout_width="@dimen/dp_20"
+            android:layout_height="@dimen/dp_20"
+            android:layout_alignEnd="@+id/imageViewc8s"
+            android:layout_alignBottom="@+id/imageViewc8s"
+            app:srcCompat="@drawable/nvs" />
 
     </RelativeLayout>
 

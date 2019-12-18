@@ -83,11 +83,11 @@
         android:id="@+id/imageView50"
         android:layout_width="@dimen/dp_20"
         android:layout_height="@dimen/dp_20"
-        android:layout_marginStart="4dp"
-        android:layout_marginBottom="12dp"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginBottom="@dimen/dp_15"
         app:layout_constraintBottom_toBottomOf="@+id/imageView22"
         app:layout_constraintStart_toStartOf="@+id/imageView22"
-        app:srcCompat="@drawable/dk_network_bar" />
+        app:srcCompat="@drawable/gold" />
 
     <TextView
         android:id="@+id/textView23"
@@ -108,15 +108,15 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/imageView37"
         android:layout_alignBottom="@+id/imageView37"
-        android:layout_marginEnd="4dp"
-        android:layout_marginBottom="12dp"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:layout_marginBottom="@dimen/dp_10"
         android:layout_toEndOf="@+id/imageView37"
         android:layout_toRightOf="@+id/imageView37"
         android:background="@drawable/mess"
         android:paddingLeft="@dimen/dp_20"
-        android:paddingTop="@dimen/dp_3"
+        android:paddingTop="@dimen/dp_5"
         android:paddingRight="@dimen/dp_20"
-        android:paddingBottom="0dp"
+        android:paddingBottom="@dimen/dp_5"
         android:text="购买"
         app:layout_constraintBottom_toBottomOf="@+id/imageView22"
         app:layout_constraintEnd_toEndOf="@+id/imageView22" />
@@ -172,11 +172,11 @@
         android:id="@+id/imageView54"
         android:layout_width="@dimen/dp_20"
         android:layout_height="@dimen/dp_20"
-        android:layout_marginStart="4dp"
-        android:layout_marginBottom="12dp"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginBottom="@dimen/dp_15"
         app:layout_constraintBottom_toBottomOf="@+id/imageView52"
         app:layout_constraintStart_toStartOf="@+id/imageView52"
-        app:srcCompat="@drawable/dk_network_bar" />
+        app:srcCompat="@drawable/gold" />
 
     <TextView
         android:id="@+id/textView36"
@@ -195,13 +195,13 @@
         android:id="@+id/textView37"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="4dp"
-        android:layout_marginBottom="12dp"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:layout_marginBottom="@dimen/dp_10"
         android:background="@drawable/mess"
         android:paddingLeft="@dimen/dp_20"
-        android:paddingTop="@dimen/dp_3"
+        android:paddingTop="@dimen/dp_5"
         android:paddingRight="@dimen/dp_20"
-        android:paddingBottom="0dp"
+        android:paddingBottom="@dimen/dp_5"
         android:text="购买"
         app:layout_constraintBottom_toBottomOf="@+id/imageView52"
         app:layout_constraintEnd_toEndOf="@+id/imageView52" />
@@ -259,11 +259,11 @@
         android:id="@+id/imageView58"
         android:layout_width="@dimen/dp_20"
         android:layout_height="@dimen/dp_20"
-        android:layout_marginStart="4dp"
-        android:layout_marginBottom="12dp"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginBottom="@dimen/dp_15"
         app:layout_constraintBottom_toBottomOf="@+id/imageView56"
         app:layout_constraintStart_toStartOf="@+id/imageView56"
-        app:srcCompat="@drawable/dk_network_bar" />
+        app:srcCompat="@drawable/gold" />
 
     <TextView
         android:id="@+id/textView41"
@@ -281,13 +281,13 @@
         android:id="@+id/textView42"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="4dp"
-        android:layout_marginBottom="12dp"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:layout_marginBottom="@dimen/dp_10"
         android:background="@drawable/mess"
         android:paddingLeft="@dimen/dp_20"
-        android:paddingTop="@dimen/dp_3"
+        android:paddingTop="@dimen/dp_5"
         android:paddingRight="@dimen/dp_20"
-        android:paddingBottom="0dp"
+        android:paddingBottom="@dimen/dp_5"
         android:text="购买"
         app:layout_constraintBottom_toBottomOf="@+id/imageView56"
         app:layout_constraintEnd_toEndOf="@+id/imageView56" />

@@ -22,5 +22,5 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="@dimen/dp_20"
-        app:srcCompat="@drawable/dk_temporary_close" />
+        app:srcCompat="@drawable/del" />
 </RelativeLayout>

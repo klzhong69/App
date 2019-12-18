@@ -54,8 +54,13 @@ public class FindmakeAdapter extends RecyclerView.Adapter {
 
         ((FindmakeAdapter.DemoViewHolder) holder).txt.setText(entity.getTxt());
         ((FindmakeAdapter.DemoViewHolder) holder).name.setText(entity.getName());
-        Glide.with(mContext).load(entity.getGender()).into(((FindmakeAdapter.DemoViewHolder)holder).gender);
+
         Glide.with(mContext).load(entity.getUserima()).into(((FindmakeAdapter.DemoViewHolder)holder).userima);
+        if(entity.getGender().equals("0")){
+            Glide.with(mContext).load(R.drawable.nan).into(((FindmakeAdapter.DemoViewHolder)holder).gender);
+        }else{
+            Glide.with(mContext).load(R.drawable.nv).into(((FindmakeAdapter.DemoViewHolder)holder).gender);
+        }
         Glide.with(mContext).load(R.drawable.l3).into(((FindmakeAdapter.DemoViewHolder)holder).grade);
         if (mOnItemClickListener != null) {
             holder.itemView.setOnClickListener(new View.OnClickListener() {

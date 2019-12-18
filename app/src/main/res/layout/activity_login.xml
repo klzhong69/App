@@ -147,7 +147,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/imageView18"
         app:layout_constraintStart_toStartOf="@+id/imageView18"
         app:layout_constraintTop_toTopOf="@+id/imageView18"
-        app:srcCompat="@drawable/dk_block_monitor" />
+        app:srcCompat="@drawable/passwprd" />
 
     <TextView
         android:id="@+id/textView156"
@@ -196,7 +196,7 @@
         android:layout_marginBottom="52dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/dk_file_explorer" />
+        app:srcCompat="@drawable/weixin" />
 
     <ImageView
         android:id="@+id/imageView133"
@@ -207,7 +207,7 @@
         app:layout_constraintStart_toEndOf="@+id/imageView132"
         app:layout_constraintTop_toTopOf="@+id/imageView132"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/dk_file_explorer" />
+        app:srcCompat="@drawable/zhifubao" />
 
     <ImageView
         android:id="@+id/imageView134"
@@ -217,7 +217,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/imageView133"
         app:layout_constraintStart_toEndOf="@+id/imageView133"
         app:layout_constraintTop_toTopOf="@+id/imageView133"
-        app:srcCompat="@drawable/dk_file_explorer" />
+        app:srcCompat="@drawable/weibo" />
 
     <TextView
         android:id="@+id/textView160"

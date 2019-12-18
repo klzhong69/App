@@ -228,8 +228,8 @@
 
     <ImageView
         android:id="@+id/imageView120"
-        android:layout_width="@dimen/dp_30"
-        android:layout_height="@dimen/dp_30"
+        android:layout_width="@dimen/dp_20"
+        android:layout_height="@dimen/dp_20"
         android:layout_marginEnd="@dimen/dp_20"
         app:layout_constraintBottom_toBottomOf="@+id/imageView119"
         app:layout_constraintEnd_toEndOf="@+id/imageView119"
@@ -304,8 +304,8 @@
 
     <ImageView
         android:id="@+id/imageView124"
-        android:layout_width="@dimen/dp_30"
-        android:layout_height="@dimen/dp_30"
+        android:layout_width="@dimen/dp_20"
+        android:layout_height="@dimen/dp_20"
         android:layout_marginEnd="@dimen/dp_20"
         app:layout_constraintBottom_toBottomOf="@+id/imageView121"
         app:layout_constraintEnd_toEndOf="@+id/imageView121"
@@ -314,8 +314,8 @@
 
     <ImageView
         android:id="@+id/imageView125"
-        android:layout_width="@dimen/dp_30"
-        android:layout_height="@dimen/dp_30"
+        android:layout_width="@dimen/dp_20"
+        android:layout_height="@dimen/dp_20"
         android:layout_marginEnd="@dimen/dp_20"
         app:layout_constraintBottom_toBottomOf="@+id/imageView122"
         app:layout_constraintEnd_toEndOf="@+id/imageView122"
@@ -324,8 +324,8 @@
 
     <ImageView
         android:id="@+id/imageView126"
-        android:layout_width="@dimen/dp_30"
-        android:layout_height="@dimen/dp_30"
+        android:layout_width="@dimen/dp_20"
+        android:layout_height="@dimen/dp_20"
         android:layout_marginEnd="@dimen/dp_20"
         app:layout_constraintBottom_toBottomOf="@+id/imageView123"
         app:layout_constraintEnd_toEndOf="@+id/imageView123"

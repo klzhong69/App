@@ -116,12 +116,12 @@
 
         <ImageView
             android:id="@+id/imageView95"
-            android:layout_width="@dimen/dp_30"
-            android:layout_height="@dimen/dp_30"
+            android:layout_width="@dimen/dp_25"
+            android:layout_height="@dimen/dp_25"
             android:layout_alignTop="@+id/imageView18"
             android:layout_marginStart="@dimen/dp_5"
             android:layout_toEndOf="@+id/textView66"
-            app:srcCompat="@drawable/dk_crash_catch" />
+            app:srcCompat="@drawable/remen" />
 
     </RelativeLayout>
 

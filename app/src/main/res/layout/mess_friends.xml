@@ -1,64 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/dp_100"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/qmui_config_color_white">
+    android:layout_height="@dimen/dp_105"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <com.qmuiteam.qmui.widget.QMUIRadiusImageView
-        android:id="@+id/imageView18"
-        android:layout_width="@dimen/dp_60"
-        android:layout_height="@dimen/dp_60"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="@dimen/dp_20"
-        android:layout_marginTop="@dimen/dp_20"
-        android:src="@drawable/back2"
-        app:qmui_border_width="0dp"
-        app:qmui_corner_radius="@dimen/dp_50"
-        />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_100"
+        android:background="@color/qmui_config_color_white">
 
-    <TextView
-        android:id="@+id/textView66"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/imageView18"
-        android:layout_marginStart="@dimen/dp_20"
-        android:layout_marginTop="@dimen/dp_5"
-        android:layout_toEndOf="@+id/imageView18"
-        android:text="Ema90"
-        android:textSize="@dimen/sp_20" />
+        <com.qmuiteam.qmui.widget.QMUIRadiusImageView
+            android:id="@+id/imageView18"
+            android:layout_width="@dimen/dp_60"
+            android:layout_height="@dimen/dp_60"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_20"
+            android:src="@drawable/back2"
+            app:qmui_border_width="0dp"
+            app:qmui_corner_radius="@dimen/dp_50"
+            />
 
-    <TextView
-        android:id="@+id/textView67"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView66"
-        android:layout_alignStart="@+id/textView66"
-        android:layout_alignBottom="@+id/imageView18"
-        android:gravity="center_vertical"
-        android:text="hi伙伴，明天一起直播吗"
-        android:textSize="@dimen/sp_14" />
+        <TextView
+            android:id="@+id/textView66"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/imageView18"
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_5"
+            android:layout_toEndOf="@+id/imageView18"
+            android:text="Ema90"
+            android:textSize="@dimen/sp_20" />
 
-    <ImageView
-        android:id="@+id/imageView67"
-        android:layout_width="@dimen/dp_40"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/textView66"
-        android:layout_alignBottom="@+id/textView66"
-        android:layout_marginStart="@dimen/dp_5"
-        android:layout_toEndOf="@+id/textView66"
-        app:srcCompat="@drawable/back2" />
+        <TextView
+            android:id="@+id/textView67"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView66"
+            android:layout_alignStart="@+id/textView66"
+            android:layout_alignBottom="@+id/imageView18"
+            android:gravity="center_vertical"
+            android:text="hi伙伴，明天一起直播吗"
+            android:textSize="@dimen/sp_14" />
 
-    <ImageView
-        android:id="@+id/imageView79"
-        android:layout_width="@dimen/dp_30"
-        android:layout_height="@dimen/dp_30"
-        android:layout_alignTop="@+id/imageView18"
-        android:layout_alignBottom="@+id/imageView18"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="@dimen/dp_20"
-        app:srcCompat="@drawable/l_liaotian" />
+        <ImageView
+            android:id="@+id/imageView67"
+            android:layout_width="@dimen/dp_15"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/textView66"
+            android:layout_alignBottom="@+id/textView66"
+            android:layout_marginStart="@dimen/dp_5"
+            android:layout_toEndOf="@+id/textView66"
+            app:srcCompat="@drawable/nans" />
+
+        <ImageView
+            android:id="@+id/imageView79"
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30"
+            android:layout_alignTop="@+id/imageView18"
+            android:layout_alignBottom="@+id/imageView18"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/dp_20"
+            app:srcCompat="@drawable/siliao" />
+
+
+    </RelativeLayout>
+
 
 
 </RelativeLayout>

@@ -82,7 +82,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/imageView18"
         app:layout_constraintEnd_toEndOf="@+id/imageView18"
         app:layout_constraintTop_toTopOf="@+id/imageView18"
-        app:srcCompat="@drawable/dk_close_icon" />
+        app:srcCompat="@drawable/hide" />
 
     <EditText
         android:id="@+id/editText4"
@@ -133,7 +133,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/imageView20"
         app:layout_constraintEnd_toEndOf="@+id/imageView20"
         app:layout_constraintTop_toTopOf="@+id/imageView20"
-        app:srcCompat="@drawable/dk_close_icon" />
+        app:srcCompat="@drawable/hide" />
 
     <EditText
         android:id="@+id/editText5"

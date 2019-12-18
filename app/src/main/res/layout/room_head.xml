@@ -46,7 +46,7 @@
         android:layout_height="@dimen/dp_30"
         android:layout_alignStart="@+id/imageView2"
         android:layout_alignBottom="@+id/imageView2"
-        app:srcCompat="@drawable/dk_net_monitor" />
+        app:srcCompat="@drawable/l_love" />
 
     <ImageView
         android:id="@+id/imageView107"
@@ -54,6 +54,6 @@
         android:layout_height="@dimen/dp_30"
         android:layout_alignEnd="@+id/imageView2"
         android:layout_alignBottom="@+id/imageView2"
-        app:srcCompat="@drawable/dk_net_monitor" />
+        app:srcCompat="@drawable/maikefeng" />
 
 </RelativeLayout>

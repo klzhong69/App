@@ -65,7 +65,7 @@
             android:layout_height="@dimen/dp_20"
             android:layout_alignEnd="@+id/imageView18"
             android:layout_alignBottom="@+id/imageView18"
-            app:srcCompat="@drawable/dk_perform_data_background" />
+            app:srcCompat="@drawable/nv" />
 
     </RelativeLayout>
 

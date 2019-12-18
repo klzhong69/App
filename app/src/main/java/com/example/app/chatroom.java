@@ -26,6 +26,7 @@ import com.example.app.Model.HoldModel;
 import com.example.app.Model.MessFriendsModel;
 import com.example.app.Model.MessModel;
 import com.example.app.Model.OnlineModel;
+import com.example.app.Model.PaimaiModel;
 import com.qmuiteam.qmui.layout.QMUIPriorityLinearLayout;
 import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
@@ -330,6 +331,8 @@ public class chatroom extends AppCompatActivity {
     RelativeLayout recyclerc10;
     @BindView(R.id.recyclerc8)
     RelativeLayout recyclerc8;
+    @BindView(R.id.fold)
+    ImageView fold;
     private Bitmap bitmap;
     private Disposable disposable;
     private chatroom context;
@@ -386,7 +389,7 @@ public class chatroom extends AppCompatActivity {
         }
     }
 
-    @OnClick({R.id.imageView101, R.id.imageView102, R.id.imageView103, R.id.imageView99, R.id.textView124, R.id.imageView104, R.id.imageView105, R.id.butc1, R.id.butc10, R.id.imageView4, R.id.imageViewc1t, R.id.imageViewc2t, R.id.imageViewc5s, R.id.recyclerbutc1, R.id.recyclerbutc2, R.id.recyclerbutc3, R.id.recyclerbutc4, R.id.recyclerbutc5, R.id.recyclerbutc6, R.id.recyclerbutc7, R.id.recyclerbutc8, R.id.recyclerbutc8s, R.id.recyclerbutc9, R.id.recyclerbutc10, R.id.recyclerbutc10s, R.id.imageViewc1, R.id.imageViewc2, R.id.imageViewc3, R.id.imageViewc4, R.id.imageViewc5, R.id.imageViewc6, R.id.imageViewc7, R.id.recyclerc8, R.id.imageViewc9, R.id.recyclerc10})
+    @OnClick({R.id.fold,R.id.imageView98,R.id.imageView101, R.id.imageView102, R.id.imageView103, R.id.imageView99, R.id.textView124, R.id.imageView104, R.id.imageView105, R.id.butc1, R.id.butc10, R.id.imageView4, R.id.imageViewc1t, R.id.imageViewc2t, R.id.imageViewc5s, R.id.recyclerbutc1, R.id.recyclerbutc2, R.id.recyclerbutc3, R.id.recyclerbutc4, R.id.recyclerbutc5, R.id.recyclerbutc6, R.id.recyclerbutc7, R.id.recyclerbutc8, R.id.recyclerbutc8s, R.id.recyclerbutc9, R.id.recyclerbutc10, R.id.recyclerbutc10s, R.id.imageViewc1, R.id.imageViewc2, R.id.imageViewc3, R.id.imageViewc4, R.id.imageViewc5, R.id.imageViewc6, R.id.imageViewc7, R.id.recyclerc8, R.id.imageViewc9, R.id.recyclerc10})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.imageView101:
@@ -431,9 +434,12 @@ public class chatroom extends AppCompatActivity {
                 MessModel.initrecyclers(context, recyclerc5s, 1);
                 break;
             case R.id.imageView103:
-                component10.setVisibility(View.VISIBLE);
+                component7.setVisibility(View.VISIBLE);
+                PaimaiModel.initData();
+                PaimaiModel.initrecycler(context, recyclerc7);
                 break;
             case R.id.imageView104:
+
                 break;
             case R.id.imageView105:
                 component4.setVisibility(View.VISIBLE);
@@ -447,6 +453,10 @@ public class chatroom extends AppCompatActivity {
                 component6.setVisibility(View.VISIBLE);
                 OnlineModel.initData();
                 OnlineModel.initrecycler(context, recyclerc6);
+                break;
+
+            case R.id.imageView98:
+                component10.setVisibility(View.VISIBLE);
                 break;
 
             case R.id.imageViewc1t:
@@ -471,11 +481,13 @@ public class chatroom extends AppCompatActivity {
                 MessFriendsModel.initrecycler(context, recyclerc2, 1);
                 break;
             case R.id.imageView4:
+                showSimpleBottomSheetGrid();
+                break;
+            case R.id.fold:
                 showSimpleBottomSheetList(
                         true, true, false, "您确定要离开房间吗？",
                         2, true, false);
                 break;
-
 
             case R.id.recyclerbutc1:
                 component1.setVisibility(View.GONE);
@@ -671,9 +683,9 @@ public class chatroom extends AppCompatActivity {
                     @Override
                     public void onClick(QMUIBottomSheet dialog, View itemView, int position, String tag) {
                         dialog.dismiss();
-                        if(position==0){
+                        if (position == 0) {
                             chatroom.this.finish();
-                        }else if(position==1){
+                        } else if (position == 1) {
 
                         }
                     }
@@ -700,10 +712,10 @@ public class chatroom extends AppCompatActivity {
         final int TAG_SHARE_WEIBO = 2;
         final int TAG_SHARE_CHAT = 3;
         QMUIBottomSheet.BottomGridSheetBuilder builder = new QMUIBottomSheet.BottomGridSheetBuilder(this);
-        builder.addItem(R.drawable.icon_more_operation_share_friend, "分享到微信", TAG_SHARE_WECHAT_FRIEND, QMUIBottomSheet.BottomGridSheetBuilder.FIRST_LINE)
-                .addItem(R.drawable.icon_more_operation_share_moment, "分享到朋友圈", TAG_SHARE_WECHAT_MOMENT, QMUIBottomSheet.BottomGridSheetBuilder.FIRST_LINE)
-                .addItem(R.drawable.icon_more_operation_share_weibo, "分享到微博", TAG_SHARE_WEIBO, QMUIBottomSheet.BottomGridSheetBuilder.FIRST_LINE)
-                .addItem(R.drawable.icon_more_operation_share_chat, "分享到私信", TAG_SHARE_CHAT, QMUIBottomSheet.BottomGridSheetBuilder.FIRST_LINE)
+        builder.addItem(R.drawable.wei_xing, "微信", TAG_SHARE_WECHAT_FRIEND, QMUIBottomSheet.BottomGridSheetBuilder.FIRST_LINE)
+                .addItem(R.drawable.pengyouquan, "朋友圈", TAG_SHARE_WECHAT_MOMENT, QMUIBottomSheet.BottomGridSheetBuilder.FIRST_LINE)
+                .addItem(R.drawable.qq, "QQ", TAG_SHARE_WEIBO, QMUIBottomSheet.BottomGridSheetBuilder.FIRST_LINE)
+                .addItem(R.drawable.qqkongjian, "QQ空间", TAG_SHARE_CHAT, QMUIBottomSheet.BottomGridSheetBuilder.FIRST_LINE)
                 .setAddCancelBtn(true)
                 .setOnSheetItemClickListener(new QMUIBottomSheet.BottomGridSheetBuilder.OnSheetItemClickListener() {
                     @Override

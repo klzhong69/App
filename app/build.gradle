@@ -6,7 +6,7 @@ android {
     buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "com.example.app"
-        minSdkVersion 26
+        minSdkVersion 24
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -94,6 +94,8 @@ dependencies {
     implementation 'com.lzy.net:okserver:2.0.5'//上传下载
 
     implementation 'com.brucetoo.pickview:library:1.2.3'//时间选择器仿ios
+
+    implementation 'com.github.princekin-f:EasyFloat:1.2.2'//悬浮窗
 
 }
 

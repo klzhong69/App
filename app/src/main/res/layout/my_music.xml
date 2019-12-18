@@ -40,13 +40,12 @@
 
         <ImageView
             android:id="@+id/imageView66"
-            android:layout_width="@dimen/dp_20"
-            android:layout_height="@dimen/dp_20"
-            android:layout_alignBottom="@+id/imageView18"
-            android:layout_marginStart="@dimen/dp_20"
-            android:layout_marginBottom="@dimen/dp_10"
-            android:layout_toEndOf="@+id/imageView18"
-            app:srcCompat="@drawable/black_background" />
+            android:layout_width="@dimen/dp_25"
+            android:layout_height="@dimen/dp_25"
+            android:layout_below="@+id/textView66"
+            android:layout_alignStart="@+id/textView66"
+            android:layout_marginTop="@dimen/dp_10"
+            app:srcCompat="@drawable/time" />
 
         <TextView
             android:id="@+id/textView67"
@@ -58,11 +57,12 @@
             android:layout_toEndOf="@+id/imageView66"
             android:gravity="center_vertical"
             android:text="00.00"
+            android:textColor="#8a8a8a"
             android:textSize="@dimen/sp_18" />
 
         <ImageView
             android:id="@+id/imageView67"
-            android:layout_width="@dimen/dp_40"
+            android:layout_width="@dimen/dp_30"
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/imageView18"
             android:layout_alignBottom="@+id/imageView18"

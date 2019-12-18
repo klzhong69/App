@@ -7,6 +7,7 @@ public class Familysea {
     private String type;
     private String icon;
     private String imagesrc;
+    private String like;
 
     public String getName() {
         return name;
@@ -48,11 +49,20 @@ public class Familysea {
         this.imagesrc = imagesrc;
     }
 
-    public Familysea(String name, String id, String type, String icon, String imagesrc) {
+    public String getLike() {
+        return like;
+    }
+
+    public void setLike(String like) {
+        this.like = like;
+    }
+
+    public Familysea(String name, String id, String type, String icon, String imagesrc, String like) {
         this.name = name;
         this.id = id;
         this.type = type;
         this.icon = icon;
         this.imagesrc = imagesrc;
+        this.like = like;
     }
 }

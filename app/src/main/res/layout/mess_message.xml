@@ -26,13 +26,13 @@
 
         <ImageView
             android:id="@+id/imageView78"
-            android:layout_width="@dimen/dp_30"
-            android:layout_height="@dimen/dp_30"
+            android:layout_width="@dimen/dp_40"
+            android:layout_height="@dimen/dp_40"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             android:layout_marginEnd="@dimen/dp_20"
-            app:srcCompat="@drawable/back" />
+            app:srcCompat="@drawable/peoples" />
     </RelativeLayout>
 
 
@@ -90,7 +90,7 @@
             android:layout_alignEnd="@+id/textView68"
             android:layout_marginStart="@dimen/dp_10"
             android:layout_marginEnd="@dimen/dp_10"
-            app:srcCompat="@drawable/back2" />
+            app:srcCompat="@drawable/guanfang" />
 
         <TextView
             android:id="@+id/textView68"

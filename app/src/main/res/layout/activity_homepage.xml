@@ -261,8 +261,8 @@
                     android:layout_alignParentTop="true"
                     android:layout_marginStart="0dp"
                     android:layout_marginTop="0dp"
-                    android:scaleType="centerCrop"
-                    app:srcCompat="@drawable/back2" />
+                    android:scaleType="centerInside"
+                    app:srcCompat="@drawable/page1" />
 
                 <com.qmuiteam.qmui.widget.QMUIRadiusImageView
                     android:id="@+id/imageView17"
@@ -272,9 +272,9 @@
                     android:layout_alignParentStart="true"
                     android:layout_marginStart="@dimen/dp_20"
                     android:layout_marginTop="@dimen/dp_20"
-                    android:src="@drawable/back2"
+                    android:src="@drawable/pager1"
                     app:qmui_border_width="0dp"
-                    app:qmui_corner_radius="15dp" />
+                    app:qmui_corner_radius="@dimen/dp_10" />
 
                 <com.qmuiteam.qmui.widget.QMUIRadiusImageView
                     android:id="@+id/imageView7"
@@ -284,9 +284,9 @@
                     android:layout_alignBottom="@+id/imageView17"
                     android:layout_marginStart="@dimen/dp_12"
                     android:layout_toEndOf="@+id/imageView17"
-                    android:src="@drawable/back2"
+                    android:src="#11444444"
                     app:qmui_border_width="0dp"
-                    app:qmui_corner_radius="15dp" />
+                    app:qmui_corner_radius="@dimen/dp_10" />
 
                 <com.qmuiteam.qmui.widget.QMUIRadiusImageView
                     android:id="@+id/imageView8"
@@ -296,9 +296,9 @@
                     android:layout_alignBottom="@+id/imageView7"
                     android:layout_marginStart="@dimen/dp_12"
                     android:layout_toEndOf="@+id/imageView7"
-                    android:src="@drawable/back2"
+                    android:src="#11444444"
                     app:qmui_border_width="0dp"
-                    app:qmui_corner_radius="15dp" />
+                    app:qmui_corner_radius="@dimen/dp_10" />
 
                 <com.qmuiteam.qmui.widget.QMUIRadiusImageView
                     android:id="@+id/imageView9"
@@ -308,9 +308,9 @@
                     android:layout_alignBottom="@+id/imageView8"
                     android:layout_marginStart="@dimen/dp_12"
                     android:layout_toEndOf="@+id/imageView8"
-                    android:src="@drawable/back2"
+                    android:src="#11444444"
                     app:qmui_border_width="0dp"
-                    app:qmui_corner_radius="15dp" />
+                    app:qmui_corner_radius="@dimen/dp_10" />
 
                 <com.qmuiteam.qmui.widget.QMUIRadiusImageView
                     android:id="@+id/imageView10"
@@ -320,9 +320,9 @@
                     android:layout_alignBottom="@+id/imageView9"
                     android:layout_marginStart="@dimen/dp_12"
                     android:layout_toEndOf="@+id/imageView9"
-                    android:src="@drawable/back2"
+                    android:src="#11444444"
                     app:qmui_border_width="0dp"
-                    app:qmui_corner_radius="15dp" />
+                    app:qmui_corner_radius="@dimen/dp_10" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -349,32 +349,19 @@
                     android:layout_alignParentTop="true"
                     android:layout_marginStart="0dp"
                     android:layout_marginTop="0dp"
-                    android:scaleType="centerCrop"
-                    app:srcCompat="@drawable/back2" />
+                    android:scaleType="centerInside"
+                    app:srcCompat="@drawable/page2" />
 
                 <TextView
                     android:id="@+id/textView11"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignTop="@+id/imageView12"
-                    android:layout_alignBottom="@+id/imageView12"
+                    android:layout_below="@+id/imageView11"
                     android:layout_alignParentStart="true"
                     android:layout_marginStart="@dimen/dp_20"
+                    android:layout_marginTop="@dimen/dp_20"
                     android:gravity="center_vertical"
                     android:text="我是芭比王国的大巫师" />
-
-                <ImageView
-                    android:id="@+id/imageView12"
-                    android:layout_width="@dimen/dp_60"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginTop="@dimen/dp_40"
-                    android:layout_marginEnd="@dimen/dp_20"
-                    android:layout_marginBottom="@dimen/dp_20"
-                    android:scaleType="centerCrop"
-                    app:srcCompat="@drawable/back2" />
 
             </RelativeLayout>
 
@@ -402,8 +389,8 @@
                     android:layout_alignParentTop="true"
                     android:layout_marginStart="0dp"
                     android:layout_marginTop="0dp"
-                    android:scaleType="centerCrop"
-                    app:srcCompat="@drawable/back2" />
+                    android:scaleType="centerInside"
+                    app:srcCompat="@drawable/page3" />
 
                 <com.qmuiteam.qmui.widget.QMUIRadiusImageView
                     android:id="@+id/imageView14"
@@ -491,8 +478,8 @@
                     android:layout_alignParentTop="true"
                     android:layout_marginStart="0dp"
                     android:layout_marginTop="0dp"
-                    android:scaleType="centerCrop"
-                    app:srcCompat="@drawable/back2" />
+                    android:scaleType="centerInside"
+                    app:srcCompat="@drawable/page4" />
 
                 <com.qmuiteam.qmui.widget.QMUIRadiusImageView
                     android:id="@+id/imageView22"
@@ -758,8 +745,8 @@
                     android:layout_alignParentTop="true"
                     android:layout_marginStart="0dp"
                     android:layout_marginTop="0dp"
-                    android:scaleType="centerCrop"
-                    app:srcCompat="@drawable/back2" />
+                    android:scaleType="centerInside"
+                    app:srcCompat="@drawable/page5" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler"
@@ -778,7 +765,7 @@
             <RelativeLayout
                 android:id="@+id/relativeLayout5"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_100"
+                android:layout_height="@dimen/dp_80"
                 android:layout_below="@+id/relativeLayout4"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentEnd="true"
@@ -792,15 +779,13 @@
 
                 <ImageView
                     android:id="@+id/imageView34"
-                    android:layout_width="@dimen/dp_40"
-                    android:layout_height="@dimen/dp_40"
+                    android:layout_width="@dimen/dp_30"
+                    android:layout_height="@dimen/dp_30"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentBottom="true"
                     android:layout_marginStart="@dimen/dp_100"
-                    android:layout_marginTop="@dimen/dp_20"
-                    android:layout_marginBottom="@dimen/dp_20"
-                    app:srcCompat="@android:drawable/btn_star_big_off" />
+                    app:srcCompat="@drawable/s_guanzhu" />
 
                 <TextView
                     android:id="@+id/textView31"
@@ -811,7 +796,8 @@
                     android:layout_marginStart="@dimen/dp_5"
                     android:layout_toEndOf="@+id/imageView34"
                     android:gravity="center_vertical"
-                    android:text="关注" />
+                    android:text="关注"
+                    android:textColor="#E2E91E63" />
 
                 <ImageView
                     android:id="@+id/imageView36"
@@ -821,7 +807,7 @@
                     android:layout_alignBottom="@+id/imageView34"
                     android:layout_marginStart="@dimen/dp_180"
                     android:layout_toEndOf="@+id/textView31"
-                    app:srcCompat="@android:drawable/btn_star_big_on" />
+                    app:srcCompat="@drawable/siliao" />
 
                 <TextView
                     android:id="@+id/textView32"

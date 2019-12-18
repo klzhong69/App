@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="@dimen/dp_140"
-    android:layout_height="@dimen/dp_120"
+    android:layout_height="@dimen/dp_100"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.qmuiteam.qmui.widget.QMUIRadiusImageView
         android:id="@+id/imageView41"
-        android:layout_width="@dimen/dp_120"
-        android:layout_height="@dimen/dp_90"
+        android:layout_width="@dimen/dp_130"
+        android:layout_height="@dimen/dp_80"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginStart="@dimen/dp_5"
         android:layout_marginTop="@dimen/dp_10"
         android:src="@color/qmui_config_color_white"
         app:qmui_border_width="1dp"
@@ -23,9 +23,9 @@
         android:layout_height="@dimen/dp_30"
         android:layout_alignStart="@+id/imageView41"
         android:layout_alignTop="@+id/imageView41"
-        android:layout_marginStart="@dimen/dp_20"
-        android:layout_marginTop="@dimen/dp_20"
-        app:srcCompat="@drawable/back" />
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
+        app:srcCompat="@drawable/gold" />
 
     <TextView
         android:id="@+id/textView64"
@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/imageView64"
         android:layout_alignBottom="@+id/imageView64"
-        android:layout_marginStart="@dimen/dp_20"
+        android:layout_marginStart="@dimen/dp_10"
         android:layout_toEndOf="@+id/imageView64"
         android:gravity="center_vertical"
         android:text="600" />

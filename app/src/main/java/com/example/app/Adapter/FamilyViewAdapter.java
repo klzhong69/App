@@ -51,12 +51,17 @@ public class FamilyViewAdapter extends RecyclerView.Adapter {
 
         ((FamilyViewAdapter.DemoViewHolder)holder).name.setText(entity.getName());
         ((FamilyViewAdapter.DemoViewHolder)holder).id.setText(entity.getId());
-       /* if(entity.getType().equals("0")){
-            Glide.with(mContext).load("").into(((DemoViewHolder)holder).type);
+        if(entity.getType().equals("0")){
+            Glide.with(mContext).load(R.drawable.l3).into(((DemoViewHolder)holder).type);
         }else{
-            Glide.with(mContext).load("").into(((DemoViewHolder)holder).type);
+            Glide.with(mContext).load(R.drawable.l2).into(((DemoViewHolder)holder).type);
         }
-        Glide.with(mContext).load(entity.getIcon()).into(((DemoViewHolder)holder).icon);*/
+        if(entity.getIcon().equals("1")){
+            Glide.with(mContext).load(R.drawable.l_love).into(((DemoViewHolder)holder).icon);
+        }else{
+            Glide.with(mContext).load(R.drawable.l_nolove).into(((DemoViewHolder)holder).icon);
+        }
+        ((FamilyViewAdapter.DemoViewHolder)holder).like.setText(entity.getLike());
         Glide.with(mContext).load(entity.getImagesrc()).into(((FamilyViewAdapter.DemoViewHolder)holder).imagesrc);
         if (mOnItemClickListener != null)
         {
@@ -95,6 +100,7 @@ public class FamilyViewAdapter extends RecyclerView.Adapter {
         private ImageView type;
         private ImageView icon;
         private ImageView imagesrc;
+        private TextView like;
 
         public DemoViewHolder(View itemView) {
             super(itemView);
@@ -103,6 +109,7 @@ public class FamilyViewAdapter extends RecyclerView.Adapter {
             type=(ImageView) itemView.findViewById(R.id.imageView38);
             icon=(ImageView) itemView.findViewById(R.id.imageView4);
             imagesrc=(ImageView) itemView.findViewById(R.id.imageView28);
+            like=(TextView) itemView.findViewById(R.id.textView179);
         }
     }
 

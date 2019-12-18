@@ -26,7 +26,7 @@
         android:layout_marginStart="@dimen/dp_20"
         android:layout_marginTop="@dimen/dp_20"
         android:layout_marginEnd="@dimen/dp_20"
-        android:src="@drawable/back"
+        android:src="@drawable/dia1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/include"
@@ -41,7 +41,7 @@
         android:layout_marginTop="@dimen/dp_20"
         app:layout_constraintStart_toStartOf="@+id/imageView17"
         app:layout_constraintTop_toTopOf="@+id/imageView17"
-        app:srcCompat="@drawable/dk_ic_volume" />
+        app:srcCompat="@drawable/jinbi" />
 
     <TextView
         android:id="@+id/textView51"
@@ -116,7 +116,7 @@
         android:layout_marginStart="@dimen/dp_20"
         android:layout_marginTop="@dimen/dp_20"
         android:layout_marginEnd="@dimen/dp_20"
-        android:src="@drawable/back"
+        android:src="@drawable/dia2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -132,7 +132,7 @@
         android:layout_marginTop="@dimen/dp_20"
         app:layout_constraintStart_toStartOf="@+id/imageView18"
         app:layout_constraintTop_toTopOf="@+id/imageView18"
-        app:srcCompat="@drawable/dk_ic_volume" />
+        app:srcCompat="@drawable/zuanshi" />
 
     <TextView
         android:id="@+id/textView52"
@@ -208,7 +208,7 @@
         android:layout_marginStart="@dimen/dp_20"
         android:layout_marginTop="@dimen/dp_20"
         android:layout_marginEnd="@dimen/dp_20"
-        android:src="@drawable/back"
+        android:src="@drawable/dia3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -224,7 +224,7 @@
         android:layout_marginTop="@dimen/dp_20"
         app:layout_constraintStart_toStartOf="@+id/imageView19"
         app:layout_constraintTop_toTopOf="@+id/imageView19"
-        app:srcCompat="@drawable/dk_ic_volume" />
+        app:srcCompat="@drawable/baoguo" />
 
     <TextView
         android:id="@+id/textView58"

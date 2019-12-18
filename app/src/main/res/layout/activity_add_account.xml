@@ -32,7 +32,7 @@
 
     <ImageView
         android:id="@+id/imageView76"
-        android:layout_width="@dimen/dp_30"
+        android:layout_width="@dimen/dp_25"
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/imageView41"
         android:layout_alignTop="@+id/imageView41"
@@ -41,7 +41,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/imageView41"
         app:layout_constraintStart_toStartOf="@+id/imageView41"
         app:layout_constraintTop_toTopOf="@+id/imageView41"
-        app:srcCompat="@drawable/dk_close_icon" />
+        app:srcCompat="@drawable/account1" />
 
 
     <TextView
@@ -110,7 +110,7 @@
 
     <ImageView
         android:id="@+id/imageView77"
-        android:layout_width="@dimen/dp_30"
+        android:layout_width="@dimen/dp_25"
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/imageView42"
         android:layout_alignTop="@+id/imageView42"
@@ -119,7 +119,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/imageView42"
         app:layout_constraintStart_toStartOf="@+id/imageView42"
         app:layout_constraintTop_toTopOf="@+id/imageView42"
-        app:srcCompat="@drawable/dk_close_icon" />
+        app:srcCompat="@drawable/account2" />
 
 
     <TextView
@@ -172,7 +172,7 @@
 
     <ImageView
         android:id="@+id/imageView78"
-        android:layout_width="@dimen/dp_30"
+        android:layout_width="@dimen/dp_25"
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/imageView43"
         android:layout_alignTop="@+id/imageView43"
@@ -181,7 +181,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/imageView43"
         app:layout_constraintStart_toStartOf="@+id/imageView43"
         app:layout_constraintTop_toTopOf="@+id/imageView43"
-        app:srcCompat="@drawable/dk_close_icon" />
+        app:srcCompat="@drawable/account3" />
 
 
     <TextView
@@ -193,7 +193,7 @@
         android:layout_marginStart="@dimen/dp_20"
         android:layout_toEndOf="@+id/imageView78"
         android:gravity="center"
-        android:text="输入卡号"
+        android:text="银行卡卡号"
         app:layout_constraintBottom_toBottomOf="@+id/imageView43"
         app:layout_constraintStart_toEndOf="@+id/imageView78"
         app:layout_constraintTop_toTopOf="@+id/imageView43" />

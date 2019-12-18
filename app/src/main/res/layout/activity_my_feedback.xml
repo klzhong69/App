@@ -122,13 +122,14 @@
 
     <ImageView
         android:id="@+id/imageView113"
-        android:layout_width="@dimen/dp_100"
-        android:layout_height="@dimen/dp_100"
+        android:layout_width="@dimen/dp_80"
+        android:layout_height="@dimen/dp_80"
         android:layout_marginStart="@dimen/dp_20"
+        android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="@+id/imageView20"
         app:layout_constraintStart_toStartOf="@+id/imageView20"
         app:layout_constraintTop_toBottomOf="@+id/editText3"
-        app:srcCompat="@color/back" />
+        app:srcCompat="@drawable/feedback" />
 
 
     <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton

@@ -176,13 +176,13 @@
 
             <ImageView
                 android:id="@+id/imageView42"
-                android:layout_width="@dimen/dp_30"
-                android:layout_height="@dimen/dp_30"
+                android:layout_width="@dimen/dp_20"
+                android:layout_height="@dimen/dp_20"
                 android:layout_below="@+id/imageView18"
                 android:layout_alignStart="@+id/imageView17"
                 android:layout_marginStart="@dimen/dp_10"
                 android:layout_marginTop="@dimen/dp_10"
-                app:srcCompat="@android:drawable/btn_star_big_on" />
+                app:srcCompat="@drawable/s_xing" />
 
             <TextView
                 android:id="@+id/textView44"
@@ -227,13 +227,13 @@
 
             <ImageView
                 android:id="@+id/imageView43"
-                android:layout_width="@dimen/dp_30"
-                android:layout_height="@dimen/dp_30"
+                android:layout_width="@dimen/dp_20"
+                android:layout_height="@dimen/dp_20"
                 android:layout_below="@+id/imageView20"
                 android:layout_alignStart="@+id/imageView19"
                 android:layout_marginStart="@dimen/dp_10"
                 android:layout_marginTop="@dimen/dp_10"
-                app:srcCompat="@android:drawable/btn_star_big_on" />
+                app:srcCompat="@drawable/s_xing" />
 
             <TextView
                 android:id="@+id/textView45"
@@ -277,13 +277,14 @@
 
             <ImageView
                 android:id="@+id/imageView44"
-                android:layout_width="@dimen/dp_30"
-                android:layout_height="@dimen/dp_30"
+                android:layout_width="@dimen/dp_20"
+                android:layout_height="@dimen/dp_20"
                 android:layout_below="@+id/imageView22"
                 android:layout_alignStart="@+id/imageView21"
                 android:layout_marginStart="@dimen/dp_10"
                 android:layout_marginTop="@dimen/dp_10"
-                app:srcCompat="@android:drawable/btn_star_big_on" />
+                android:visibility="gone"
+                app:srcCompat="@drawable/s_xing" />
 
             <TextView
                 android:id="@+id/textView46"
@@ -298,39 +299,41 @@
                 android:layout_toEndOf="@+id/imageView44"
                 android:ellipsize="end"
                 android:gravity="center_vertical"
+                android:visibility="gone"
                 android:singleLine="true"
-                android:text="冰封好迷人冠以"
                 android:textSize="@dimen/sp_16" />
 
             <ImageView
                 android:id="@+id/imageView45"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/dp_80"
+                android:layout_height="@dimen/dp_80"
                 android:layout_alignStart="@+id/imageView17"
                 android:layout_alignTop="@+id/imageView17"
                 android:layout_marginStart="@dimen/dp_55"
                 android:layout_marginTop="@dimen/dp_60"
-                app:srcCompat="@drawable/qmui_icon_tip_new" />
+                android:visibility="gone"
+                app:srcCompat="@drawable/weikaitong2" />
 
             <ImageView
                 android:id="@+id/imageView46"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/dp_80"
+                android:layout_height="@dimen/dp_80"
                 android:layout_alignStart="@+id/imageView19"
                 android:layout_alignTop="@+id/imageView19"
                 android:layout_marginStart="@dimen/dp_55"
                 android:layout_marginTop="@dimen/dp_60"
-                app:srcCompat="@drawable/qmui_icon_tip_new" />
+                android:visibility="gone"
+                app:srcCompat="@drawable/weikaitong2" />
 
             <ImageView
                 android:id="@+id/imageView47"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/dp_80"
+                android:layout_height="@dimen/dp_80"
                 android:layout_alignStart="@+id/imageView21"
                 android:layout_alignTop="@+id/imageView21"
-                android:layout_marginStart="@dimen/dp_55"
+                android:layout_marginStart="@dimen/dp_40"
                 android:layout_marginTop="@dimen/dp_60"
-                app:srcCompat="@drawable/qmui_icon_tip_new" />
+                app:srcCompat="@drawable/weikaitong2" />
 
         </RelativeLayout>
 
@@ -381,7 +384,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginStart="@dimen/dp_15"
                 android:layout_marginTop="@dimen/dp_15"
-                app:srcCompat="@drawable/dk_cpu" />
+                app:srcCompat="@drawable/guanli" />
 
             <TextView
                 android:id="@+id/textView49"

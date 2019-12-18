@@ -25,7 +25,8 @@
         android:layout_alignParentEnd="true"
         android:layout_marginStart="@dimen/dp_10"
         android:layout_marginEnd="@dimen/dp_10"
-        android:src="@drawable/back2"
+        android:scaleType="centerInside"
+        android:src="@drawable/liwu"
         app:qmui_border_width="0dp"
         app:qmui_corner_radius="15dp" />
 

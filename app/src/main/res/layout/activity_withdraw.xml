@@ -44,7 +44,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/imageView41"
         app:layout_constraintStart_toStartOf="@+id/imageView41"
         app:layout_constraintTop_toTopOf="@+id/imageView41"
-        app:srcCompat="@drawable/dk_close_icon" />
+        app:srcCompat="@drawable/zuanshi2" />
 
 
     <TextView
@@ -87,7 +87,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/imageView43"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/imageView43"
-        app:srcCompat="@drawable/dk_close_icon" />
+        app:srcCompat="@drawable/zhanghu" />
 
     <TextView
         android:id="@+id/textView89"

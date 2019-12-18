@@ -23,18 +23,20 @@
             android:layout_alignParentTop="true"
             android:layout_marginStart="14dp"
             android:layout_marginTop="11dp"
-            android:src="@drawable/back2"
+            android:src="@drawable/h2"
             app:qmui_border_width="0dp"
             app:qmui_corner_radius="@dimen/dp_50" />
+
 
         <ImageView
             android:id="@+id/imageView31"
             android:layout_width="@dimen/dp_20"
             android:layout_height="@dimen/dp_20"
+            android:layout_above="@+id/textView17"
             android:layout_alignEnd="@+id/imageView18"
-            android:layout_alignBottom="@+id/imageView18"
-            app:srcCompat="@drawable/dk_perform_data_background" />
-
+            android:layout_marginEnd="0dp"
+            android:layout_marginBottom="0dp"
+            app:srcCompat="@drawable/nan" />
 
         <com.qmuiteam.qmui.widget.QMUIRadiusImageView
             android:id="@+id/imageView19"
@@ -44,7 +46,7 @@
             android:layout_alignBottom="@+id/imageView18"
             android:layout_marginStart="@dimen/dp_20"
             android:layout_toEndOf="@+id/textView8"
-            android:src="@drawable/back2"
+            android:src="@drawable/h3"
             app:qmui_border_width="0dp"
             app:qmui_corner_radius="@dimen/dp_50" />
 
@@ -54,7 +56,7 @@
             android:layout_height="@dimen/dp_20"
             android:layout_alignEnd="@+id/imageView19"
             android:layout_alignBottom="@+id/imageView19"
-            app:srcCompat="@drawable/dk_perform_data_background" />
+            app:srcCompat="@drawable/nv" />
 
         <TextView
             android:id="@+id/textView66"

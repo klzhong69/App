@@ -57,6 +57,7 @@ public class ListModel {
             public void onItemClick(View view, int position) {
                 Intent intent2 = new Intent(context, chat.class);
                 context.startActivity(intent2);
+          
             }
 
             @Override
@@ -76,6 +77,7 @@ public class ListModel {
 
 
     }
+
 
 
     public static void Add(RecyclerView mRecyclerView,Listleader entity){

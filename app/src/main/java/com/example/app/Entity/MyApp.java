@@ -3,6 +3,7 @@ package com.example.app.Entity;
 import android.app.Application;
 
 import com.didichuxing.doraemonkit.DoraemonKit;
+import com.lzf.easyfloat.EasyFloat;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheEntity;
 import com.lzy.okgo.cache.CacheMode;
@@ -55,8 +56,9 @@ public class MyApp extends Application {
     public void onCreate() {
         // TODO Auto-generated method stub
         super.onCreate();
-        DoraemonKit.install(this);//测试
+        //DoraemonKit.install(this);//测试
         OkGo.getInstance().init(this);//网络请求
+        EasyFloat.init(this);//悬浮窗
         initOkGo();
 
         setScore(0); //初始化全局变量

@@ -50,12 +50,11 @@
 
     <ImageView
         android:id="@+id/imageView147"
-        android:layout_width="@dimen/dp_20"
-        android:layout_height="@dimen/dp_20"
-        android:layout_marginEnd="@dimen/dp_10"
+        android:layout_width="@dimen/dp_30"
+        android:layout_height="@dimen/dp_30"
         app:layout_constraintBottom_toBottomOf="@+id/textView178"
         app:layout_constraintEnd_toStartOf="@+id/textView178"
         app:layout_constraintTop_toTopOf="@+id/textView178"
-        app:srcCompat="@drawable/dk_log_info" />
+        app:srcCompat="@drawable/clore" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

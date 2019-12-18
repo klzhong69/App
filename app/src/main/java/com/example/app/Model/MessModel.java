@@ -33,7 +33,7 @@ public class MessModel {
 
         for (int i = 0; i < 4; i++) {
 
-            Message i1 = new Message("Ema90", "hi伙伴，明天一起直播吗", "今天13:20", "3", "https://momeak.oss-cn-shenzhen.aliyuncs.com/dear1.png", "");
+            Message i1 = new Message("Ema90", "hi伙伴，明天一起直播吗", "今天13:20", "3", "https://momeak.oss-cn-shenzhen.aliyuncs.com/dear1.png", i+"");
             mArrayList.add(i1);
         }
 

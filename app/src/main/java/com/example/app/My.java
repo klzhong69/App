@@ -13,12 +13,8 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.bumptech.glide.Glide;
-import com.example.app.Sqlentity.User;
-import com.example.app.dao.mUserDao;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 
-import java.util.List;
 import java.util.Objects;
 
 import butterknife.BindView;
@@ -50,8 +46,6 @@ public class My extends Fragment {
     TextView textView94;
     @BindView(R.id.textView95)
     TextView textView95;
-    @BindView(R.id.imageView75)
-    ImageView imageView75;
     @BindView(R.id.imageView37)
     QMUIRadiusImageView imageView37;
     @BindView(R.id.imageView39)
@@ -137,7 +131,7 @@ public class My extends Fragment {
         try {
             SharedPreferences sp = Objects.requireNonNull(getContext()).getSharedPreferences("User", Context.MODE_PRIVATE);
             long userid = sp.getLong("userid", 0);
-            if(userid!=0){
+            if (userid != 0) {
                 imageView36.setVisibility(View.GONE);
                 textView11.setVisibility(View.GONE);
                 textView75.setVisibility(View.GONE);
@@ -146,7 +140,6 @@ public class My extends Fragment {
                 textView94.setVisibility(View.VISIBLE);
                 textView95.setVisibility(View.VISIBLE);
                 imageView37.setVisibility(View.VISIBLE);
-                imageView75.setVisibility(View.VISIBLE);
             }
 
         } catch (Exception ignored) {
@@ -179,7 +172,7 @@ public class My extends Fragment {
     }
 
 
-    @OnClick({R.id.imageView68, R.id.imageView36, R.id.textView11, R.id.imageView37, R.id.textView76, R.id.textView77, R.id.textView78, R.id.textView79, R.id.textView80, R.id.textView81, R.id.textView82, R.id.textView83, R.id.imageView73, R.id.textView84, R.id.imageView74, R.id.textView85, R.id.imageView41, R.id.imageView76, R.id.textView87, R.id.imageView77, R.id.imageView43, R.id.imageView80, R.id.textView89, R.id.imageView81, R.id.imageView44, R.id.imageView82, R.id.textView90, R.id.imageView83, R.id.imageView45, R.id.imageView84, R.id.textView91, R.id.imageView85})
+    @OnClick({R.id.imageView28, R.id.textView92, R.id.textView93, R.id.textView94, R.id.textView95, R.id.imageView68, R.id.imageView36, R.id.textView11, R.id.imageView37, R.id.textView76, R.id.textView77, R.id.textView78, R.id.textView79, R.id.textView80, R.id.textView81, R.id.textView82, R.id.textView83, R.id.imageView73, R.id.textView84, R.id.imageView74, R.id.textView85, R.id.imageView41, R.id.imageView76, R.id.textView87, R.id.imageView77, R.id.imageView43, R.id.imageView80, R.id.textView89, R.id.imageView81, R.id.imageView44, R.id.imageView82, R.id.textView90, R.id.imageView83, R.id.imageView45, R.id.imageView84, R.id.textView91, R.id.imageView85})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.imageView68:
@@ -192,6 +185,11 @@ public class My extends Fragment {
                 Intent intent1 = new Intent(getContext(), login.class);
                 startActivity(intent1);
                 break;
+            case R.id.imageView28:
+            case R.id.textView92:
+            case R.id.textView93:
+            case R.id.textView94:
+            case R.id.textView95:
             case R.id.imageView37:
                 Intent intent2 = new Intent(getContext(), modify_information.class);
                 startActivity(intent2);
@@ -257,4 +255,5 @@ public class My extends Fragment {
                 break;
         }
     }
+
 }

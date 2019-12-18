@@ -1,5 +1,6 @@
 package com.example.app;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -19,8 +20,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -28,7 +31,17 @@ import android.widget.LinearLayout;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.ashokvarma.bottomnavigation.TextBadgeItem;
+import com.example.app.utils.Translation;
+import com.lzf.easyfloat.EasyFloat;
+import com.lzf.easyfloat.enums.ShowPattern;
+import com.lzf.easyfloat.enums.SidePattern;
+import com.lzf.easyfloat.interfaces.OnFloatCallbacks;
+import com.lzf.easyfloat.interfaces.OnPermissionResult;
+import com.lzf.easyfloat.permission.PermissionUtils;
 
+import org.greenrobot.greendao.annotation.NotNull;
+
+import java.time.Instant;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -71,6 +84,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
      * 判断是否需要检测，防止不停的弹框
      */
     private boolean isNeedCheck = true;
+    public static EasyFloat easy;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +93,26 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
         ButterKnife.bind(this);
         init();
         setDefaultFragment();
+
+        EasyFloat.with(this).setLayout(R.layout.floating).show();
+
+       /* // 关闭浮窗
+        dismiss(activity: Activity? = null, floatTag: String? = null)
+
+        // 隐藏浮窗
+        hide(activity: Activity? = null, floatTag: String? = null)
+
+        // 显示浮窗
+        show(activity: Activity? = null, floatTag: String? = null)
+
+        // 设置是否可拖拽
+        setDragEnable(activity: Activity? = null, dragEnable: Boolean, floatTag: String? = null )
+
+        // 浮窗是否显示
+        isShow(activity: Activity? = null, floatTag: String? = null)
+
+        // 获取我们设置的浮窗View
+        getFloatView(activity: Activity? = null, tag: String? = null)*/
 
     }
 
@@ -112,11 +146,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
                */
 
         bottomNavigationBar
-                .addItem(new BottomNavigationItem(R.drawable.back, "首页").setActiveColorResource(R.color.colorAccent))
-                .addItem(new BottomNavigationItem(R.drawable.back, "发现").setActiveColorResource(R.color.colorAccent))
-                .addItem(new BottomNavigationItem(R.drawable.back, "排名榜").setActiveColorResource(R.color.colorAccent))
-                .addItem(new BottomNavigationItem(R.drawable.back, "消息").setActiveColorResource(R.color.colorAccent).setBadgeItem(mBadgeItem))
-                .addItem(new BottomNavigationItem(R.drawable.back, "我的").setActiveColorResource(R.color.colorAccent))
+                .addItem(new BottomNavigationItem(R.drawable.ic_shouye, "首页").setActiveColorResource(R.color.colorAccent))
+                .addItem(new BottomNavigationItem(R.drawable.ic_faxian, "发现").setActiveColorResource(R.color.colorAccent))
+                .addItem(new BottomNavigationItem(R.drawable.ic_paiming, "排名榜").setActiveColorResource(R.color.colorAccent))
+                .addItem(new BottomNavigationItem(R.drawable.ic_xiaoxi, "消息").setActiveColorResource(R.color.colorAccent).setBadgeItem(mBadgeItem))
+                .addItem(new BottomNavigationItem(R.drawable.ic_wode, "我的").setActiveColorResource(R.color.colorAccent))
                 .setFirstSelectedPosition(0)
                 .initialise();
         bottomNavigationBar.setTabSelectedListener(this);
@@ -148,13 +182,13 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
 
 
     /**
-     *  Activity创建或者从后台重新回到前台时被调用
+     * Activity创建或者从后台重新回到前台时被调用
      */
     @Override
     protected void onStart() {
         super.onStart();
-        Intent intent =getIntent();
-        int id= intent.getIntExtra("id",0);
+        Intent intent = getIntent();
+        int id = intent.getIntExtra("id", 0);
         bottomNavigationBar.setFirstSelectedPosition(id).initialise();
         onTabSelected(id);
     }
@@ -253,7 +287,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
             checkPermissions(needPermissions);
         }
     }
-
 
 
     /**

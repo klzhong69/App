@@ -56,6 +56,10 @@ public class family_search extends AppCompatActivity {
         textView7.setVisibility(View.GONE);
 
         initData();
+        init();
+    }
+
+    private void init(){
         //适配器
         FamilyViewAdapter mAdapter = new FamilyViewAdapter(this, mArrayList);
         //设置适配器adapter
@@ -94,14 +98,13 @@ public class family_search extends AppCompatActivity {
         defaultItemAnimator.setRemoveDuration(200);
         recycler3.setItemAnimator(defaultItemAnimator);
     }
-
     private void initData() {
         mArrayList = new ArrayList<Familysea>();
-        Familysea i1 = new Familysea("芭比UU王国", "ID" + "25634896", "0", "R.drawable.l3", "https://momeak.oss-cn-shenzhen.aliyuncs.com/dear1.png");
+        Familysea i1 = new Familysea("芭比UU王国", "ID" + "25634896", "0", "1", "https://momeak.oss-cn-shenzhen.aliyuncs.com/dear1.png","2569");
         mArrayList.add(i1);
-        Familysea i2 = new Familysea("芭比UU王国", "ID" + "25634896", "0", "R.drawable.l3", "https://momeak.oss-cn-shenzhen.aliyuncs.com/dear2.png");
+        Familysea i2 = new Familysea("芭比UU王国", "ID" + "25634896", "0", "0", "https://momeak.oss-cn-shenzhen.aliyuncs.com/dear2.png","2569");
         mArrayList.add(i2);
-        Familysea i3 = new Familysea("芭比UU王国", "ID" + "25634896", "1", "R.drawable.l3", "https://momeak.oss-cn-shenzhen.aliyuncs.com/dear3.png");
+        Familysea i3 = new Familysea("芭比UU王国", "ID" + "25634896", "1", "0", "https://momeak.oss-cn-shenzhen.aliyuncs.com/dear3.png","2569");
         mArrayList.add(i3);
     }
 

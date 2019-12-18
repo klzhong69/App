@@ -22,6 +22,8 @@ public class Home extends Fragment {
     Button button;
     @BindView(R.id.scroll)
     NestedScrollView scroll;
+    @BindView(R.id.button2)
+    Button button2;
     private Unbinder unbinder;
 
 
@@ -61,9 +63,17 @@ public class Home extends Fragment {
 
     }
 
-    @OnClick(R.id.button)
-    public void onViewClicked() {
-        Intent intent3 = new Intent(getContext(), search.class);
-        startActivity(intent3);
+
+    @OnClick({R.id.button, R.id.button2})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.button:
+                Intent intent3 = new Intent(getContext(), search.class);
+                startActivity(intent3);
+                break;
+            case R.id.button2:
+                MainActivity.easy.show();
+                break;
+        }
     }
 }
