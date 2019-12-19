@@ -51,15 +51,15 @@ public class FamilyViewAdapter extends RecyclerView.Adapter {
 
         ((FamilyViewAdapter.DemoViewHolder)holder).name.setText(entity.getName());
         ((FamilyViewAdapter.DemoViewHolder)holder).id.setText(entity.getId());
-        if(entity.getType().equals("0")){
-            Glide.with(mContext).load(R.drawable.l3).into(((DemoViewHolder)holder).type);
+        if(entity.getType().equals("1")){
+            Glide.with(mContext).load(R.drawable.l_love).into(((DemoViewHolder)holder).type);
         }else{
-            Glide.with(mContext).load(R.drawable.l2).into(((DemoViewHolder)holder).type);
+            Glide.with(mContext).load(R.drawable.l_nolove).into(((DemoViewHolder)holder).type);
         }
-        if(entity.getIcon().equals("1")){
-            Glide.with(mContext).load(R.drawable.l_love).into(((DemoViewHolder)holder).icon);
+        if(entity.getIcon().equals("0")){
+            Glide.with(mContext).load(R.drawable.l3).into(((DemoViewHolder)holder).icon);
         }else{
-            Glide.with(mContext).load(R.drawable.l_nolove).into(((DemoViewHolder)holder).icon);
+            Glide.with(mContext).load(R.drawable.l2).into(((DemoViewHolder)holder).icon);
         }
         ((FamilyViewAdapter.DemoViewHolder)holder).like.setText(entity.getLike());
         Glide.with(mContext).load(entity.getImagesrc()).into(((FamilyViewAdapter.DemoViewHolder)holder).imagesrc);

@@ -97,6 +97,10 @@ dependencies {
 
     implementation 'com.github.princekin-f:EasyFloat:1.2.2'//悬浮窗
 
+    implementation 'com.lijiankun24:shadowlayout:1.1.0'//阴影库
+
+    implementation 'cn.bingoogolapple:bga-qrcode-zbar:1.3.7'//二维码
+
 }
 
 greendao {

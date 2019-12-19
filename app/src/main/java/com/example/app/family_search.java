@@ -1,5 +1,6 @@
 package com.example.app;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -49,7 +50,10 @@ public class family_search extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_family_search);
         ButterKnife.bind(this);
-
+        Intent intent = getIntent();
+        String searchtxt = intent.getStringExtra("searchtxt");
+        title.setText("搜索："+searchtxt);
+        subtitle.setText("");
         textView2.setVisibility(View.GONE);
         textView3.setVisibility(View.VISIBLE);
         textView6.setVisibility(View.VISIBLE);
@@ -100,11 +104,11 @@ public class family_search extends AppCompatActivity {
     }
     private void initData() {
         mArrayList = new ArrayList<Familysea>();
-        Familysea i1 = new Familysea("芭比UU王国", "ID" + "25634896", "0", "1", "https://momeak.oss-cn-shenzhen.aliyuncs.com/dear1.png","2569");
+        Familysea i1 = new Familysea("芭比UU王国", "ID" + "25634896", "1", "0", "https://momeak.oss-cn-shenzhen.aliyuncs.com/dear1.png","2569");
         mArrayList.add(i1);
         Familysea i2 = new Familysea("芭比UU王国", "ID" + "25634896", "0", "0", "https://momeak.oss-cn-shenzhen.aliyuncs.com/dear2.png","2569");
         mArrayList.add(i2);
-        Familysea i3 = new Familysea("芭比UU王国", "ID" + "25634896", "1", "0", "https://momeak.oss-cn-shenzhen.aliyuncs.com/dear3.png","2569");
+        Familysea i3 = new Familysea("芭比UU王国", "ID" + "25634896", "0", "1", "https://momeak.oss-cn-shenzhen.aliyuncs.com/dear3.png","2569");
         mArrayList.add(i3);
     }
 

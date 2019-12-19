@@ -105,7 +105,8 @@ public class my_music extends AppCompatActivity {
                 this.finish();
                 break;
             case R.id.subtitle:
-
+                Intent intent1 = new Intent(my_music.this, scan_code.class);
+                startActivity(intent1);
                 break;
             case R.id.imageView141:
                 Intent intent2 = new Intent(my_music.this, my_music_search.class);

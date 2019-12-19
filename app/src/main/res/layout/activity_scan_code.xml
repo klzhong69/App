@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".scan_code">
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/head"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_80"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <cn.bingoogolapple.qrcode.zbar.ZBarView
+        android:id="@+id/zbarview"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_600"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include"
+        app:qrcv_animTime="1000"
+        app:qrcv_borderColor="@android:color/white"
+        app:qrcv_borderSize="1dp"
+        app:qrcv_cornerColor="@color/colorPrimaryDark"
+        app:qrcv_cornerLength="20dp"
+        app:qrcv_cornerSize="3dp"
+        app:qrcv_isOnlyDecodeScanBoxArea="true"
+        app:qrcv_isShowDefaultScanLineDrawable="true"
+        app:qrcv_maskColor="#33FFFFFF"
+        app:qrcv_rectWidth="200dp"
+        app:qrcv_scanLineColor="@color/colorPrimaryDark"
+        app:qrcv_topOffset="90dp">
+
+    </cn.bingoogolapple.qrcode.zbar.ZBarView>
+
+    <ImageView
+        android:id="@+id/imageView150"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/zbarview"
+        app:srcCompat="@color/background" />
+
+    <TextView
+        android:id="@+id/textView180"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_50"
+        android:layout_marginEnd="@dimen/dp_50"
+        android:layout_marginBottom="@dimen/dp_50"
+        android:gravity="center"
+        android:text="可将电脑的mp3文件上传到个人帐户，并自动同步到手机"
+        android:textColor="#000000"
+        android:textSize="@dimen/sp_20"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView150"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView181"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_30"
+        android:text="https://www.qrcode.mymusic.com"
+        android:textColor="#000000"
+        android:textSize="@dimen/sp_20"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView182" />
+
+    <TextView
+        android:id="@+id/textView182"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_50"
+        android:text="在电脑浏览器上输入"
+        android:textColor="#000000"
+        android:textSize="@dimen/sp_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/zbarview" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

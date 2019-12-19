@@ -125,7 +125,6 @@
                 android:layout_marginTop="14dp"
                 android:layout_marginEnd="15dp"
                 android:src="@drawable/h4"
-                app:layout_constraintBottom_toTopOf="@+id/imageView3"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:qmui_border_width="0dp"
                 app:qmui_corner_radius="@dimen/dp_50" />

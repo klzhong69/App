@@ -32,10 +32,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/imageView64"
+        android:layout_alignEnd="@+id/imageView41"
         android:layout_alignBottom="@+id/imageView64"
         android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginEnd="@dimen/dp_10"
         android:layout_toEndOf="@+id/imageView64"
-        android:gravity="center_vertical"
+        android:gravity="center"
         android:text="600" />
 
     <TextView
@@ -44,8 +46,10 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView64"
         android:layout_alignStart="@+id/textView64"
+        android:layout_alignEnd="@+id/textView64"
         android:layout_marginTop="@dimen/dp_5"
         android:text="6元"
+        android:gravity="center"
         android:textColor="#5E5E5E"
         android:textSize="@dimen/sp_14" />
 

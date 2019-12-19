@@ -1,5 +1,6 @@
 package com.example.app;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -394,34 +395,27 @@ public class chatroom extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.imageView101:
                 QMUIPopups.quickAction(this,
-                        QMUIDisplayHelper.dp2px(this, 56),
-                        QMUIDisplayHelper.dp2px(this, 56))
+                        QMUIDisplayHelper.dp2px(this, 46),
+                        QMUIDisplayHelper.dp2px(this, 46))
                         .shadow(true)
                         .edgeProtection(QMUIDisplayHelper.dp2px(this, 20))
-                        .addAction(new QMUIQuickAction.Action().icon(R.drawable.back).text("复制").onClick(
+                        .addAction(new QMUIQuickAction.Action().icon(R.drawable.sets).text("设置").onClick(
                                 new QMUIQuickAction.OnClickListener() {
                                     @Override
                                     public void onClick(QMUIQuickAction quickAction, QMUIQuickAction.Action action, int position) {
                                         quickAction.dismiss();
-                                        Toast.makeText(chatroom.this, "复制成功", Toast.LENGTH_SHORT).show();
+                                        Intent intent2 = new Intent(chatroom.this, room_set.class);
+                                        startActivity(intent2);
                                     }
                                 }
                         ))
-                        .addAction(new QMUIQuickAction.Action().icon(R.drawable.back).text("划线").onClick(
+                        .addAction(new QMUIQuickAction.Action().icon(R.drawable.musics).text("音乐").onClick(
                                 new QMUIQuickAction.OnClickListener() {
                                     @Override
                                     public void onClick(QMUIQuickAction quickAction, QMUIQuickAction.Action action, int position) {
                                         quickAction.dismiss();
-                                        Toast.makeText(chatroom.this, "划线成功", Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                        ))
-                        .addAction(new QMUIQuickAction.Action().icon(R.drawable.back).text("分享").onClick(
-                                new QMUIQuickAction.OnClickListener() {
-                                    @Override
-                                    public void onClick(QMUIQuickAction quickAction, QMUIQuickAction.Action action, int position) {
-                                        quickAction.dismiss();
-                                        Toast.makeText(chatroom.this, "分享成功", Toast.LENGTH_SHORT).show();
+                                        Intent intent2 = new Intent(chatroom.this, my_music.class);
+                                        startActivity(intent2);
                                     }
                                 }
                         ))

@@ -1,28 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/scroll"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/relative11"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_80"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp"
+        android:background="#ffffff">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:gravity="center"
+            android:text="主页"
+            android:textSize="@dimen/sp_24" />
+
+        <ImageView
+            android:id="@+id/imageView149"
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="@dimen/dp_20"
+            app:srcCompat="@drawable/sousuo" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relative12"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_below="@+id/relative11"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true">
+
+        <include
+            android:id="@+id/include"
+            layout="@layout/home_room_item"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_700"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relative13"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/relative11"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true">
+
+        <include
+            android:id="@+id/include"
+            layout="@layout/home_room_item2"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_700"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/imageView152"
+        android:layout_width="@dimen/dp_80"
+        android:layout_height="@dimen/dp_80"
+        android:layout_below="@+id/relative12"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="@dimen/dp_80"
+        android:layout_marginTop="@dimen/dp_20"
+        app:srcCompat="@drawable/home1" />
+
+    <ImageView
+        android:id="@+id/imageView153"
+        android:layout_width="@dimen/dp_80"
+        android:layout_height="@dimen/dp_80"
+        android:layout_alignTop="@+id/imageView152"
+        android:layout_marginStart="@dimen/dp_80"
+        android:layout_toEndOf="@+id/imageView152"
+        app:srcCompat="@drawable/home3" />
+
+    <ImageView
+        android:id="@+id/imageView154"
+        android:layout_width="@dimen/dp_80"
+        android:layout_height="@dimen/dp_80"
+        android:layout_alignTop="@+id/imageView153"
+        android:layout_marginStart="@dimen/dp_80"
+        android:layout_toEndOf="@+id/imageView153"
+        app:srcCompat="@drawable/home2" />
 
 
-        <Button
-            android:id="@+id/button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Button" />
-
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Button" />
-    </LinearLayout>
-
-</androidx.core.widget.NestedScrollView>
+</RelativeLayout>

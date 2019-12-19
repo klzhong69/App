@@ -1,6 +1,8 @@
 package com.example.app;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.View;
@@ -18,6 +20,8 @@ import com.example.app.Adapter.RecordAdapter;
 import com.example.app.Adapter.SearchitemAdapter;
 import com.example.app.Entity.Record;
 import com.example.app.Entity.Searchitem;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 
@@ -31,8 +35,6 @@ public class search extends AppCompatActivity {
     ImageView imageView37;
     @BindView(R.id.search_view)
     SearchView searchView;
-    @BindView(R.id.imageView145)
-    ImageView imageView145;
     @BindView(R.id.textView173)
     TextView textView173;
     @BindView(R.id.recyclerView3)
@@ -42,13 +44,22 @@ public class search extends AppCompatActivity {
     @BindView(R.id.imageView147)
     ImageView imageView147;
     private ArrayList<Searchitem> mArrayList;
+    private SharedPreferences sp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         ButterKnife.bind(this);
+        sp = getSharedPreferences("User_LIST", Context.MODE_PRIVATE);
         init();
+
+    }
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+
         initData();
         //适配器
         SearchitemAdapter mAdapter = new SearchitemAdapter(this, mArrayList);
@@ -70,7 +81,28 @@ public class search extends AppCompatActivity {
         mAdapter.setOnItemClickListener(new SearchitemAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Toast.makeText(search.this, position + " click", Toast.LENGTH_SHORT).show();
+                ImageView imageView =  view.findViewById(R.id.imageView146);
+                imageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mAdapter.removeData(position);
+
+                        Gson user_gson = new Gson();
+                        String user_jsonstr = user_gson.toJson(mArrayList);
+                        System.out.println("user_list"+user_jsonstr);
+                        if(user_jsonstr.equals("[]")){
+                            sp.edit().putString("user_list", "").apply();
+                            textView173.setVisibility(View.GONE);
+                            recyclerView3.setVisibility(View.GONE);
+                            textView178.setVisibility(View.GONE);
+                            imageView147.setVisibility(View.GONE);
+                        }else{
+                            sp.edit().putString("user_list", user_jsonstr).apply();
+                        }
+
+
+                    }
+                });
             }
 
             @Override
@@ -86,8 +118,6 @@ public class search extends AppCompatActivity {
         defaultItemAnimator.setRemoveDuration(200);
         recyclerView3.setItemAnimator(defaultItemAnimator);
     }
-
-
     private void init() {
 
         searchView.setIconifiedByDefault(false);
@@ -119,9 +149,15 @@ public class search extends AppCompatActivity {
             @Override
             public boolean onQueryTextSubmit(String queryText) {
                 //点击搜索
+                Searchitem searchitem = new Searchitem(queryText);
+                mArrayList.add(searchitem);
+
+                Gson user_gson = new Gson();
+                String user_jsonstr = user_gson.toJson(mArrayList);
+                sp.edit().putString("user_list", user_jsonstr).apply();
                 Intent intent3 = new Intent(search.this, family_search.class);
+                intent3.putExtra("searchtxt",queryText);
                 startActivity(intent3);
-                System.out.println("onQueryTextSubmit:" + queryText);
                 return true;
             }
         });
@@ -130,24 +166,36 @@ public class search extends AppCompatActivity {
 
     private void initData() {
         mArrayList = new ArrayList<Searchitem>();
-        for (int i = 0; i < 6; i++) {
-            Searchitem i1 = new Searchitem("守望先锋");
-            mArrayList.add(i1);
+        textView173.setVisibility(View.VISIBLE);
+        recyclerView3.setVisibility(View.VISIBLE);
+        textView178.setVisibility(View.VISIBLE);
+        imageView147.setVisibility(View.VISIBLE);
+        String user_json = sp.getString("user_list","");
+        System.out.println("user_list"+user_json);
+        if(user_json.equals("")){
+            textView173.setVisibility(View.GONE);
+            recyclerView3.setVisibility(View.GONE);
+            textView178.setVisibility(View.GONE);
+            imageView147.setVisibility(View.GONE);
+        }else{
+            Gson user_gson = new Gson();
+            mArrayList = user_gson.fromJson(user_json,new TypeToken<ArrayList<Searchitem>>(){}.getType());
         }
     }
 
-    @OnClick({R.id.imageView37, R.id.imageView145, R.id.textView178, R.id.imageView147})
+    @OnClick({R.id.imageView37,  R.id.textView178, R.id.imageView147})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.imageView37:
                 this.finish();
                 break;
-            case R.id.imageView145:
-                searchView.setQuery("",false);
-                break;
             case R.id.textView178:
             case R.id.imageView147:
                 mArrayList.clear();
+                textView173.setVisibility(View.GONE);
+                recyclerView3.setVisibility(View.GONE);
+                textView178.setVisibility(View.GONE);
+                imageView147.setVisibility(View.GONE);
                 break;
         }
     }
