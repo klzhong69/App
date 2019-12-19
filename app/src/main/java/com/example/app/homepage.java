@@ -8,15 +8,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.app.Adapter.GridViewAdapter;
-import com.example.app.Entity.Page;
 import com.example.app.Model.HomePageModel;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
-
-import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -77,8 +72,6 @@ public class homepage extends AppCompatActivity {
     ImageView imageView11;
     @BindView(R.id.textView11)
     TextView textView11;
-    @BindView(R.id.imageView12)
-    ImageView imageView12;
     @BindView(R.id.relativeLayout1)
     RelativeLayout relativeLayout1;
     @BindView(R.id.imageView13)
@@ -167,7 +160,7 @@ public class homepage extends AppCompatActivity {
     }
 
 
-    @OnClick({R.id.fold,  R.id.subtitle})
+    @OnClick({R.id.fold, R.id.subtitle})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fold:
