@@ -49,7 +49,7 @@ public class GridViewAdapter extends RecyclerView.Adapter {
         Page entity = mEntityList.get(position);
 
         ((DemoViewHolder)holder).mTxt.setText(entity.getTxt());
-        Glide.with(mContext).load(entity.getImagesrc()).into(((GridViewAdapter.DemoViewHolder)holder).mIma);
+        Glide.with(mContext).load(R.drawable.liwu).into(((GridViewAdapter.DemoViewHolder)holder).mIma);
 
         if (mOnItemClickListener != null)
         {

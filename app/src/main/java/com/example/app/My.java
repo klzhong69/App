@@ -217,7 +217,7 @@ public class My extends Fragment {
                 break;
             case R.id.imageView73:
             case R.id.textView84:
-                Intent intent7 = new Intent(getContext(), my_wallet.class);
+                Intent intent7 = new Intent(getContext(), chatroom.class);
                 startActivity(intent7);
                 break;
             case R.id.imageView74:
