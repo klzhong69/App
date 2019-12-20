@@ -15,6 +15,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.app.Adapter.AccountAdapter;
 import com.example.app.Entity.Findmake;
 import com.example.app.Sqlentity.Account;
+import com.example.app.Sqlentity.User;
+import com.example.app.cofig.Initialization;
+import com.example.app.dao.mAccountDao;
+import com.example.app.dao.mUserDao;
 
 import java.util.ArrayList;
 
@@ -39,6 +43,7 @@ public class account extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account);
         ButterKnife.bind(this);
+        Initialization.setupDatabaseAccount(this);
         title.setText("账号管理");
         subtitle.setText("添加账号");
         initData();
@@ -83,12 +88,13 @@ public class account extends AppCompatActivity {
 
     private void initData() {
         mArrayList = new ArrayList<Account>();
-        Account i1 = new Account(1, "dali-chan", 0);
-        mArrayList.add(i1);
-        Account i2 = new Account(0, "dali-chan", 1);
-        mArrayList.add(i2);
-        Account i3 = new Account(0, "dali-chan", 2);
-        mArrayList.add(i3);
+
+        Account account = new Account();
+        account.setName("dali-chan");
+        account.setState(1);
+        account.setType(0);
+        mAccountDao.insert(account);
+        mArrayList.add(account);
 
     }
     @OnClick({R.id.fold, R.id.subtitle})

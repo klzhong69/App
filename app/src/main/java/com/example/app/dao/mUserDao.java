@@ -1,8 +1,8 @@
 package com.example.app.dao;
 
 import com.example.app.Sqlentity.User;
+import com.example.app.cofig.Initialization;
 import com.example.app.gen.UserDao;
-import com.example.app.information;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ public class mUserDao {
      * @param user
      */
     public static void insert(User user) {
-        information.getDaoInstant().getUserDao().insertOrReplace(user);
+        Initialization.getDaoInstantUser().getUserDao().insertOrReplace(user);
     }
 
     /**
@@ -23,7 +23,7 @@ public class mUserDao {
      * @param id
      */
     public static void delete(Long id) {
-        information.getDaoInstant().getUserDao().deleteByKey(id);
+        Initialization.getDaoInstantUser().getUserDao().deleteByKey(id);
     }
 
     /**
@@ -32,7 +32,7 @@ public class mUserDao {
      * @param user
      */
     public static void update(User user) {
-        information.getDaoInstant().getUserDao().update(user);
+        Initialization.getDaoInstantUser().getUserDao().update(user);
     }
 
     /**
@@ -41,7 +41,7 @@ public class mUserDao {
      * @return
      */
     public static List<User> query(Long id) {
-        return information.getDaoInstant().getUserDao().queryBuilder().where(UserDao.Properties.Id.eq(id)).list();
+        return Initialization.getDaoInstantUser().getUserDao().queryBuilder().where(UserDao.Properties.Id.eq(id)).list();
     }
 
     /**
@@ -50,14 +50,14 @@ public class mUserDao {
      * @return
      */
     public static List<User> querys(Long userid) {
-        return information.getDaoInstant().getUserDao().queryBuilder().where(UserDao.Properties.UserId.eq(userid)).list();
+        return Initialization.getDaoInstantUser().getUserDao().queryBuilder().where(UserDao.Properties.UserId.eq(userid)).list();
     }
 
     /**
      * 查询全部数据
      */
     public static List<User> queryAll() {
-        return information.getDaoInstant().getUserDao().loadAll();
+        return Initialization.getDaoInstantUser().getUserDao().loadAll();
     }
 
     /**
@@ -65,7 +65,7 @@ public class mUserDao {
      */
     public static List<User> queryBuilder(int set , int lim) {
 
-        return information.getDaoInstant().getUserDao().queryBuilder().offset(set).limit(lim).list();
+        return Initialization.getDaoInstantUser().getUserDao().queryBuilder().offset(set).limit(lim).list();
     }
 
     /**
@@ -73,7 +73,7 @@ public class mUserDao {
      */
     /*public static List<User> queryBuilder(int set , int lim) {
 
-        QueryBuilder<User> queryBuilder = My.getDaoInstant().getUserDao().queryBuilder();
+        QueryBuilder<User> queryBuilder = My.getDaoInstantUser().getUserDao().queryBuilder();
 
         queryBuilder.join(Address.class, AddressDao.Properties.userId)
                 .where(AddressDao.Properties.Street.eq("Sesame Street"));
@@ -88,13 +88,13 @@ public class mUserDao {
 
     public static List<User> queryBuilder() {
         // 正序
-        return information.getDaoInstant().getUserDao().queryBuilder().orderAsc(UserDao.Properties.State).list();
+        return Initialization.getDaoInstantUser().getUserDao().queryBuilder().orderAsc(UserDao.Properties.State).list();
 
         // 反序
-        //information.getDaoInstant().getUserDao().queryBuilder().orderDesc(UserDao.Properties.Id).list();
+        //Initialization.getDaoInstantUser().getUserDao().queryBuilder().orderDesc(UserDao.Properties.Id).list();
 
         // 多条件
-        //information.getDaoInstant().getUserDao().queryBuilder().orderAsc(UserDao.Properties.Id).orderDesc(UserDao.Properties.MemberSex).list();
+        //Initialization.getDaoInstantUser().getUserDao().queryBuilder().orderAsc(UserDao.Properties.Id).orderDesc(UserDao.Properties.MemberSex).list();
 
     }
 }

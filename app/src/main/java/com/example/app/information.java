@@ -1,8 +1,6 @@
 package com.example.app;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteDatabase;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -10,22 +8,16 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.bruce.pickerview.LoopScrollListener;
-import com.bruce.pickerview.LoopView;
 import com.bruce.pickerview.popwindow.DatePickerPopWin;
 import com.example.app.Sqlentity.User;
+import com.example.app.cofig.Initialization;
 import com.example.app.dao.mUserDao;
-import com.example.app.gen.DaoMaster;
 import com.example.app.gen.DaoSession;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,8 +25,10 @@ import butterknife.OnClick;
 
 public class information extends AppCompatActivity {
 
-    @BindView(R.id.imageView115)
-    ImageView imageView115;
+
+    private static DaoSession daoSession;
+    @BindView(R.id.imageView2)
+    QMUIRadiusImageView imageView2;
     @BindView(R.id.imageView19)
     QMUIRadiusImageView imageView19;
     @BindView(R.id.imageView138)
@@ -61,7 +55,6 @@ public class information extends AppCompatActivity {
     TextView textView164;
     @BindView(R.id.imageView140)
     ImageView imageView140;
-    private static DaoSession daoSession;
     private int sex = 0;
 
     @Override
@@ -69,7 +62,7 @@ public class information extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_information);
         ButterKnife.bind(this);
-        setupDatabase();
+        Initialization.setupDatabaseUser(this);
 
     }
 
@@ -94,30 +87,28 @@ public class information extends AppCompatActivity {
     }
 
 
-
     @OnClick({R.id.imageView139, R.id.but, R.id.radioButton2, R.id.radioButton3, R.id.textView164, R.id.imageView140})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.but:
-                List<User> list =  mUserDao.queryAll();
-                Long lon = (long) list.size()+1;
                 User user = new User();
-                user.setId(lon);
-                user.setUserId("1345078");
+                user.setUserId(1345078L);
                 user.setUsersrc("https://momeak.oss-cn-shenzhen.aliyuncs.com/h4.png");
                 user.setName(editText.getText().toString());
                 user.setState(0);
                 mUserDao.insert(user);
+                Intent intent2 = new Intent(this, login.class);
+                startActivity(intent2);
                 break;
             case R.id.radioButton2:
                 radioButton2.setChecked(true);
                 radioButton3.setChecked(false);
-                sex=0;
+                sex = 0;
                 break;
             case R.id.radioButton3:
                 radioButton2.setChecked(false);
                 radioButton3.setChecked(true);
-                sex=1;
+                sex = 1;
                 break;
             case R.id.imageView139:
             case R.id.textView164:
@@ -127,20 +118,4 @@ public class information extends AppCompatActivity {
         }
     }
 
-    /**
-     * 配置数据库
-     */
-    private void setupDatabase() {
-        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, "User.db", null);
-        //获取可写数据库
-        SQLiteDatabase db = helper.getWritableDatabase();
-        //获取数据库对象
-        DaoMaster daoMaster = new DaoMaster(db);
-        //获取Dao对象管理者
-        daoSession = daoMaster.newSession();
-    }
-
-    public static DaoSession getDaoInstant() {
-        return daoSession;
-    }
 }

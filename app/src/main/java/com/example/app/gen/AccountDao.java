@@ -15,7 +15,7 @@ import com.example.app.Sqlentity.Account;
 /** 
  * DAO for table "ACCOUNT".
 */
-public class AccountDao extends AbstractDao<Account, Void> {
+public class AccountDao extends AbstractDao<Account, Long> {
 
     public static final String TABLENAME = "ACCOUNT";
 
@@ -24,9 +24,10 @@ public class AccountDao extends AbstractDao<Account, Void> {
      * Can be used for QueryBuilder and for referencing column names.
      */
     public static class Properties {
-        public final static Property State = new Property(0, int.class, "state", false, "STATE");
-        public final static Property Name = new Property(1, String.class, "name", false, "NAME");
-        public final static Property Type = new Property(2, int.class, "type", false, "TYPE");
+        public final static Property Id = new Property(0, Long.class, "id", true, "_id");
+        public final static Property State = new Property(1, int.class, "state", false, "STATE");
+        public final static Property Name = new Property(2, String.class, "name", false, "NAME");
+        public final static Property Type = new Property(3, int.class, "type", false, "TYPE");
     }
 
 
@@ -42,9 +43,10 @@ public class AccountDao extends AbstractDao<Account, Void> {
     public static void createTable(Database db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"ACCOUNT\" (" + //
-                "\"STATE\" INTEGER NOT NULL ," + // 0: state
-                "\"NAME\" TEXT," + // 1: name
-                "\"TYPE\" INTEGER NOT NULL );"); // 2: type
+                "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
+                "\"STATE\" INTEGER NOT NULL ," + // 1: state
+                "\"NAME\" TEXT," + // 2: name
+                "\"TYPE\" INTEGER NOT NULL );"); // 3: type
         // Add Indexes
         db.execSQL("CREATE UNIQUE INDEX " + constraint + "IDX_ACCOUNT_STATE ON \"ACCOUNT\"" +
                 " (\"STATE\" ASC);");
@@ -59,64 +61,79 @@ public class AccountDao extends AbstractDao<Account, Void> {
     @Override
     protected final void bindValues(DatabaseStatement stmt, Account entity) {
         stmt.clearBindings();
-        stmt.bindLong(1, entity.getState());
+ 
+        Long id = entity.getId();
+        if (id != null) {
+            stmt.bindLong(1, id);
+        }
+        stmt.bindLong(2, entity.getState());
  
         String name = entity.getName();
         if (name != null) {
-            stmt.bindString(2, name);
+            stmt.bindString(3, name);
         }
-        stmt.bindLong(3, entity.getType());
+        stmt.bindLong(4, entity.getType());
     }
 
     @Override
     protected final void bindValues(SQLiteStatement stmt, Account entity) {
         stmt.clearBindings();
-        stmt.bindLong(1, entity.getState());
+ 
+        Long id = entity.getId();
+        if (id != null) {
+            stmt.bindLong(1, id);
+        }
+        stmt.bindLong(2, entity.getState());
  
         String name = entity.getName();
         if (name != null) {
-            stmt.bindString(2, name);
+            stmt.bindString(3, name);
         }
-        stmt.bindLong(3, entity.getType());
+        stmt.bindLong(4, entity.getType());
     }
 
     @Override
-    public Void readKey(Cursor cursor, int offset) {
-        return null;
+    public Long readKey(Cursor cursor, int offset) {
+        return cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0);
     }    
 
     @Override
     public Account readEntity(Cursor cursor, int offset) {
         Account entity = new Account( //
-            cursor.getInt(offset + 0), // state
-            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // name
-            cursor.getInt(offset + 2) // type
+            cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
+            cursor.getInt(offset + 1), // state
+            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // name
+            cursor.getInt(offset + 3) // type
         );
         return entity;
     }
      
     @Override
     public void readEntity(Cursor cursor, Account entity, int offset) {
-        entity.setState(cursor.getInt(offset + 0));
-        entity.setName(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
-        entity.setType(cursor.getInt(offset + 2));
+        entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
+        entity.setState(cursor.getInt(offset + 1));
+        entity.setName(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
+        entity.setType(cursor.getInt(offset + 3));
      }
     
     @Override
-    protected final Void updateKeyAfterInsert(Account entity, long rowId) {
-        // Unsupported or missing PK type
-        return null;
+    protected final Long updateKeyAfterInsert(Account entity, long rowId) {
+        entity.setId(rowId);
+        return rowId;
     }
     
     @Override
-    public Void getKey(Account entity) {
-        return null;
+    public Long getKey(Account entity) {
+        if(entity != null) {
+            return entity.getId();
+        } else {
+            return null;
+        }
     }
 
     @Override
     public boolean hasKey(Account entity) {
-        // TODO
-        return false;
+        return entity.getId() != null;
     }
 
     @Override

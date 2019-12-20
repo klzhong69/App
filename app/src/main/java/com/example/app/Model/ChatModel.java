@@ -1,5 +1,6 @@
 package com.example.app.Model;
 
+import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
@@ -17,11 +18,28 @@ import androidx.core.widget.NestedScrollView;
 
 import com.bumptech.glide.Glide;
 import com.example.app.R;
+import com.example.app.Sqlentity.Chat;
+import com.example.app.Sqlentity.User;
 import com.example.app.chat;
+import com.example.app.chatroom;
+import com.example.app.cofig.DateUtil;
+import com.example.app.cofig.Initialization;
+import com.example.app.dao.mChatDao;
+import com.example.app.dao.mUserDao;
+
+import java.util.Date;
+import java.util.List;
+import java.util.concurrent.Callable;
+
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+
+import static com.example.app.cofig.DateUtil.dateToString;
 
 public class ChatModel {
 
     private static View convertView;
+    private static View convertTime;
     private static ViewHolder viewHolder;
     private static LayoutInflater inflater;
 
@@ -33,7 +51,7 @@ public class ChatModel {
 
 
 
-    public static void set(NestedScrollView scrollmess, EditText editText, LayoutInflater inflaters, LinearLayout layout, Button but, ImageView imageView45){
+    public static void set(NestedScrollView scrollmess, EditText editText, LayoutInflater inflaters,int a){
         inflater = inflaters;
         viewHolder = new ViewHolder();
         scrollmess.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -51,10 +69,24 @@ public class ChatModel {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
                 if (i == EditorInfo.IME_ACTION_SEND) {
-                    layout.addView(ChatModel.add(editText.getText().toString(), "https://momeak.oss-cn-shenzhen.aliyuncs.com/dear1.png", "", 0, 1));
-                    editText.setText("");
-                    but.setVisibility(View.GONE);
-                    imageView45.setVisibility(View.VISIBLE);
+                    if(a==0){
+                        Observable<Integer> observable = Observable.defer(new Callable<ObservableSource<? extends Integer>>() {
+                            @Override
+                            public ObservableSource<? extends Integer> call() throws Exception {
+                                return Observable.just(0);
+                            }
+                        });
+                        observable.subscribe(chat.observer);
+                    }else{
+                        Observable<Integer> observable = Observable.defer(new Callable<ObservableSource<? extends Integer>>() {
+                            @Override
+                            public ObservableSource<? extends Integer> call() throws Exception {
+                                return Observable.just(0);
+                            }
+                        });
+                        observable.subscribe(chatroom.observerchat);
+                    }
+
                     return true;   //返回true，保留软键盘。false，隐藏软键盘
                 }
                 return false;
@@ -73,13 +105,7 @@ public class ChatModel {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s == null) {
-                    but.setVisibility(View.GONE);
-                    imageView45.setVisibility(View.VISIBLE);
-                } else {
-                    but.setVisibility(View.VISIBLE);
-                    imageView45.setVisibility(View.GONE);
-                }
+
             }
         };
         editText.addTextChangedListener(watcher);
@@ -94,14 +120,14 @@ public class ChatModel {
             convertView.setTag(viewHolder);
             viewHolder.txt.setText(txt);
             Glide.with(convertView).load(head).into(viewHolder.head);
-        } else if (state == 0 && type == 1) {
+        } else if (state == 1 && type == 0) {
             convertView = inflater.inflate(R.layout.chat_txt_right, null);
             viewHolder.txt = (TextView) convertView.findViewById(R.id.text);
             viewHolder.head = (ImageView) convertView.findViewById(R.id.imageView20);
             convertView.setTag(viewHolder);
             viewHolder.txt.setText(txt);
             Glide.with(convertView).load(head).into(viewHolder.head);
-        } else if (state == 1 && type == 0) {
+        } else if (state == 0 && type == 1) {
             convertView = inflater.inflate(R.layout.chat_ima_left, null);
             viewHolder.imagesrc = (ImageView) convertView.findViewById(R.id.imageViews2);
             viewHolder.head = (ImageView) convertView.findViewById(R.id.imageView20);
@@ -120,22 +146,37 @@ public class ChatModel {
         return convertView;
     }
 
-    public static void initData(LinearLayout layout) {
-        layout.addView(add("你好", "https://momeak.oss-cn-shenzhen.aliyuncs.com/dear1.png", "", 0, 0));
-        layout.addView(add("你好", "https://momeak.oss-cn-shenzhen.aliyuncs.com/dear1.png", "", 0, 1));
-        layout.addView(add("", "https://momeak.oss-cn-shenzhen.aliyuncs.com/dear1.png", "https://momeak.oss-cn-shenzhen.aliyuncs.com/dear1.png", 1, 0));
-        layout.addView(add("", "https://momeak.oss-cn-shenzhen.aliyuncs.com/dear1.png", "https://momeak.oss-cn-shenzhen.aliyuncs.com/dear1.png", 1, 1));
-        layout.addView(add("你好", "https://momeak.oss-cn-shenzhen.aliyuncs.com/dear1.png", "", 0, 0));
-        layout.addView(add("你好", "https://momeak.oss-cn-shenzhen.aliyuncs.com/dear1.png", "", 0, 1));
-        layout.addView(add("你好", "https://momeak.oss-cn-shenzhen.aliyuncs.com/dear1.png", "", 0, 0));
-        layout.addView(add("你好", "https://momeak.oss-cn-shenzhen.aliyuncs.com/dear1.png", "", 0, 1));
-        layout.addView(add("你好", "https://momeak.oss-cn-shenzhen.aliyuncs.com/dear1.png", "", 0, 0));
-        layout.addView(add("你好", "https://momeak.oss-cn-shenzhen.aliyuncs.com/dear1.png", "", 0, 1));
-        layout.addView(add("你好", "https://momeak.oss-cn-shenzhen.aliyuncs.com/dear1.png", "", 0, 0));
-        layout.addView(add("你好", "https://momeak.oss-cn-shenzhen.aliyuncs.com/dear1.png", "", 0, 1));
-        layout.addView(add("你好", "https://momeak.oss-cn-shenzhen.aliyuncs.com/dear1.png", "", 0, 0));
-        layout.addView(add("你好", "https://momeak.oss-cn-shenzhen.aliyuncs.com/dear1.png", "", 0, 1));
-        layout.addView(add("你好", "https://momeak.oss-cn-shenzhen.aliyuncs.com/dear1.png", "", 0, 0));
-        layout.addView(add("你好", "https://momeak.oss-cn-shenzhen.aliyuncs.com/dear1.png", "", 0, 1));
+
+    public static View addtime(String txt){
+
+        convertTime = inflater.inflate(R.layout.chat_time, null);
+        viewHolder.txt = (TextView) convertTime.findViewById(R.id.textView183);
+        convertTime.setTag(viewHolder);
+        viewHolder.txt.setText(txt);
+
+        return convertTime;
+    }
+
+
+    public static void initData(LinearLayout layout,Long conver) {
+
+        try{
+            List<Chat> list = mChatDao.queryBuilder(conver,0,10);
+            for(int i=0;i<list.size();i++){
+                System.out.println("内容："+list.get(i).getConversation());
+                if(i==0){
+                    layout.addView(addtime(DateUtil.stampToDate(list.get(i).getData().toString())));
+                }else{
+                    Long longs = (list.get(i).getData())-(list.get(i-1).getData());
+                    if(longs>1800000L){
+                        layout.addView(addtime(DateUtil.stampToDate(list.get(i).getData().toString())));
+                    }
+                }
+                layout.addView(add(list.get(i).getTxt(), list.get(i).getSendsrc(), "",  list.get(i).getState(),0));
+            }
+        }catch (Exception ignored){
+        }
+
+
     }
 }

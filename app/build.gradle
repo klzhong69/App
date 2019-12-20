@@ -90,7 +90,7 @@ dependencies {
 
     //必须使用
     implementation 'com.lzy.net:okgo:3.0.4' //okgo网络请求
-    implementation 'com.lzy.net:okrx2:2.0.2'//okga+RxJava
+    implementation 'com.lzy.net:okrx2:2.0.2'//okgo+RxJava
     implementation 'com.lzy.net:okserver:2.0.5'//上传下载
 
     implementation 'com.brucetoo.pickview:library:1.2.3'//时间选择器仿ios
@@ -104,7 +104,7 @@ dependencies {
 }
 
 greendao {
-    schemaVersion 1
+    schemaVersion 2
     daoPackage 'com.example.app.gen'
     targetGenDir 'src/main/java'
 }

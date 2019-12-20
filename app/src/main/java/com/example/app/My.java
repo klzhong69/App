@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.app.cofig.DateUtil;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 
 import java.util.Objects;
@@ -21,6 +22,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+
+import static com.example.app.cofig.DateUtil.getNowDate;
 
 public class My extends Fragment {
     Unbinder unbinder;
@@ -144,6 +147,8 @@ public class My extends Fragment {
 
         } catch (Exception ignored) {
         }
+
+        System.out.println("Date:"+ DateUtil.getCurrentTimeYMDHMS());
         return view;
     }
 

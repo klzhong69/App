@@ -25,7 +25,7 @@ public class UserDao extends AbstractDao<User, Long> {
      */
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
-        public final static Property UserId = new Property(1, String.class, "userId", false, "USER_ID");
+        public final static Property UserId = new Property(1, Long.class, "userId", false, "USER_ID");
         public final static Property Name = new Property(2, String.class, "name", false, "NAME");
         public final static Property Usersrc = new Property(3, String.class, "usersrc", false, "USERSRC");
         public final static Property State = new Property(4, int.class, "state", false, "STATE");
@@ -45,7 +45,7 @@ public class UserDao extends AbstractDao<User, Long> {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"USER\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
-                "\"USER_ID\" TEXT," + // 1: userId
+                "\"USER_ID\" INTEGER," + // 1: userId
                 "\"NAME\" TEXT," + // 2: name
                 "\"USERSRC\" TEXT," + // 3: usersrc
                 "\"STATE\" INTEGER NOT NULL );"); // 4: state
@@ -69,9 +69,9 @@ public class UserDao extends AbstractDao<User, Long> {
             stmt.bindLong(1, id);
         }
  
-        String userId = entity.getUserId();
+        Long userId = entity.getUserId();
         if (userId != null) {
-            stmt.bindString(2, userId);
+            stmt.bindLong(2, userId);
         }
  
         String name = entity.getName();
@@ -95,9 +95,9 @@ public class UserDao extends AbstractDao<User, Long> {
             stmt.bindLong(1, id);
         }
  
-        String userId = entity.getUserId();
+        Long userId = entity.getUserId();
         if (userId != null) {
-            stmt.bindString(2, userId);
+            stmt.bindLong(2, userId);
         }
  
         String name = entity.getName();
@@ -121,7 +121,7 @@ public class UserDao extends AbstractDao<User, Long> {
     public User readEntity(Cursor cursor, int offset) {
         User entity = new User( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
-            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // userId
+            cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1), // userId
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // name
             cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // usersrc
             cursor.getInt(offset + 4) // state
@@ -132,7 +132,7 @@ public class UserDao extends AbstractDao<User, Long> {
     @Override
     public void readEntity(Cursor cursor, User entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
-        entity.setUserId(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
+        entity.setUserId(cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1));
         entity.setName(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
         entity.setUsersrc(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
         entity.setState(cursor.getInt(offset + 4));

@@ -1,8 +1,8 @@
 package com.example.app.dao;
 
-import com.example.app.Sqlentity.User;
-import com.example.app.gen.UserDao;
-import com.example.app.information;
+import com.example.app.Sqlentity.Account;
+import com.example.app.cofig.Initialization;
+import com.example.app.gen.AccountDao;
 
 import java.util.List;
 
@@ -11,10 +11,10 @@ public class mAccountDao {
     /**
      * 添加数据，如果有重复则覆盖
      *
-     * @param user
+     * @param account
      */
-    public static void insert(User user) {
-        information.getDaoInstant().getUserDao().insertOrReplace(user);
+    public static void insert(Account account) {
+        Initialization.getDaoInstantAccount().getAccountDao().insertOrReplace(account);
     }
 
     /**
@@ -23,16 +23,16 @@ public class mAccountDao {
      * @param id
      */
     public static void delete(Long id) {
-        information.getDaoInstant().getUserDao().deleteByKey(id);
+        Initialization.getDaoInstantAccount().getAccountDao().deleteByKey(id);
     }
 
     /**
      * 更新数据
      *
-     * @param user
+     * @param account
      */
-    public static void update(User user) {
-        information.getDaoInstant().getUserDao().update(user);
+    public static void update(Account account) {
+        Initialization.getDaoInstantAccount().getAccountDao().update(account);
     }
 
     /**
@@ -40,8 +40,8 @@ public class mAccountDao {
      *
      * @return
      */
-    public static List<User> query(Long id) {
-        return information.getDaoInstant().getUserDao().queryBuilder().where(UserDao.Properties.Id.eq(id)).list();
+    public static List<Account> query(int state) {
+        return Initialization.getDaoInstantAccount().getAccountDao().queryBuilder().where(AccountDao.Properties.State.eq(state)).list();
     }
 
     /**
@@ -49,23 +49,23 @@ public class mAccountDao {
      *
      * @return
      */
-    public static List<User> querys(Long userid) {
-        return information.getDaoInstant().getUserDao().queryBuilder().where(UserDao.Properties.UserId.eq(userid)).list();
+    public static List<Account> querys(int type) {
+        return Initialization.getDaoInstantAccount().getAccountDao().queryBuilder().where(AccountDao.Properties.Type.eq(type)).list();
     }
 
     /**
      * 查询全部数据
      */
-    public static List<User> queryAll() {
-        return information.getDaoInstant().getUserDao().loadAll();
+    public static List<Account> queryAll() {
+        return Initialization.getDaoInstantAccount().getAccountDao().loadAll();
     }
 
     /**
      * 分页
      */
-    public static List<User> queryBuilder(int set , int lim) {
+    public static List<Account> queryBuilder(int set , int lim) {
 
-        return information.getDaoInstant().getUserDao().queryBuilder().offset(set).limit(lim).list();
+        return Initialization.getDaoInstantAccount().getAccountDao().queryBuilder().offset(set).limit(lim).list();
     }
 
     /**
@@ -73,7 +73,7 @@ public class mAccountDao {
      */
     /*public static List<User> queryBuilder(int set , int lim) {
 
-        QueryBuilder<User> queryBuilder = My.getDaoInstant().getUserDao().queryBuilder();
+        QueryBuilder<User> queryBuilder = My.getAccountDao().getUserDao().queryBuilder();
 
         queryBuilder.join(Address.class, AddressDao.Properties.userId)
                 .where(AddressDao.Properties.Street.eq("Sesame Street"));
@@ -86,15 +86,15 @@ public class mAccountDao {
      * 排序
      */
 
-    public static List<User> queryBuilder() {
+    public static List<Account> queryBuilder() {
         // 正序
-        return information.getDaoInstant().getUserDao().queryBuilder().orderAsc(UserDao.Properties.State).list();
+        return Initialization.getDaoInstantAccount().getAccountDao().queryBuilder().orderAsc(AccountDao.Properties.State).list();
 
         // 反序
-        //information.getDaoInstant().getUserDao().queryBuilder().orderDesc(UserDao.Properties.Id).list();
+        //Initialization.getDaoInstantAccount().getUserDao().queryBuilder().orderDesc(UserDao.Properties.Id).list();
 
         // 多条件
-        //information.getDaoInstant().getUserDao().queryBuilder().orderAsc(UserDao.Properties.Id).orderDesc(UserDao.Properties.MemberSex).list();
+        //Initialization.getDaoInstantAccount().getUserDao().queryBuilder().orderAsc(UserDao.Properties.Id).orderDesc(UserDao.Properties.MemberSex).list();
 
     }
 }

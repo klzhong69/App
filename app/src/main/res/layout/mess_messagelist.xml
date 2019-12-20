@@ -35,20 +35,20 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView66"
         android:layout_alignStart="@+id/textView66"
-        android:layout_alignBottom="@+id/imageView18"
+        android:layout_marginTop="@dimen/dp_10"
         android:gravity="center_vertical"
         android:text="hi伙伴，明天一起直播吗"
         android:textSize="@dimen/sp_16" />
 
     <ImageView
         android:id="@+id/imageView67"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/dp_30"
-        android:layout_alignStart="@+id/textView68"
+        android:layout_width="@dimen/dp_60"
+        android:layout_height="wrap_content"
         android:layout_alignTop="@+id/textView66"
-        android:layout_alignEnd="@+id/textView68"
-        android:layout_marginStart="@dimen/dp_10"
-        android:layout_marginEnd="@dimen/dp_10"
+        android:layout_alignBottom="@+id/textView66"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="@dimen/dp_20"
+        android:scaleType="fitCenter"
         app:srcCompat="@drawable/zhiyou" />
 
     <TextView
@@ -56,11 +56,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/textView67"
+        android:layout_alignEnd="@+id/imageView67"
         android:layout_alignBottom="@+id/textView67"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="@dimen/dp_20"
-        android:gravity="center_vertical"
-        android:text="今天15：20"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:gravity="center"
+        android:text="15:20"
         android:textSize="@dimen/sp_16" />
 
     <TextView

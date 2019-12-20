@@ -14,6 +14,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.app.Sqlentity.User;
+import com.example.app.cofig.Initialization;
 import com.example.app.dao.mUserDao;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
@@ -70,6 +71,15 @@ public class login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+        Initialization.setupDatabaseUser(this);
+        try {
+            List<User> list = mUserDao.queryAll();
+            for(int i=0;i<list.size();i++){
+                System.out.println("所有的"+list.get(i).getId());
+            }
+
+        } catch (Exception ignored){}
+
     }
 
     @OnClick({R.id.but, R.id.textView156, R.id.textView157, R.id.textView159, R.id.imageView132, R.id.imageView133, R.id.imageView134})
@@ -79,7 +89,7 @@ public class login extends AppCompatActivity {
                 SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
                 sp.edit().putLong("userid", 1L).apply();
                 Intent intent1 = new Intent(login.this, MainActivity.class);
-                intent1.putExtra("id",4);
+                intent1.putExtra("id", 4);
                 startActivity(intent1);
                 break;
             case R.id.textView156:
@@ -92,7 +102,7 @@ public class login extends AppCompatActivity {
                 break;
             case R.id.textView159:
                 Intent intent4 = new Intent(login.this, agreement.class);
-                intent4.putExtra("about",0);
+                intent4.putExtra("about", 0);
                 startActivity(intent4);
                 break;
             case R.id.imageView132:

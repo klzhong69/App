@@ -12,7 +12,7 @@ public class User {
     private Long id;
 
     @Index(unique = true)//设置唯一性
-    private String userId;//人员编号
+    private Long userId;//人员编号
 
     private String name;//人员姓名
 
@@ -20,8 +20,8 @@ public class User {
 
     private int state;//是否为当前账户
 
-    @Generated(hash = 482959625)
-    public User(Long id, String userId, String name, String usersrc, int state) {
+    @Generated(hash = 63559966)
+    public User(Long id, Long userId, String name, String usersrc, int state) {
         this.id = id;
         this.userId = userId;
         this.name = name;
@@ -41,11 +41,11 @@ public class User {
         this.id = id;
     }
 
-    public String getUserId() {
+    public Long getUserId() {
         return this.userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
@@ -72,6 +72,10 @@ public class User {
     public void setState(int state) {
         this.state = state;
     }
+
+   
+
+    
 
 
 

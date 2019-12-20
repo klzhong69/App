@@ -28,6 +28,8 @@ import com.example.app.Model.MessFriendsModel;
 import com.example.app.Model.MessModel;
 import com.example.app.Model.OnlineModel;
 import com.example.app.Model.PaimaiModel;
+import com.example.app.Sqlentity.Chat;
+import com.example.app.dao.mChatDao;
 import com.qmuiteam.qmui.layout.QMUIPriorityLinearLayout;
 import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
@@ -124,10 +126,6 @@ public class chatroom extends AppCompatActivity {
     EditText editTextc1;
     @BindView(R.id.butc1)
     QMUIRoundButton butc1;
-    @BindView(R.id.imageViewc1s)
-    ImageView imageViewc1s;
-    @BindView(R.id.priorityc1)
-    QMUIPriorityLinearLayout priorityc1;
     @BindView(R.id.layoutc1)
     LinearLayout layoutc1;
     @BindView(R.id.scrollmessc1)
@@ -216,8 +214,6 @@ public class chatroom extends AppCompatActivity {
     ImageView imageViewc5s;
     @BindView(R.id.recyclerc5)
     RecyclerView recyclerc5;
-    @BindView(R.id.recyclerc5s)
-    RecyclerView recyclerc5s;
     @BindView(R.id.relativec5)
     RelativeLayout relativec5;
     @BindView(R.id.component5)
@@ -338,8 +334,13 @@ public class chatroom extends AppCompatActivity {
     private Disposable disposable;
     private chatroom context;
     public static Observer<Integer> observer;
+    public static Observer<Integer> observerchat;
     public static Observer<View> observers;
     private QMUIPopup mNormalPopup;
+    private Long conver;
+    private long sendid;
+    private String sendname;
+    private String sendsrc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -425,7 +426,6 @@ public class chatroom extends AppCompatActivity {
                 component5.setVisibility(View.VISIBLE);
                 MessModel.initData();
                 MessModel.initrecycler(context, recyclerc5, 1);
-                MessModel.initrecyclers(context, recyclerc5s, 1);
                 break;
             case R.id.imageView103:
                 component7.setVisibility(View.VISIBLE);
@@ -552,8 +552,13 @@ public class chatroom extends AppCompatActivity {
                     case 5:
                         component5.setVisibility(View.GONE);
                         component1.setVisibility(View.VISIBLE);
-                        ChatModel.set(scrollmessc1, editTextc1, LayoutInflater.from(chatroom.this), layoutc1, butc1, imageViewc1s);
-                        ChatModel.initData(layoutc1);
+                        conver = 0L;
+                        sendid = 0L;
+                        sendname = "苗苗";
+                        sendsrc = "https://momeak.oss-cn-shenzhen.aliyuncs.com/h2.jpg";
+                        textViewc1.setText(sendname);
+                        ChatModel.set(scrollmessc1, editTextc1, LayoutInflater.from(chatroom.this), 1);
+                        ChatModel.initData(layoutc1,conver);
                         break;
                     case 6:
                         break;
@@ -579,6 +584,9 @@ public class chatroom extends AppCompatActivity {
             public void onComplete() {
 
             }
+
+
+
         };
 
 
@@ -646,6 +654,43 @@ public class chatroom extends AppCompatActivity {
                             }
                         })
                         .show(view);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        };
+
+
+        observerchat = new Observer<Integer>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(Integer integer) {
+
+                String txt = editTextc1.getText().toString();
+                layoutc1.addView(ChatModel.add(txt, "https://momeak.oss-cn-shenzhen.aliyuncs.com/h4.jpg", "", 1, 0));
+                editTextc1.setText("");
+                Chat chat = new Chat();
+                chat.setConversation(conver);
+                chat.setData(System.currentTimeMillis());
+                chat.setReceiveId(sendid);
+                chat.setSendId(123456L);
+                chat.setReceivesrc(sendsrc);
+                chat.setSendsrc("https://momeak.oss-cn-shenzhen.aliyuncs.com/h4.jpg");
+                chat.setTxt(txt);
+                chat.setState(1);
+                mChatDao.insert(chat);
+
             }
 
             @Override

@@ -1,7 +1,11 @@
 package com.example.app;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -17,6 +21,9 @@ import com.example.app.Adapter.FindgiftAdapter;
 import com.example.app.Adapter.FindmakeAdapter;
 import com.example.app.Entity.Findgift;
 import com.example.app.Entity.Findmake;
+import com.example.app.Model.ChatModel;
+import com.example.app.Sqlentity.Chat;
+import com.example.app.dao.mChatDao;
 import com.qmuiteam.qmui.layout.QMUIPriorityLinearLayout;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
@@ -41,14 +48,10 @@ public class find_make extends AppCompatActivity {
     RelativeLayout relativeLayout10;
     @BindView(R.id.recycler15)
     RecyclerView recycler15;
-    @BindView(R.id.imageView45)
-    ImageView imageView45;
     @BindView(R.id.editText)
     EditText editText;
     @BindView(R.id.but)
     QMUIRoundButton but;
-    @BindView(R.id.priority)
-    QMUIPriorityLinearLayout priority;
     @BindView(R.id.relativeLayout11)
     RelativeLayout relativeLayout11;
     @BindView(R.id.textView3)
@@ -69,6 +72,37 @@ public class find_make extends AppCompatActivity {
         textView3.setVisibility(View.VISIBLE);
         textView6.setVisibility(View.VISIBLE);
         textView7.setVisibility(View.GONE);
+
+
+        editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                if (i == EditorInfo.IME_ACTION_SEND) {
+                    String txt = editText.getText().toString();
+
+
+                    return true;   //返回true，保留软键盘。false，隐藏软键盘
+                }
+                return false;
+            }
+        });
+        TextWatcher watcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        };
+        editText.addTextChangedListener(watcher);
     }
 
     private void init() {
