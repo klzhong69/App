@@ -23,7 +23,7 @@ public class PaimaiModel {
     public static void initData() {
         mArrayList = new ArrayList<Paimai>();
         for (int i = 0; i < 10; i++) {
-            Paimai i1 = new Paimai("ID2698456", "https://momeak.oss-cn-shenzhen.aliyuncs.com/h5.jpg", "胡楠"+i, "", i+"");
+            Paimai i1 = new Paimai("ID2698456", "https://momeak.oss-cn-shenzhen.aliyuncs.com/h5.jpg", "胡楠"+i, "");
             mArrayList.add(i1);
         }
 
@@ -74,7 +74,19 @@ public class PaimaiModel {
 
     public static void Add(RecyclerView mRecyclerView,Paimai entity){
         mAdapter.addData(mArrayList.size(), entity);
-        mRecyclerView.smoothScrollToPosition(mArrayList.size());
+    }
+
+    public static void Remove(int position){
+        mAdapter.removeData(position);
+    }
+
+    public static int get(String id){
+        for(int i=0;i<mArrayList.size();i++){
+            if(mArrayList.get(i).getId().equals(id)){
+                return i;
+            }
+        }
+        return 0;
     }
 
 }

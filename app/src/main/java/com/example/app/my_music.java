@@ -90,8 +90,8 @@ public class my_music extends AppCompatActivity {
 
     private void initData() {
         mArrayList = new ArrayList<Mymusic>();
-        for (int i = 0; i < 6; i++) {
-            Mymusic i1 = new Mymusic("https://momeak.oss-cn-shenzhen.aliyuncs.com/dear1.png", "星坠-天空的幻想-林晓夜", "03.00", "0");
+        for (int i = 0; i < 3; i++) {
+            Mymusic i1 = new Mymusic( "星坠-天空的幻想-林晓夜", "03.00", i+"","80%");
             mArrayList.add(i1);
         }
 
@@ -103,6 +103,7 @@ public class my_music extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.fold:
                 this.finish();
+                overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
                 break;
             case R.id.subtitle:
                 Intent intent1 = new Intent(my_music.this, scan_code.class);

@@ -186,11 +186,13 @@ public class Home extends Fragment {
             case R.id.imageView149:
                 Intent intent2 = new Intent(getContext(), search.class);
                 startActivity(intent2);
+                getActivity().overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
                 break;
             case R.id.relative12:
             case R.id.relative13:
                 Intent intent = new Intent(getContext(), chatroom.class);
                 startActivity(intent);
+                getActivity().overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
                 break;
             case R.id.imageView152:
                 flipCard();

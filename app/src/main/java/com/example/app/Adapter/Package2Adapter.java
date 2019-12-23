@@ -49,7 +49,12 @@ public class Package2Adapter extends RecyclerView.Adapter {
 
         ((Package2Adapter.DemoViewHolder)holder).mNmae.setText(entity.getName());
         ((Package2Adapter.DemoViewHolder)holder).mTime.setText(entity.getTime());
-        Glide.with(mContext).load(entity.getIma()).into(((Package2Adapter.DemoViewHolder)holder).mIma);
+        if(entity.getIma().equals("0")){
+            Glide.with(mContext).load(R.drawable.add2).into(((Package2Adapter.DemoViewHolder)holder).mIma);
+        }else{
+            Glide.with(mContext).load(R.drawable.page).into(((Package2Adapter.DemoViewHolder)holder).mIma);
+        }
+
 
         if (mOnItemClickListener != null)
         {

@@ -57,7 +57,7 @@ public class ChatRoomModel {
         mData.add(i6);
         Roomhead i7 = new Roomhead("https://momeak.oss-cn-shenzhen.aliyuncs.com/h4.jpg", "陌生人7", "", "");
         mData.add(i7);
-        Roomhead i8 = new Roomhead("https://momeak.oss-cn-shenzhen.aliyuncs.com/dear3.png", "空位", "", "");
+        Roomhead i8 = new Roomhead("0", "空位", "", "");
         mData.add(i8);
 
     }
@@ -82,8 +82,9 @@ public class ChatRoomModel {
         mLinearLayoutManager.setStackFromEnd(true);
         if (mAdapter.getItemCount() > 0) {
             mLinearLayoutManager.scrollToPositionWithOffset(mAdapter.getItemCount() - 1, Integer.MIN_VALUE);
-        }
 
+        }
+        mRecyclerView.scrollToPosition(mAdapter.getItemCount()-1);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
 
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -129,13 +130,25 @@ public class ChatRoomModel {
         mAdapters.setOnItemClickListener(new RoomheadAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Observable<Integer> observable = Observable.defer(new Callable<ObservableSource<? extends Integer>>() {
-                    @Override
-                    public ObservableSource<? extends Integer> call() throws Exception {
-                        return Observable.just(8);
-                    }
-                });
-                observable.subscribe(chatroom.observer);
+
+                if(mData.get(position).getUsersrc().equals("0")){
+                    Observable<View> observable = Observable.defer(new Callable<ObservableSource<? extends View>>() {
+                        @Override
+                        public ObservableSource<? extends View> call() throws Exception {
+                            return Observable.just(view);
+                        }
+                    });
+                    observable.subscribe(chatroom.observers);
+                }else{
+                    Observable<Integer> observable = Observable.defer(new Callable<ObservableSource<? extends Integer>>() {
+                        @Override
+                        public ObservableSource<? extends Integer> call() throws Exception {
+                            return Observable.just(8);
+                        }
+                    });
+                    observable.subscribe(chatroom.observer);
+                }
+
             }
 
             @Override

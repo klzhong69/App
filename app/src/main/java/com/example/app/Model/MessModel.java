@@ -1,10 +1,12 @@
 package com.example.app.Model;
 
+import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.app.Adapter.MessageAdapter;
 import com.example.app.Entity.Message;
 import com.example.app.Messages;
+import com.example.app.R;
 import com.example.app.Sqlentity.Chat;
 import com.example.app.Sqlentity.Conver;
 import com.example.app.chat;
@@ -49,7 +52,7 @@ public class MessModel {
 
     }
 
-    public static void initrecycler(Context context, RecyclerView recycler10,int a) {
+    public static void initrecycler(Context context, FragmentActivity fragmentActivity,RecyclerView recycler10, int a) {
         //适配器
         MessageAdapter mAdapter = new MessageAdapter(context, mArrayList);
         //设置适配器adapter
@@ -77,6 +80,7 @@ public class MessModel {
                     intent2.putExtra("sendname",list.get(position).getSendname());
                     intent2.putExtra("sendsrc",list.get(position).getSendsrc());
                     context.startActivity(intent2);
+                    fragmentActivity.overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
                 }else{
                     Observable<Integer> observable = Observable.defer(new Callable<ObservableSource<? extends Integer>>() {
                         @Override

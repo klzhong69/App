@@ -71,11 +71,12 @@ public class my_wallet extends AppCompatActivity {
     }
 
 
-    @OnClick({R.id.fold, R.id.subtitle, R.id.imageView35, R.id.textView10, R.id.imageView36, R.id.textView11})
+    @OnClick({R.id.fold, R.id.subtitle, R.id.imageView35, R.id.textView10, R.id.imageView36, R.id.textView11, R.id.imageView17, R.id.imageView18, R.id.imageView19})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fold:
                 this.finish();
+                overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
                 break;
             case R.id.subtitle:
                 break;
@@ -83,11 +84,30 @@ public class my_wallet extends AppCompatActivity {
             case R.id.textView10:
                 Intent intent1 = new Intent(my_wallet.this, my_gold.class);
                 startActivity(intent1);
+                overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
                 break;
             case R.id.imageView36:
             case R.id.textView11:
                 Intent intent2 = new Intent(my_wallet.this, withdraw.class);
                 startActivity(intent2);
+                overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
+                break;
+            case R.id.imageView17:
+                Intent intent3 = new Intent(my_wallet.this, my_gold.class);
+                startActivity(intent3);
+                overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
+                break;
+            case R.id.imageView18:
+                Intent intent4 = new Intent(my_wallet.this, my_diamond.class);
+                startActivity(intent4);
+                overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
+
+                break;
+            case R.id.imageView19:
+                Intent intent5 = new Intent(my_wallet.this, my_package.class);
+                startActivity(intent5);
+                overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
+
                 break;
         }
     }

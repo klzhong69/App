@@ -51,13 +51,20 @@ public class RoomtxtAdapter extends RecyclerView.Adapter {
         }else{
             ((DemoViewHolder)holder).mName.setText(entity.getName());
         }
+
         if(entity.getGrade().equals("")){
             ((DemoViewHolder)holder).mGrade.setVisibility(View.GONE);
         }else{
             Glide.with(mContext).load(R.drawable.l3).into(((DemoViewHolder)holder).mGrade);
         }
+
         ((DemoViewHolder)holder).mText.setText(entity.getText());
 
+        if(entity.getTxt().equals("")){
+            ((DemoViewHolder)holder).mTxt.setVisibility(View.GONE);
+        }else{
+            ((DemoViewHolder)holder).mTxt.setText(entity.getTxt());
+        }
         if (mOnItemClickListener != null)
         {
             holder.itemView.setOnClickListener(new View.OnClickListener()
@@ -92,6 +99,7 @@ public class RoomtxtAdapter extends RecyclerView.Adapter {
 
         private TextView mText;
         private TextView mName;
+        private TextView mTxt;
         private ImageView mGrade;
 
         public DemoViewHolder(View itemView) {
@@ -99,6 +107,7 @@ public class RoomtxtAdapter extends RecyclerView.Adapter {
             mText = (TextView) itemView.findViewById(R.id.textView35);
             mName = (TextView) itemView.findViewById(R.id.textView34);
             mGrade = (ImageView) itemView.findViewById(R.id.imageView42);
+            mTxt = (TextView) itemView.findViewById(R.id.textView36);
         }
     }
 

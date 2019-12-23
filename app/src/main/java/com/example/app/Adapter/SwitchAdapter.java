@@ -52,7 +52,7 @@ public class SwitchAdapter extends RecyclerView.Adapter {
             User entity = mEntityList.get(position);
 
             ((SwitchAdapter.DemoViewHolder) holder).name.setText(entity.getName());
-            ((SwitchAdapter.DemoViewHolder) holder).id.setText(entity.getUserId().toString());
+            ((SwitchAdapter.DemoViewHolder) holder).id.setText("ID"+entity.getUserId().toString());
             Glide.with(mContext).load(entity.getUsersrc()).into(((SwitchAdapter.DemoViewHolder)holder).userima);
             if(entity.getState()==1){
                 Glide.with(mContext).load(R.drawable.qmui_icon_checkmark).into(((DemoViewHolder)holder).type);

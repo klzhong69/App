@@ -6,7 +6,6 @@ public class Paimai {
     private String userima;
     private String name;
     private String grade;
-    private String type;
 
     public String getId() {
         return id;
@@ -40,19 +39,10 @@ public class Paimai {
         this.grade = grade;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public Paimai(String id, String userima, String name, String grade, String type) {
+    public Paimai(String id, String userima, String name, String grade) {
         this.id = id;
         this.userima = userima;
         this.name = name;
         this.grade = grade;
-        this.type = type;
     }
 }

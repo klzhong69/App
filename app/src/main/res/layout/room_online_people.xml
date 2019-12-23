@@ -69,7 +69,7 @@
             android:layout_marginTop="@dimen/dp_35"
             android:layout_marginEnd="@dimen/dp_20"
             android:layout_marginBottom="@dimen/dp_35"
-            android:background="@drawable/txtframeblue"
+            android:background="@drawable/txtframeblues"
             android:paddingStart="@dimen/dp_10"
             android:paddingTop="@dimen/dp_2"
             android:paddingEnd="@dimen/dp_10"

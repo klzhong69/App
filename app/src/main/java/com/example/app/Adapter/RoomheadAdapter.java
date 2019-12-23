@@ -46,8 +46,8 @@ public class RoomheadAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         Roomhead entity = mEntityList.get(position);
-        if(entity.getUsersrc().equals("")){
-            Glide.with(mContext).load(entity.getUsersrc()).into(((RoomheadAdapter.DemoViewHolder)holder).mUserSrc);
+        if(entity.getUsersrc().equals("0")){
+            Glide.with(mContext).load(R.drawable.add2).into(((RoomheadAdapter.DemoViewHolder)holder).mUserSrc);
         }else{
             Glide.with(mContext).load(entity.getUsersrc()).into(((RoomheadAdapter.DemoViewHolder)holder).mUserSrc);
         }
@@ -62,10 +62,10 @@ public class RoomheadAdapter extends RecyclerView.Adapter {
             Glide.with(mContext).load(entity.getIma()).into(((RoomheadAdapter.DemoViewHolder)holder).mIma);
         }
 
-        if(entity.getIma().equals("")){
+        if(entity.getMsima().equals("")){
             ((DemoViewHolder)holder).msIma.setVisibility(View.GONE);
         }else{
-            Glide.with(mContext).load(entity.getIma()).into(((RoomheadAdapter.DemoViewHolder)holder).msIma);
+            Glide.with(mContext).load(entity.getMsima()).into(((RoomheadAdapter.DemoViewHolder)holder).msIma);
         }
 
         if (mOnItemClickListener != null)

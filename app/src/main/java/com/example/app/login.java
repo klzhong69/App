@@ -3,13 +3,11 @@ package com.example.app;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -65,6 +63,12 @@ public class login extends AppCompatActivity {
     ImageView imageView135;
     @BindView(R.id.imageView136)
     ImageView imageView136;
+    @BindView(R.id.fold)
+    ImageView fold;
+    @BindView(R.id.title)
+    TextView title;
+    @BindView(R.id.subtitle)
+    TextView subtitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,38 +76,49 @@ public class login extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         Initialization.setupDatabaseUser(this);
+        title.setText("登陆");
+        subtitle.setText("");
         try {
             List<User> list = mUserDao.queryAll();
-            for(int i=0;i<list.size();i++){
-                System.out.println("所有的"+list.get(i).getId());
+            for (int i = 0; i < list.size(); i++) {
+                System.out.println("所有的" + list.get(i).getId());
             }
 
-        } catch (Exception ignored){}
+        } catch (Exception ignored) {
+        }
 
     }
 
-    @OnClick({R.id.but, R.id.textView156, R.id.textView157, R.id.textView159, R.id.imageView132, R.id.imageView133, R.id.imageView134})
+    @OnClick({R.id.fold,R.id.but, R.id.textView156, R.id.textView157, R.id.textView159, R.id.imageView132, R.id.imageView133, R.id.imageView134})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.fold:
+                this.finish();
+                overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
+                break;
             case R.id.but:
                 SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
-                sp.edit().putLong("userid", 1L).apply();
+                sp.edit().putLong("userid", 2L).apply();
                 Intent intent1 = new Intent(login.this, MainActivity.class);
                 intent1.putExtra("id", 4);
                 startActivity(intent1);
+                overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
                 break;
             case R.id.textView156:
                 Intent intent2 = new Intent(login.this, forget_password.class);
                 startActivity(intent2);
+                overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
                 break;
             case R.id.textView157:
                 Intent intent3 = new Intent(login.this, registered.class);
                 startActivity(intent3);
+                overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
                 break;
             case R.id.textView159:
                 Intent intent4 = new Intent(login.this, agreement.class);
                 intent4.putExtra("about", 0);
                 startActivity(intent4);
+                overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
                 break;
             case R.id.imageView132:
                 break;

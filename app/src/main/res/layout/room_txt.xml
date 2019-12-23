@@ -6,6 +6,7 @@
 
 
 
+
     <ImageView
         android:id="@+id/imageView42"
         android:layout_width="wrap_content"
@@ -39,9 +40,21 @@
         android:id="@+id/textView35"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/textView34"
+        android:layout_alignParentTop="true"
         android:layout_marginStart="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_10"
         android:layout_toEndOf="@+id/textView34"
+        android:gravity="center_vertical"
+        android:text="TextView"
+        android:textColor="#ffffff" />
+
+    <TextView
+        android:id="@+id/textView36"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView35"
+        android:layout_alignStart="@+id/textView35"
+        android:layout_marginTop="@dimen/dp_10"
         android:gravity="center_vertical"
         android:text="TextView"
         android:textColor="#ffffff" />

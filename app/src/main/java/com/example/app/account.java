@@ -102,10 +102,12 @@ public class account extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.fold:
                 this.finish();
+                overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
                 break;
             case R.id.subtitle:
                 Intent intent2 = new Intent(account.this, add_account.class);
                 startActivity(intent2);
+                overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
                 break;
         }
     }

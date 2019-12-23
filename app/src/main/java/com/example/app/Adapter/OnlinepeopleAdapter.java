@@ -58,11 +58,13 @@ public class OnlinepeopleAdapter extends RecyclerView.Adapter {
         ((OnlinepeopleAdapter.DemoViewHolder) holder).name.setText(entity.getName());
 
         if(entity.getType().equals("0")){
-            ((OnlinepeopleAdapter.DemoViewHolder) holder).type.setVisibility(View.GONE);
+            ((OnlinepeopleAdapter.DemoViewHolder) holder).type.setText("房主");
+        }else if(entity.getType().equals("1")){
+            ((OnlinepeopleAdapter.DemoViewHolder) holder).type.setText("管理员");
+        }else if(entity.getType().equals("2")) {
+            ((OnlinepeopleAdapter.DemoViewHolder) holder).type.setText("家族");
         }else{
-            ((OnlinepeopleAdapter.DemoViewHolder) holder).type.setText(entity.getType());
-
-
+            ((OnlinepeopleAdapter.DemoViewHolder) holder).type.setVisibility(View.GONE);
         }
         Glide.with(mContext).load(entity.getUserima()).into(((OnlinepeopleAdapter.DemoViewHolder)holder).userima);
         Glide.with(mContext).load(R.drawable.l3).into(((OnlinepeopleAdapter.DemoViewHolder)holder).grade);

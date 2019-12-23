@@ -55,11 +55,15 @@ public class MusicViewAdapter extends RecyclerView.Adapter {
         ((MusicViewAdapter.DemoViewHolder) holder).name.setText(entity.getName());
         ((MusicViewAdapter.DemoViewHolder) holder).time.setText(entity.getTime());
        if(entity.getType().equals("0")){
+           ((MusicViewAdapter.DemoViewHolder) holder).type.setVisibility(View.GONE);
+           ((MusicViewAdapter.DemoViewHolder) holder).txt.setText(entity.getTxt());
+        }else if(entity.getType().equals("2")){
+           ((MusicViewAdapter.DemoViewHolder) holder).txt.setVisibility(View.GONE);
             Glide.with(mContext).load(R.drawable.dk_ic_play_disable).into(((DemoViewHolder)holder).type);
         }else{
-            Glide.with(mContext).load(R.drawable.dk_ic_pause_disable).into(((DemoViewHolder)holder).type);
-        }
-        Glide.with(mContext).load(entity.getIma()).into(((MusicViewAdapter.DemoViewHolder) holder).imagesrc);
+           ((MusicViewAdapter.DemoViewHolder) holder).txt.setVisibility(View.GONE);
+           Glide.with(mContext).load(R.drawable.dk_ic_pause_disable).into(((DemoViewHolder)holder).type);
+       }
         if (mOnItemClickListener != null) {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -90,14 +94,14 @@ public class MusicViewAdapter extends RecyclerView.Adapter {
         private TextView name;
         private TextView time;
         private ImageView type;
-        private ImageView imagesrc;
+        private TextView txt;
 
         public DemoViewHolder(View itemView) {
             super(itemView);
             name = (TextView) itemView.findViewById(R.id.textView66);
             time = (TextView) itemView.findViewById(R.id.textView67);
             type = (ImageView) itemView.findViewById(R.id.imageView67);
-            imagesrc = (ImageView) itemView.findViewById(R.id.imageView18);
+            txt = (TextView) itemView.findViewById(R.id.textView68);
         }
     }
 

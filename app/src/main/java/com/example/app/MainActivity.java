@@ -25,14 +25,18 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.ashokvarma.bottomnavigation.TextBadgeItem;
 import com.example.app.utils.Translation;
 import com.lzf.easyfloat.EasyFloat;
+import com.lzf.easyfloat.anim.AppFloatDefaultAnimator;
+import com.lzf.easyfloat.anim.DefaultAnimator;
 import com.lzf.easyfloat.enums.ShowPattern;
 import com.lzf.easyfloat.enums.SidePattern;
 import com.lzf.easyfloat.interfaces.OnFloatCallbacks;
@@ -42,6 +46,7 @@ import com.lzf.easyfloat.permission.PermissionUtils;
 import org.greenrobot.greendao.annotation.NotNull;
 
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -84,7 +89,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
      * 判断是否需要检测，防止不停的弹框
      */
     private boolean isNeedCheck = true;
-    public static EasyFloat easy;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,7 +100,68 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
         init();
         setDefaultFragment();
 
-        EasyFloat.with(this).setLayout(R.layout.floating).show();
+
+        EasyFloat.with(this)
+                // 设置浮窗xml布局文件，并可设置详细信息
+                .setLayout(R.layout.floating)
+                // 设置浮窗显示类型，默认只在当前Activity显示，可选一直显示、仅前台显示
+                .setShowPattern(ShowPattern.CURRENT_ACTIVITY)
+                // 设置吸附方式，共15种模式，详情参考SidePattern
+                .setSidePattern(SidePattern.RESULT_RIGHT)
+                // 设置浮窗的标签，用于区分多个浮窗
+                .setTag("testFloat")
+                // 设置浮窗是否可拖拽
+                .setDragEnable(true)
+                // 系统浮窗是否包含EditText，仅针对系统浮窗，默认不包含
+                .hasEditText(false)
+                // 设置浮窗固定坐标，ps：设置固定坐标，Gravity属性和offset属性将无效
+                .setLocation(0, 400)
+                // 设置浮窗的对齐方式和坐标偏移量
+                //.setGravity( 1, 400)
+                // 设置宽高是否充满父布局，直接在xml设置match_parent属性无效
+                .setMatchParent(false, false)
+                // 设置Activity浮窗的出入动画，可自定义，实现相应接口即可（策略模式），无需动画直接设置为null
+                .setAnimator(new DefaultAnimator())
+                // 设置系统浮窗的出入动画，使用同上
+                .setAppFloatAnimator(new AppFloatDefaultAnimator())
+                // 设置系统浮窗的不需要显示的页面
+                .setFilter()
+                // 浮窗的一些状态回调，如：创建结果、显示、隐藏、销毁、touchEvent、拖拽过程、拖拽结束。
+                .registerCallbacks(new OnFloatCallbacks() {
+                    @Override
+                    public void createdResult(boolean isCreated, @Nullable String msg, @Nullable View view) {
+                        Toast.makeText(MainActivity.this, "创建", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void show(@NotNull View view) {
+                        Toast.makeText(MainActivity.this, "显示", Toast.LENGTH_SHORT).show();
+
+                    }
+
+                    @Override
+                    public void hide(@NotNull View view) {
+                    }
+
+                    @Override
+                    public void dismiss() {
+                        Toast.makeText(MainActivity.this, "销毁", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void touchEvent(@NotNull View view, @NotNull MotionEvent event) {
+                    }
+
+                    @Override
+                    public void drag(@NotNull View view, @NotNull MotionEvent event) {
+                    }
+
+                    @Override
+                    public void dragEnd(@NotNull View view) {
+
+                    }
+                }).show();
+
 
        /* // 关闭浮窗
         dismiss(activity: Activity? = null, floatTag: String? = null)
@@ -115,6 +182,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
         getFloatView(activity: Activity? = null, tag: String? = null)*/
 
     }
+
 
     private void init() {
         bottomNavigationBar = (BottomNavigationBar) findViewById(R.id.navbar1);
@@ -287,6 +355,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
             checkPermissions(needPermissions);
         }
     }
+
 
 
     /**

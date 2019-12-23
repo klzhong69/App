@@ -49,7 +49,13 @@ public interface OnItemClickListener {
         Package1 entity = mEntityList.get(position);
 
         ((Package1Adapter.DemoViewHolder)holder).mName.setText(entity.getName());
-        Glide.with(mContext).load(entity.getIma()).into(((Package1Adapter.DemoViewHolder)holder).mIma);
+        if(entity.getIma().equals("0")){
+            Glide.with(mContext).load(R.drawable.add1).into(((Package1Adapter.DemoViewHolder)holder).mIma);
+
+        }else{
+            Glide.with(mContext).load(entity.getIma()).into(((Package1Adapter.DemoViewHolder)holder).mIma);
+        }
+
 
         if (mOnItemClickListener != null)
         {

@@ -64,6 +64,7 @@ public class information extends AppCompatActivity {
         ButterKnife.bind(this);
         Initialization.setupDatabaseUser(this);
 
+
     }
 
 
@@ -93,7 +94,7 @@ public class information extends AppCompatActivity {
             case R.id.but:
                 User user = new User();
                 user.setUserId(1345078L);
-                user.setUsersrc("https://momeak.oss-cn-shenzhen.aliyuncs.com/h4.png");
+                user.setUsersrc("https://momeak.oss-cn-shenzhen.aliyuncs.com/h4.jpg");
                 user.setName(editText.getText().toString());
                 user.setState(0);
                 mUserDao.insert(user);

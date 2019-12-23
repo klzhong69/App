@@ -50,6 +50,7 @@ public class my_diamond extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.fold:
                 this.finish();
+                overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
                 break;
             case R.id.subtitle:
                 Intent intent1 = new Intent(my_diamond.this, operation_record.class);

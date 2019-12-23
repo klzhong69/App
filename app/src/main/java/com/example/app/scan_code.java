@@ -58,6 +58,7 @@ public class scan_code extends AppCompatActivity implements QRCodeView.Delegate 
         mZBarView.setType(BarcodeType.ALL, null); // 识别所有类型的码
         mZBarView.getScanBoxView().setOnlyDecodeScanBoxArea(true);
         mZBarView.startSpotAndShowRect(); // 显示扫描框，并开始识别
+
     }
 
     @Override
@@ -122,6 +123,7 @@ public class scan_code extends AppCompatActivity implements QRCodeView.Delegate 
         switch (view.getId()) {
             case R.id.fold:
                 this.finish();
+                overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
                 break;
             case R.id.subtitle:
                 break;

@@ -22,7 +22,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".system_information"></activity>
+        <activity android:name=".room_theme"></activity>
+        <activity android:name=".room_online" />
+        <activity android:name=".system_information" />
         <activity android:name=".scan_code" />
         <activity android:name=".search" />
         <activity android:name=".operation_record" />

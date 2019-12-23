@@ -37,6 +37,8 @@ public class operation_record extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_operation_record);
         ButterKnife.bind(this);
+        title.setText("操作记录");
+        subtitle.setText("");
         initData();
         //适配器
         RecordAdapter mAdapter = new RecordAdapter(this, mArrayList);
@@ -88,5 +90,6 @@ public class operation_record extends AppCompatActivity {
     @OnClick(R.id.fold)
     public void onViewClicked() {
         this.finish();
+        overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
     }
 }

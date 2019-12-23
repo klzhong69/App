@@ -2,10 +2,13 @@ package com.example.app;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -51,6 +54,8 @@ public class my_change_photo extends AppCompatActivity {
         imageView111.setVisibility(View.GONE);
         title.setText("换绑手机号");
         subtitle.setText("");
+        editText4.setText("");
+        editText5.setText("");
         if(butnum){
             editText4.setText("");
             editText4.setHint("请输入新的手机号");
@@ -71,18 +76,31 @@ public class my_change_photo extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.fold:
                 this.finish();
+                overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
                 break;
             case R.id.but:
-                if(butnum){
-                    this.finish();
+                if(editText4.getText().equals("")){
+                    if(editText5.getText().equals("")){
+                        if(butnum){
+                            this.finish();
+                        }else{
+                            this.finish();
+                            Intent intent2 = new Intent(my_change_photo.this, my_change_photo.class);
+                            intent2.putExtra("butnum",true);
+                            startActivity(intent2);
+                        }
+                    }else{
+                        Toast.makeText(my_change_photo.this, "请输入验证码", Toast.LENGTH_SHORT).show();
+                    }
+
                 }else{
-                    this.finish();
-                    Intent intent2 = new Intent(my_change_photo.this, my_change_photo.class);
-                    intent2.putExtra("butnum",true);
-                    startActivity(intent2);
+                    Toast.makeText(my_change_photo.this, "请输入手机号", Toast.LENGTH_SHORT).show();
                 }
+
                 break;
             case R.id.textView150:
+                textView150.setVisibility(View.GONE);
+                imageView111.setVisibility(View.VISIBLE);
                 break;
             case R.id.imageView111:
                 break;

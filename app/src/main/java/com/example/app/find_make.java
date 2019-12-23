@@ -60,6 +60,7 @@ public class find_make extends AppCompatActivity {
     TextView textView7;
     private ArrayList<Findmake> mArrayList;
     private ArrayList<Findgift> mArrayLists;
+    private FindmakeAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,7 +108,7 @@ public class find_make extends AppCompatActivity {
 
     private void init() {
         //适配器
-        FindmakeAdapter mAdapter = new FindmakeAdapter(this, mArrayList);
+         mAdapter = new FindmakeAdapter(this, mArrayList);
         //设置适配器adapter
         recycler15.setAdapter(mAdapter);
 
@@ -187,7 +188,7 @@ public class find_make extends AppCompatActivity {
 
     private void initData() {
         mArrayList = new ArrayList<Findmake>();
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 4; i++) {
 
             Findmake i1 = new Findmake("https://momeak.oss-cn-shenzhen.aliyuncs.com/h3.jpg", "", "", "我是大大大", "我是大大大大");
             mArrayList.add(i1);
@@ -211,6 +212,7 @@ public class find_make extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.imageView40:
                 this.finish();
+                overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
                 break;
             case R.id.textView2:
                 initData();
@@ -237,9 +239,11 @@ public class find_make extends AppCompatActivity {
                 inits();
                 break;
             case R.id.but:
+                Findmake i1 = new Findmake("https://momeak.oss-cn-shenzhen.aliyuncs.com/h3.jpg", "", "", "我是大大大", editText.getText().toString());
+                mAdapter.addData(0,i1);
+                editText.setText("");
                 break;
         }
     }
-
 
 }

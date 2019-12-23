@@ -140,19 +140,19 @@ public class my_package extends AppCompatActivity {
         mDatas = new ArrayList<Package2>();
 
         for (int i = 0; i < 5; i++) {
-            Package1 i1 = new Package1("https://momeak.oss-cn-shenzhen.aliyuncs.com/dear1.png", "苗苗");
+            Package1 i1 = new Package1("https://momeak.oss-cn-shenzhen.aliyuncs.com/h2.jpg", "苗苗");
             mData.add(i1);
         }
 
-        Package1 i1 = new Package1("https://momeak.oss-cn-shenzhen.aliyuncs.com/dear2.png", "");
+        Package1 i1 = new Package1("0", "");
         mData.add(mData.size(), i1);
 
         for (int i = 0; i < 4; i++) {
-            Package2 i2 = new Package2("https://momeak.oss-cn-shenzhen.aliyuncs.com/dear1.png", "苗苗", "有效期:2019-12-30");
+            Package2 i2 = new Package2("https://momeak.oss-cn-shenzhen.aliyuncs.com/h3.jpg", "苗苗", "有效期:2019-12-30");
             mDatas.add(i2);
         }
 
-        Package2 i2 = new Package2("https://momeak.oss-cn-shenzhen.aliyuncs.com/dear2.png", "", "");
+        Package2 i2 = new Package2("0", "", "");
         mDatas.add(mDatas.size(), i2);
     }
 
@@ -161,6 +161,7 @@ public class my_package extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.fold:
                 this.finish();
+                overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
                 break;
             case R.id.title:
                 title.setText("我的包裹");

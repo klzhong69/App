@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -19,6 +20,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.app.Entity.Paimai;
+import com.example.app.Entity.Roomtxt;
 import com.example.app.Model.ChatModel;
 import com.example.app.Model.ChatRoomModel;
 import com.example.app.Model.GiftModel;
@@ -26,11 +29,9 @@ import com.example.app.Model.GiftheadModel;
 import com.example.app.Model.HoldModel;
 import com.example.app.Model.MessFriendsModel;
 import com.example.app.Model.MessModel;
-import com.example.app.Model.OnlineModel;
 import com.example.app.Model.PaimaiModel;
 import com.example.app.Sqlentity.Chat;
 import com.example.app.dao.mChatDao;
-import com.qmuiteam.qmui.layout.QMUIPriorityLinearLayout;
 import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
@@ -46,6 +47,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
@@ -76,8 +78,6 @@ public class chatroom extends AppCompatActivity {
     RecyclerView gridview;
     @BindView(R.id.recyclerview)
     RecyclerView recyclerview;
-    @BindView(R.id.relativeLayout)
-    RelativeLayout relativeLayout;
     @BindView(R.id.textView19)
     TextView textView19;
     @BindView(R.id.imageView96)
@@ -218,18 +218,6 @@ public class chatroom extends AppCompatActivity {
     RelativeLayout relativec5;
     @BindView(R.id.component5)
     RelativeLayout component5;
-    @BindView(R.id.recyclerbutc6)
-    RelativeLayout recyclerbutc6;
-    @BindView(R.id.imageViewc6)
-    ImageView imageViewc6;
-    @BindView(R.id.textView128)
-    TextView textView128;
-    @BindView(R.id.recyclerc6)
-    RecyclerView recyclerc6;
-    @BindView(R.id.relativec6)
-    RelativeLayout relativec6;
-    @BindView(R.id.component6)
-    RelativeLayout component6;
     @BindView(R.id.recyclerbutc7)
     RelativeLayout recyclerbutc7;
     @BindView(R.id.imageViewc7)
@@ -330,6 +318,14 @@ public class chatroom extends AppCompatActivity {
     RelativeLayout recyclerc8;
     @BindView(R.id.fold)
     ImageView fold;
+    @BindView(R.id.relativeLayout)
+    NestedScrollView relativeLayout;
+    @BindView(R.id.relativeLayout11)
+    RelativeLayout relativeLayout11;
+    @BindView(R.id.imageView12)
+    ImageView imageView12;
+    @BindView(R.id.textViewc7t)
+    TextView textViewc7t;
     private Bitmap bitmap;
     private Disposable disposable;
     private chatroom context;
@@ -341,6 +337,7 @@ public class chatroom extends AppCompatActivity {
     private long sendid;
     private String sendname;
     private String sendsrc;
+    private boolean bool=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -352,6 +349,17 @@ public class chatroom extends AppCompatActivity {
         ChatRoomModel.initData();
         ChatRoomModel.initrecycler(context, recyclerview);
         ChatRoomModel.initrecyclers(context, gridview);
+
+        relativeLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                relativeLayout.post(new Runnable() {
+                    public void run() {
+                        relativeLayout.fullScroll(View.FOCUS_DOWN);
+                    }
+                });
+            }
+        });
 
        /* Observable.interval(1, TimeUnit.SECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -391,7 +399,7 @@ public class chatroom extends AppCompatActivity {
         }
     }
 
-    @OnClick({R.id.fold,R.id.imageView98,R.id.imageView101, R.id.imageView102, R.id.imageView103, R.id.imageView99, R.id.textView124, R.id.imageView104, R.id.imageView105, R.id.butc1, R.id.butc10, R.id.imageView4, R.id.imageViewc1t, R.id.imageViewc2t, R.id.imageViewc5s, R.id.recyclerbutc1, R.id.recyclerbutc2, R.id.recyclerbutc3, R.id.recyclerbutc4, R.id.recyclerbutc5, R.id.recyclerbutc6, R.id.recyclerbutc7, R.id.recyclerbutc8, R.id.recyclerbutc8s, R.id.recyclerbutc9, R.id.recyclerbutc10, R.id.recyclerbutc10s, R.id.imageViewc1, R.id.imageViewc2, R.id.imageViewc3, R.id.imageViewc4, R.id.imageViewc5, R.id.imageViewc6, R.id.imageViewc7, R.id.recyclerc8, R.id.imageViewc9, R.id.recyclerc10})
+    @OnClick({R.id.fold, R.id.imageView98, R.id.imageView101, R.id.imageView102, R.id.imageView103, R.id.imageView99, R.id.textView124, R.id.imageView104, R.id.imageView105, R.id.textViewc7t, R.id.butc1, R.id.butc10, R.id.imageView4, R.id.imageViewc1t, R.id.imageViewc2t, R.id.imageViewc5s, R.id.recyclerbutc1, R.id.recyclerbutc2, R.id.recyclerbutc3, R.id.recyclerbutc4, R.id.recyclerbutc5, R.id.recyclerbutc7, R.id.recyclerbutc8, R.id.recyclerbutc8s, R.id.recyclerbutc9, R.id.recyclerbutc10, R.id.recyclerbutc10s, R.id.imageViewc1, R.id.imageViewc2, R.id.imageViewc3, R.id.imageViewc4, R.id.imageViewc5, R.id.imageViewc7, R.id.recyclerc8, R.id.imageViewc9, R.id.recyclerc10})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.imageView101:
@@ -425,7 +433,7 @@ public class chatroom extends AppCompatActivity {
             case R.id.imageView102:
                 component5.setVisibility(View.VISIBLE);
                 MessModel.initData();
-                MessModel.initrecycler(context, recyclerc5, 1);
+                MessModel.initrecycler(context, context, recyclerc5, 1);
                 break;
             case R.id.imageView103:
                 component7.setVisibility(View.VISIBLE);
@@ -433,6 +441,35 @@ public class chatroom extends AppCompatActivity {
                 PaimaiModel.initrecycler(context, recyclerc7);
                 break;
             case R.id.imageView104:
+                Observable.just(1, 1, 1, 1, 1, 1, 1, 1, 1, 2)
+                        .subscribe(new Observer<Integer>() {
+                            @Override
+                            public void onSubscribe(Disposable d) {
+
+                            }
+
+                            @Override
+                            public void onNext(Integer integer) {
+                                if (integer == 1) {
+                                    Roomtxt entity = new Roomtxt("进入房间打赏", "周润发", "https://momeak.oss-cn-shenzhen.aliyuncs.com/l3.png", "");
+                                    ChatRoomModel.Add(recyclerview, entity);
+                                } else if (integer == 2) {
+                                    Roomtxt entity = new Roomtxt("【房间公告】", "", "", "---为了更好的体验请大家文明用语---");
+                                    ChatRoomModel.Add(recyclerview, entity);
+                                }
+
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+
+                            }
+
+                            @Override
+                            public void onComplete() {
+
+                            }
+                        });
 
                 break;
             case R.id.imageView105:
@@ -444,13 +481,27 @@ public class chatroom extends AppCompatActivity {
                 break;
             case R.id.imageView99:
             case R.id.textView124:
-                component6.setVisibility(View.VISIBLE);
-                OnlineModel.initData();
-                OnlineModel.initrecycler(context, recyclerc6);
+                Intent intent2 = new Intent(chatroom.this, room_online.class);
+                startActivity(intent2);
+                overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
                 break;
 
             case R.id.imageView98:
                 component10.setVisibility(View.VISIBLE);
+                break;
+
+            case R.id.textViewc7t:
+               if(bool){
+                   int i =  PaimaiModel.get("123456");
+                   PaimaiModel.Remove(i);
+                   textViewc7t.setText("申请排麦");
+                   bool=false;
+               }else{
+                   Paimai i1 = new Paimai("123456", "https://momeak.oss-cn-shenzhen.aliyuncs.com/h3.jpg", "胡楠我", "");
+                   PaimaiModel.Add(recyclerc7,i1);
+                   textViewc7t.setText("取消排麦");
+                   bool=true;
+               }
                 break;
 
             case R.id.imageViewc1t:
@@ -498,9 +549,6 @@ public class chatroom extends AppCompatActivity {
             case R.id.recyclerbutc5:
                 component5.setVisibility(View.GONE);
                 break;
-            case R.id.recyclerbutc6:
-                component6.setVisibility(View.GONE);
-                break;
             case R.id.recyclerbutc7:
                 component7.setVisibility(View.GONE);
                 break;
@@ -520,7 +568,6 @@ public class chatroom extends AppCompatActivity {
             case R.id.imageViewc3:
             case R.id.imageViewc4:
             case R.id.imageViewc5:
-            case R.id.imageViewc6:
             case R.id.imageViewc7:
             case R.id.recyclerc8:
             case R.id.imageViewc9:
@@ -552,13 +599,13 @@ public class chatroom extends AppCompatActivity {
                     case 5:
                         component5.setVisibility(View.GONE);
                         component1.setVisibility(View.VISIBLE);
-                        conver = 0L;
+                        conver = 1L;
                         sendid = 0L;
                         sendname = "苗苗";
                         sendsrc = "https://momeak.oss-cn-shenzhen.aliyuncs.com/h2.jpg";
                         textViewc1.setText(sendname);
                         ChatModel.set(scrollmessc1, editTextc1, LayoutInflater.from(chatroom.this), 1);
-                        ChatModel.initData(layoutc1,conver);
+                        ChatModel.initData(layoutc1, conver);
                         break;
                     case 6:
                         break;
@@ -584,7 +631,6 @@ public class chatroom extends AppCompatActivity {
             public void onComplete() {
 
             }
-
 
 
         };
@@ -724,6 +770,7 @@ public class chatroom extends AppCompatActivity {
                         dialog.dismiss();
                         if (position == 0) {
                             chatroom.this.finish();
+                            overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
                         } else if (position == 1) {
 
                         }

@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -22,8 +23,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-
-import static com.example.app.cofig.DateUtil.getNowDate;
 
 public class My extends Fragment {
     Unbinder unbinder;
@@ -123,6 +122,8 @@ public class My extends Fragment {
     ImageView imageView85;
     @BindView(R.id.textView88)
     TextView textView88;
+    @BindView(R.id.recycler18)
+    RelativeLayout recycler18;
 
 
     @Nullable
@@ -143,12 +144,21 @@ public class My extends Fragment {
                 textView94.setVisibility(View.VISIBLE);
                 textView95.setVisibility(View.VISIBLE);
                 imageView37.setVisibility(View.VISIBLE);
+            } else {
+                imageView36.setVisibility(View.VISIBLE);
+                textView11.setVisibility(View.VISIBLE);
+                textView75.setVisibility(View.VISIBLE);
+                textView92.setVisibility(View.GONE);
+                textView93.setVisibility(View.GONE);
+                textView94.setVisibility(View.GONE);
+                textView95.setVisibility(View.GONE);
+                imageView37.setVisibility(View.GONE);
             }
 
         } catch (Exception ignored) {
         }
 
-        System.out.println("Date:"+ DateUtil.getCurrentTimeYMDHMS());
+        System.out.println("Date:" + DateUtil.getCurrentTimeYMDHMS());
         return view;
     }
 
@@ -177,19 +187,22 @@ public class My extends Fragment {
     }
 
 
-    @OnClick({R.id.imageView28, R.id.textView92, R.id.textView93, R.id.textView94, R.id.textView95, R.id.imageView68, R.id.imageView36, R.id.textView11, R.id.imageView37, R.id.textView76, R.id.textView77, R.id.textView78, R.id.textView79, R.id.textView80, R.id.textView81, R.id.textView82, R.id.textView83, R.id.imageView73, R.id.textView84, R.id.imageView74, R.id.textView85, R.id.imageView41, R.id.imageView76, R.id.textView87, R.id.imageView77, R.id.imageView43, R.id.imageView80, R.id.textView89, R.id.imageView81, R.id.imageView44, R.id.imageView82, R.id.textView90, R.id.imageView83, R.id.imageView45, R.id.imageView84, R.id.textView91, R.id.imageView85})
+    @OnClick({R.id.recycler18,R.id.imageView28, R.id.textView92, R.id.textView93, R.id.textView94, R.id.textView95, R.id.imageView68, R.id.imageView36, R.id.textView11, R.id.imageView37, R.id.textView76, R.id.textView77, R.id.textView78, R.id.textView79, R.id.textView80, R.id.textView81, R.id.textView82, R.id.textView83, R.id.imageView73, R.id.textView84, R.id.imageView74, R.id.textView85, R.id.imageView41, R.id.imageView76, R.id.textView87, R.id.imageView77, R.id.imageView43, R.id.imageView80, R.id.textView89, R.id.imageView81, R.id.imageView44, R.id.imageView82, R.id.textView90, R.id.imageView83, R.id.imageView45, R.id.imageView84, R.id.textView91, R.id.imageView85})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.imageView68:
                 Intent intent = new Intent(getContext(), my_set.class);
                 startActivity(intent);
+                getActivity().overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
                 break;
             case R.id.imageView36:
             case R.id.textView11:
                 //登陆
                 Intent intent1 = new Intent(getContext(), login.class);
                 startActivity(intent1);
+                getActivity().overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
                 break;
+            case R.id.recycler18:
             case R.id.imageView28:
             case R.id.textView92:
             case R.id.textView93:
@@ -198,37 +211,44 @@ public class My extends Fragment {
             case R.id.imageView37:
                 Intent intent2 = new Intent(getContext(), modify_information.class);
                 startActivity(intent2);
+                getActivity().overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
                 //认证
                 break;
             case R.id.textView76:
             case R.id.textView77:
                 Intent intent3 = new Intent(getContext(), my_music.class);
                 startActivity(intent3);
+                getActivity().overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
                 break;
             case R.id.textView78:
             case R.id.textView79:
                 Intent intent4 = new Intent(getContext(), my_package.class);
                 startActivity(intent4);
+                getActivity().overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
                 break;
             case R.id.textView80:
             case R.id.textView81:
                 Intent intent5 = new Intent(getContext(), my_favorite.class);
                 startActivity(intent5);
+                getActivity().overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
                 break;
             case R.id.textView82:
             case R.id.textView83:
                 Intent intent6 = new Intent(getContext(), my_footprint.class);
                 startActivity(intent6);
+                getActivity().overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
                 break;
             case R.id.imageView73:
             case R.id.textView84:
                 Intent intent7 = new Intent(getContext(), chatroom.class);
                 startActivity(intent7);
+                getActivity().overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
                 break;
             case R.id.imageView74:
             case R.id.textView85:
                 Intent intent8 = new Intent(getContext(), homepage.class);
                 startActivity(intent8);
+                getActivity().overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
                 break;
             case R.id.imageView41:
             case R.id.imageView76:
@@ -236,6 +256,7 @@ public class My extends Fragment {
             case R.id.imageView77:
                 Intent intent9 = new Intent(getContext(), my_wallet.class);
                 startActivity(intent9);
+                getActivity().overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
                 break;
             case R.id.imageView43:
             case R.id.imageView80:
@@ -243,6 +264,7 @@ public class My extends Fragment {
             case R.id.imageView81:
                 Intent intent11 = new Intent(getContext(), my_music.class);
                 startActivity(intent11);
+                getActivity().overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
                 break;
             case R.id.imageView44:
             case R.id.imageView82:
@@ -250,6 +272,7 @@ public class My extends Fragment {
             case R.id.imageView83:
                 Intent intent12 = new Intent(getContext(), my_grade.class);
                 startActivity(intent12);
+                getActivity().overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
                 break;
             case R.id.imageView45:
             case R.id.imageView84:
@@ -257,6 +280,7 @@ public class My extends Fragment {
             case R.id.imageView85:
                 Intent intent13 = new Intent(getContext(), my_realname.class);
                 startActivity(intent13);
+                getActivity().overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
                 break;
         }
     }

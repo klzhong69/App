@@ -63,6 +63,16 @@
         android:background="@color/qmui_config_color_white">
 
 
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerc7"
             android:layout_width="match_parent"
@@ -70,6 +80,20 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true" />
+        </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
     </RelativeLayout>
+
+    <TextView
+        android:id="@+id/textViewc7t"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/recyclerbutc7"
+        android:layout_alignBottom="@+id/imageViewc7"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="@dimen/dp_20"
+        android:gravity="center"
+        android:text="申请排麦"
+        android:textColor="#FFFFFF" />
 
 </RelativeLayout>

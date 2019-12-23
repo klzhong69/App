@@ -52,16 +52,9 @@ public class PaimaiAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         Paimai entity = mEntityList.get(position);
 
-        ((PaimaiAdapter.DemoViewHolder) holder).id.setText(entity.getId());
+        ((PaimaiAdapter.DemoViewHolder) holder).id.setText("ID"+entity.getId());
         ((PaimaiAdapter.DemoViewHolder) holder).name.setText(entity.getName());
 
-        if(entity.getType().equals("0")){
-            ((PaimaiAdapter.DemoViewHolder) holder).type.setVisibility(View.GONE);
-        }else{
-            ((PaimaiAdapter.DemoViewHolder) holder).type.setVisibility(View.VISIBLE);
-
-
-        }
         Glide.with(mContext).load(entity.getUserima()).into(((PaimaiAdapter.DemoViewHolder)holder).userima);
         Glide.with(mContext).load(R.drawable.l3).into(((PaimaiAdapter.DemoViewHolder)holder).grade);
         if (mOnItemClickListener != null) {
@@ -95,7 +88,7 @@ public class PaimaiAdapter extends RecyclerView.Adapter {
         private ImageView userima;
         private TextView name;
         private ImageView grade;
-        private Button type;
+
 
         DemoViewHolder(View itemView) {
             super(itemView);
@@ -103,7 +96,6 @@ public class PaimaiAdapter extends RecyclerView.Adapter {
             name = (TextView) itemView.findViewById(R.id.textView66);
             grade = (ImageView) itemView.findViewById(R.id.imageView66);
             userima = (ImageView) itemView.findViewById(R.id.imageView18);
-            type = (Button) itemView.findViewById(R.id.but);
 
         }
     }

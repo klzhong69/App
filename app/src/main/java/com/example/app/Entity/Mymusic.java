@@ -2,18 +2,10 @@ package com.example.app.Entity;
 
 public class Mymusic {
 
-    private String ima;
     private String name;
     private String time;
     private String type;
-
-    public String getIma() {
-        return ima;
-    }
-
-    public void setIma(String ima) {
-        this.ima = ima;
-    }
+    private String txt;
 
     public String getName() {
         return name;
@@ -39,10 +31,19 @@ public class Mymusic {
         this.type = type;
     }
 
-    public Mymusic(String ima , String name, String time, String type) {
-        this.ima = ima;
+    public String getTxt() {
+        return txt;
+    }
+
+    public void setTxt(String txt) {
+        this.txt = txt;
+    }
+
+
+    public Mymusic(String name, String time, String type, String txt) {
         this.name = name;
         this.time = time;
         this.type = type;
+        this.txt = txt;
     }
 }

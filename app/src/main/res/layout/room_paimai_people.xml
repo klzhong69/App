@@ -59,29 +59,6 @@
             android:text="ID2634589"
             android:textSize="@dimen/sp_16" />
 
-        <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
-            android:id="@+id/but"
-            android:layout_width="@dimen/dp_100"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginTop="@dimen/dp_30"
-            android:layout_marginEnd="@dimen/dp_20"
-            android:layout_marginBottom="@dimen/dp_30"
-            android:clickable="true"
-            android:gravity="center"
-            android:padding="@dimen/dp_10"
-            android:text="取消排麦"
-            android:textColor="@color/qmui_config_color_white"
-            android:textSize="@dimen/sp_16"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:qmui_backgroundColor="@color/tabbarcolor"
-            app:qmui_borderWidth="0px"
-            app:qmui_radius="@dimen/dp_30" />
-
     </RelativeLayout>
 
 

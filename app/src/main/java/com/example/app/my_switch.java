@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.app.Adapter.SwitchAdapter;
 import com.example.app.Sqlentity.User;
+import com.example.app.cofig.Initialization;
 import com.example.app.dao.mUserDao;
 
 import java.util.ArrayList;
@@ -48,6 +49,7 @@ public class my_switch extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_switch);
         ButterKnife.bind(this);
+        Initialization.setupDatabaseUser(this);
         title.setText("切换账户");
         subtitle.setText("");
 
@@ -77,7 +79,7 @@ public class my_switch extends AppCompatActivity {
                 SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
                 sp.edit().putLong("userid", user.get(position).getId()).apply();
                 Intent intent = new Intent(my_switch.this, MainActivity.class);
-                intent.putExtra("id", 3);
+                intent.putExtra("id", 4);
                 startActivity(intent);
             }
 
@@ -101,11 +103,11 @@ public class my_switch extends AppCompatActivity {
         user = new ArrayList<User>();
         try {
             user  = mUserDao.queryBuilder();
-
             for (int i = 0; i < user.size(); i++) {
-                if (!user.get(i).getId().equals(userid)) {
-                    user.get(i).setState(0);
+                if (user.get(i).getId().equals(userid)) {
+                    user.get(i).setState(1);
                 }
+                System.out.println("ID"+user.get(i).getId());
             }
         }catch (Exception ignored){}
     }
@@ -114,12 +116,14 @@ public class my_switch extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.fold:
                 this.finish();
+                overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
                 break;
             case R.id.imageView44:
             case R.id.textView37:
             case R.id.imageView114:
                 Intent intent1 = new Intent(this, login.class);
                 startActivity(intent1);
+                overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
                 break;
         }
     }

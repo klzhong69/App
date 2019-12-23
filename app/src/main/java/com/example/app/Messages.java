@@ -72,7 +72,7 @@ public class Messages extends Fragment {
         Context context = getContext();
         Initialization.setupDatabaseConver(getContext());
         MessModel.initData();
-        MessModel.initrecycler(context, recycler10,0);
+        MessModel.initrecycler(context, getActivity(),recycler10,0);
 
         return view;
 
@@ -105,6 +105,7 @@ public class Messages extends Fragment {
             case R.id.imageView78:
                 Intent intent2 = new Intent(getContext(), mess_friends.class);
                 startActivity(intent2);
+                getActivity().overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
                 /*Conver conver = new Conver();
                 Long couver = 123456L+234567L;
                 conver.setConversations(couver);
@@ -126,6 +127,7 @@ public class Messages extends Fragment {
             case R.id.rect_views:
                 Intent intent3 = new Intent(getContext(), system_information.class);
                 startActivity(intent3);
+                getActivity().overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
                 break;
         }
     }

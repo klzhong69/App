@@ -32,7 +32,7 @@ public class RecordAdapter extends RecyclerView.Adapter {
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.my_switch, parent, false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.my_operation_record, parent, false);
         return new RecordAdapter.DemoViewHolder(view);
     }
 
@@ -54,10 +54,10 @@ public class RecordAdapter extends RecyclerView.Adapter {
         ((RecordAdapter.DemoViewHolder) holder).amount.setText(entity.getAmount());
         ((RecordAdapter.DemoViewHolder) holder).date.setText(entity.getDate());
         if(entity.getType()==0){
-            Glide.with(mContext).load(R.drawable.qmui_icon_checkmark).into(((RecordAdapter.DemoViewHolder)holder).ima);
+            Glide.with(mContext).load(R.drawable.less).into(((RecordAdapter.DemoViewHolder)holder).ima);
             ((RecordAdapter.DemoViewHolder) holder).txt.setText("提现");
         }else{
-            Glide.with(mContext).load(R.drawable.qmui_icon_checkmark).into(((RecordAdapter.DemoViewHolder)holder).ima);
+            Glide.with(mContext).load(R.drawable.adds).into(((RecordAdapter.DemoViewHolder)holder).ima);
             ((RecordAdapter.DemoViewHolder) holder).txt.setText("充值");
         }
         if (mOnItemClickListener != null) {

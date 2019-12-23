@@ -77,13 +77,12 @@ public class Find extends Fragment {
             public void onItemClick(View view, int position) {
                 Intent intent = new Intent(getContext(), chatroom.class);
                 startActivity(intent);
+                getActivity().overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
 
             }
 
             @Override
             public void onItemLongClick(View view, int position) {
-
-                Toast.makeText(getContext(), position + " Long click", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -99,8 +98,7 @@ public class Find extends Fragment {
     private void initData() {
         mArrayList = new ArrayList<Findlist>();
         for (int i = 0; i < 8; i++) {
-            int a = i + 1;
-            Findlist i1 = new Findlist("PHakamile Sikali", "Muria Moura", "2345", "https://momeak.oss-cn-shenzhen.aliyuncs.com/h" + a + ".jpg", "", "热门", "CV", "德国");
+            Findlist i1 = new Findlist("PHakamile Sikali", "Muria Moura", "2345", "https://momeak.oss-cn-shenzhen.aliyuncs.com/h4.jpg", "", "热门", "CV", "德国");
             mArrayList.add(i1);
         }
 
@@ -137,5 +135,6 @@ public class Find extends Fragment {
     public void onViewClicked() {
         Intent intent2 = new Intent(getContext(), find_make.class);
         startActivity(intent2);
+        getActivity().overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
     }
 }

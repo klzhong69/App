@@ -153,7 +153,7 @@ public class homepage extends AppCompatActivity {
         setContentView(R.layout.activity_homepage);
         ButterKnife.bind(this);
         title.setText("个人主页");
-        subtitle.setText("");
+        subtitle.setText("修改信息");
         Context context = this;
         HomePageModel.initData();
         HomePageModel.initrecycler(context, recycler);
@@ -165,9 +165,10 @@ public class homepage extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.fold:
                 this.finish();
+                overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
                 break;
             case R.id.subtitle:
-                subtitle.setText("修改信息");
+
                 break;
         }
     }

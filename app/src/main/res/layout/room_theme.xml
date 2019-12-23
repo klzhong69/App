@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="@dimen/dp_180" android:layout_height="@dimen/dp_340">
+
+
+    <ImageView
+        android:id="@+id/imageView151"
+        android:layout_width="@dimen/dp_140"
+        android:layout_height="@dimen/dp_250"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_20"
+        app:srcCompat="@drawable/roomback" />
+
+    <TextView
+        android:id="@+id/textView128"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/imageView151"
+        android:layout_alignEnd="@+id/imageView151"
+        android:layout_alignBottom="@+id/imageView151"
+        android:background="@color/dk_color_999999"
+        android:gravity="center"
+        android:padding="@dimen/dp_5"
+        android:text="默认主题" />
+
+    <TextView
+        android:id="@+id/textView186"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageView151"
+        android:layout_alignStart="@+id/imageView151"
+        android:layout_alignEnd="@+id/imageView151"
+        android:layout_marginTop="@dimen/dp_10"
+        android:gravity="center"
+        android:padding="@dimen/dp_5"
+        android:text="免费" />
+
+    <RadioButton
+        android:id="@+id/radioButton"
+        android:layout_width="@dimen/dp_40"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/imageView151"
+        android:layout_alignEnd="@+id/imageView151"
+        android:layout_marginTop="@dimen/dp_m_10"
+        android:layout_marginEnd="@dimen/dp_m_10"
+        android:button="@drawable/radio"
+        android:checked="true" />
+
+</RelativeLayout>

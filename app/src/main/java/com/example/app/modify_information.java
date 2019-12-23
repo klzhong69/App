@@ -1,5 +1,6 @@
 package com.example.app;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.app.Adapter.GridViewAdapter;
+import com.example.app.Adapter.ListLeaderAdapter;
 import com.example.app.Adapter.ModifyViewAdapter;
 import com.example.app.Entity.Modify;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
@@ -79,7 +81,7 @@ public class modify_information extends AppCompatActivity {
 
         recycler2.setItemAnimator(new DefaultItemAnimator());
 
-        mAdapters.setOnItemClickListener(new GridViewAdapter.OnItemClickListener() {
+        mAdapters.setOnItemClickListener(new ModifyViewAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 int del = mData.size() - 1;
@@ -109,11 +111,11 @@ public class modify_information extends AppCompatActivity {
     private void init() {
         mData = new ArrayList<Modify>();
         for (int i = 0; i < 12; i++) {
-            Modify i1 = new Modify("https://momeak.oss-cn-shenzhen.aliyuncs.com/dear1.png");
+            Modify i1 = new Modify("https://momeak.oss-cn-shenzhen.aliyuncs.com/h2.jpg");
             mData.add(i1);
         }
 
-        Modify i1 = new Modify("https://momeak.oss-cn-shenzhen.aliyuncs.com/dear2.png");
+        Modify i1 = new Modify("0");
         mData.add(mData.size(), i1);
 
 
@@ -124,6 +126,7 @@ public class modify_information extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.fold:
                 this.finish();
+                overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
                 break;
             case R.id.title:
                 title.setText("修改信息");

@@ -142,6 +142,7 @@ public class chat extends AppCompatActivity {
                 break;
             case R.id.fold:
                 this.finish();
+                overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
                 break;
         }
     }

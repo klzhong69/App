@@ -18,11 +18,12 @@ import java.util.List;
 public class ModifyViewAdapter extends RecyclerView.Adapter {
     private Context mContext;
     private List<Modify> mEntityList;
-    private GridViewAdapter.OnItemClickListener mOnItemClickListener;
+    private ModifyViewAdapter.OnItemClickListener mOnItemClickListener;
     public ModifyViewAdapter(Context context, List<Modify> entityList){
         this.mContext = context;
         this.mEntityList = entityList;
     }
+
 
 
     @NonNull
@@ -32,7 +33,12 @@ public class ModifyViewAdapter extends RecyclerView.Adapter {
         return new ModifyViewAdapter.DemoViewHolder(view);
     }
 
-    public void setOnItemClickListener(GridViewAdapter.OnItemClickListener onItemClickListener) {
+    public interface OnItemClickListener {
+        void onItemClick(View view, int position);
+        void onItemLongClick(View view, int position);
+    }
+
+    public void setOnItemClickListener(ModifyViewAdapter.OnItemClickListener onItemClickListener) {
         mOnItemClickListener = onItemClickListener;
     }
 
@@ -41,7 +47,12 @@ public class ModifyViewAdapter extends RecyclerView.Adapter {
         Modify entity = mEntityList.get(position);
 
 
-        Glide.with(mContext).load(entity.getImagesrc()).into(((ModifyViewAdapter.DemoViewHolder)holder).mIma);
+        if(entity.getImagesrc().equals("0")){
+            Glide.with(mContext).load(R.drawable.add3).into(((ModifyViewAdapter.DemoViewHolder)holder).mIma);
+        }else{
+            Glide.with(mContext).load(entity.getImagesrc()).into(((ModifyViewAdapter.DemoViewHolder)holder).mIma);
+        }
+
 
         if (mOnItemClickListener != null)
         {

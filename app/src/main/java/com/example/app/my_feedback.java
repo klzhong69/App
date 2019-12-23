@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -49,6 +50,8 @@ public class my_feedback extends AppCompatActivity {
         ButterKnife.bind(this);
         title.setText("反馈意见");
         subtitle.setText("");
+        editText.setText("");
+        editText3.setText("");
     }
 
     @OnClick({R.id.fold, R.id.imageView113, R.id.but})
@@ -56,10 +59,20 @@ public class my_feedback extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.fold:
                 this.finish();
+                overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
                 break;
             case R.id.imageView113:
                 break;
             case R.id.but:
+                if(editText.getText().equals("")){
+                    if(editText3.getText().equals("")){
+                        Toast.makeText(my_feedback.this, "提交成功", Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(my_feedback.this, "请输入意见", Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+                    Toast.makeText(my_feedback.this, "请输入手机号", Toast.LENGTH_SHORT).show();
+                }
                 break;
         }
     }

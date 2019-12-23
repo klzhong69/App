@@ -1,6 +1,8 @@
 package com.example.app;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -84,6 +86,7 @@ public class my_set extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.fold:
                 this.finish();
+                overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
                 break;
             case R.id.imageView119:
             case R.id.textView137:
@@ -128,6 +131,12 @@ public class my_set extends AppCompatActivity {
                 startActivity(intent6);
                 break;
             case R.id.but:
+                SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
+                sp.edit().putLong("userid", 0).apply();
+                Intent intent7 = new Intent(my_set.this, MainActivity.class);
+                intent7.putExtra("id",4);
+                startActivity(intent7);
+                overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
                 break;
         }
     }
