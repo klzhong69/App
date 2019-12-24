@@ -32,6 +32,7 @@ import com.example.app.Model.MessModel;
 import com.example.app.Model.PaimaiModel;
 import com.example.app.Sqlentity.Chat;
 import com.example.app.dao.mChatDao;
+import com.lzf.easyfloat.EasyFloat;
 import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
@@ -43,11 +44,13 @@ import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
@@ -337,7 +340,7 @@ public class chatroom extends AppCompatActivity {
     private long sendid;
     private String sendname;
     private String sendsrc;
-    private boolean bool=false;
+    private boolean bool = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -491,17 +494,17 @@ public class chatroom extends AppCompatActivity {
                 break;
 
             case R.id.textViewc7t:
-               if(bool){
-                   int i =  PaimaiModel.get("123456");
-                   PaimaiModel.Remove(i);
-                   textViewc7t.setText("申请排麦");
-                   bool=false;
-               }else{
-                   Paimai i1 = new Paimai("123456", "https://momeak.oss-cn-shenzhen.aliyuncs.com/h3.jpg", "胡楠我", "");
-                   PaimaiModel.Add(recyclerc7,i1);
-                   textViewc7t.setText("取消排麦");
-                   bool=true;
-               }
+                if (bool) {
+                    int i = PaimaiModel.get("123456");
+                    PaimaiModel.Remove(i);
+                    textViewc7t.setText("申请排麦");
+                    bool = false;
+                } else {
+                    Paimai i1 = new Paimai("123456", "https://momeak.oss-cn-shenzhen.aliyuncs.com/h3.jpg", "胡楠我", "");
+                    PaimaiModel.Add(recyclerc7, i1);
+                    textViewc7t.setText("取消排麦");
+                    bool = true;
+                }
                 break;
 
             case R.id.imageViewc1t:
@@ -588,6 +591,9 @@ public class chatroom extends AppCompatActivity {
             @Override
             public void onNext(Integer integer) {
                 switch (integer) {
+                    case 0:
+                        chatroom.this.finish();
+                        break;
                     case 1:
                         break;
                     case 2:
@@ -749,6 +755,7 @@ public class chatroom extends AppCompatActivity {
 
             }
         };
+
     }
 
     private void showSimpleBottomSheetList(boolean gravityCenter,
@@ -770,8 +777,16 @@ public class chatroom extends AppCompatActivity {
                         dialog.dismiss();
                         if (position == 0) {
                             chatroom.this.finish();
-                            overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
-                        } else if (position == 1) {
+                        } else {
+                            Intent intent2 = new Intent(chatroom.this, MainActivity.class);
+                            startActivity(intent2);
+                            Observable<Integer> observable = Observable.defer(new Callable<ObservableSource<? extends Integer>>() {
+                                @Override
+                                public ObservableSource<? extends Integer> call() throws Exception {
+                                    return Observable.just(0);
+                                }
+                            });
+                            observable.subscribe(MainActivity.observer);
 
                         }
                     }
@@ -826,6 +841,13 @@ public class chatroom extends AppCompatActivity {
                 }).build().show();
 
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        showSimpleBottomSheetList(
+                true, true, false, "您确定要离开房间吗？",
+                2, true, false);
     }
 
 }

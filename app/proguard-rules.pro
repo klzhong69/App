@@ -22,3 +22,4 @@
 -keep class io.agora.**{*;}
 -keep class com.squareup.wire.** { *; }
 -keep class com.opensource.svgaplayer.proto.** { *; }
+-keep class com.lzf.easyfloat.** {*;}

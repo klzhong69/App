@@ -1,9 +1,27 @@
 package com.example.app.Entity;
 
+import android.app.Activity;
 import android.app.Application;
+import android.content.Intent;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.Toast;
+
+import androidx.annotation.Nullable;
 
 import com.didichuxing.doraemonkit.DoraemonKit;
+import com.example.app.MainActivity;
+import com.example.app.R;
+import com.example.app.chatroom;
 import com.lzf.easyfloat.EasyFloat;
+import com.lzf.easyfloat.anim.AppFloatDefaultAnimator;
+import com.lzf.easyfloat.anim.DefaultAnimator;
+import com.lzf.easyfloat.enums.ShowPattern;
+import com.lzf.easyfloat.enums.SidePattern;
+import com.lzf.easyfloat.interfaces.OnFloatCallbacks;
+import com.lzf.easyfloat.interfaces.OnPermissionResult;
+import com.lzf.easyfloat.permission.PermissionUtils;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheEntity;
 import com.lzy.okgo.cache.CacheMode;
@@ -11,6 +29,8 @@ import com.lzy.okgo.cookie.CookieJarImpl;
 import com.lzy.okgo.cookie.store.DBCookieStore;
 import com.lzy.okgo.https.HttpsUtils;
 import com.lzy.okgo.interceptor.HttpLoggingInterceptor;
+
+import org.greenrobot.greendao.annotation.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -58,7 +78,7 @@ public class MyApp extends Application {
         super.onCreate();
         //DoraemonKit.install(this);//测试
         OkGo.getInstance().init(this);//网络请求
-        EasyFloat.init(this);//悬浮窗
+        EasyFloat.init(this,true);//悬浮窗
         initOkGo();
 
         setScore(0); //初始化全局变量
@@ -108,5 +128,6 @@ public class MyApp extends Application {
                 .setCacheTime(CacheEntity.CACHE_NEVER_EXPIRE)   //全局统一缓存时间，默认永不过期，可以不传
                 .setRetryCount(3);                 //全局统一超时重连次数，默认为三次，那么最差的情况会请求4次(一次原始请求，三次重连请求)，不需要可以设置为0
     }
+
 
 }

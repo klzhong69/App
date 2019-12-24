@@ -2,12 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/dp_700">
+    android:layout_height="wrap_content">
 
 
     <com.lijiankun24.shadowlayout.ShadowLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:layout_gravity="center_horizontal"
         app:shadowColor="#44000000"
         app:shadowDx="0dp"
@@ -19,10 +21,10 @@
             android:id="@+id/imageViewi1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/textViewi10"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
             android:src="@color/qmui_config_color_white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -33,10 +35,10 @@
             android:id="@+id/textViewi1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/imageViewi1"
-            android:layout_alignTop="@+id/imageViewi1"
-            android:layout_marginStart="@dimen/sp_20"
-            android:layout_marginTop="@dimen/sp_20"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_20"
             android:text="《点歌》生命歌手集"
             android:textColor="#000000"
             android:textSize="@dimen/sp_25" />
@@ -46,7 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_above="@+id/textViewi7"
-            android:layout_alignEnd="@+id/imageViewi1"
+            android:layout_alignParentEnd="true"
             android:layout_marginEnd="@dimen/dp_20"
             android:layout_marginBottom="@dimen/dp_10"
             android:text="ID2456889"
@@ -58,7 +60,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/textViewi1"
             android:layout_alignStart="@+id/textViewi1"
-            android:layout_marginTop="@dimen/sp_10"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="@dimen/dp_10"
             android:text="爱乐粉丝团"
             android:textSize="@dimen/sp_20" />
 
@@ -66,9 +69,9 @@
             android:id="@+id/textViewi4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/textViewi3"
-            android:layout_alignBottom="@+id/textViewi3"
+            android:layout_below="@+id/textViewi1"
             android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_10"
             android:layout_toEndOf="@+id/textViewi3"
             android:background="@drawable/label"
             android:gravity="center"
@@ -132,9 +135,10 @@
             android:id="@+id/textViewi7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/imageViewi1"
-            android:layout_alignBottom="@+id/textViewi6"
+            android:layout_alignBottom="@+id/textViewi4"
+            android:layout_alignParentEnd="true"
             android:layout_marginEnd="@dimen/dp_20"
+            android:layout_marginBottom="-1dp"
             android:text="2345"
             android:textSize="@dimen/sp_18" />
 
@@ -152,72 +156,75 @@
 
         <com.qmuiteam.qmui.widget.QMUIRadiusImageView
             android:id="@+id/imageViewi3"
-            android:layout_width="@dimen/dp_480"
-            android:layout_height="@dimen/dp_480"
-            android:layout_below="@+id/textViewi3"
-            android:layout_alignStart="@+id/imageViewi1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imageViewi2"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
             android:layout_marginStart="@dimen/dp_20"
-            android:layout_marginTop="@dimen/dp_40"
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_marginEnd="@dimen/dp_20"
             android:scaleType="centerCrop"
             android:src="@drawable/s1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:qmui_border_width="0dp"
-            app:qmui_corner_radius="@dimen/dp_20" />
+            app:qmui_corner_radius="@dimen/dp_10" />
 
         <com.qmuiteam.qmui.widget.QMUIRadiusImageView
             android:id="@+id/imageViewi4"
-            android:layout_width="312dp"
-            android:layout_height="100dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignStart="@+id/imageViewi5"
-            android:layout_alignTop="@+id/textViewi11"
-            android:layout_alignEnd="@+id/textViewi10"
-            android:layout_alignBottom="@+id/textViewi10"
-            android:layout_marginStart="@dimen/dp_m_20"
-            android:layout_marginTop="@dimen/dp_m_10"
+            android:layout_alignTop="@+id/imageViewi5"
+            android:layout_alignEnd="@+id/textViewi11"
+            android:layout_alignBottom="@+id/imageViewi5"
+            android:layout_marginStart="@dimen/dp_m_10"
+            android:layout_marginTop="@dimen/dp_m_5"
             android:layout_marginEnd="@dimen/dp_m_20"
-            android:layout_marginBottom="@dimen/dp_m_10"
+            android:layout_marginBottom="@dimen/dp_m_5"
             android:src="#44000000"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:qmui_border_width="0dp"
             app:qmui_corner_radius="@dimen/dp_30" />
 
+
         <TextView
             android:id="@+id/textViewi9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/textViewi10"
-            android:layout_alignStart="@+id/textViewi10"
-            android:layout_alignEnd="@+id/textViewi10"
-            android:layout_marginBottom="@dimen/dp_10"
+            android:layout_below="@+id/imageViewi3"
+            android:layout_alignStart="@+id/imageViewi3"
+            android:layout_alignEnd="@+id/imageViewi3"
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_marginEnd="@dimen/dp_50"
             android:text="==《而福利社区点歌台》=="
-            android:textColor="#ffffff"
+            android:textColor="#000000"
             android:textSize="@dimen/sp_20" />
 
         <TextView
             android:id="@+id/textViewi10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/imageViewi3"
-            android:layout_alignEnd="@+id/imageViewi3"
-            android:layout_alignBottom="@+id/imageViewi3"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="@dimen/dp_20"
-            android:layout_marginBottom="@dimen/dp_10"
+            android:layout_below="@+id/textViewi9"
+            android:layout_alignStart="@+id/textViewi9"
+            android:layout_alignEnd="@+id/textViewi9"
+            android:layout_marginTop="@dimen/dp_10"
+            android:paddingBottom="@dimen/dp_20"
             android:text="我做了这么多改变，只为了我心中不变"
-            android:textColor="#ffffff"
-            android:textSize="@dimen/sp_16" />
-
+            android:textColor="#0a0a0a"
+            android:textSize="@dimen/sp_18" />
 
         <com.qmuiteam.qmui.widget.QMUIRadiusImageView
             android:id="@+id/imageViewi5"
             android:layout_width="@dimen/dp_60"
             android:layout_height="@dimen/dp_60"
-            android:layout_above="@+id/textViewi9"
             android:layout_alignStart="@+id/imageViewi3"
+            android:layout_alignTop="@+id/imageViewi3"
             android:layout_marginStart="@dimen/dp_20"
-            android:layout_marginBottom="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_marginBottom="@dimen/dp_20"
             android:src="@drawable/h4"
             app:layout_constraintEnd_toEndOf="parent"
             app:qmui_border_width="0dp"
@@ -227,6 +234,7 @@
             android:id="@+id/textViewi11"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/imageViewi5"
             android:layout_alignBottom="@+id/imageViewi5"
             android:layout_marginStart="@dimen/dp_10"
             android:layout_toEndOf="@+id/imageViewi5"
@@ -239,9 +247,9 @@
             android:layout_width="@dimen/dp_120"
             android:layout_height="@dimen/dp_40"
             android:layout_alignStart="@+id/imageViewi3"
-            android:layout_alignTop="@+id/imageViewi3"
+            android:layout_alignBottom="@+id/imageViewi3"
             android:layout_marginStart="@dimen/dp_20"
-            android:layout_marginTop="@dimen/dp_20"
+            android:layout_marginBottom="@dimen/dp_10"
             android:src="#44000000"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -272,5 +280,7 @@
             android:text="黄金房间"
             android:textColor="#ffffff"
             android:textSize="@dimen/sp_16" />
+
+
     </com.lijiankun24.shadowlayout.ShadowLayout>
 </RelativeLayout>

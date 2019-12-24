@@ -1,7 +1,9 @@
 package com.example.app;
 
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -13,17 +15,27 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.app.Adapter.GridViewAdapter;
 import com.example.app.Adapter.ListLeaderAdapter;
 import com.example.app.Adapter.ModifyViewAdapter;
 import com.example.app.Entity.Modify;
+import com.example.app.Model.ChatModel;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
+import com.wildma.pictureselector.PictureSelector;
 
 import java.util.ArrayList;
+import java.util.concurrent.Callable;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 
 public class modify_information extends AppCompatActivity {
 
@@ -59,6 +71,9 @@ public class modify_information extends AppCompatActivity {
     private ArrayList<Modify> mData;
     private ModifyViewAdapter mAdapters;
     private GridLayoutManager mLayoutManager;
+    public static Observer<Integer> observer;
+    private int in;
+    private String picturePath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +101,10 @@ public class modify_information extends AppCompatActivity {
             public void onItemClick(View view, int position) {
                 int del = mData.size() - 1;
                 if (position == del) {
-                    Toast.makeText(modify_information.this, "添加图片", Toast.LENGTH_SHORT).show();
+                    in = 1;
+                    PictureSelector
+                            .create(modify_information.this, PictureSelector.SELECT_REQUEST_CODE)
+                            .selectPicture(true, 200, 200, 1, 1);
                 } else {
                     Toast.makeText(modify_information.this, position + " click", Toast.LENGTH_SHORT).show();
                 }
@@ -121,19 +139,79 @@ public class modify_information extends AppCompatActivity {
 
     }
 
-    @OnClick({R.id.fold, R.id.title, R.id.subtitle})
+    @OnClick({R.id.fold, R.id.imageView2, R.id.subtitle})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fold:
                 this.finish();
                 overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
                 break;
-            case R.id.title:
-                title.setText("修改信息");
+            case R.id.imageView2:
+                in=0;
+                PictureSelector
+                        .create(modify_information.this, PictureSelector.SELECT_REQUEST_CODE)
+                        .selectPicture(true, 200, 200, 1, 1);
                 break;
-            case R.id.subtitle:
-                subtitle.setText("");
-                break;
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        observer = new Observer<Integer>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(Integer integer) {
+                switch (integer) {
+                    case 0:
+                        RequestOptions requestOptions = RequestOptions
+                                .circleCropTransform()
+                                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                                .skipMemoryCache(true);
+                        Glide.with(modify_information.this).load(picturePath).apply(requestOptions).into(imageView2);
+                        break;
+
+                    case 1:
+                        break;
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+
+
+        };
+
+    }
+        @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        /*结果回调*/
+        if (requestCode == PictureSelector.SELECT_REQUEST_CODE) {
+            if (data != null) {
+                 picturePath = data.getStringExtra(PictureSelector.PICTURE_PATH);
+               // imageView2.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+
+                Observable<Integer> observable = Observable.defer(new Callable<ObservableSource<? extends Integer>>() {
+                    @Override
+                    public ObservableSource<? extends Integer> call() throws Exception {
+                        return Observable.just(in);
+                    }
+                });
+                observable.subscribe(observer);
+
+            }
         }
     }
 }

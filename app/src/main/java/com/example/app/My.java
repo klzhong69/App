@@ -124,6 +124,7 @@ public class My extends Fragment {
     TextView textView88;
     @BindView(R.id.recycler18)
     RelativeLayout recycler18;
+    private long userid;
 
 
     @Nullable
@@ -134,7 +135,7 @@ public class My extends Fragment {
         textView88.setText("未认证");
         try {
             SharedPreferences sp = Objects.requireNonNull(getContext()).getSharedPreferences("User", Context.MODE_PRIVATE);
-            long userid = sp.getLong("userid", 0);
+             userid = sp.getLong("userid", 0);
             if (userid != 0) {
                 imageView36.setVisibility(View.GONE);
                 textView11.setVisibility(View.GONE);
@@ -209,9 +210,11 @@ public class My extends Fragment {
             case R.id.textView94:
             case R.id.textView95:
             case R.id.imageView37:
-                Intent intent2 = new Intent(getContext(), modify_information.class);
-                startActivity(intent2);
-                getActivity().overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
+                if(userid!=0){
+                    Intent intent2 = new Intent(getContext(), modify_information.class);
+                    startActivity(intent2);
+                    getActivity().overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
+                }
                 //认证
                 break;
             case R.id.textView76:

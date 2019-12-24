@@ -1,6 +1,5 @@
 package com.example.app;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -23,9 +22,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -33,28 +30,29 @@ import android.widget.Toast;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.ashokvarma.bottomnavigation.TextBadgeItem;
-import com.example.app.utils.Translation;
 import com.lzf.easyfloat.EasyFloat;
 import com.lzf.easyfloat.anim.AppFloatDefaultAnimator;
 import com.lzf.easyfloat.anim.DefaultAnimator;
 import com.lzf.easyfloat.enums.ShowPattern;
 import com.lzf.easyfloat.enums.SidePattern;
-import com.lzf.easyfloat.interfaces.OnFloatCallbacks;
+import com.lzf.easyfloat.interfaces.OnInvokeView;
 import com.lzf.easyfloat.interfaces.OnPermissionResult;
 import com.lzf.easyfloat.permission.PermissionUtils;
 
-import org.greenrobot.greendao.annotation.NotNull;
-
-import java.time.Instant;
-import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.concurrent.Callable;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationBar.OnTabSelectedListener {
 
 
+    private static final String TAG = "12";
     @BindView(R.id.navbar1)
     BottomNavigationBar navbar1;
     @BindView(R.id.layout1)
@@ -85,11 +83,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
     };
 
     private static final int PERMISSION_REQUESTED = 0;
+    private static final int REQUEST_CODE = 1;
     /**
      * 判断是否需要检测，防止不停的弹框
      */
     private boolean isNeedCheck = true;
-
+    public static Observer<Integer> observer;
 
 
     @Override
@@ -100,86 +99,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
         init();
         setDefaultFragment();
 
-
-        EasyFloat.with(this)
-                // 设置浮窗xml布局文件，并可设置详细信息
-                .setLayout(R.layout.floating)
-                // 设置浮窗显示类型，默认只在当前Activity显示，可选一直显示、仅前台显示
-                .setShowPattern(ShowPattern.CURRENT_ACTIVITY)
-                // 设置吸附方式，共15种模式，详情参考SidePattern
-                .setSidePattern(SidePattern.RESULT_RIGHT)
-                // 设置浮窗的标签，用于区分多个浮窗
-                .setTag("testFloat")
-                // 设置浮窗是否可拖拽
-                .setDragEnable(true)
-                // 系统浮窗是否包含EditText，仅针对系统浮窗，默认不包含
-                .hasEditText(false)
-                // 设置浮窗固定坐标，ps：设置固定坐标，Gravity属性和offset属性将无效
-                .setLocation(0, 400)
-                // 设置浮窗的对齐方式和坐标偏移量
-                //.setGravity( 1, 400)
-                // 设置宽高是否充满父布局，直接在xml设置match_parent属性无效
-                .setMatchParent(false, false)
-                // 设置Activity浮窗的出入动画，可自定义，实现相应接口即可（策略模式），无需动画直接设置为null
-                .setAnimator(new DefaultAnimator())
-                // 设置系统浮窗的出入动画，使用同上
-                .setAppFloatAnimator(new AppFloatDefaultAnimator())
-                // 设置系统浮窗的不需要显示的页面
-                .setFilter()
-                // 浮窗的一些状态回调，如：创建结果、显示、隐藏、销毁、touchEvent、拖拽过程、拖拽结束。
-                .registerCallbacks(new OnFloatCallbacks() {
-                    @Override
-                    public void createdResult(boolean isCreated, @Nullable String msg, @Nullable View view) {
-                        Toast.makeText(MainActivity.this, "创建", Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void show(@NotNull View view) {
-                        Toast.makeText(MainActivity.this, "显示", Toast.LENGTH_SHORT).show();
-
-                    }
-
-                    @Override
-                    public void hide(@NotNull View view) {
-                    }
-
-                    @Override
-                    public void dismiss() {
-                        Toast.makeText(MainActivity.this, "销毁", Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void touchEvent(@NotNull View view, @NotNull MotionEvent event) {
-                    }
-
-                    @Override
-                    public void drag(@NotNull View view, @NotNull MotionEvent event) {
-                    }
-
-                    @Override
-                    public void dragEnd(@NotNull View view) {
-
-                    }
-                }).show();
-
-
-       /* // 关闭浮窗
-        dismiss(activity: Activity? = null, floatTag: String? = null)
-
-        // 隐藏浮窗
-        hide(activity: Activity? = null, floatTag: String? = null)
-
-        // 显示浮窗
-        show(activity: Activity? = null, floatTag: String? = null)
-
-        // 设置是否可拖拽
-        setDragEnable(activity: Activity? = null, dragEnable: Boolean, floatTag: String? = null )
-
-        // 浮窗是否显示
-        isShow(activity: Activity? = null, floatTag: String? = null)
-
-        // 获取我们设置的浮窗View
-        getFloatView(activity: Activity? = null, tag: String? = null)*/
 
     }
 
@@ -259,8 +178,87 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
         int id = intent.getIntExtra("id", 0);
         bottomNavigationBar.setFirstSelectedPosition(id).initialise();
         onTabSelected(id);
+
     }
 
+    private void showAppFloat() {
+
+        EasyFloat.with(this)
+                // 设置浮窗xml布局文件，并可设置详细信息
+                .setLayout(R.layout.floating, new OnInvokeView() {
+                    @Override
+                    public void invoke(View view) {
+                        ImageView ima = view.findViewById(R.id.float_ima);
+                        ImageView del = view.findViewById(R.id.float_del);
+
+                        ima.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent(MainActivity.this, chatroom.class);
+                                startActivity(intent);
+                            }
+                        });
+
+                        del.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                EasyFloat.dismissAppFloat("testFloat");
+                                Observable<Integer> observable = Observable.defer(new Callable<ObservableSource<? extends Integer>>() {
+                                    @Override
+                                    public ObservableSource<? extends Integer> call() throws Exception {
+                                        return Observable.just(0);
+                                    }
+                                });
+                                observable.subscribe(chatroom.observer);
+                            }
+                        });
+                    }
+                })
+                .setShowPattern(ShowPattern.FOREGROUND)
+                .setSidePattern(SidePattern.RESULT_RIGHT)
+                .setGravity(Gravity.CENTER)
+                // 设置浮窗的标签，用于区分多个浮窗
+                .setTag("testFloat")
+                // 设置浮窗是否可拖拽
+                .setDragEnable(true)
+                // 系统浮窗是否包含EditText，仅针对系统浮窗，默认不包含
+                .hasEditText(false)
+                // 设置浮窗固定坐标，ps：设置固定坐标，Gravity属性和offset属性将无效
+                //.setLocation(0, 400)
+                // 设置宽高是否充满父布局，直接在xml设置match_parent属性无效
+                .setMatchParent(false, false)
+                // 设置Activity浮窗的出入动画，可自定义，实现相应接口即可（策略模式），无需动画直接设置为null
+                .setAnimator(new DefaultAnimator())
+                // 设置系统浮窗的出入动画，使用同上
+                .setAppFloatAnimator(new AppFloatDefaultAnimator())
+                // 设置系统浮窗的不需要显示的页面
+                .setFilter(chatroom.class).show();
+
+
+    }
+
+    /**
+     * 检测浮窗权限是否开启，若没有给与申请提示框（非必须，申请依旧是EasyFloat内部内保进行）
+     */
+    private void checkPermission() {
+        if (PermissionUtils.checkPermission(this)) {
+            showAppFloat();
+        } else {
+            requestPermission();
+        }
+    }
+
+    /**
+     * 主动申请浮窗权限
+     */
+    private void requestPermission() {
+        PermissionUtils.requestPermission(this, new OnPermissionResult() {
+            @Override
+            public void permissionResult(boolean b) {
+                System.out.println("状态："+EasyFloat.appFloatIsShow("testFloat"));
+            }
+        });
+    }
 
     @Override
     public void onTabSelected(int position) {
@@ -354,8 +352,33 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
         if (isNeedCheck) {
             checkPermissions(needPermissions);
         }
-    }
+        observer = new Observer<Integer>() {
+            @Override
+            public void onSubscribe(Disposable d) {
 
+            }
+
+            @Override
+            public void onNext(Integer integer) {
+                if (!EasyFloat.appFloatIsShow("testFloat")) {
+                    checkPermission();
+                }
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+
+
+        };
+    }
 
 
     /**
@@ -374,6 +397,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
                     needRequestPermissonList.toArray(new String[needRequestPermissonList.size()]),
                     PERMISSION_REQUESTED);
         }
+        /*if(FloatWindowManager.checkPermission(MainActivity.this)) {
+            EasyFloat.show();
+        }else{
+            FloatWindowManager.applyPermission(MainActivity.this);
+        }*/
+
     }
 
 

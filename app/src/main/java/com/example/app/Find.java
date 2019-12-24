@@ -77,7 +77,6 @@ public class Find extends Fragment {
             public void onItemClick(View view, int position) {
                 Intent intent = new Intent(getContext(), chatroom.class);
                 startActivity(intent);
-                getActivity().overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
 
             }
 
