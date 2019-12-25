@@ -12,6 +12,7 @@ public class Initialization {
     private static DaoSession daoSessionaccount;
     private static DaoSession daoSessioncaht;
     private static DaoSession daoSessionconver;
+    private static DaoSession daoSessionmusic;
 
     /**
      * 配置数据库
@@ -82,5 +83,23 @@ public class Initialization {
 
     public static DaoSession getDaoInstantConver() {
         return daoSessionconver;
+    }
+
+
+    /**
+     * 配置数据库
+     */
+    public static void setupDatabaseMusic(Context context) {
+        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(context, "Conver.db", null);
+        //获取可写数据库
+        SQLiteDatabase db = helper.getWritableDatabase();
+        //获取数据库对象
+        DaoMaster daoMaster = new DaoMaster(db);
+        //获取Dao对象管理者
+        daoSessionmusic = daoMaster.newSession();
+    }
+
+    public static DaoSession getDaoInstantMusic() {
+        return daoSessionmusic;
     }
 }

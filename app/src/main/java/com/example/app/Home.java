@@ -126,8 +126,6 @@ public class Home extends Fragment {
     ImageView imageView153;
     @BindView(R.id.imageView154)
     ImageView imageView154;
-    @BindView(R.id.scroll)
-    RelativeLayout scroll;
     private Unbinder unbinder;
     private AnimatorSet mRightOutSet; // 右出动画
     private AnimatorSet mLeftInSet; // 左入动画

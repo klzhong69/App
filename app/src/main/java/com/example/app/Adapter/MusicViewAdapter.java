@@ -57,7 +57,7 @@ public class MusicViewAdapter extends RecyclerView.Adapter {
        if(entity.getType().equals("0")){
            ((MusicViewAdapter.DemoViewHolder) holder).type.setVisibility(View.GONE);
            ((MusicViewAdapter.DemoViewHolder) holder).txt.setText(entity.getTxt());
-        }else if(entity.getType().equals("2")){
+        }else if(entity.getType().equals("1")){
            ((MusicViewAdapter.DemoViewHolder) holder).txt.setVisibility(View.GONE);
             Glide.with(mContext).load(R.drawable.dk_ic_play_disable).into(((DemoViewHolder)holder).type);
         }else{

@@ -121,7 +121,7 @@ public class my_music_search extends AppCompatActivity {
     private void initData() {
         mArrayList = new ArrayList<Mymusic>();
         for (int i = 0; i < 10; i++) {
-            Mymusic i1 = new Mymusic( "星坠-天空的幻想-林晓夜", "03.00", "2","100%");
+            Mymusic i1 = new Mymusic( (long) i,"星坠-天空的幻想-林晓夜", "03.00", "2","100%","");
             mArrayList.add(i1);
         }
     }

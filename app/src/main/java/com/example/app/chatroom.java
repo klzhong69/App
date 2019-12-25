@@ -1,8 +1,10 @@
 package com.example.app;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.net.http.HttpResponseCache;
 import android.os.Bundle;
+import android.text.TextPaint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -17,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -32,7 +35,11 @@ import com.example.app.Model.MessModel;
 import com.example.app.Model.PaimaiModel;
 import com.example.app.Sqlentity.Chat;
 import com.example.app.dao.mChatDao;
-import com.lzf.easyfloat.EasyFloat;
+import com.opensource.svgaplayer.SVGADrawable;
+import com.opensource.svgaplayer.SVGADynamicEntity;
+import com.opensource.svgaplayer.SVGAImageView;
+import com.opensource.svgaplayer.SVGAParser;
+import com.opensource.svgaplayer.SVGAVideoEntity;
 import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
@@ -41,6 +48,11 @@ import com.qmuiteam.qmui.widget.popup.QMUIPopups;
 import com.qmuiteam.qmui.widget.popup.QMUIQuickAction;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
+import org.greenrobot.greendao.annotation.NotNull;
+
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -329,7 +341,20 @@ public class chatroom extends AppCompatActivity {
     ImageView imageView12;
     @BindView(R.id.textViewc7t)
     TextView textViewc7t;
-    private Bitmap bitmap;
+    @BindView(R.id.svga1)
+    SVGAImageView svga1;
+    @BindView(R.id.svga2)
+    SVGAImageView svga2;
+    @BindView(R.id.svga3)
+    SVGAImageView svga3;
+    @BindView(R.id.svga)
+    ConstraintLayout svga;
+    @BindView(R.id.gift1)
+    SVGAImageView gift1;
+    @BindView(R.id.gift2)
+    SVGAImageView gift2;
+    @BindView(R.id.gift)
+    ConstraintLayout gift;
     private Disposable disposable;
     private chatroom context;
     public static Observer<Integer> observer;
@@ -341,6 +366,8 @@ public class chatroom extends AppCompatActivity {
     private String sendname;
     private String sendsrc;
     private boolean bool = false;
+    public static Observer<Integer> observersvga;
+    private SVGAParser parser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -389,6 +416,36 @@ public class chatroom extends AppCompatActivity {
 
                     }
                 });*/
+
+        String[] array = {"https://github.com/yyued/SVGA-Samples/blob/master/posche.svga?raw=true", "https://github.com/yyued/SVGA-Samples/blob/master/kingset.svga?raw=true"};
+        Observable.fromArray(array)
+                .subscribe(new Observer<String>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(String integer) {
+                        File cacheDir = new File(getCacheDir(), integer);
+                        try {
+                            HttpResponseCache tart = HttpResponseCache.install(cacheDir, 1024 * 1024 * 128);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+
 
     }
 
@@ -444,7 +501,7 @@ public class chatroom extends AppCompatActivity {
                 PaimaiModel.initrecycler(context, recyclerc7);
                 break;
             case R.id.imageView104:
-                Observable.just(1, 1, 1, 1, 1, 1, 1, 1, 1, 2)
+                Observable.just(1, 2)
                         .subscribe(new Observer<Integer>() {
                             @Override
                             public void onSubscribe(Disposable d) {
@@ -473,7 +530,6 @@ public class chatroom extends AppCompatActivity {
 
                             }
                         });
-
                 break;
             case R.id.imageView105:
                 component4.setVisibility(View.VISIBLE);
@@ -490,7 +546,13 @@ public class chatroom extends AppCompatActivity {
                 break;
 
             case R.id.imageView98:
-                component10.setVisibility(View.VISIBLE);
+                Observable<Integer> observable = Observable.defer(new Callable<ObservableSource<? extends Integer>>() {
+                    @Override
+                    public ObservableSource<? extends Integer> call() throws Exception {
+                        return Observable.just(0, 2);
+                    }
+                });
+                observable.subscribe(observersvga);
                 break;
 
             case R.id.textViewc7t:
@@ -756,6 +818,44 @@ public class chatroom extends AppCompatActivity {
             }
         };
 
+
+        observersvga = new Observer<Integer>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(Integer integer) {
+                svga.setVisibility(View.VISIBLE);
+                switch (integer) {
+                    case 0:
+                        loadAnimation(svga1, 0, "https://github.com/yyued/SVGA-Samples/blob/master/posche.svga?raw=true", "", "", "", "");
+                        break;
+                    case 1:
+                        loadAnimation(svga2, 1, "https://github.com/yyued/SVGA-Samples/blob/master/kingset.svga?raw=true", "https://momeak.oss-cn-shenzhen.aliyuncs.com/h2.jpg", "99", "", "");
+                        break;
+                    case 2:
+                        loadAnimation(svga3, 1, "https://github.com/yyued/SVGA-Samples/blob/master/kingset.svga?raw=true", "https://momeak.oss-cn-shenzhen.aliyuncs.com/h2.jpg", "99", "Pony send Kitty flowers.", "banner");
+                        break;
+
+                }
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+
+
+        };
+
     }
 
     private void showSimpleBottomSheetList(boolean gravityCenter,
@@ -850,5 +950,57 @@ public class chatroom extends AppCompatActivity {
                 2, true, false);
     }
 
+
+    private void loadAnimation(SVGAImageView svga, int type, String url, String ima, String imaforkey, String txt, String txtforkey) {
+        // new URL needs try catch.
+        parser = new SVGAParser(this);
+        try {
+            switch (type) {
+                case 0:
+                    parser.decodeFromURL(new URL(url), new SVGAParser.ParseCompletion() {
+                        @Override
+                        public void onComplete(@NotNull SVGAVideoEntity videoItem) {
+                            SVGADrawable drawable = new SVGADrawable(videoItem);
+                            svga.setImageDrawable(drawable);
+                            svga.startAnimation();
+                        }
+
+                        @Override
+                        public void onError() {
+
+                        }
+                    });
+                    break;
+                case 1:
+                    parser.decodeFromURL(new URL(url), new SVGAParser.ParseCompletion() {
+                        @Override
+                        public void onComplete(@NotNull SVGAVideoEntity videoItem) {
+                            SVGADynamicEntity dynamicEntity = new SVGADynamicEntity();
+
+                            if (!ima.equals("")) {
+                                dynamicEntity.setDynamicImage(ima, imaforkey); // Here is the KEY implementation.
+                                TextPaint textPaint = new TextPaint();
+                                textPaint.setColor(Color.WHITE);
+                                textPaint.setTextSize(28);
+                                dynamicEntity.setDynamicText(txt, textPaint, txtforkey);
+
+                            }
+                            SVGADrawable drawable = new SVGADrawable(videoItem, dynamicEntity);
+                            svga.setImageDrawable(drawable);
+                            svga.startAnimation();
+                        }
+
+                        @Override
+                        public void onError() {
+
+                        }
+                    });
+                    break;
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
 

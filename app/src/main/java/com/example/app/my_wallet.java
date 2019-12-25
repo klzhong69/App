@@ -79,6 +79,8 @@ public class my_wallet extends AppCompatActivity {
                 overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
                 break;
             case R.id.subtitle:
+                Intent intent = new Intent(my_wallet.this, operation_record.class);
+                startActivity(intent);
                 break;
             case R.id.imageView35:
             case R.id.textView10:

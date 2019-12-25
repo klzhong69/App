@@ -15,6 +15,7 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
 
+
     <application
         android:name=".Entity.MyApp"
         android:allowBackup="true"
@@ -23,7 +24,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".room_theme"></activity>
+        <activity android:name=".room_theme" />
         <activity android:name=".room_online" />
         <activity android:name=".system_information" />
         <activity android:name=".scan_code" />

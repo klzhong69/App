@@ -42,7 +42,7 @@ public class my_diamond extends AppCompatActivity {
         setContentView(R.layout.activity_my_diamond);
         ButterKnife.bind(this);
         title.setText("我的钻石");
-        subtitle.setText("操作记录");
+        subtitle.setText("");
     }
 
     @OnClick({R.id.fold, R.id.subtitle, R.id.but, R.id.buts})
@@ -51,10 +51,6 @@ public class my_diamond extends AppCompatActivity {
             case R.id.fold:
                 this.finish();
                 overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
-                break;
-            case R.id.subtitle:
-                Intent intent1 = new Intent(my_diamond.this, operation_record.class);
-                startActivity(intent1);
                 break;
             case R.id.but:
                 Intent intent2 = new Intent(my_diamond.this, withdraw.class);
