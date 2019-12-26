@@ -41,7 +41,7 @@ public class mMusicDao {
      * @return
      */
     public static List<Music> query(Long musicid) {
-        return Initialization.getDaoInstantMusic().getMusicDao().queryBuilder().where(MusicDao.Properties.Musicid.eq(musicid)).list();
+        return Initialization.getDaoInstantMusic().getMusicDao().queryBuilder().where(MusicDao.Properties.Id.eq(musicid)).list();
     }
 
 
@@ -57,7 +57,7 @@ public class mMusicDao {
      */
     public static List<Music> queryBuilder(Long musicid,int set , int lim) {
 
-        return Initialization.getDaoInstantMusic().getMusicDao().queryBuilder().where(MusicDao.Properties.Musicid.eq(musicid)).offset(set).limit(lim).list();
+        return Initialization.getDaoInstantMusic().getMusicDao().queryBuilder().where(MusicDao.Properties.Id.eq(musicid)).offset(set).limit(lim).list();
     }
 
     /**

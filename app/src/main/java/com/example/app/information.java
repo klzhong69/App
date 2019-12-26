@@ -8,20 +8,39 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bruce.pickerview.popwindow.DatePickerPopWin;
+import com.example.app.Entity.MyApp;
 import com.example.app.Sqlentity.User;
+import com.example.app.cofig.DateUtil;
 import com.example.app.cofig.Initialization;
+import com.example.app.cofig.Prexiew;
 import com.example.app.dao.mUserDao;
 import com.example.app.gen.DaoSession;
+import com.example.app.utils.Translation;
+import com.google.gson.Gson;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
+
+import java.io.IOException;
+import java.text.ParseException;
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class information extends AppCompatActivity {
 
@@ -55,7 +74,9 @@ public class information extends AppCompatActivity {
     TextView textView164;
     @BindView(R.id.imageView140)
     ImageView imageView140;
-    private int sex = 0;
+    private int sex = 2;
+    private String phone;
+    private String pass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,8 +84,10 @@ public class information extends AppCompatActivity {
         setContentView(R.layout.activity_information);
         ButterKnife.bind(this);
         Initialization.setupDatabaseUser(this);
-
-
+        Intent intent = getIntent();
+         phone = intent.getStringExtra("phone");
+         pass = intent.getStringExtra("pass");
+        editText.setText("mo");
     }
 
 
@@ -92,19 +115,16 @@ public class information extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.but:
-                User user = new User();
-                user.setUserId(1345078L);
-                user.setUsersrc("https://momeak.oss-cn-shenzhen.aliyuncs.com/h4.jpg");
-                user.setName(editText.getText().toString());
-                user.setState(0);
-                mUserDao.insert(user);
-                Intent intent2 = new Intent(this, login.class);
-                startActivity(intent2);
+                if(!editText.getText().toString().equals("")){
+                    okgo();
+                }else{
+                    Toast.makeText(information.this, "请输入昵称", Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.radioButton2:
                 radioButton2.setChecked(true);
                 radioButton3.setChecked(false);
-                sex = 0;
+                sex = 2;
                 break;
             case R.id.radioButton3:
                 radioButton2.setChecked(false);
@@ -117,6 +137,45 @@ public class information extends AppCompatActivity {
                 data();
                 break;
         }
+    }
+
+
+    private void okgo() {
+        MyApp application = ((MyApp) this.getApplicationContext());
+
+        String date = null;
+        try {
+            date = DateUtil.dateToStamps(textView164.getText().toString());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        OkGo.<String>post(application.getUrl()+"/app/user/register")
+                .params("phone",phone)
+                .params("password",pass)
+                .params("nickname",editText.getText().toString())
+                .params("gender",sex)
+                .params("birthday",date)
+                .params("avatarUrl","https://momeak.oss-cn-shenzhen.aliyuncs.com/h3.jpg")
+                .execute(new StringCallback() {
+
+                    @Override
+                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+
+                        Gson gson = new Gson();
+                        Prexiew prexiew = gson.fromJson(response.body(), Prexiew.class);
+
+                        if(prexiew.getCode()==0){
+                            Toast.makeText(information.this, prexiew.getMsg()+"", Toast.LENGTH_SHORT).show();
+                        }else if(prexiew.getCode()==40000){
+                            Toast.makeText(information.this, prexiew.getMsg()+"", Toast.LENGTH_SHORT).show();
+                        }else if(prexiew.getCode()==40004){
+                            Toast.makeText(information.this, prexiew.getMsg()+"", Toast.LENGTH_SHORT).show();
+                        }
+
+
+                    }
+                });
+
     }
 
 }

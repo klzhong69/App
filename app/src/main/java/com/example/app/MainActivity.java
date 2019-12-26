@@ -30,6 +30,7 @@ import android.widget.Toast;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.ashokvarma.bottomnavigation.TextBadgeItem;
+import com.example.app.cofig.DateUtil;
 import com.lzf.easyfloat.EasyFloat;
 import com.lzf.easyfloat.anim.AppFloatDefaultAnimator;
 import com.lzf.easyfloat.anim.DefaultAnimator;
@@ -39,7 +40,10 @@ import com.lzf.easyfloat.interfaces.OnInvokeView;
 import com.lzf.easyfloat.interfaces.OnPermissionResult;
 import com.lzf.easyfloat.permission.PermissionUtils;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.concurrent.Callable;
 
 import butterknife.BindView;
@@ -98,8 +102,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
         ButterKnife.bind(this);
         init();
         setDefaultFragment();
-
-
     }
 
 
@@ -397,11 +399,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
                     needRequestPermissonList.toArray(new String[needRequestPermissonList.size()]),
                     PERMISSION_REQUESTED);
         }
-        /*if(FloatWindowManager.checkPermission(MainActivity.this)) {
-            EasyFloat.show();
-        }else{
-            FloatWindowManager.applyPermission(MainActivity.this);
-        }*/
+        if (!PermissionUtils.checkPermission(this)) {
+            requestPermission();
+        }
 
     }
 

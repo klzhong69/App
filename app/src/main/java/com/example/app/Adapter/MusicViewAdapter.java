@@ -56,12 +56,15 @@ public class MusicViewAdapter extends RecyclerView.Adapter {
         ((MusicViewAdapter.DemoViewHolder) holder).time.setText(entity.getTime());
        if(entity.getType().equals("0")){
            ((MusicViewAdapter.DemoViewHolder) holder).type.setVisibility(View.GONE);
+           ((MusicViewAdapter.DemoViewHolder) holder).txt.setVisibility(View.VISIBLE);
            ((MusicViewAdapter.DemoViewHolder) holder).txt.setText(entity.getTxt());
         }else if(entity.getType().equals("1")){
            ((MusicViewAdapter.DemoViewHolder) holder).txt.setVisibility(View.GONE);
+           ((DemoViewHolder) holder).type.setVisibility(View.VISIBLE);
             Glide.with(mContext).load(R.drawable.dk_ic_play_disable).into(((DemoViewHolder)holder).type);
-        }else{
+        }else if(entity.getType().equals("2")){
            ((MusicViewAdapter.DemoViewHolder) holder).txt.setVisibility(View.GONE);
+           ((MusicViewAdapter.DemoViewHolder) holder).type.setVisibility(View.VISIBLE);
            Glide.with(mContext).load(R.drawable.dk_ic_pause_disable).into(((DemoViewHolder)holder).type);
        }
         if (mOnItemClickListener != null) {
@@ -114,5 +117,15 @@ public class MusicViewAdapter extends RecyclerView.Adapter {
     public void removeData(int position) {
         mEntityList.remove(position);
         notifyItemRemoved(position);
+    }
+
+
+    public void refresh(int position){
+        mEntityList.get(position).setType("1");
+        notifyItemChanged(position);
+    }
+
+    public void refreshall(){
+        notifyDataSetChanged();
     }
 }

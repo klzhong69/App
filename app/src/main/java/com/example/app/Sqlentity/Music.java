@@ -9,16 +9,16 @@ import org.greenrobot.greendao.annotation.Generated;
 public class Music {
 
     @Id(autoincrement = true)//设置自增长
+    @Index(unique = true)//设置唯一性
     private Long id;
 
-    @Index(unique = true)//设置唯一性
-    private Long musicid;
+
+
     private String name;
     private String time;
-    @Generated(hash = 383321657)
-    public Music(Long id, Long musicid, String name, String time) {
+    @Generated(hash = 461341878)
+    public Music(Long id, String name, String time) {
         this.id = id;
-        this.musicid = musicid;
         this.name = name;
         this.time = time;
     }
@@ -30,12 +30,6 @@ public class Music {
     }
     public void setId(Long id) {
         this.id = id;
-    }
-    public Long getMusicid() {
-        return this.musicid;
-    }
-    public void setMusicid(Long musicid) {
-        this.musicid = musicid;
     }
     public String getName() {
         return this.name;
@@ -49,6 +43,5 @@ public class Music {
     public void setTime(String time) {
         this.time = time;
     }
-
-
+  
 }

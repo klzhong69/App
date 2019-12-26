@@ -13,6 +13,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -38,6 +39,8 @@ import com.liulishuo.filedownloader.FileDownloadQueueSet;
 import com.liulishuo.filedownloader.FileDownloader;
 import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 import com.qmuiteam.qmui.widget.popup.QMUIPopup;
 import com.qmuiteam.qmui.widget.popup.QMUIPopups;
 import com.wildma.pictureselector.Constant;
@@ -57,9 +60,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.ObservableSource;
 import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 public class my_music extends AppCompatActivity {
 
@@ -75,11 +83,14 @@ public class my_music extends AppCompatActivity {
     @BindView(R.id.imageView141)
     ImageView imageView141;
     private List<Mymusic> mArrayList;
-    private int i=0;
+    private List<Long> mArrayLists;
     private WlMusic wlMusic;
     private MusicViewAdapter mAdapter;
     private Observer<Integer> observer;
     private Observable<Integer> observable;
+    private int mCurrentDialogStyle = com.qmuiteam.qmui.R.style.QMUI_Dialog;
+    private Observer<Integer> observers;
+    private LinearLayoutManager layoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,21 +99,112 @@ public class my_music extends AppCompatActivity {
         ButterKnife.bind(this);
         title.setText("我的音乐");
         subtitle.setText("添加");
-        initData();
+
         Initialization.setupDatabaseMusic(this);
         FileDownloader.setup(this);
 
 
-        music();
+        initData();
+        List<Music> music = mMusicDao.queryAll();
+        mArrayLists = new ArrayList<Long>();
+        for (int i = 0; i < mArrayList.size(); i++) {
+
+            int a = 0;
+            for (int j = 0; j < music.size(); j++) {
+
+                if (music.get(j).getId().equals(mArrayList.get(i).getId())) {
+                    a++;
+                }
+            }
+            if (a == 0) {
+                mArrayLists.add(mArrayList.get(i).getId());
+
+            }
+        }
+
+        if(mArrayLists.size()>0){
+            showMessagePositiveDialog();
+        }
+
+        observers = new Observer<Integer>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(Integer integer) {
+                Music music = new Music();
+                music.setTime(mArrayList.get(integer).getTime());
+                music.setName(mArrayList.get(integer).getName());
+                music.setId(mArrayList.get(integer).getId());
+                mMusicDao.insert(music);
+                download(mArrayList.get(integer).getUrl(), "music" + mArrayList.get(integer).getId(), integer);
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+            }
+
+        };
+
+        observer = new Observer<Integer>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(Integer integer) {
+                for (int j = 0; j < mArrayList.size(); j++) {
+                    mArrayList.get(j).setType("1");
+                }
+                mArrayList.get(integer).setType("2");
+                mAdapter.notifyDataSetChanged();
+                music(integer);
+
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+            }
+
+        };
+
+    }
+
+    private void initData() {
+
+        mArrayList = new ArrayList<Mymusic>();
+        for (int i = 0; i < 3; i++) {
+            String publicPath = Objects.requireNonNull(this.getExternalCacheDir()).getPath();
+            String filePath = publicPath + "/music/music" + i + ".mp3";
+            Mymusic i1 = new Mymusic((long) i, "星坠-天空的幻想-林晓夜"+i, "03.00", "1", "100%", filePath);
+            mArrayList.add(i1);
+        }
+
+
         //适配器
-         mAdapter = new MusicViewAdapter(this, mArrayList);
+        mAdapter = new MusicViewAdapter(this, mArrayList);
         //设置适配器adapter
         recycler5.setAdapter(mAdapter);
 
         /*LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         mListView.setLayoutManager(mLinearLayoutManager);*/
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this) {
+         layoutManager = new LinearLayoutManager(this) {
             @Override
             public boolean canScrollVertically() {
                 return false;
@@ -114,59 +216,21 @@ public class my_music extends AppCompatActivity {
         mAdapter.setOnItemClickListener(new MusicViewAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                if(mArrayList.get(position).getType().equals("0")){
+                if (mArrayList.get(position).getType().equals("0")) {
+                    showMessagePositiveDialog();
 
-                    Observable.just(1)
-                            .subscribe(new Observer < Integer > () {
-                                @Override
-                                public void onSubscribe(Disposable d) {
+                } else if (mArrayList.get(position).getType().equals("1")) {
+                    Observable<Integer> observable = Observable.defer(new Callable<ObservableSource<? extends Integer>>() {
+                        @Override
+                        public ObservableSource<? extends Integer> call() throws Exception {
+                            return Observable.just(position);
+                        }
+                    });
+                    observable.subscribe(observer);
 
-                                }
-
-                                @Override
-                                public void onNext(Integer integer) {
-                                    List<Music> mu = mMusicDao.queryAll();
-                                    for(i=0;i<mu.size();i++){
-                                        System.out.println("music"+mu.get(i).getId());
-                                    }
-                                    Music music = new Music();
-                                    music.setMusicid(mArrayList.get(position).getId());
-                                    music.setName("music"+mArrayList.get(position).getId());
-                                    music.setTime(mArrayList.get(position).getTime());
-                                    mMusicDao.insert(music);
-                                    download(mArrayList.get(position).getUrl(),"music"+mArrayList.get(position).getId(),position);
-                                }
-
-                                @Override
-                                public void onError(Throwable e) {
-
-                                }
-
-                                @Override
-                                public void onComplete() {
-
-                                }
-                            });
-
-
-                }else if(mArrayList.get(position).getType().equals("1")){
-                    i=position;
-                    for(int j=0;j<mArrayList.size();j++){
-                        mArrayList.get(j).setType("1");
-                    }
-                    mArrayList.get(i).setType("2");
-                    mAdapter.notifyDataSetChanged();
-                    System.out.println("状态："+wlMusic.isPlaying());
-                    if(wlMusic.isPlaying()){
-                        wlMusic.playNext(mArrayList.get(i).getUrl());
-                    }else{
-                        wlMusic.start();
-                    }
-                    System.out.println("时长"+wlMusic.getDuration());
-
-                }else if(mArrayList.get(position).getType().equals("2")){
-                    mArrayList.get(i).setType("1");
-                    mAdapter.notifyDataSetChanged();
+                } else if (mArrayList.get(position).getType().equals("2")) {
+                    mArrayList.get(position).setType("1");
+                    mAdapter.notifyItemChanged(position);
                     wlMusic.pause();
                 }
 
@@ -188,21 +252,6 @@ public class my_music extends AppCompatActivity {
         defaultItemAnimator.setAddDuration(200);
         defaultItemAnimator.setRemoveDuration(200);
         recycler5.setItemAnimator(defaultItemAnimator);
-
-
-    }
-
-    private void initData() {
-        mArrayList = new ArrayList<Mymusic>();
-        for (int i = 0; i < 3; i++) {
-            String type = "0";
-            if(i!=0){
-                 type = "1";
-            }
-            Mymusic i1 = new Mymusic((long) i,"星坠-天空的幻想-林晓夜", "03.00", type, "0%","https://momeak.oss-cn-shenzhen.aliyuncs.com/music.mp3");
-            mArrayList.add(i1);
-        }
-
 
     }
 
@@ -241,22 +290,64 @@ public class my_music extends AppCompatActivity {
                     @Override
                     public void onClick(QMUIBottomSheet dialog, View itemView, int position, String tag) {
                         dialog.dismiss();
-                        Toast.makeText(my_music.this, "Item " + (position + 1), Toast.LENGTH_SHORT).show();
+                        if(position==0){
+                            int firstItem = layoutManager.findFirstVisibleItemPosition();
+                            int lastItem = layoutManager.findLastVisibleItemPosition();
+                            if (0 <= firstItem) {
+                                recycler5.scrollToPosition(0);
+                            } else if (0 <= lastItem) {
+                                int top = recycler5.getChildAt(0 - firstItem).getTop();
+                                recycler5.scrollBy(0, top);
+                            } else {
+                                recycler5.scrollToPosition(0);
+                            }
+
+                        }else if(position==1){
+
+                        }
                     }
                 });
         if (withMark) {
             builder.setCheckedIndex(40);
         }
 
-        builder.addItem("向上移");
-        builder.addItem("向下移 ");
+        builder.addItem("置顶");
         builder.addItem("删除");
         builder.build().show();
     }
 
-    private void music() {
+    private void showMessagePositiveDialog() {
+        new QMUIDialog.MessageDialogBuilder(this)
+                .setTitle("提示")
+                .setMessage("是否开始同步？")
+                .addAction("取消", new QMUIDialogAction.ActionListener() {
+                    @Override
+                    public void onClick(QMUIDialog dialog, int index) {
+                        dialog.dismiss();
+                    }
+                })
+                .addAction(0, "确定", QMUIDialogAction.ACTION_PROP_POSITIVE, new QMUIDialogAction.ActionListener() {
+                    @Override
+                    public void onClick(QMUIDialog dialog, int index) {
+                        dialog.dismiss();
+                        for (int i = 0; i < mArrayLists.size(); i++) {
+                            int finalI = i;
+                            Observable<Integer> observables = Observable.defer(new Callable<ObservableSource<? extends Integer>>() {
+                                @Override
+                                public ObservableSource<? extends Integer> call() throws Exception {
+                                    return Observable.just(finalI);
+                                }
+                            });
+                            observables.subscribe(observers);
+                        }
+                    }
+                })
+                .create(mCurrentDialogStyle).show();
+    }
+
+    private void music(int postion) {
         wlMusic = WlMusic.getInstance();
-        wlMusic.setSource(mArrayList.get(i).getUrl()); //设置音频源
+        wlMusic.setSource(mArrayList.get(postion).getUrl()); //设置音频源
         wlMusic.setCallBackPcmData(false);//是否返回音频PCM数据
         wlMusic.setShowPCMDB(false);//是否返回音频分贝大小
         wlMusic.setPlayCircle(false); //设置不间断循环播放音频
@@ -270,79 +361,36 @@ public class my_music extends AppCompatActivity {
         wlMusic.setOnPreparedListener(new OnPreparedListener() {
             @Override
             public void onPrepared() {
-
+                wlMusic.start();
             }
         });
 
         wlMusic.setOnCompleteListener(new OnCompleteListener() {
             @Override
             public void onComplete() {
-                i=i+1;
-                observable = Observable.defer(new Callable<ObservableSource<? extends Integer>>() {
+                System.out.println("完成");
+                Observable<Integer> observable = Observable.defer(new Callable<ObservableSource<? extends Integer>>() {
                     @Override
                     public ObservableSource<? extends Integer> call() throws Exception {
-                        return Observable.just(1);
+                        return Observable.just(postion + 1);
                     }
                 });
                 observable.subscribe(observer);
-                if(wlMusic.isPlaying()){
-                    wlMusic.playNext(mArrayList.get(i).getUrl());
-                }else{
-                    wlMusic.start();
-                }
             }
         });
 
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        observer = new Observer<Integer>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-
-            }
-
-            @Override
-            public void onNext(Integer integer) {
-                if (integer == 0) {
-
-
-                }else if(integer==1){
-                    for(int j=0;j<mArrayList.size();j++){
-                        mArrayList.get(j).setType("1");
-                    }
-                    mArrayList.get(i).setType("2");
-
-                }else if(integer==2){
-                    mArrayList.get(i).setType("1");
-                }
-
-                mAdapter.notifyDataSetChanged();
-
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-
-            @Override
-            public void onComplete() {
-
-            }
-
-
-        };
-
+        System.out.println("状态：" + wlMusic.isPlaying());
+        if (wlMusic.isPlaying()) {
+            wlMusic.playNext(mArrayList.get(postion).getUrl());
+        }
+        System.out.println("时长" + wlMusic.getDuration());
 
     }
 
-    private void download(String url,String name,int postion){
+
+    private void download(String url, String name, int posetion) {
         String publicPath = Objects.requireNonNull(this.getExternalCacheDir()).getPath();
-        String filePath = publicPath + "/music/"+name+".mp3";
+        String filePath = publicPath + "/music/" + name + ".mp3";
         FileDownloader.getImpl().create(url)
                 .setPath(filePath)
                 .setListener(new FileDownloadListener() {
@@ -356,9 +404,10 @@ public class my_music extends AppCompatActivity {
 
                     @Override
                     protected void progress(BaseDownloadTask task, int soFarBytes, int totalBytes) {
-                        int pross = (int) (soFarBytes/totalBytes)*100;
-                        mArrayList.get(postion).setTxt(pross+"%");
-                        mAdapter.notifyDataSetChanged();
+                        int percent = (int) ((double) soFarBytes / (double) totalBytes * 100);
+                        mArrayList.get(posetion).setTxt(percent + "%");
+                        mAdapter.notifyItemChanged(posetion);
+
                     }
 
                     @Override
@@ -372,8 +421,8 @@ public class my_music extends AppCompatActivity {
                     @Override
                     protected void completed(BaseDownloadTask task) {
 
-                        mArrayList.get(postion).setType("1");
-                        mAdapter.notifyDataSetChanged();
+                        mAdapter.refresh(posetion);
+
                     }
 
                     @Override
@@ -386,8 +435,14 @@ public class my_music extends AppCompatActivity {
 
                     @Override
                     protected void warn(BaseDownloadTask task) {
+                        while (task.getSmallFileSoFarBytes() != task.getSmallFileTotalBytes()) {
+                            int percent = (int) ((double) task.getSmallFileSoFarBytes() / (double) task.getSmallFileTotalBytes() * 100);
+                            mArrayList.get(posetion).setTxt(percent + "%");
+                            mAdapter.notifyItemChanged(posetion);
+                        }
                     }
                 }).start();
+
     }
 
 }
