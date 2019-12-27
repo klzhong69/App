@@ -1,9 +1,6 @@
 package com.example.app;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -13,24 +10,15 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.app.Sqlentity.User;
-import com.example.app.dao.mUserDao;
-import com.example.app.gen.DaoMaster;
-import com.example.app.gen.DaoSession;
-import com.example.app.utils.Translation;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class registered extends AppCompatActivity {
+
 
     @BindView(R.id.fold)
     ImageView fold;
@@ -48,8 +36,6 @@ public class registered extends AppCompatActivity {
     EditText editText5;
     @BindView(R.id.textView150)
     TextView textView150;
-    @BindView(R.id.imageView111)
-    ImageView imageView111;
     @BindView(R.id.imageView19)
     QMUIRadiusImageView imageView19;
     @BindView(R.id.editText)
@@ -74,12 +60,12 @@ public class registered extends AppCompatActivity {
         ButterKnife.bind(this);
         title.setText("立即注册");
         subtitle.setText("");
-        editText4.setText("");
-        editText5.setText("");
-        editText.setText("");
+        editText4.setText("15913420136");
+        editText5.setText("7364");
+        editText.setText("131721..");
     }
 
-    @OnClick({R.id.fold, R.id.textView150, R.id.imageView111, R.id.but, R.id.textView159})
+    @OnClick({R.id.fold, R.id.textView150, R.id.but, R.id.textView159})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fold:
@@ -88,13 +74,11 @@ public class registered extends AppCompatActivity {
                 break;
             case R.id.textView150:
                 break;
-            case R.id.imageView111:
-                break;
             case R.id.but:
                 if (!editText4.getText().toString().equals("")) {
 
                     if (!editText5.getText().toString().equals("")) {
-                        if (!editText.getText().toString().equals("")  &&  editText.getText().length()>=8  &&  editText.getText().length()<16) {
+                        if (!editText.getText().toString().equals("") && editText.getText().length() >= 8 && editText.getText().length() < 16) {
                             Intent intent2 = new Intent(registered.this, information.class);
                             intent2.putExtra("phone", editText4.getText().toString());
                             intent2.putExtra("pass", editText.getText().toString());
@@ -119,8 +103,6 @@ public class registered extends AppCompatActivity {
                 break;
         }
     }
-
-
 
 
     @Override

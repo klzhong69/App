@@ -112,6 +112,9 @@ dependencies {
 
     implementation 'ywl.ywl5320:libmusic:1.2.6'//音乐播放
 
+
+    implementation 'com.aliyun.dpa:oss-android-sdk:2.9.2'//oss
+
     implementation project(path: ':pictureselector')
 
 }

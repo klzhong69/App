@@ -83,6 +83,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
             Manifest.permission.MODIFY_AUDIO_SETTINGS,
             Manifest.permission.BLUETOOTH,
             Manifest.permission.ACCESS_WIFI_STATE,
+            Manifest.permission.CHANGE_WIFI_STATE,
 
     };
 

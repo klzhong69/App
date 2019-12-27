@@ -17,6 +17,7 @@ import butterknife.OnClick;
 
 public class forget_password extends AppCompatActivity {
 
+
     @BindView(R.id.fold)
     ImageView fold;
     @BindView(R.id.title)
@@ -33,8 +34,6 @@ public class forget_password extends AppCompatActivity {
     EditText editText5;
     @BindView(R.id.textView150)
     TextView textView150;
-    @BindView(R.id.imageView111)
-    ImageView imageView111;
     @BindView(R.id.imageView19)
     QMUIRadiusImageView imageView19;
     @BindView(R.id.editText)
@@ -63,7 +62,7 @@ public class forget_password extends AppCompatActivity {
         subtitle.setText("");
     }
 
-    @OnClick({R.id.fold, R.id.textView150, R.id.imageView111, R.id.but})
+    @OnClick({R.id.fold, R.id.textView150, R.id.but})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fold:
@@ -71,8 +70,6 @@ public class forget_password extends AppCompatActivity {
                 overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
                 break;
             case R.id.textView150:
-                break;
-            case R.id.imageView111:
                 break;
             case R.id.but:
                 break;

@@ -159,7 +159,6 @@ public class My extends Fragment {
         } catch (Exception ignored) {
         }
 
-        System.out.println("Date:" + DateUtil.getCurrentTimeYMDHMS());
         return view;
     }
 
@@ -200,6 +199,7 @@ public class My extends Fragment {
             case R.id.textView11:
                 //登陆
                 Intent intent1 = new Intent(getContext(), login.class);
+                intent1.putExtra("type",0);
                 startActivity(intent1);
                 getActivity().overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
                 break;

@@ -1,6 +1,8 @@
 package com.example.app;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -13,33 +15,46 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bruce.pickerview.popwindow.DatePickerPopWin;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.app.Entity.MyApp;
 import com.example.app.Sqlentity.Chat;
 import com.example.app.Sqlentity.User;
 import com.example.app.cofig.DateUtil;
 import com.example.app.cofig.Initialization;
+import com.example.app.cofig.OSSSet;
 import com.example.app.cofig.Prexiew;
 import com.example.app.dao.mChatDao;
 import com.example.app.dao.mUserDao;
 import com.example.app.gen.DaoSession;
 import com.example.app.utils.Translation;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
+import com.wildma.pictureselector.PictureSelector;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Callable;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -82,6 +97,7 @@ public class information extends AppCompatActivity {
     private int sex = 2;
     private String phone;
     private String pass;
+    private String picturePath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,14 +132,12 @@ public class information extends AppCompatActivity {
     }
 
 
-    @OnClick({R.id.imageView139, R.id.but, R.id.radioButton2, R.id.radioButton3, R.id.textView164, R.id.imageView140})
+    @OnClick({R.id.imageView139, R.id.but, R.id.radioButton2, R.id.radioButton3, R.id.textView164, R.id.imageView140, R.id.imageView2})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.but:
                 if (!editText.getText().toString().equals("")) {
-                    //okgo();
-                    Intent intent2 = new Intent(information.this, login.class);
-                    startActivity(intent2);
+                    okgo();
                 } else {
                     Toast.makeText(information.this, "请输入昵称", Toast.LENGTH_SHORT).show();
                 }
@@ -142,6 +156,11 @@ public class information extends AppCompatActivity {
             case R.id.textView164:
             case R.id.imageView140:
                 data();
+                break;
+            case R.id.imageView2:
+                PictureSelector
+                        .create(information.this, PictureSelector.SELECT_REQUEST_CODE)
+                        .selectPicture(true, 400, 400, 1, 1);
                 break;
         }
     }
@@ -181,6 +200,89 @@ public class information extends AppCompatActivity {
                             Toast.makeText(information.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
                             Intent intent2 = new Intent(information.this, registered.class);
                             startActivity(intent2);
+                        }
+
+
+                    }
+
+
+                });
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        /*结果回调*/
+        if (requestCode == PictureSelector.SELECT_REQUEST_CODE) {
+            if (data != null) {
+                picturePath = data.getStringExtra(PictureSelector.PICTURE_PATH);
+                // imageView2.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+
+                Observable.just(0)
+                        .subscribe(new Observer<Integer>() {
+                            @Override
+                            public void onSubscribe(Disposable d) {
+
+                            }
+
+                            @Override
+                            public void onNext(Integer integer) {
+                                RequestOptions requestOptions = RequestOptions
+                                        .circleCropTransform()
+                                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                                        .skipMemoryCache(true);
+                                Glide.with(information.this).load(picturePath).apply(requestOptions).into(imageView2);
+                                okgoima();
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+
+                            }
+
+                            @Override
+                            public void onComplete() {
+
+                            }
+                        });
+            }
+        }
+
+    }
+
+    private void okgoima() {
+        MyApp application = ((MyApp) this.getApplicationContext());
+        OkGo.<String>post(application.getUrl() + "/app/alioss/getUserUploadToken")
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+
+                        Gson gson = new Gson();
+                        Prexiew prexiew = gson.fromJson(response.body(), Prexiew.class);
+
+                        if (prexiew.getCode() == 0) {
+
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(prexiew.getData().toString());
+                                String AccessKeyId = jsonObject.optString("AccessKeyId");
+                                String AccessKeySecret = jsonObject.optString("AccessKeySecret");
+                                String SecurityToken = jsonObject.optString("SecurityToken");
+                                String region = jsonObject.optString("region");
+                                String bucket = jsonObject.optString("bucket");
+
+                                if (!AccessKeyId.equals("")) {
+                                    OSSSet.OSSClient(information.this, AccessKeyId, AccessKeySecret, SecurityToken, region);
+                                    String upload = OSSSet.Upload(bucket, "123.jpg", picturePath);
+                                    Toast.makeText(information.this, upload + "", Toast.LENGTH_SHORT).show();
+                                }
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        } else if (prexiew.getCode() == 40000) {
+                            Toast.makeText(information.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
                         }
 
 

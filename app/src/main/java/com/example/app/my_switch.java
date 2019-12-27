@@ -122,6 +122,7 @@ public class my_switch extends AppCompatActivity {
             case R.id.textView37:
             case R.id.imageView114:
                 Intent intent1 = new Intent(this, login.class);
+                intent1.putExtra("type",1);
                 startActivity(intent1);
                 overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
                 break;

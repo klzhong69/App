@@ -150,7 +150,7 @@ public class modify_information extends AppCompatActivity {
                 in=0;
                 PictureSelector
                         .create(modify_information.this, PictureSelector.SELECT_REQUEST_CODE)
-                        .selectPicture(true, 200, 200, 1, 1);
+                        .selectPicture(true, 400, 400, 1, 1);
                 break;
         }
     }
@@ -158,40 +158,6 @@ public class modify_information extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        observer = new Observer<Integer>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-
-            }
-
-            @Override
-            public void onNext(Integer integer) {
-                switch (integer) {
-                    case 0:
-                        RequestOptions requestOptions = RequestOptions
-                                .circleCropTransform()
-                                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                                .skipMemoryCache(true);
-                        Glide.with(modify_information.this).load(picturePath).apply(requestOptions).into(imageView2);
-                        break;
-
-                    case 1:
-                        break;
-                }
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-
-            @Override
-            public void onComplete() {
-
-            }
-
-
-        };
 
     }
         @Override
@@ -203,13 +169,39 @@ public class modify_information extends AppCompatActivity {
                  picturePath = data.getStringExtra(PictureSelector.PICTURE_PATH);
                // imageView2.setImageBitmap(BitmapFactory.decodeFile(picturePath));
 
-                Observable<Integer> observable = Observable.defer(new Callable<ObservableSource<? extends Integer>>() {
-                    @Override
-                    public ObservableSource<? extends Integer> call() throws Exception {
-                        return Observable.just(in);
-                    }
-                });
-                observable.subscribe(observer);
+                Observable.just(in)
+                        .subscribe(new Observer < Integer > () {
+                            @Override
+                            public void onSubscribe(Disposable d) {
+
+                            }
+
+                            @Override
+                            public void onNext(Integer integer) {
+                                switch (integer) {
+                                    case 0:
+                                        RequestOptions requestOptions = RequestOptions
+                                                .circleCropTransform()
+                                                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                                                .skipMemoryCache(true);
+                                        Glide.with(modify_information.this).load(picturePath).apply(requestOptions).into(imageView2);
+                                        break;
+
+                                    case 1:
+                                        break;
+                                }
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+
+                            }
+
+                            @Override
+                            public void onComplete() {
+
+                            }
+                        });
 
             }
         }

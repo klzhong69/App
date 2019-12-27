@@ -82,6 +82,7 @@ public class login extends AppCompatActivity {
     @BindView(R.id.subtitle)
     TextView subtitle;
     private int type;
+    private int state;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +95,8 @@ public class login extends AppCompatActivity {
         editText.setText("15913420136");
         editText4.setText("131721..");
 
+        Intent intent = getIntent();
+        state = intent.getIntExtra("type", 0);
     }
 
     @OnClick({R.id.fold,R.id.but, R.id.textView156, R.id.textView157, R.id.textView159, R.id.imageView132, R.id.imageView133, R.id.imageView134})
@@ -104,13 +107,7 @@ public class login extends AppCompatActivity {
                 overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
                 break;
             case R.id.but:
-                //okgo();
-                SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
-                sp.edit().putLong("userid", 1L).apply();
-                Intent intent1 = new Intent(login.this, MainActivity.class);
-                intent1.putExtra("id", 4);
-                startActivity(intent1);
-                overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
+                okgo();
                 break;
             case R.id.textView156:
                 Intent intent2 = new Intent(login.this, forget_password.class);
@@ -160,19 +157,20 @@ public class login extends AppCompatActivity {
 
                             try {
                                 JSONObject jsonObject = new JSONObject(prexiew.getData().toString());
-                                Long id = jsonObject.optLong("uniqueId");
+                                long id = jsonObject.optLong("uniqueId");
                                 String name = jsonObject.optString("nickname");
                                 String userima = jsonObject.optString("avatarUrl");
                                 String token = jsonObject.optString("token");
                                 application.setToken(token);
 
-                                User user = new User();
-                                user.setName(name);
-                                user.setUsersrc(userima);
-                                user.setState(0);
-                                user.setUserId(id);
-                                mUserDao.insert(user);
-
+                                /*if(state==1){
+                                    User user = new User();
+                                    user.setName(name);
+                                    user.setUsersrc(userima);
+                                    user.setState(0);
+                                    user.setUserId(id);
+                                    mUserDao.insert(user);
+                                }*/
 
                                 SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
                                 sp.edit().putLong("userid", id).apply();

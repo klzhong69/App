@@ -1,6 +1,7 @@
 package com.example.app.cofig;
 
 import com.example.app.Entity.Paimai;
+import com.google.gson.JsonObject;
 
 import java.lang.reflect.Array;
 
@@ -8,8 +9,8 @@ public class Prexiew {
 
     private int code;
     private String msg;
-    private Object data;
-    private Object cdn;
+    private JsonObject data;
+    private JsonObject cdn;
 
     public int getCode() {
         return code;
@@ -20,11 +21,11 @@ public class Prexiew {
     }
 
 
-    public Object getData() {
+    public JsonObject getData() {
         return data;
     }
 
-    public Object getCdn() {
+    public JsonObject getCdn() {
         return cdn;
     }
 
