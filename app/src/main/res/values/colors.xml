@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#ffffff</color>
-    <color name="colorPrimaryDark">#ABABAB</color>
+    <color name="colorPrimaryDark">#f277a3</color>
     <color name="colorAccent">#D81B60</color>
     <color name="tabbarcolor">#DFEF6598</color>
     <color name="cardFront">#434850</color>

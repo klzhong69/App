@@ -157,7 +157,7 @@
         <com.qmuiteam.qmui.widget.QMUIRadiusImageView
             android:id="@+id/imageViewi3"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_480"
+            android:layout_height="@dimen/dp_400"
             android:layout_below="@+id/imageViewi2"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"

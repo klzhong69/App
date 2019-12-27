@@ -97,7 +97,13 @@ public class Find extends Fragment {
     private void initData() {
         mArrayList = new ArrayList<Findlist>();
         for (int i = 0; i < 8; i++) {
-            Findlist i1 = new Findlist("PHakamile Sikali", "Muria Moura", "2345", "https://momeak.oss-cn-shenzhen.aliyuncs.com/h4.jpg", "", "热门", "CV", "德国");
+            int sum ;
+            if(i>5){
+                sum = i-5;
+            }else{
+                sum = i+1;
+            }
+            Findlist i1 = new Findlist("PHakamile Sikali", "Muria Moura", "2345", "https://momeak.oss-cn-shenzhen.aliyuncs.com/h"+sum+".jpg", "", "热门", "CV", "德国");
             mArrayList.add(i1);
         }
 

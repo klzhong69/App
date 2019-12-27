@@ -1,44 +1,96 @@
 package com.example.app.Model;
 
 import android.content.Context;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewTreeObserver;
-import android.view.inputmethod.EditorInfo;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.Toast;
 
-import androidx.core.widget.NestedScrollView;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.example.app.R;
-import com.example.app.Sqlentity.Chat;
-import com.example.app.Sqlentity.User;
-import com.example.app.chat;
-import com.example.app.chatroom;
-import com.example.app.cofig.DateUtil;
-import com.example.app.cofig.Initialization;
-import com.example.app.dao.mChatDao;
-import com.example.app.dao.mUserDao;
+import com.example.app.Adapter.ChatAdapter;
+import com.example.app.Entity.Chats;
 
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
-
-import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
-
-import static com.example.app.cofig.DateUtil.dateToString;
 
 public class ChatModel {
 
-    private static View convertView;
+    private static ChatAdapter mAdapter;
+    private static List<Chats> mArrayList;
+
+    public static void initData() {
+        mArrayList = new ArrayList<Chats>();
+        for (int i = 0; i < 20; i++) {
+            int type=0;
+            if(i<=5 && i>0){
+                type=1;
+            }else if(i>5 && i<=10){
+                type=2;
+            }else if(i>10){
+                type=1;
+            }
+            Chats i1 = new Chats("https://momeak.oss-cn-shenzhen.aliyuncs.com/h3.jpg", "你好", "2019-12-27", type);
+            mArrayList.add(i1);
+        }
+
+    }
+
+    public static void initrecycler(Context context, RecyclerView recycler13) {
+        //适配器
+        mAdapter = new ChatAdapter(context, mArrayList);
+        //设置适配器adapter
+        recycler13.setAdapter(mAdapter);
+
+        /*LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        mListView.setLayoutManager(mLinearLayoutManager);*/
+
+        LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(context);
+        mLinearLayoutManager.setStackFromEnd(true);
+        if (mAdapter.getItemCount() > 0) {
+            mLinearLayoutManager.scrollToPositionWithOffset(mAdapter.getItemCount() - 1, Integer.MIN_VALUE);
+
+        }
+        recycler13.scrollToPosition(mAdapter.getItemCount()-1);
+        recycler13.setLayoutManager(mLinearLayoutManager);
+
+        recycler13.setItemAnimator(new DefaultItemAnimator());
+
+        mAdapter.setOnItemClickListener(new ChatAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+
+            }
+
+            @Override
+            public void onItemLongClick(View view, int position) {
+
+            }
+        });
+
+        /**
+         * 既然是动画，就会有时间，我们把动画执行时间变大一点来看一看效果
+         */
+        DefaultItemAnimator defaultItemAnimator = new DefaultItemAnimator();
+        defaultItemAnimator.setAddDuration(200);
+        defaultItemAnimator.setRemoveDuration(200);
+        recycler13.setItemAnimator(defaultItemAnimator);
+
+
+    }
+
+
+
+    public static void Add(RecyclerView mRecyclerView, Chats entity){
+        mAdapter.addData(mArrayList.size(), entity);
+        mRecyclerView.smoothScrollToPosition(mArrayList.size());
+    }
+
+    public static void recly(RecyclerView mRecyclerView){
+        mRecyclerView.smoothScrollToPosition(mArrayList.size());
+    }
+
+    /*private static View convertView;
     private static View convertTime;
     private static ViewHolder viewHolder;
     private static LayoutInflater inflater;
@@ -48,6 +100,8 @@ public class ChatModel {
         private ImageView imagesrc;
         private ImageView head;
     }
+
+
 
 
 
@@ -178,5 +232,5 @@ public class ChatModel {
         }
 
 
-    }
+    }*/
 }

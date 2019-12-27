@@ -112,4 +112,12 @@ public class room_theme extends AppCompatActivity {
         defaultItemAnimator.setRemoveDuration(200);
         recyclerc12.setItemAnimator(defaultItemAnimator);
     }
+
+
+
+    @Override
+    public void onBackPressed() {
+        this.finish();
+        overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
+    }
 }

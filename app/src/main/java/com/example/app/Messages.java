@@ -105,18 +105,12 @@ public class Messages extends Fragment {
             case R.id.imageView78:
                 Intent intent2 = new Intent(getContext(), mess_friends.class);
                 startActivity(intent2);
-                /*Conver conver = new Conver();
-                Long couver = 123456L+234567L;
-                conver.setConversations(couver);
-                conver.setSendId(234567L);
-                conver.setSendname("苗苗");
-                conver.setSendsrc("https://momeak.oss-cn-shenzhen.aliyuncs.com/h2.jpg");
-                conver.setType(0);
-                mConverDao.insert(conver);*/
+                getActivity().overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
                 break;
             case R.id.rect_views:
                 Intent intent3 = new Intent(getContext(), system_information.class);
                 startActivity(intent3);
+                getActivity().overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
                 break;
         }
     }

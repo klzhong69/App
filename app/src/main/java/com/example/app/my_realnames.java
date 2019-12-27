@@ -49,7 +49,16 @@ public class my_realnames extends AppCompatActivity {
                 Intent intent2 = new Intent(my_realnames.this, MainActivity.class);
                 intent2.putExtra("id",4);
                 startActivity(intent2);
+                overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
                 break;
         }
+    }
+
+
+
+    @Override
+    public void onBackPressed() {
+        this.finish();
+        overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
     }
 }

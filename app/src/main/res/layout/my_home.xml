@@ -61,7 +61,7 @@
             android:layout_marginStart="@dimen/dp_20"
             android:layout_marginTop="@dimen/dp_10"
             android:layout_marginBottom="@dimen/dp_10"
-            android:src="@drawable/h1"
+            android:src="@drawable/h4"
             app:layout_constraintEnd_toEndOf="parent"
             app:qmui_border_width="0dp"
             app:qmui_corner_radius="@dimen/dp_50" />

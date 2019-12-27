@@ -102,4 +102,10 @@ public class my_favorite extends AppCompatActivity {
                 break;
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        this.finish();
+        overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
+    }
 }

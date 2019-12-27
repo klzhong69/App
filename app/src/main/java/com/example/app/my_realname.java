@@ -54,7 +54,16 @@ public class my_realname extends AppCompatActivity {
             case R.id.but:
                 Intent intent2 = new Intent(my_realname.this, my_realname_name.class);
                 startActivity(intent2);
+                overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
                 break;
         }
+    }
+
+
+
+    @Override
+    public void onBackPressed() {
+        this.finish();
+        overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
     }
 }

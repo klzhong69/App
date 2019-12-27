@@ -92,4 +92,13 @@ public class operation_record extends AppCompatActivity {
         this.finish();
         overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
     }
+
+
+
+
+    @Override
+    public void onBackPressed() {
+        this.finish();
+        overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
+    }
 }

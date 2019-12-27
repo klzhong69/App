@@ -245,7 +245,6 @@ public class My extends Fragment {
             case R.id.textView84:
                 Intent intent7 = new Intent(getContext(), chatroom.class);
                 startActivity(intent7);
-                getActivity().overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
                 break;
             case R.id.imageView74:
             case R.id.textView85:

@@ -57,7 +57,8 @@ public class RoomgiftAdapter extends RecyclerView.Adapter {
 
         ((DemoViewHolder) holder).giftname.setText(entity.getGiftname());
         ((DemoViewHolder) holder).num.setText(entity.getNum());
-        Glide.with(mContext).load(entity.getIma()).into(((RoomgiftAdapter.DemoViewHolder)holder).ima);
+        //Glide.with(mContext).load(entity.getIma()).into(((RoomgiftAdapter.DemoViewHolder)holder).ima);
+        Glide.with(mContext).load(R.drawable.liwu).into(((RoomgiftAdapter.DemoViewHolder)holder).ima);
         if (mOnItemClickListener != null) {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

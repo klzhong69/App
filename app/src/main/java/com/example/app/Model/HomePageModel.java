@@ -23,7 +23,7 @@ public class HomePageModel {
 
     public static void initData() {
         mData = new ArrayList<Page>();
-        for(int i=0;i<14;i++){
+        for(int i=0;i<8;i++){
             Page i1 = new Page("宝马  x  241", "https://momeak.oss-cn-shenzhen.aliyuncs.com/dear1.png");
             mData.add(i1);
         }

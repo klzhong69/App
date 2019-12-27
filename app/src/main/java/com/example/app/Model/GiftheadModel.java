@@ -34,8 +34,14 @@ public class GiftheadModel {
 
         mData = new ArrayList<Gifthead>();
         map = new HashMap<Integer, Boolean>();
-        for (int i = 0; i < 10; i++) {
-            Gifthead i1 = new Gifthead("https://momeak.oss-cn-shenzhen.aliyuncs.com/h2.jpg", "");
+        for (int i = 0; i < 6; i++) {
+            int sum ;
+            if(i>5){
+                sum = i-5;
+            }else{
+                sum = i+1;
+            }
+            Gifthead i1 = new Gifthead("https://momeak.oss-cn-shenzhen.aliyuncs.com/h"+sum+".jpg", "");
             mData.add(i1);
             map.put(i, false);
         }

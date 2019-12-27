@@ -74,36 +74,6 @@ public class find_make extends AppCompatActivity {
         textView6.setVisibility(View.VISIBLE);
         textView7.setVisibility(View.GONE);
 
-
-        editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
-                if (i == EditorInfo.IME_ACTION_SEND) {
-                    String txt = editText.getText().toString();
-
-
-                    return true;   //返回true，保留软键盘。false，隐藏软键盘
-                }
-                return false;
-            }
-        });
-        TextWatcher watcher = new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        };
-        editText.addTextChangedListener(watcher);
     }
 
     private void init() {
@@ -246,4 +216,9 @@ public class find_make extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        this.finish();
+        overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
+    }
 }

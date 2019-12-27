@@ -14,10 +14,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bruce.pickerview.popwindow.DatePickerPopWin;
 import com.example.app.Entity.MyApp;
+import com.example.app.Sqlentity.Chat;
 import com.example.app.Sqlentity.User;
 import com.example.app.cofig.DateUtil;
 import com.example.app.cofig.Initialization;
 import com.example.app.cofig.Prexiew;
+import com.example.app.dao.mChatDao;
 import com.example.app.dao.mUserDao;
 import com.example.app.gen.DaoSession;
 import com.example.app.utils.Translation;
@@ -26,6 +28,9 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -85,9 +90,9 @@ public class information extends AppCompatActivity {
         ButterKnife.bind(this);
         Initialization.setupDatabaseUser(this);
         Intent intent = getIntent();
-         phone = intent.getStringExtra("phone");
-         pass = intent.getStringExtra("pass");
-        editText.setText("mo");
+        phone = intent.getStringExtra("phone");
+        pass = intent.getStringExtra("pass");
+        editText.setText("");
     }
 
 
@@ -115,9 +120,11 @@ public class information extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.but:
-                if(!editText.getText().toString().equals("")){
-                    okgo();
-                }else{
+                if (!editText.getText().toString().equals("")) {
+                    //okgo();
+                    Intent intent2 = new Intent(information.this, login.class);
+                    startActivity(intent2);
+                } else {
                     Toast.makeText(information.this, "请输入昵称", Toast.LENGTH_SHORT).show();
                 }
                 break;
@@ -149,13 +156,13 @@ public class information extends AppCompatActivity {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        OkGo.<String>post(application.getUrl()+"/app/user/register")
-                .params("phone",phone)
-                .params("password",pass)
-                .params("nickname",editText.getText().toString())
-                .params("gender",sex)
-                .params("birthday",date)
-                .params("avatarUrl","https://momeak.oss-cn-shenzhen.aliyuncs.com/h3.jpg")
+        OkGo.<String>post(application.getUrl() + "/app/user/register")
+                .params("phone", phone)
+                .params("password", pass)
+                .params("nickname", editText.getText().toString())
+                .params("gender", sex)
+                .params("birthday", date)
+                .params("avatarUrl", "https://momeak.oss-cn-shenzhen.aliyuncs.com/h3.jpg")
                 .execute(new StringCallback() {
 
                     @Override
@@ -164,12 +171,16 @@ public class information extends AppCompatActivity {
                         Gson gson = new Gson();
                         Prexiew prexiew = gson.fromJson(response.body(), Prexiew.class);
 
-                        if(prexiew.getCode()==0){
-                            Toast.makeText(information.this, prexiew.getMsg()+"", Toast.LENGTH_SHORT).show();
-                        }else if(prexiew.getCode()==40000){
-                            Toast.makeText(information.this, prexiew.getMsg()+"", Toast.LENGTH_SHORT).show();
-                        }else if(prexiew.getCode()==40004){
-                            Toast.makeText(information.this, prexiew.getMsg()+"", Toast.LENGTH_SHORT).show();
+                        if (prexiew.getCode() == 0) {
+                            Toast.makeText(information.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
+                            Intent intent2 = new Intent(information.this, login.class);
+                            startActivity(intent2);
+                        } else if (prexiew.getCode() == 40000) {
+                            Toast.makeText(information.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
+                        } else if (prexiew.getCode() == 40004) {
+                            Toast.makeText(information.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
+                            Intent intent2 = new Intent(information.this, registered.class);
+                            startActivity(intent2);
                         }
 
 

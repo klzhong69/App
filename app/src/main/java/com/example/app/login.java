@@ -8,15 +8,27 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.app.Entity.MyApp;
 import com.example.app.Sqlentity.User;
+import com.example.app.cofig.DateUtil;
 import com.example.app.cofig.Initialization;
+import com.example.app.cofig.Prexiew;
 import com.example.app.dao.mUserDao;
+import com.google.gson.Gson;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
+import java.text.ParseException;
 import java.util.List;
 
 import butterknife.BindView;
@@ -69,6 +81,7 @@ public class login extends AppCompatActivity {
     TextView title;
     @BindView(R.id.subtitle)
     TextView subtitle;
+    private int type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,14 +91,8 @@ public class login extends AppCompatActivity {
         Initialization.setupDatabaseUser(this);
         title.setText("登陆");
         subtitle.setText("");
-        try {
-            List<User> list = mUserDao.queryAll();
-            for (int i = 0; i < list.size(); i++) {
-                System.out.println("所有的" + list.get(i).getId());
-            }
-
-        } catch (Exception ignored) {
-        }
+        editText.setText("15913420136");
+        editText4.setText("131721..");
 
     }
 
@@ -97,8 +104,9 @@ public class login extends AppCompatActivity {
                 overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
                 break;
             case R.id.but:
+                //okgo();
                 SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
-                sp.edit().putLong("userid", 2L).apply();
+                sp.edit().putLong("userid", 1L).apply();
                 Intent intent1 = new Intent(login.this, MainActivity.class);
                 intent1.putExtra("id", 4);
                 startActivity(intent1);
@@ -121,12 +129,77 @@ public class login extends AppCompatActivity {
                 overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
                 break;
             case R.id.imageView132:
+                type = 2;
                 break;
             case R.id.imageView133:
+                type = 3;
                 break;
             case R.id.imageView134:
+                type = 4;
                 break;
         }
     }
 
+    private void okgo() {
+        MyApp application = ((MyApp) this.getApplicationContext());
+        type = 1;
+        OkGo.<String>post(application.getUrl()+"/app/user/login")
+                .params("account",editText.getText().toString())
+                .params("password",editText4.getText().toString())
+                .params("type",type)
+                .execute(new StringCallback() {
+
+                    @Override
+                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+
+                        Gson gson = new Gson();
+                        Prexiew prexiew = gson.fromJson(response.body(), Prexiew.class);
+
+                        if(prexiew.getCode()==0){
+                            Toast.makeText(login.this, prexiew.getMsg()+"", Toast.LENGTH_SHORT).show();
+
+                            try {
+                                JSONObject jsonObject = new JSONObject(prexiew.getData().toString());
+                                Long id = jsonObject.optLong("uniqueId");
+                                String name = jsonObject.optString("nickname");
+                                String userima = jsonObject.optString("avatarUrl");
+                                String token = jsonObject.optString("token");
+                                application.setToken(token);
+
+                                User user = new User();
+                                user.setName(name);
+                                user.setUsersrc(userima);
+                                user.setState(0);
+                                user.setUserId(id);
+                                mUserDao.insert(user);
+
+
+                                SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
+                                sp.edit().putLong("userid", id).apply();
+                                Intent intent1 = new Intent(login.this, MainActivity.class);
+                                intent1.putExtra("id", 4);
+                                startActivity(intent1);
+                                overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+
+                        }else if(prexiew.getCode()==40000){
+                            Toast.makeText(login.this, prexiew.getMsg()+"", Toast.LENGTH_SHORT).show();
+                        }
+
+
+                    }
+                });
+
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        this.finish();
+        overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
+    }
 }

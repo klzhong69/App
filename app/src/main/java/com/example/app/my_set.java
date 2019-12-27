@@ -93,6 +93,7 @@ public class my_set extends AppCompatActivity {
             case R.id.imageView120:
                 Intent intent1 = new Intent(my_set.this, my_change_pass.class);
                 startActivity(intent1);
+                overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
                 break;
             case R.id.imageView121:
             case R.id.textView138:
@@ -100,24 +101,28 @@ public class my_set extends AppCompatActivity {
                 Intent intent2 = new Intent(my_set.this, my_change_photo.class);
                 intent2.putExtra("butnum",false);
                 startActivity(intent2);
+                overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
                 break;
             case R.id.imageView123:
             case R.id.textView139:
             case R.id.imageView124:
                 Intent intent3 = new Intent(my_set.this, my_push.class);
                 startActivity(intent3);
+                overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
                 break;
             case R.id.imageView125:
             case R.id.textView140:
             case R.id.imageView126:
                 Intent intent4 = new Intent(my_set.this, my_feedback.class);
                 startActivity(intent4);
+                overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
                 break;
             case R.id.imageView127:
             case R.id.textView141:
             case R.id.imageView128:
                 Intent intent5 = new Intent(my_set.this, my_switch.class);
                 startActivity(intent5);
+                overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
                 break;
             case R.id.imageView129:
             case R.id.textView142:
@@ -129,6 +134,7 @@ public class my_set extends AppCompatActivity {
             case R.id.imageView132:
                 Intent intent6 = new Intent(my_set.this, my_about.class);
                 startActivity(intent6);
+                overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
                 break;
             case R.id.but:
                 SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
@@ -160,5 +166,13 @@ public class my_set extends AppCompatActivity {
                     }
                 })
                 .create(mCurrentDialogStyle).show();
+    }
+
+
+
+    @Override
+    public void onBackPressed() {
+        this.finish();
+        overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
     }
 }

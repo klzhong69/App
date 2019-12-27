@@ -74,9 +74,9 @@ public class registered extends AppCompatActivity {
         ButterKnife.bind(this);
         title.setText("立即注册");
         subtitle.setText("");
-        editText4.setText("15913420136");
-        editText5.setText("7364");
-        editText.setText("131721..");
+        editText4.setText("");
+        editText5.setText("");
+        editText.setText("");
     }
 
     @OnClick({R.id.fold, R.id.textView150, R.id.imageView111, R.id.but, R.id.textView159})
@@ -120,5 +120,13 @@ public class registered extends AppCompatActivity {
         }
     }
 
+
+
+
+    @Override
+    public void onBackPressed() {
+        this.finish();
+        overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
+    }
 
 }

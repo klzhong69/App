@@ -40,9 +40,13 @@ public class MessModel {
         mArrayList = new ArrayList<Message>();
 
         try{
-            list = mConverDao.queryAll();
-            for(int i=0;i<list.size();i++){
-                Message i1 = new Message(list.get(i).getSendname(), "你好", "19:20", "3", list.get(i).getSendsrc(), String.valueOf(list.get(i).getType()));
+           // list = mConverDao.queryAll();
+            for(int i=0;i<5;i++){
+                int sum = 0;
+                if(i==0){
+                    sum = 3;
+                }
+                Message i1 = new Message("苗苗"+i, "你好", "19:20", sum+"", "https://momeak.oss-cn-shenzhen.aliyuncs.com/h2.jpg", i+"");
                 mArrayList.add(i1);
 
             }
@@ -75,10 +79,10 @@ public class MessModel {
             public void onItemClick(View view, int position) {
                 if(a==0){
                     Intent intent2 = new Intent(context, chat.class);
-                    intent2.putExtra("conver",list.get(position).getConversations());
-                    intent2.putExtra("sendid",list.get(position).getSendId());
-                    intent2.putExtra("sendname",list.get(position).getSendname());
-                    intent2.putExtra("sendsrc",list.get(position).getSendsrc());
+                    //intent2.putExtra("conver",list.get(position).getConversations());
+                    //intent2.putExtra("sendid",list.get(position).getSendId());
+                    intent2.putExtra("sendname","苗苗"+position);
+                    intent2.putExtra("sendsrc","https://momeak.oss-cn-shenzhen.aliyuncs.com/h2.jpg");
                     context.startActivity(intent2);
                     fragmentActivity.overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
                 }else{

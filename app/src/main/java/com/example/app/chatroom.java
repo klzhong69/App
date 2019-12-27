@@ -5,14 +5,12 @@ import android.graphics.Color;
 import android.net.http.HttpResponseCache;
 import android.os.Bundle;
 import android.text.TextPaint;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -23,6 +21,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.app.Entity.Chats;
 import com.example.app.Entity.Paimai;
 import com.example.app.Entity.Roomtxt;
 import com.example.app.Model.ChatModel;
@@ -34,6 +33,8 @@ import com.example.app.Model.MessFriendsModel;
 import com.example.app.Model.MessModel;
 import com.example.app.Model.PaimaiModel;
 import com.example.app.Sqlentity.Chat;
+import com.example.app.cofig.DateUtil;
+import com.example.app.cofig.KeyboardStateObserver;
 import com.example.app.dao.mChatDao;
 import com.opensource.svgaplayer.SVGADrawable;
 import com.opensource.svgaplayer.SVGADynamicEntity;
@@ -141,10 +142,6 @@ public class chatroom extends AppCompatActivity {
     EditText editTextc1;
     @BindView(R.id.butc1)
     QMUIRoundButton butc1;
-    @BindView(R.id.layoutc1)
-    LinearLayout layoutc1;
-    @BindView(R.id.scrollmessc1)
-    NestedScrollView scrollmessc1;
     @BindView(R.id.relativec1)
     RelativeLayout relativec1;
     @BindView(R.id.component1)
@@ -355,6 +352,8 @@ public class chatroom extends AppCompatActivity {
     SVGAImageView gift2;
     @BindView(R.id.gift)
     ConstraintLayout gift;
+    @BindView(R.id.recyclerc1)
+    RecyclerView recyclerc1;
     private Disposable disposable;
     private chatroom context;
     public static Observer<Integer> observer;
@@ -459,7 +458,7 @@ public class chatroom extends AppCompatActivity {
         }
     }
 
-    @OnClick({R.id.fold, R.id.imageView98, R.id.imageView101, R.id.imageView102, R.id.imageView103, R.id.imageView99, R.id.textView124, R.id.imageView104, R.id.imageView105, R.id.textViewc7t, R.id.butc1, R.id.butc10, R.id.imageView4, R.id.imageViewc1t, R.id.imageViewc2t, R.id.imageViewc5s, R.id.recyclerbutc1, R.id.recyclerbutc2, R.id.recyclerbutc3, R.id.recyclerbutc4, R.id.recyclerbutc5, R.id.recyclerbutc7, R.id.recyclerbutc8, R.id.recyclerbutc8s, R.id.recyclerbutc9, R.id.recyclerbutc10, R.id.recyclerbutc10s, R.id.imageViewc1, R.id.imageViewc2, R.id.imageViewc3, R.id.imageViewc4, R.id.imageViewc5, R.id.imageViewc7, R.id.recyclerc8, R.id.imageViewc9, R.id.recyclerc10})
+    @OnClick({R.id.fold, R.id.imageView98, R.id.imageView101, R.id.imageView102, R.id.imageView103, R.id.imageView99, R.id.textView124, R.id.imageView104, R.id.imageView105, R.id.textViewc7t, R.id.butc1, R.id.butc10, R.id.imageView4, R.id.imageViewc1t, R.id.imageViewc2t, R.id.imageViewc5s, R.id.recyclerbutc1, R.id.recyclerbutc2, R.id.recyclerbutc3, R.id.recyclerbutc4, R.id.recyclerbutc5, R.id.recyclerbutc7, R.id.recyclerbutc8, R.id.recyclerbutc8s, R.id.recyclerbutc9, R.id.recyclerbutc10, R.id.recyclerbutc10s, R.id.imageViewc1, R.id.imageViewc2, R.id.imageViewc3, R.id.imageViewc4, R.id.imageViewc5, R.id.imageViewc7, R.id.recyclerc8, R.id.imageViewc9, R.id.recyclerc10, R.id.relativec1, R.id.relativec2, R.id.relativec3, R.id.relativec4, R.id.relativec5, R.id.relativec7, R.id.relativec9})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.imageView101:
@@ -578,7 +577,9 @@ public class chatroom extends AppCompatActivity {
                 component5.setVisibility(View.VISIBLE);
                 break;
             case R.id.butc1:
-                layoutc1.addView(ChatModel.add(editTextc1.getText().toString(), "https://momeak.oss-cn-shenzhen.aliyuncs.com/dear1.png", "", 0, 1));
+                String time = DateUtil.getCurrentTimeYMDHMS();
+                Chats i1 = new Chats("https://momeak.oss-cn-shenzhen.aliyuncs.com/h4.jpg", editTextc1.getText().toString(), time, 2);
+                ChatModel.Add(recyclerc1,i1);
                 editTextc1.setText("");
                 break;
             case R.id.butc10:
@@ -637,6 +638,13 @@ public class chatroom extends AppCompatActivity {
             case R.id.recyclerc8:
             case R.id.imageViewc9:
             case R.id.recyclerc10:
+            case R.id.relativec1:
+            case R.id.relativec2:
+            case R.id.relativec3:
+            case R.id.relativec4:
+            case R.id.relativec5:
+            case R.id.relativec7:
+            case R.id.relativec9:
                 break;
         }
     }
@@ -672,8 +680,20 @@ public class chatroom extends AppCompatActivity {
                         sendname = "苗苗";
                         sendsrc = "https://momeak.oss-cn-shenzhen.aliyuncs.com/h2.jpg";
                         textViewc1.setText(sendname);
-                        ChatModel.set(scrollmessc1, editTextc1, LayoutInflater.from(chatroom.this), 1);
-                        ChatModel.initData(layoutc1, conver);
+                        ChatModel.initData();
+                        ChatModel.initrecycler(chatroom.this, recyclerc1);
+                        KeyboardStateObserver.getKeyboardStateObserver(chatroom.this).
+                                setKeyboardVisibilityListener(new KeyboardStateObserver.OnKeyboardVisibilityListener() {
+                                    @Override
+                                    public void onKeyboardShow() {
+                                        ChatModel.recly(recyclerc1);
+                                    }
+
+                                    @Override
+                                    public void onKeyboardHide() {
+                                        ChatModel.recly(recyclerc1);
+                                    }
+                                });
                         break;
                     case 6:
                         break;
@@ -791,10 +811,16 @@ public class chatroom extends AppCompatActivity {
             @Override
             public void onNext(Integer integer) {
 
+
+                String time = DateUtil.getCurrentTimeYMDHMS();
                 String txt = editTextc1.getText().toString();
-                layoutc1.addView(ChatModel.add(txt, "https://momeak.oss-cn-shenzhen.aliyuncs.com/h4.jpg", "", 1, 0));
-                editTextc1.setText("");
-                Chat chat = new Chat();
+                if(txt.equals("")){
+                    Chats i1 = new Chats("https://momeak.oss-cn-shenzhen.aliyuncs.com/h4.jpg", txt, time, 2);
+                    ChatModel.Add(recyclerc1, i1);
+                    editTextc1.setText("");
+                }
+
+                /*Chat chat = new Chat();
                 chat.setConversation(conver);
                 chat.setData(System.currentTimeMillis());
                 chat.setReceiveId(sendid);
@@ -803,7 +829,7 @@ public class chatroom extends AppCompatActivity {
                 chat.setSendsrc("https://momeak.oss-cn-shenzhen.aliyuncs.com/h4.jpg");
                 chat.setTxt(txt);
                 chat.setState(1);
-                mChatDao.insert(chat);
+                mChatDao.insert(chat);*/
 
             }
 

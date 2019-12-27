@@ -24,7 +24,6 @@ public class Prexiew {
         return data;
     }
 
-
     public Object getCdn() {
         return cdn;
     }

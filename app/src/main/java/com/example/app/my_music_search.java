@@ -129,5 +129,14 @@ public class my_music_search extends AppCompatActivity {
     @OnClick(R.id.imageView37)
     public void onViewClicked() {
         this.finish();
+        overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
+    }
+
+
+
+    @Override
+    public void onBackPressed() {
+        this.finish();
+        overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
     }
 }
