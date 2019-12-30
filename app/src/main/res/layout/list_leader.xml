@@ -32,21 +32,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/imageView18"
-            android:layout_marginStart="@dimen/dp_20"
-            android:layout_marginTop="@dimen/dp_5"
-            android:layout_toEndOf="@+id/imageView18"
-            android:text="胡楠健身"
-            android:textSize="@dimen/sp_20" />
-
-        <ImageView
-            android:id="@+id/imageView66"
-            android:layout_width="@dimen/dp_40"
-            android:layout_height="@dimen/dp_20"
             android:layout_alignBottom="@+id/imageView18"
             android:layout_marginStart="@dimen/dp_20"
-            android:layout_marginBottom="@dimen/dp_10"
             android:layout_toEndOf="@+id/imageView18"
-            app:srcCompat="@drawable/l3" />
+            android:gravity="center"
+            android:text="胡楠健身"
+            android:textSize="@dimen/sp_20" />
 
         <TextView
             android:id="@+id/textView67"

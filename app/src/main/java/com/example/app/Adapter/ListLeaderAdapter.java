@@ -54,10 +54,9 @@ public class ListLeaderAdapter extends RecyclerView.Adapter {
 
         ((ListLeaderAdapter.DemoViewHolder) holder).lerder.setText(entity.getLerder());
         ((ListLeaderAdapter.DemoViewHolder) holder).name.setText(entity.getName());
-        ((ListLeaderAdapter.DemoViewHolder) holder).grade.setText(entity.getGrade());
+        ((ListLeaderAdapter.DemoViewHolder) holder).type.setText(entity.getType());
         ((ListLeaderAdapter.DemoViewHolder) holder).sum.setText(entity.getSum());
         Glide.with(mContext).load(entity.getUserima()).into(((ListLeaderAdapter.DemoViewHolder)holder).userima);
-        Glide.with(mContext).load(R.drawable.l3).into(((ListLeaderAdapter.DemoViewHolder)holder).type);
         if (mOnItemClickListener != null) {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -88,18 +87,16 @@ public class ListLeaderAdapter extends RecyclerView.Adapter {
         private TextView lerder;
         private ImageView userima;
         private TextView name;
-        private TextView grade;
-        private ImageView type;
+        private TextView type;
         private TextView sum;
 
         public DemoViewHolder(View itemView) {
             super(itemView);
             lerder = (TextView) itemView.findViewById(R.id.textView67);
             name = (TextView) itemView.findViewById(R.id.textView66);
-            grade = (TextView) itemView.findViewById(R.id.textView113);
-            sum = (TextView) itemView.findViewById(R.id.textView114);
+            sum = (TextView) itemView.findViewById(R.id.textView113);
+            type = (TextView) itemView.findViewById(R.id.textView114);
             userima = (ImageView) itemView.findViewById(R.id.imageView18);
-            type = (ImageView) itemView.findViewById(R.id.imageView66);
 
         }
     }

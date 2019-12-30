@@ -132,28 +132,31 @@
                     android:layout_alignStart="@+id/imageView28"
                     android:layout_alignEnd="@+id/imageView28"
                     android:layout_marginTop="@dimen/dp_20"
+                    android:maxLines="1"
+                    android:ellipsize="end"
                     android:gravity="center"
                     android:text="听南"
                     android:textSize="@dimen/sp_20" />
 
-                <ImageView
-                    android:id="@+id/imageView92"
-                    android:layout_width="@dimen/dp_40"
-                    android:layout_height="@dimen/dp_20"
+                <TextView
+                    android:id="@+id/textView92"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_below="@+id/textView102"
                     android:layout_alignStart="@+id/textView102"
                     android:layout_marginTop="@dimen/dp_5"
-                    app:srcCompat="@drawable/l3" />
+                    android:text="财富值"
+                    android:textColor="#777777"
+                    android:textSize="@dimen/sp_16"/>
 
                 <TextView
                     android:id="@+id/textView103"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/textView102"
-                    android:layout_alignEnd="@+id/textView102"
+                    android:layout_alignTop="@+id/textView92"
+                    android:layout_alignBottom="@+id/textView92"
                     android:layout_marginStart="@dimen/dp_10"
-                    android:layout_marginTop="@dimen/dp_5"
-                    android:layout_toEndOf="@+id/imageView92"
+                    android:layout_toEndOf="@+id/textView92"
                     android:gravity="center"
                     android:text="50325"
                     android:textColor="#777777"
@@ -169,18 +172,22 @@
                     android:layout_alignEnd="@+id/imageView90"
                     android:layout_marginTop="@dimen/dp_40"
                     android:gravity="center"
+                    android:maxLines="1"
+                    android:ellipsize="end"
                     android:text="听南"
                     android:textSize="@dimen/sp_20" />
 
-                <ImageView
-                    android:id="@+id/imageView93"
-                    android:layout_width="@dimen/dp_40"
-                    android:layout_height="@dimen/dp_20"
+                <TextView
+                    android:id="@+id/textView93"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_below="@+id/textView104"
                     android:layout_alignStart="@+id/textView104"
                     android:layout_marginStart="@dimen/dp_10"
                     android:layout_marginTop="@dimen/dp_5"
-                    app:srcCompat="@drawable/l3" />
+                    android:text="财富值"
+                    android:textColor="#777777"
+                    android:textSize="@dimen/sp_16" />
 
                 <TextView
                     android:id="@+id/textView105"
@@ -190,7 +197,7 @@
                     android:layout_alignEnd="@+id/textView104"
                     android:layout_marginStart="@dimen/dp_10"
                     android:layout_marginTop="@dimen/dp_5"
-                    android:layout_toEndOf="@+id/imageView93"
+                    android:layout_toEndOf="@+id/textView93"
                     android:gravity="center"
                     android:text="60395"
                     android:textColor="#777777"
@@ -206,27 +213,30 @@
                     android:layout_alignEnd="@+id/imageView91"
                     android:layout_marginTop="@dimen/dp_20"
                     android:gravity="center"
+                    android:maxLines="1"
+                    android:ellipsize="end"
                     android:text="听南"
                     android:textSize="@dimen/sp_20" />
 
-                <ImageView
-                    android:id="@+id/imageView94"
-                    android:layout_width="@dimen/dp_40"
-                    android:layout_height="@dimen/dp_20"
+                <TextView
+                    android:id="@+id/textView94"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_below="@+id/textView106"
                     android:layout_alignStart="@+id/textView106"
                     android:layout_marginTop="@dimen/dp_5"
-                    app:srcCompat="@drawable/l3" />
+                    android:text="财富值"
+                    android:textColor="#777777"
+                    android:textSize="@dimen/sp_16" />
 
                 <TextView
                     android:id="@+id/textView107"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/textView106"
-                    android:layout_alignEnd="@+id/textView106"
                     android:layout_marginStart="@dimen/dp_10"
                     android:layout_marginTop="@dimen/dp_5"
-                    android:layout_toEndOf="@+id/imageView94"
+                    android:layout_toEndOf="@+id/textView94"
                     android:gravity="center"
                     android:text="23580"
                     android:textColor="#777777"
@@ -473,24 +483,15 @@
                     android:id="@+id/textView68"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_above="@+id/textView66"
                     android:layout_alignTop="@+id/imageView66"
-                    android:layout_alignBottom="@+id/imageView66"
-                    android:layout_marginStart="@dimen/dp_5"
-                    android:layout_toEndOf="@+id/imageView66"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginBottom="2dp"
+                    android:layout_toEndOf="@+id/imageView21"
                     android:gravity="center_vertical"
                     android:text="8630"
                     android:textColor="#ffffff"
                     android:textSize="@dimen/sp_16" />
-
-                <ImageView
-                    android:id="@+id/imageView66"
-                    android:layout_width="@dimen/dp_40"
-                    android:layout_height="@dimen/dp_20"
-                    android:layout_alignTop="@+id/imageView21"
-                    android:layout_marginStart="@dimen/dp_10"
-                    android:layout_marginTop="@dimen/dp_5"
-                    android:layout_toEndOf="@+id/imageView21"
-                    app:srcCompat="@drawable/l3" />
 
                 <TextView
                     android:id="@+id/textView113"

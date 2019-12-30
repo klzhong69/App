@@ -56,12 +56,13 @@
 
         <ImageView
             android:id="@+id/imageView79"
-            android:layout_width="@dimen/dp_30"
+            android:layout_width="@dimen/dp_80"
             android:layout_height="@dimen/dp_30"
-            android:layout_alignTop="@+id/imageView18"
-            android:layout_alignBottom="@+id/imageView18"
+            android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="@dimen/dp_20"
+            android:layout_alignParentBottom="true"
+            android:paddingStart="@dimen/dp_20"
+            android:paddingEnd="@dimen/dp_20"
             app:srcCompat="@drawable/siliao" />
 
 

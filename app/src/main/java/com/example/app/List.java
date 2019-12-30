@@ -1,7 +1,10 @@
 package com.example.app;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,17 +17,34 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.example.app.Entity.Listleader;
 import com.example.app.Model.ListModel;
+import com.google.gson.JsonArray;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.scwang.smart.refresh.header.MaterialHeader;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.util.Objects;
+import java.util.concurrent.Callable;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.ObservableSource;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 
 public class List extends Fragment {
     Unbinder unbinder;
@@ -44,20 +64,14 @@ public class List extends Fragment {
     ImageView imageView91;
     @BindView(R.id.textView102)
     TextView textView102;
-    @BindView(R.id.imageView92)
-    ImageView imageView92;
     @BindView(R.id.textView103)
     TextView textView103;
     @BindView(R.id.textView104)
     TextView textView104;
-    @BindView(R.id.imageView93)
-    ImageView imageView93;
     @BindView(R.id.textView105)
     TextView textView105;
     @BindView(R.id.textView106)
     TextView textView106;
-    @BindView(R.id.imageView94)
-    ImageView imageView94;
     @BindView(R.id.textView107)
     TextView textView107;
     @BindView(R.id.textView108)
@@ -88,8 +102,6 @@ public class List extends Fragment {
     TextView textView66;
     @BindView(R.id.textView68)
     TextView textView68;
-    @BindView(R.id.imageView66)
-    ImageView imageView66;
     @BindView(R.id.textView113)
     TextView textView113;
     @BindView(R.id.textView114)
@@ -108,8 +120,16 @@ public class List extends Fragment {
     TextView textView121;
     @BindView(R.id.textView122)
     TextView textView122;
+    @BindView(R.id.textView92)
+    TextView textView92;
+    @BindView(R.id.textView93)
+    TextView textView93;
+    @BindView(R.id.textView94)
+    TextView textView94;
     private Context context;
-    private int a =0;
+    private int rankListCategory = 1;
+    private int durationCategory = 2;
+    public static Observer<JsonArray> observer;
 
     @Nullable
     @Override
@@ -118,47 +138,110 @@ public class List extends Fragment {
         unbinder = ButterKnife.bind(this, view);
 
         context = getContext();
-        ListModel.initData(0,0);
+        ListModel.okgo(context, rankListCategory, durationCategory);
         ListModel.initrecycler(context, recycler13);
+
         textView108.setVisibility(View.GONE);
         textView109.setVisibility(View.VISIBLE);
         textView118.setVisibility(View.VISIBLE);
         textView119.setVisibility(View.GONE);
         imageView18.setVisibility(View.VISIBLE);
-        textView110.setVisibility(View.GONE);
-        textView120.setVisibility(View.VISIBLE);
-        textView111.setVisibility(View.VISIBLE);
-        textView121.setVisibility(View.GONE);
+        textView110.setVisibility(View.VISIBLE);
+        textView120.setVisibility(View.GONE);
+        textView111.setVisibility(View.GONE);
+        textView121.setVisibility(View.VISIBLE);
         textView112.setVisibility(View.VISIBLE);
         textView122.setVisibility(View.GONE);
+
         refreshLayout.setRefreshHeader(new MaterialHeader(getContext()).setScrollableWhenRefreshing(true));
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshlayout) {
-                //refreshlayout.autoRefresh();
-                refreshlayout.finishRefresh(2000);
+                refreshlayout.autoRefresh();
+                ListModel.okgo(context, rankListCategory, durationCategory);
+                ListModel.initrecycler(context, recycler13);
+                refreshlayout.finishRefresh();
 
-             /*   //创建Retrofit对象
-                Observable.create(new ObservableOnSubscribe<Listleader>() {
-                    @Override
-                    public void subscribe(ObservableEmitter<Listleader> emitter) throws Exception {
-
-
-                    }
-                }).observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Consumer<Listleader>() {
-                            @Override
-                            public void accept(Listleader entity) throws Exception {
-                                //回调后在UI界面上展示出来
-                                mAdapter.addData(mArrayList.size(), entity);
-                                refreshlayout.finishLoadMore();
-                            }
-                        });*/
             }
         });
 
 
+         observer = new Observer<JsonArray>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(JsonArray integer) {
+                initData(integer);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        };
+
+
+
         return view;
+    }
+
+
+
+    private void initData(JsonArray jsonArray) {
+        SharedPreferences sp = Objects.requireNonNull(getContext()).getSharedPreferences("User", Context.MODE_PRIVATE);
+       // Long userid = sp.getLong("userid", 0);
+        Long userid = Long.valueOf("923883237");
+        if (rankListCategory == 1) {
+            textView93.setText("财富值");
+            textView92.setText("财富值");
+            textView94.setText("财富值");
+        } else if (rankListCategory == 2) {
+            textView93.setText("魅力值");
+            textView92.setText("魅力值");
+            textView94.setText("魅力值");
+        }
+        for (int i = 0; i < jsonArray.size(); i++) {
+            if (i == 0) {
+                Glide.with(this).load(jsonArray.get(i).getAsJsonObject().get("avatarUrl").getAsString()).into(imageView87);
+                textView104.setText(jsonArray.get(i).getAsJsonObject().get("nickname").getAsString());
+                textView105.setText(jsonArray.get(i).getAsJsonObject().get("count").getAsString());
+
+            } else if (i == 1) {
+                Glide.with(this).load(jsonArray.get(i).getAsJsonObject().get("avatarUrl").getAsString()).into(imageView28);
+                textView102.setText(jsonArray.get(i).getAsJsonObject().get("nickname").getAsString());
+                textView103.setText(jsonArray.get(i).getAsJsonObject().get("count").getAsString());
+
+            } else if (i == 2) {
+                Glide.with(this).load(jsonArray.get(i).getAsJsonObject().get("avatarUrl").getAsString()).into(imageView88);
+                textView106.setText(jsonArray.get(i).getAsJsonObject().get("nickname").getAsString());
+                textView107.setText(jsonArray.get(i).getAsJsonObject().get("count").getAsString());
+
+            }
+
+            if (jsonArray.get(i).getAsJsonObject().get("uniqueId").getAsLong() == userid) {
+                textView67.setText(i + 1 + "");
+                Glide.with(this).load(jsonArray.get(i).getAsJsonObject().get("avatarUrl").getAsString()).into(imageView21);
+                textView66.setText(jsonArray.get(i).getAsJsonObject().get("nickname").getAsString());
+                textView68.setText(jsonArray.get(i).getAsJsonObject().get("count").getAsString());
+                if (i == 0) {
+                    textView113.setText(0 + "");
+                } else {
+                    Long lon = jsonArray.get(i-1).getAsJsonObject().get("count").getAsLong() - jsonArray.get(i).getAsJsonObject().get("count").getAsLong();
+                    textView113.setText(lon + "");
+                }
+
+            }
+
+        }
+
     }
 
     @Override
@@ -182,92 +265,14 @@ public class List extends Fragment {
         unbinder.unbind();
     }
 
-    public void request() {
-
-       /* //步骤4:创建Retrofit对象
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://fy.iciba.com/") // 设置 网络请求 Url
-                .addConverterFactory(GsonConverterFactory.create()) //设置使用Gson解析(记得加入依赖)
-                .build();
-
-        // 步骤5:创建 网络请求接口 的实例
-        IService request = retrofit.create(IService.class);
-
-        //对 发送请求 进行封装
-        Call<Translation> call = request.getCall();
-
-        //步骤6:发送网络请求(异步)
-        call.enqueue(new Callback<Translation>() {
-            //请求成功时回调
-            @Override
-            public void onResponse(Call<Translation> call, Response<Translation> response) {
-                // 步骤7：处理返回的数据结果
-                response.body().show();
-                System.out.println(response.body());
-            }
-
-            //请求失败时回调
-            @Override
-            public void onFailure(Call<Translation> call, Throwable throwable) {
-                System.out.println("连接失败");
-                System.out.println(throwable.getMessage());
-            }
-        });
-    }*/
-
-        /*OkGo.<LzyResponse<ServerModel>>get(Urls.URL_JSONOBJECT)//
-                .headers("aaa", "111")//
-                .params("bbb", "222")//
-                .converter(new JsonConvert<LzyResponse<ServerModel>>() {})//
-                .adapt(new ObservableBody<LzyResponse<ServerModel>>())//
-                .subscribeOn(Schedulers.io())//
-                .doOnSubscribe(new Consumer<Disposable>() {
-                    @Override
-                    public void accept(@NonNull Disposable disposable) throws Exception {
-                        showLoading();
-                    }
-                })//
-                .map(new Function<LzyResponse<ServerModel>, ServerModel>() {
-                    @Override
-                    public ServerModel apply(@NonNull LzyResponse<ServerModel> response) throws Exception {
-                        return response.data;
-                    }
-                })//
-                .observeOn(AndroidSchedulers.mainThread())//
-                .subscribe(new Observer<ServerModel>() {
-                    @Override
-                    public void onSubscribe(@NonNull Disposable d) {
-                        addDisposable(d);
-                    }
-
-                    @Override
-                    public void onNext(@NonNull ServerModel serverModel) {
-                        handleResponse(serverModel);
-                    }
-
-                    @Override
-                    public void onError(@NonNull Throwable e) {
-                        e.printStackTrace();            //请求失败
-                        showToast("请求失败");
-                        handleError(null);
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        dismissLoading();
-                    }
-                });*/
-
-    }
-
 
     @OnClick({R.id.textView108, R.id.textView109, R.id.textView118, R.id.textView119, R.id.textView110, R.id.textView111, R.id.textView112, R.id.textView120, R.id.textView121, R.id.textView122})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.textView108:
-                a=0;
-                ListModel.initData(0,0);
-                ListModel.initrecycler(context, recycler13);
+                rankListCategory = 1;
+                ListModel.okgo(context, rankListCategory, durationCategory);
+                ListModel.initrecycler(context,recycler13);
                 textView108.setVisibility(View.GONE);
                 textView109.setVisibility(View.VISIBLE);
                 textView118.setVisibility(View.VISIBLE);
@@ -275,9 +280,9 @@ public class List extends Fragment {
                 imageView18.setVisibility(View.VISIBLE);
                 break;
             case R.id.textView109:
-                a=1;
-                ListModel.initData(1,0);
-                ListModel.initrecycler(context, recycler13);
+                rankListCategory = 2;
+                ListModel.okgo(context, rankListCategory, durationCategory);
+                ListModel.initrecycler(context,recycler13);
                 textView108.setVisibility(View.VISIBLE);
                 textView109.setVisibility(View.GONE);
                 textView118.setVisibility(View.GONE);
@@ -285,18 +290,19 @@ public class List extends Fragment {
                 imageView19.setVisibility(View.VISIBLE);
                 break;
             case R.id.textView118:
-                a=0;
-                ListModel.initData(0,0);
-                ListModel.initrecycler(context, recycler13);
+                rankListCategory = 1;
+                ListModel.okgo(context, rankListCategory, durationCategory);
+                ListModel.initrecycler(context,recycler13);
                 break;
             case R.id.textView119:
-                a=1;
-                ListModel.initData(1,0);
-                ListModel.initrecycler(context, recycler13);
+                rankListCategory = 2;
+                ListModel.okgo(context, rankListCategory, durationCategory);
+                ListModel.initrecycler(context,recycler13);
                 break;
             case R.id.textView110:
-                ListModel.initData(a,0);
-                ListModel.initrecycler(context, recycler13);
+                durationCategory = 1;
+                ListModel.okgo(context, rankListCategory, durationCategory);
+                ListModel.initrecycler(context,recycler13);
                 textView110.setVisibility(View.GONE);
                 textView120.setVisibility(View.VISIBLE);
                 textView111.setVisibility(View.VISIBLE);
@@ -305,8 +311,9 @@ public class List extends Fragment {
                 textView122.setVisibility(View.GONE);
                 break;
             case R.id.textView111:
-                ListModel.initData(a,1);
-                ListModel.initrecycler(context, recycler13);
+                durationCategory = 2;
+                ListModel.okgo(context, rankListCategory, durationCategory);
+                ListModel.initrecycler(context,recycler13);
                 textView110.setVisibility(View.VISIBLE);
                 textView120.setVisibility(View.GONE);
                 textView111.setVisibility(View.GONE);
@@ -315,8 +322,9 @@ public class List extends Fragment {
                 textView122.setVisibility(View.GONE);
                 break;
             case R.id.textView112:
-                ListModel.initData(a,2);
-                ListModel.initrecycler(context, recycler13);
+                durationCategory = 3;
+                ListModel.okgo(context, rankListCategory, durationCategory);
+                ListModel.initrecycler(context,recycler13);
                 textView110.setVisibility(View.VISIBLE);
                 textView120.setVisibility(View.GONE);
                 textView111.setVisibility(View.VISIBLE);
@@ -325,16 +333,19 @@ public class List extends Fragment {
                 textView122.setVisibility(View.VISIBLE);
                 break;
             case R.id.textView120:
-                ListModel.initData(a,0);
-                ListModel.initrecycler(context, recycler13);
+                durationCategory = 1;
+                ListModel.okgo(context, rankListCategory, durationCategory);
+                ListModel.initrecycler(context,recycler13);
                 break;
             case R.id.textView121:
-                ListModel.initData(a,1);
-                ListModel.initrecycler(context, recycler13);
+                durationCategory = 2;
+                ListModel.okgo(context, rankListCategory, durationCategory);
+                ListModel.initrecycler(context,recycler13);
                 break;
             case R.id.textView122:
-                ListModel.initData(a,2);
-                ListModel.initrecycler(context, recycler13);
+                durationCategory = 3;
+                ListModel.okgo(context, rankListCategory, durationCategory);
+                ListModel.initrecycler(context,recycler13);
                 break;
         }
     }

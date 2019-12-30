@@ -1,13 +1,21 @@
 package com.example.app;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.app.Entity.MyApp;
+import com.example.app.cofig.Preview;
+import com.google.gson.Gson;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
@@ -43,6 +51,9 @@ public class my_diamond extends AppCompatActivity {
         ButterKnife.bind(this);
         title.setText("我的钻石");
         subtitle.setText("");
+        Intent intent = getIntent();
+        String diamond = intent.getStringExtra("diamond");
+        textView59.setText(diamond);
     }
 
     @OnClick({R.id.fold, R.id.subtitle, R.id.but, R.id.buts})
@@ -62,6 +73,8 @@ public class my_diamond extends AppCompatActivity {
                 break;
         }
     }
+
+
 
     @Override
     public void onBackPressed() {

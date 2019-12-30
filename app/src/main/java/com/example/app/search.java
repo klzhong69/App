@@ -45,6 +45,7 @@ public class search extends AppCompatActivity {
     ImageView imageView147;
     private ArrayList<Searchitem> mArrayList;
     private SharedPreferences sp;
+    private String Text;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +83,7 @@ public class search extends AppCompatActivity {
             @Override
             public void onItemClick(View view, int position) {
                 ImageView imageView =  view.findViewById(R.id.imageView146);
+                TextView textView =  view.findViewById(R.id.textView177);
                 imageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -103,10 +105,24 @@ public class search extends AppCompatActivity {
 
                     }
                 });
+
+                textView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        Intent intent3 = new Intent(search.this, family_search.class);
+                        intent3.putExtra("searchtxt",mArrayList.get(position).getTxt());
+                        startActivity(intent3);
+
+                    }
+                });
+
             }
 
             @Override
             public void onItemLongClick(View view, int position) {
+
+
             }
         });
 
@@ -142,7 +158,7 @@ public class search extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextChange(String queryText) {
-                System.out.println("onQueryTextChange:" + queryText);
+                 Text = queryText;
                 return true;
             }
 
@@ -171,7 +187,6 @@ public class search extends AppCompatActivity {
         textView178.setVisibility(View.VISIBLE);
         imageView147.setVisibility(View.VISIBLE);
         String user_json = sp.getString("user_list","");
-        System.out.println("user_list"+user_json);
         if(user_json.equals("")){
             textView173.setVisibility(View.GONE);
             recyclerView3.setVisibility(View.GONE);

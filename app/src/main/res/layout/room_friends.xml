@@ -30,28 +30,13 @@
         android:background="@drawable/ima" />
 
     <TextView
-        android:id="@+id/textViewc2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/recyclerbutc2"
-        android:layout_alignBottom="@+id/imageViewc2"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="@dimen/dp_200"
-        android:gravity="center"
-        android:text="好友"
-        android:textColor="#ffffff"
-        android:textSize="@dimen/sp_24" />
-
-    <TextView
         android:id="@+id/textViewc2s"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_below="@+id/recyclerbutc2"
         android:layout_alignBottom="@+id/imageViewc2"
         android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="@dimen/dp_240"
-        android:layout_marginEnd="@dimen/dp_240"
+        android:layout_marginStart="@dimen/dp_220"
         android:gravity="center"
         android:text="关注"
         android:textColor="#ffffff"
@@ -64,11 +49,37 @@
         android:layout_below="@+id/recyclerbutc2"
         android:layout_alignBottom="@+id/imageViewc2"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="@dimen/dp_320"
+        android:layout_marginStart="@dimen/dp_300"
         android:gravity="center"
         android:text="粉丝"
         android:textColor="#ffffff"
         android:textSize="@dimen/sp_20" />
+
+    <TextView
+        android:id="@+id/textViewc2d"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/recyclerbutc2"
+        android:layout_alignBottom="@+id/imageViewc2"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="@dimen/dp_220"
+        android:gravity="center"
+        android:text="关注"
+        android:textColor="#ffffff"
+        android:textSize="@dimen/sp_24" />
+
+    <TextView
+        android:id="@+id/textViewc2f"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/recyclerbutc2"
+        android:layout_alignBottom="@+id/imageViewc2"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="@dimen/dp_300"
+        android:gravity="center"
+        android:text="粉丝"
+        android:textColor="#ffffff"
+        android:textSize="@dimen/sp_24" />
 
     <RelativeLayout
         android:id="@+id/relativec2"

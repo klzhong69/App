@@ -1,16 +1,23 @@
 package com.example.app;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.app.Entity.MyApp;
 import com.example.app.Model.HomePageModel;
+import com.example.app.cofig.Preview;
+import com.google.gson.Gson;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 
 import butterknife.BindView;
@@ -160,7 +167,7 @@ public class homepage extends AppCompatActivity {
     }
 
 
-    @OnClick({R.id.fold, R.id.subtitle})
+    @OnClick({R.id.fold, R.id.subtitle,R.id.imageView34,R.id.textView31,R.id.imageView36,R.id.textView32})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fold:
@@ -170,8 +177,45 @@ public class homepage extends AppCompatActivity {
             case R.id.subtitle:
 
                 break;
+            case R.id.imageView34:
+            case R.id.textView31:
+                okgo();
+                break;
+            case R.id.imageView36:
+            case R.id.textView32:
+                Intent intent1 = new Intent(this, chat.class);
+                //intent1.putExtra("sendname",mArrayList.get(position).getName());
+               // intent1.putExtra("sendsrc",mArrayList.get(position).getImagesrc());
+                startActivity(intent1);
+                break;
         }
     }
+
+    private void okgo() {
+        MyApp application = ((MyApp) this.getApplicationContext());
+        OkGo.<String>post(application.getUrl()+"/app/user/follow?token="+application.getToken())
+                .params("userId","923883237")
+                .params("followId","692240405")
+                .execute(new StringCallback() {
+
+                    @Override
+                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+
+                        Gson gson = new Gson();
+                        Preview prexiew = gson.fromJson(response.body(), Preview.class);
+
+                        if(prexiew.getCode()==0){
+                            Toast.makeText(homepage.this, prexiew.getMsg()+"", Toast.LENGTH_SHORT).show();
+
+                        }else if(prexiew.getCode()==40000){
+                            Toast.makeText(homepage.this, prexiew.getMsg()+"", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                });
+
+    }
+
 
     @Override
     public void onBackPressed() {

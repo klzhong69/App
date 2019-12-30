@@ -1,5 +1,8 @@
 package com.example.app;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -14,8 +17,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.app.Adapter.Package1Adapter;
 import com.example.app.Adapter.Package2Adapter;
+import com.example.app.Entity.Friends;
+import com.example.app.Entity.MyApp;
 import com.example.app.Entity.Package1;
 import com.example.app.Entity.Package2;
+import com.example.app.cofig.DateUtil;
+import com.example.app.cofig.Preview;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
 
 import java.util.ArrayList;
 
@@ -42,10 +54,18 @@ public class my_package extends AppCompatActivity {
     RelativeLayout relativeLayout9;
     @BindView(R.id.textView72)
     TextView textView72;
+    @BindView(R.id.textView73)
+    TextView textView73;
+    @BindView(R.id.recycler10)
+    RecyclerView recycler10;
+    @BindView(R.id.relativeLayout10)
+    RelativeLayout relativeLayout10;
     private ArrayList<Package1> mData;
     private Package1Adapter mAdapter;
     private Package2Adapter mAdapters;
+    private Package2Adapter mAdaptert;
     private ArrayList<Package2> mDatas;
+    private ArrayList<Package2> mDatat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +75,9 @@ public class my_package extends AppCompatActivity {
         initData();
         title.setText("我的包裹");
         subtitle.setText("");
+
         init();
+        inits();
         //创建适配器，将数据传递给适配器
         mAdapter = new Package1Adapter(this, mData);
         //设置适配器adapter
@@ -135,26 +157,47 @@ public class my_package extends AppCompatActivity {
         recycler9.setItemAnimator(defaultItemAnimator);
     }
 
-    private void initData() {
-        mData = new ArrayList<Package1>();
-        mDatas = new ArrayList<Package2>();
 
-        for (int i = 0; i < 5; i++) {
-            Package1 i1 = new Package1("https://momeak.oss-cn-shenzhen.aliyuncs.com/h2.jpg", "苗苗");
-            mData.add(i1);
-        }
+    private void inits() {
+        //创建适配器，将数据传递给适配器
+        mAdaptert = new Package2Adapter(this, mDatat);
+        //设置适配器adapter
+        recycler10.setAdapter(mAdaptert);
 
-        Package1 i1 = new Package1("0", "");
-        mData.add(mData.size(), i1);
+        //多列布局
+        GridLayoutManager mLayoutManager = new GridLayoutManager(this, 4);
+        recycler10.setLayoutManager(mLayoutManager);
 
-        for (int i = 0; i < 4; i++) {
-            Package2 i2 = new Package2("https://momeak.oss-cn-shenzhen.aliyuncs.com/h3.jpg", "苗苗", "有效期:2019-12-30");
-            mDatas.add(i2);
-        }
 
-        Package2 i2 = new Package2("0", "", "");
-        mDatas.add(mDatas.size(), i2);
+        recycler10.setItemAnimator(new DefaultItemAnimator());
+
+        mAdaptert.setOnItemClickListener(new Package2Adapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                int del = mDatat.size() - 1;
+                if (position == del) {
+                    Toast.makeText(my_package.this, "添加图片", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(my_package.this, position + " click", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+            @Override
+            public void onItemLongClick(View view, int position) {
+
+            }
+        });
+
+        /**
+         * 既然是动画，就会有时间，我们把动画执行时间变大一点来看一看效果
+         */
+        DefaultItemAnimator defaultItemAnimator = new DefaultItemAnimator();
+        defaultItemAnimator.setAddDuration(200);
+        defaultItemAnimator.setRemoveDuration(200);
+        recycler10.setItemAnimator(defaultItemAnimator);
     }
+
 
     @OnClick({R.id.fold, R.id.title, R.id.subtitle})
     public void onViewClicked(View view) {
@@ -172,6 +215,59 @@ public class my_package extends AppCompatActivity {
         }
     }
 
+
+    private void initData() {
+        mData = new ArrayList<Package1>();
+        mDatas = new ArrayList<Package2>();
+        mDatat = new ArrayList<Package2>();
+
+        SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
+        // Long userid = sp.getLong("userid", 0);
+        Long userid = Long.valueOf("923883237");
+        MyApp application = ((MyApp) getApplicationContext());
+
+        OkGo.<String>post(application.getUrl() + "/app/user/getPackage?token=" + application.getToken())
+                .params("userId", userid)
+                .execute(new StringCallback() {
+
+                    @Override
+                    public void onSuccess(Response<String> response) {
+
+                        Gson gson = new Gson();
+                        Preview prexiew = gson.fromJson(response.body(), Preview.class);
+
+                        if (prexiew.getCode() == 0) {
+
+
+                            JsonArray jsonArray1 = prexiew.getData().getAsJsonArray("gifts");
+                            JsonArray jsonArray2 = prexiew.getData().getAsJsonArray("headwears");
+                            JsonArray jsonArray3 = prexiew.getData().getAsJsonArray("friendCards");
+
+                            for (int i = 0; i < jsonArray1.size(); i++) {
+                                Package1 i1 = new Package1(jsonArray1.get(i).getAsJsonObject().get("picUrl").getAsString(), jsonArray1.get(i).getAsJsonObject().get("cardName").getAsString());
+                                mData.add(i1);
+                            }
+
+                            for (int i = 0; i < jsonArray2.size(); i++) {
+                                Package2 i2 = new Package2(jsonArray2.get(i).getAsJsonObject().get("smallPicUrl").getAsString(), jsonArray2.get(i).getAsJsonObject().get("giftName").getAsString(), "数量:"+jsonArray2.get(i).getAsJsonObject().get("amount").getAsString());
+                                mDatas.add(i2);
+                            }
+
+                            for (int i = 0; i < jsonArray3.size(); i++) {
+                                Package2 i3 = new Package2(jsonArray2.get(i).getAsJsonObject().get("headwearPicUrl").getAsString(), jsonArray2.get(i).getAsJsonObject().get("headwearName").getAsString(), "有效期:"+ DateUtil.stampToDate(jsonArray2.get(i).getAsJsonObject().get("endTime").getAsString()));
+                                mDatat.add(i3);
+                            }
+
+
+                        } else if (prexiew.getCode() == 40000) {
+                            Toast.makeText(my_package.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
+                        }
+
+
+                    }
+                });
+
+    }
 
 
     @Override

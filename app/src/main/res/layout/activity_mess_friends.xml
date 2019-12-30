@@ -28,27 +28,13 @@
             app:srcCompat="@drawable/flot" />
 
         <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="@dimen/dp_200"
-            android:gravity="center"
-            android:text="好友"
-            android:textSize="@dimen/sp_20" />
-
-        <TextView
             android:id="@+id/textView6"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="@dimen/dp_240"
-            android:layout_marginEnd="@dimen/dp_240"
+            android:layout_marginStart="@dimen/dp_230"
             android:gravity="center"
             android:text="关注"
             android:textSize="@dimen/sp_20" />
@@ -66,27 +52,13 @@
             android:textSize="@dimen/sp_20" />
 
         <TextView
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="@dimen/dp_200"
-            android:gravity="center"
-            android:text="好友"
-            android:textSize="@dimen/sp_24" />
-
-        <TextView
             android:id="@+id/textView7"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="@dimen/dp_240"
-            android:layout_marginEnd="@dimen/dp_240"
+            android:layout_marginStart="@dimen/dp_220"
             android:gravity="center"
             android:text="关注"
             android:textSize="@dimen/sp_24" />

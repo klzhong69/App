@@ -1,13 +1,22 @@
 package com.example.app;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.app.Entity.MyApp;
+import com.example.app.cofig.Preview;
+import com.google.gson.Gson;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
@@ -65,8 +74,41 @@ public class exchange_gold extends AppCompatActivity {
                 overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
                 break;
             case R.id.but:
+                okgo();
                 break;
         }
+    }
+
+    private void okgo() {
+        MyApp application = ((MyApp) this.getApplicationContext());
+        SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
+        // Long userid = sp.getLong("userid", 0);
+        Long userid = Long.valueOf("923883237");
+        OkGo.<String>post(application.getUrl()+"/app/user/exchangeGold?token="+application.getToken())
+                .params("userId",userid)
+                .params("diamond",editText.getText().toString())
+                .execute(new StringCallback() {
+
+                    @Override
+                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+
+                        Gson gson = new Gson();
+                        Preview prexiew = gson.fromJson(response.body(), Preview.class);
+
+                        if(prexiew.getCode()==0){
+
+                            Toast.makeText(exchange_gold.this, prexiew.getMsg()+"", Toast.LENGTH_SHORT).show();
+                            Intent intent2 = new Intent(exchange_gold.this, my_wallet.class);
+                            startActivity(intent2);
+                            onBackPressed();
+
+                        }else if(prexiew.getCode()==40000){
+                            Toast.makeText(exchange_gold.this, prexiew.getMsg()+"", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                });
+
     }
 
     @Override

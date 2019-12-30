@@ -784,7 +784,7 @@
                     android:layout_alignParentTop="true"
                     android:layout_alignParentBottom="true"
                     android:layout_marginStart="@dimen/dp_100"
-                    app:srcCompat="@drawable/s_guanzhu" />
+                    app:srcCompat="@drawable/s_guanzhus" />
 
                 <TextView
                     android:id="@+id/textView31"
@@ -796,7 +796,7 @@
                     android:layout_toEndOf="@+id/imageView34"
                     android:gravity="center_vertical"
                     android:text="关注"
-                    android:textColor="#E2E91E63" />
+                    android:textColor="#aa000000" />
 
                 <ImageView
                     android:id="@+id/imageView36"
@@ -817,6 +817,7 @@
                     android:layout_marginStart="@dimen/dp_5"
                     android:layout_toEndOf="@+id/imageView36"
                     android:gravity="center_vertical"
+                    android:textColor="#aa000000"
                     android:text="私聊" />
             </RelativeLayout>
 

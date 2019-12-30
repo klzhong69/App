@@ -5,7 +5,6 @@ public class Listleader {
     private String lerder;
     private String userima;
     private String name;
-    private String grade;
     private String type;
     private String sum;
 
@@ -33,13 +32,7 @@ public class Listleader {
         this.name = name;
     }
 
-    public String getGrade() {
-        return grade;
-    }
 
-    public void setGrade(String grade) {
-        this.grade = grade;
-    }
 
     public String getType() {
         return type;
@@ -58,11 +51,10 @@ public class Listleader {
     }
 
 
-    public Listleader(String lerder, String userima, String name, String grade, String type, String sum) {
+    public Listleader(String lerder, String userima, String name,String type, String sum) {
         this.lerder = lerder;
         this.userima = userima;
         this.name = name;
-        this.grade = grade;
         this.type = type;
         this.sum = sum;
     }

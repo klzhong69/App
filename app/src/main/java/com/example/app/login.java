@@ -14,22 +14,18 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.app.Entity.MyApp;
 import com.example.app.Sqlentity.User;
-import com.example.app.cofig.DateUtil;
 import com.example.app.cofig.Initialization;
-import com.example.app.cofig.Prexiew;
+import com.example.app.cofig.Preview;
 import com.example.app.dao.mUserDao;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
-import org.json.JSONException;
+import org.json.JSONArray;
 import org.json.JSONObject;
-
-import java.io.File;
-import java.text.ParseException;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -150,44 +146,37 @@ public class login extends AppCompatActivity {
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
 
                         Gson gson = new Gson();
-                        Prexiew prexiew = gson.fromJson(response.body(), Prexiew.class);
+                        Preview prexiew = gson.fromJson(response.body(), Preview.class);
 
                         if(prexiew.getCode()==0){
                             Toast.makeText(login.this, prexiew.getMsg()+"", Toast.LENGTH_SHORT).show();
 
-                            try {
-                                JSONObject jsonObject = new JSONObject(prexiew.getData().toString());
-                                long id = jsonObject.optLong("uniqueId");
-                                String name = jsonObject.optString("nickname");
-                                String userima = jsonObject.optString("avatarUrl");
-                                String token = jsonObject.optString("token");
-                                application.setToken(token);
+                            long id = prexiew.getData().get("uniqueId").getAsLong();
+                            String name = prexiew.getData().get("nickname").getAsString();
+                            String userima = prexiew.getData().get("avatarUrl").getAsString();
+                            String token = prexiew.getData().get("token").getAsString();
+                            application.setToken(token);
 
-                                /*if(state==1){
-                                    User user = new User();
-                                    user.setName(name);
-                                    user.setUsersrc(userima);
-                                    user.setState(0);
-                                    user.setUserId(id);
-                                    mUserDao.insert(user);
-                                }*/
-
-                                SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
-                                sp.edit().putLong("userid", id).apply();
-                                Intent intent1 = new Intent(login.this, MainActivity.class);
-                                intent1.putExtra("id", 4);
-                                startActivity(intent1);
-                                overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
+                            if(state==1){
+                                User user = new User();
+                                user.setName(name);
+                                user.setUsersrc(userima);
+                                user.setState(0);
+                                user.setUserId(id);
+                                mUserDao.insert(user);
                             }
+
+                            SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
+                            sp.edit().putLong("userid", id).apply();
+                            Intent intent1 = new Intent(login.this, MainActivity.class);
+                            intent1.putExtra("id", 4);
+                            startActivity(intent1);
+                            overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
 
 
                         }else if(prexiew.getCode()==40000){
                             Toast.makeText(login.this, prexiew.getMsg()+"", Toast.LENGTH_SHORT).show();
                         }
-
 
                     }
                 });

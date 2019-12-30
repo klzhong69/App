@@ -102,6 +102,7 @@ public class MyApp extends Application {
         EasyFloat.init(this,true);//悬浮窗
         initOkGo();
         setUrl("http://192.168.120.91:8360");
+        setToken("f37135f4-2514-4d49-a958-c2765b6dae81");
         setScore(0); //初始化全局变量
         setScoret(0);
 

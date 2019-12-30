@@ -1,8 +1,6 @@
 package com.example.app;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -19,48 +17,26 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.app.Entity.MyApp;
-import com.example.app.Sqlentity.Chat;
-import com.example.app.Sqlentity.User;
 import com.example.app.cofig.DateUtil;
 import com.example.app.cofig.Initialization;
 import com.example.app.cofig.OSSSet;
-import com.example.app.cofig.Prexiew;
-import com.example.app.dao.mChatDao;
-import com.example.app.dao.mUserDao;
+import com.example.app.cofig.Preview;
 import com.example.app.gen.DaoSession;
-import com.example.app.utils.Translation;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 import com.wildma.pictureselector.PictureSelector;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.text.ParseException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.Callable;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class information extends AppCompatActivity {
 
@@ -188,7 +164,7 @@ public class information extends AppCompatActivity {
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
 
                         Gson gson = new Gson();
-                        Prexiew prexiew = gson.fromJson(response.body(), Prexiew.class);
+                        Preview prexiew = gson.fromJson(response.body(), Preview.class);
 
                         if (prexiew.getCode() == 0) {
                             Toast.makeText(information.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
@@ -233,7 +209,7 @@ public class information extends AppCompatActivity {
                                         .diskCacheStrategy(DiskCacheStrategy.NONE)
                                         .skipMemoryCache(true);
                                 Glide.with(information.this).load(picturePath).apply(requestOptions).into(imageView2);
-                                okgoima();
+                                //okgoima();
                             }
 
                             @Override
@@ -259,28 +235,22 @@ public class information extends AppCompatActivity {
                     public void onSuccess(com.lzy.okgo.model.Response<String> response) {
 
                         Gson gson = new Gson();
-                        Prexiew prexiew = gson.fromJson(response.body(), Prexiew.class);
+                        Preview prexiew = gson.fromJson(response.body(), Preview.class);
 
                         if (prexiew.getCode() == 0) {
 
-                            JSONObject jsonObject = null;
-                            try {
-                                jsonObject = new JSONObject(prexiew.getData().toString());
-                                String AccessKeyId = jsonObject.optString("AccessKeyId");
-                                String AccessKeySecret = jsonObject.optString("AccessKeySecret");
-                                String SecurityToken = jsonObject.optString("SecurityToken");
-                                String region = jsonObject.optString("region");
-                                String bucket = jsonObject.optString("bucket");
+                           String AccessKeyId = prexiew.getData().get("AccessKeyId").getAsString();
+                            String AccessKeySecret = prexiew.getData().get("AccessKeySecret").getAsString();
+                            String SecurityToken = prexiew.getData().get("SecurityToken").getAsString();
+                            String region = prexiew.getData().get("region").getAsString();
+                            String bucket = prexiew.getData().get("bucket").getAsString();
 
-                                if (!AccessKeyId.equals("")) {
-                                    OSSSet.OSSClient(information.this, AccessKeyId, AccessKeySecret, SecurityToken, region);
-                                    String upload = OSSSet.Upload(bucket, "123.jpg", picturePath);
-                                    Toast.makeText(information.this, upload + "", Toast.LENGTH_SHORT).show();
-                                }
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
+                            if (!AccessKeyId.equals("")) {
+                                OSSSet.OSSClient(information.this, AccessKeyId, AccessKeySecret, SecurityToken, region);
+                                String upload = OSSSet.Upload(bucket, "123.jpg", picturePath);
+                                Toast.makeText(information.this, upload + "", Toast.LENGTH_SHORT).show();
                             }
+
                         } else if (prexiew.getCode() == 40000) {
                             Toast.makeText(information.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
                         }

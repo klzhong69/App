@@ -32,10 +32,8 @@ import com.example.app.Model.HoldModel;
 import com.example.app.Model.MessFriendsModel;
 import com.example.app.Model.MessModel;
 import com.example.app.Model.PaimaiModel;
-import com.example.app.Sqlentity.Chat;
 import com.example.app.cofig.DateUtil;
 import com.example.app.cofig.KeyboardStateObserver;
-import com.example.app.dao.mChatDao;
 import com.opensource.svgaplayer.SVGADrawable;
 import com.opensource.svgaplayer.SVGADynamicEntity;
 import com.opensource.svgaplayer.SVGAImageView;
@@ -150,8 +148,6 @@ public class chatroom extends AppCompatActivity {
     RelativeLayout recyclerbutc2;
     @BindView(R.id.imageViewc2)
     ImageView imageViewc2;
-    @BindView(R.id.textViewc2)
-    TextView textViewc2;
     @BindView(R.id.textViewc2s)
     TextView textViewc2s;
     @BindView(R.id.textViewc2t)
@@ -354,6 +350,10 @@ public class chatroom extends AppCompatActivity {
     ConstraintLayout gift;
     @BindView(R.id.recyclerc1)
     RecyclerView recyclerc1;
+    @BindView(R.id.textViewc2d)
+    TextView textViewc2d;
+    @BindView(R.id.textViewc2f)
+    TextView textViewc2f;
     private Disposable disposable;
     private chatroom context;
     public static Observer<Integer> observer;
@@ -579,7 +579,7 @@ public class chatroom extends AppCompatActivity {
             case R.id.butc1:
                 String time = DateUtil.getCurrentTimeYMDHMS();
                 Chats i1 = new Chats("https://momeak.oss-cn-shenzhen.aliyuncs.com/h4.jpg", editTextc1.getText().toString(), time, 2);
-                ChatModel.Add(recyclerc1,i1);
+                ChatModel.Add(recyclerc1, i1);
                 editTextc1.setText("");
                 break;
             case R.id.butc10:
@@ -588,8 +588,8 @@ public class chatroom extends AppCompatActivity {
             case R.id.imageViewc5s:
                 component5.setVisibility(View.GONE);
                 component2.setVisibility(View.VISIBLE);
-                MessFriendsModel.initData(0);
-                MessFriendsModel.initrecycler(context, recyclerc2, 1);
+                MessFriendsModel.initData(context, 1);
+                MessFriendsModel.initrecycler(context, recyclerc2);
                 break;
             case R.id.imageView4:
                 showSimpleBottomSheetGrid();
@@ -814,7 +814,7 @@ public class chatroom extends AppCompatActivity {
 
                 String time = DateUtil.getCurrentTimeYMDHMS();
                 String txt = editTextc1.getText().toString();
-                if(txt.equals("")){
+                if (txt.equals("")) {
                     Chats i1 = new Chats("https://momeak.oss-cn-shenzhen.aliyuncs.com/h4.jpg", txt, time, 2);
                     ChatModel.Add(recyclerc1, i1);
                     editTextc1.setText("");

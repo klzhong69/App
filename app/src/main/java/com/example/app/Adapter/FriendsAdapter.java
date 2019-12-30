@@ -55,7 +55,7 @@ public class FriendsAdapter extends RecyclerView.Adapter {
         ((FriendsAdapter.DemoViewHolder) holder).name.setText(entity.getName());
         ((FriendsAdapter.DemoViewHolder) holder).txt.setText(entity.getTxt());
         Glide.with(mContext).load(entity.getImagesrc()).into(((FriendsAdapter.DemoViewHolder)holder).imagesrc);
-        if(entity.getIcon().equals("0")){
+        if(entity.getIcon().equals("2")){
             Glide.with(mContext).load(R.drawable.nans).into(((FriendsAdapter.DemoViewHolder)holder).icon);
         }else{
             Glide.with(mContext).load(R.drawable.nvs).into(((FriendsAdapter.DemoViewHolder)holder).icon);

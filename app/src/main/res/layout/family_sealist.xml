@@ -51,27 +51,16 @@
             app:layout_constraintStart_toStartOf="@+id/textView2"
             app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
-        <ImageView
-            android:id="@+id/imageView4"
-            android:layout_width="@dimen/dp_40"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/textView2"
-            android:layout_marginStart="@dimen/dp_5"
-            android:layout_marginBottom="@dimen/dp_10"
-            android:layout_toEndOf="@+id/textView2"
-            app:layout_constraintBottom_toBottomOf="@+id/textView2"
-            app:layout_constraintStart_toEndOf="@+id/textView2"
-            app:srcCompat="@drawable/l3" />
 
         <ImageView
             android:id="@+id/imageView38"
-            android:layout_width="@dimen/dp_25"
-            android:layout_height="@dimen/dp_25"
+            android:layout_width="@dimen/dp_20"
+            android:layout_height="@dimen/dp_20"
             android:layout_alignTop="@+id/textView179"
             android:layout_alignBottom="@+id/textView179"
             android:layout_marginEnd="@dimen/dp_10"
             android:layout_toStartOf="@+id/textView179"
-            app:srcCompat="@drawable/l_love" />
+            app:srcCompat="@drawable/henter" />
 
         <TextView
             android:id="@+id/textView179"
