@@ -1,8 +1,11 @@
 package com.example.app;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -22,8 +25,16 @@ import com.example.app.Adapter.GridViewAdapter;
 import com.example.app.Adapter.ListLeaderAdapter;
 import com.example.app.Adapter.ModifyViewAdapter;
 import com.example.app.Entity.Modify;
+import com.example.app.Entity.MyApp;
 import com.example.app.Model.ChatModel;
+import com.example.app.cofig.OSSSet;
+import com.example.app.cofig.Preview;
+import com.google.gson.Gson;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 import com.wildma.pictureselector.PictureSelector;
 
 import java.util.ArrayList;
@@ -74,7 +85,7 @@ public class modify_information extends AppCompatActivity {
     public static Observer<Integer> observer;
     private int in;
     private String picturePath;
-
+    private int mCurrentDialogStyle = com.qmuiteam.qmui.R.style.QMUI_Dialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -113,7 +124,7 @@ public class modify_information extends AppCompatActivity {
 
             @Override
             public void onItemLongClick(View view, int position) {
-
+                showMessageNegativeDialog();
             }
         });
 
@@ -124,6 +135,27 @@ public class modify_information extends AppCompatActivity {
         defaultItemAnimator.setAddDuration(200);
         defaultItemAnimator.setRemoveDuration(200);
         recycler2.setItemAnimator(defaultItemAnimator);
+    }
+
+
+    private void showMessageNegativeDialog() {
+        new QMUIDialog.MessageDialogBuilder(this)
+                .setTitle("标题")
+                .setMessage("确定要删除吗？")
+                .addAction("取消", new QMUIDialogAction.ActionListener() {
+                    @Override
+                    public void onClick(QMUIDialog dialog, int index) {
+                        dialog.dismiss();
+                    }
+                })
+                .addAction(0, "删除", QMUIDialogAction.ACTION_PROP_NEGATIVE, new QMUIDialogAction.ActionListener() {
+                    @Override
+                    public void onClick(QMUIDialog dialog, int index) {
+                        Toast.makeText(modify_information.this, "删除成功", Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
+                    }
+                })
+                .create(mCurrentDialogStyle).show();
     }
 
     private void init() {
@@ -139,7 +171,7 @@ public class modify_information extends AppCompatActivity {
 
     }
 
-    @OnClick({R.id.fold, R.id.imageView2, R.id.subtitle})
+    @OnClick({R.id.fold, R.id.imageView2, R.id.textView35, R.id.textView37})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fold:
@@ -152,6 +184,12 @@ public class modify_information extends AppCompatActivity {
                         .create(modify_information.this, PictureSelector.SELECT_REQUEST_CODE)
                         .selectPicture(true, 400, 400, 1, 1);
                 break;
+            case R.id.textView35:
+                showEditTextDialog();
+                break;
+            case R.id.textView37:
+                showEditTextDialogs();
+                break;
         }
     }
 
@@ -160,7 +198,128 @@ public class modify_information extends AppCompatActivity {
         super.onStart();
 
     }
-        @Override
+
+
+
+
+    private void showEditTextDialog() {
+        final QMUIDialog.EditTextDialogBuilder builder = new QMUIDialog.EditTextDialogBuilder(this);
+        builder.setTitle("标题")
+                .setPlaceholder("在此输入您的昵称")
+                .setInputType(InputType.TYPE_CLASS_TEXT)
+                .addAction("取消", new QMUIDialogAction.ActionListener() {
+                    @Override
+                    public void onClick(QMUIDialog dialog, int index) {
+                        dialog.dismiss();
+                    }
+                })
+                .addAction("确定", new QMUIDialogAction.ActionListener() {
+                    @Override
+                    public void onClick(QMUIDialog dialog, int index) {
+                        CharSequence text = builder.getEditText().getText();
+                        if (text != null && text.length() > 0) {
+                            textView35.setText(text.toString());
+                            okgo(text.toString());
+                            dialog.dismiss();
+                        } else {
+                            Toast.makeText(modify_information.this, "请填入昵称", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                })
+                .create(mCurrentDialogStyle).show();
+    }
+
+    private void okgo(String txt) {
+        MyApp application = ((MyApp) this.getApplicationContext());
+        SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
+        // Long userid = sp.getLong("userid", 0);
+        Long userid = Long.valueOf("700647775");
+        OkGo.<String>post(application.getUrl()+"/editUserInfoNickname?token="+application.getToken())
+                .params("userId",userid)
+                .params("nickname",txt)
+                .execute(new StringCallback() {
+
+                    @Override
+                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+
+                        Gson gson = new Gson();
+                        Preview prexiew = gson.fromJson(response.body(), Preview.class);
+
+                        if(prexiew.getCode()==0){
+
+                            Toast.makeText(modify_information.this, prexiew.getMsg()+"", Toast.LENGTH_SHORT).show();
+
+
+                        }else if(prexiew.getCode()==40000){
+                            Toast.makeText(modify_information.this, prexiew.getMsg()+"", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                });
+
+    }
+
+
+
+    private void showEditTextDialogs() {
+        final QMUIDialog.EditTextDialogBuilder builder = new QMUIDialog.EditTextDialogBuilder(this);
+        builder.setTitle("标题")
+                    .setPlaceholder("在此输入您的签名")
+                .setInputType(InputType.TYPE_CLASS_TEXT)
+                .addAction("取消", new QMUIDialogAction.ActionListener() {
+                    @Override
+                    public void onClick(QMUIDialog dialog, int index) {
+                        dialog.dismiss();
+                    }
+                })
+                .addAction("确定", new QMUIDialogAction.ActionListener() {
+                    @Override
+                    public void onClick(QMUIDialog dialog, int index) {
+                        CharSequence text = builder.getEditText().getText();
+                        if (text != null && text.length() > 0) {
+                            textView37.setText(text);
+                            okgos(text.toString());
+                            dialog.dismiss();
+                        } else {
+                            Toast.makeText(modify_information.this, "请填入签名", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                })
+                .create(mCurrentDialogStyle).show();
+    }
+
+    private void okgos(String txt) {
+        MyApp application = ((MyApp) this.getApplicationContext());
+        SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
+        // Long userid = sp.getLong("userid", 0);
+        Long userid = Long.valueOf("700647775");
+        OkGo.<String>post(application.getUrl()+"/editUserInfoNickname?token="+application.getToken())
+                .params("userId",userid)
+                .params("signtureText",txt)
+                .execute(new StringCallback() {
+
+                    @Override
+                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+
+                        Gson gson = new Gson();
+                        Preview prexiew = gson.fromJson(response.body(), Preview.class);
+
+                        if(prexiew.getCode()==0){
+
+                            Toast.makeText(modify_information.this, prexiew.getMsg()+"", Toast.LENGTH_SHORT).show();
+
+
+                        }else if(prexiew.getCode()==40000){
+                            Toast.makeText(modify_information.this, prexiew.getMsg()+"", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                });
+
+    }
+
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         /*结果回调*/
@@ -185,6 +344,7 @@ public class modify_information extends AppCompatActivity {
                                                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                                                 .skipMemoryCache(true);
                                         Glide.with(modify_information.this).load(picturePath).apply(requestOptions).into(imageView2);
+                                        okgoima();
                                         break;
 
                                     case 1:
@@ -205,6 +365,43 @@ public class modify_information extends AppCompatActivity {
 
             }
         }
+    }
+
+    private void okgoima() {
+        MyApp application = ((MyApp) this.getApplicationContext());
+        SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
+        // Long userid = sp.getLong("userid", 0);
+        String userid = "700647775";
+        String phone = "15913420136";
+        OkGo.<String>post(application.getUrl() + "/app/alioss/getUserUploadToken")
+                .params("phone",phone)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+
+                        Gson gson = new Gson();
+                        Preview prexiew = gson.fromJson(response.body(), Preview.class);
+
+                        if (prexiew.getCode() == 0) {
+                            String AccessKeyId = prexiew.getData().get("AccessKeyId").getAsString();
+                            String AccessKeySecret = prexiew.getData().get("AccessKeySecret").getAsString();
+                            String SecurityToken = prexiew.getData().get("SecurityToken").getAsString();
+                            String region = prexiew.getData().get("region").getAsString();
+                            String bucket = prexiew.getData().get("bucket").getAsString();
+
+                            if (!AccessKeyId.equals("")) {
+                                OSSSet.OSSClient(modify_information.this, AccessKeyId, AccessKeySecret, SecurityToken, region,bucket);
+                                OSSSet.Callback(bucket, phone+"/avatar.jpg", picturePath,userid);
+                            }
+
+                        } else if (prexiew.getCode() == 40000) {
+                            Toast.makeText(modify_information.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
+                        }
+
+
+                    }
+                });
+
     }
 
     @Override

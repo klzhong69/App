@@ -1,5 +1,8 @@
 package com.example.app;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -11,6 +14,11 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.app.Entity.MyApp;
+import com.example.app.cofig.Preview;
+import com.google.gson.Gson;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
@@ -115,7 +123,7 @@ public class my_change_pass extends AppCompatActivity {
             case R.id.but:
                 if(extnumber && extcapital && extlower){
                     if(editText5.getText().toString().equals(editText4.getText().toString())){
-                        Toast.makeText(my_change_pass.this, "修改成功", Toast.LENGTH_SHORT).show();
+                        okgo();
                     }else{
                         Toast.makeText(my_change_pass.this, "两次密码不同，请重新输入", Toast.LENGTH_SHORT).show();
                     }
@@ -125,6 +133,42 @@ public class my_change_pass extends AppCompatActivity {
                 }
                 break;
         }
+    }
+
+
+    private void okgo() {
+        MyApp application = ((MyApp) this.getApplicationContext());
+        SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
+        // Long userid = sp.getLong("userid", 0);
+        Long userid = Long.valueOf("700647775");
+        OkGo.<String>post(application.getUrl()+"/app/user/changePassword?token="+application.getToken())
+                .params("userId",userid)
+                .params("olaPassword",editText.getText().toString())
+                .params("newPassword",editText4.getText().toString())
+                .execute(new StringCallback() {
+
+                    @Override
+                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+
+                        Gson gson = new Gson();
+                        Preview prexiew = gson.fromJson(response.body(), Preview.class);
+
+                        if(prexiew.getCode()==0){
+
+                            Intent intent1 = new Intent(my_change_pass.this, login.class);
+                            intent1.putExtra("type",0);
+                            startActivity(intent1);
+                            overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
+                            Toast.makeText(my_change_pass.this, prexiew.getMsg()+"", Toast.LENGTH_SHORT).show();
+
+
+                        }else if(prexiew.getCode()==40000){
+                            Toast.makeText(my_change_pass.this, prexiew.getMsg()+"", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                });
+
     }
 
     @Override

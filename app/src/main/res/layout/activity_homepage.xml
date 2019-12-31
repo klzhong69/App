@@ -239,7 +239,7 @@
             <RelativeLayout
                 android:id="@+id/relativeLayout"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_170"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/relativeLayou"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentEnd="true"
@@ -263,65 +263,17 @@
                     android:scaleType="centerInside"
                     app:srcCompat="@drawable/page1" />
 
-                <com.qmuiteam.qmui.widget.QMUIRadiusImageView
-                    android:id="@+id/imageView17"
-                    android:layout_width="@dimen/dp_95"
-                    android:layout_height="@dimen/dp_105"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_below="@+id/imageView6"
                     android:layout_alignParentStart="true"
-                    android:layout_marginStart="@dimen/dp_20"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="0dp"
                     android:layout_marginTop="@dimen/dp_20"
-                    android:src="@drawable/pager1"
-                    app:qmui_border_width="0dp"
-                    app:qmui_corner_radius="@dimen/dp_10" />
+                    android:layout_marginEnd="0dp" />
 
-                <com.qmuiteam.qmui.widget.QMUIRadiusImageView
-                    android:id="@+id/imageView7"
-                    android:layout_width="@dimen/dp_95"
-                    android:layout_height="@dimen/dp_105"
-                    android:layout_alignTop="@+id/imageView17"
-                    android:layout_alignBottom="@+id/imageView17"
-                    android:layout_marginStart="@dimen/dp_12"
-                    android:layout_toEndOf="@+id/imageView17"
-                    android:src="#11444444"
-                    app:qmui_border_width="0dp"
-                    app:qmui_corner_radius="@dimen/dp_10" />
-
-                <com.qmuiteam.qmui.widget.QMUIRadiusImageView
-                    android:id="@+id/imageView8"
-                    android:layout_width="@dimen/dp_95"
-                    android:layout_height="@dimen/dp_105"
-                    android:layout_alignTop="@+id/imageView7"
-                    android:layout_alignBottom="@+id/imageView7"
-                    android:layout_marginStart="@dimen/dp_12"
-                    android:layout_toEndOf="@+id/imageView7"
-                    android:src="#11444444"
-                    app:qmui_border_width="0dp"
-                    app:qmui_corner_radius="@dimen/dp_10" />
-
-                <com.qmuiteam.qmui.widget.QMUIRadiusImageView
-                    android:id="@+id/imageView9"
-                    android:layout_width="@dimen/dp_95"
-                    android:layout_height="@dimen/dp_105"
-                    android:layout_alignTop="@+id/imageView8"
-                    android:layout_alignBottom="@+id/imageView8"
-                    android:layout_marginStart="@dimen/dp_12"
-                    android:layout_toEndOf="@+id/imageView8"
-                    android:src="#11444444"
-                    app:qmui_border_width="0dp"
-                    app:qmui_corner_radius="@dimen/dp_10" />
-
-                <com.qmuiteam.qmui.widget.QMUIRadiusImageView
-                    android:id="@+id/imageView10"
-                    android:layout_width="@dimen/dp_95"
-                    android:layout_height="@dimen/dp_105"
-                    android:layout_alignTop="@+id/imageView9"
-                    android:layout_alignBottom="@+id/imageView9"
-                    android:layout_marginStart="@dimen/dp_12"
-                    android:layout_toEndOf="@+id/imageView9"
-                    android:src="#11444444"
-                    app:qmui_border_width="0dp"
-                    app:qmui_corner_radius="@dimen/dp_10" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -362,12 +314,22 @@
                     android:gravity="center_vertical"
                     android:text="我是芭比王国的大巫师" />
 
+                <ImageView
+                    android:id="@+id/imageView7"
+                    android:layout_width="@dimen/dp_30"
+                    android:layout_height="@dimen/dp_30"
+                    android:layout_below="@+id/imageView11"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_marginEnd="@dimen/dp_20"
+                    app:srcCompat="@drawable/yuyin" />
+
             </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/relativeLayout2"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_170"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/relativeLayout1"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentEnd="true"
@@ -391,65 +353,16 @@
                     android:scaleType="centerInside"
                     app:srcCompat="@drawable/page3" />
 
-                <com.qmuiteam.qmui.widget.QMUIRadiusImageView
-                    android:id="@+id/imageView14"
-                    android:layout_width="@dimen/dp_95"
-                    android:layout_height="@dimen/dp_95"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_below="@+id/imageView13"
                     android:layout_alignParentStart="true"
-                    android:layout_marginStart="@dimen/dp_20"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="0dp"
                     android:layout_marginTop="@dimen/dp_20"
-                    android:src="@drawable/h1"
-                    app:qmui_border_width="0dp"
-                    app:qmui_corner_radius="15dp" />
-
-                <com.qmuiteam.qmui.widget.QMUIRadiusImageView
-                    android:id="@+id/imageView15"
-                    android:layout_width="@dimen/dp_95"
-                    android:layout_height="@dimen/dp_95"
-                    android:layout_alignTop="@+id/imageView14"
-                    android:layout_alignBottom="@+id/imageView14"
-                    android:layout_marginStart="@dimen/dp_12"
-                    android:layout_toEndOf="@+id/imageView14"
-                    android:src="@drawable/h2"
-                    app:qmui_border_width="0dp"
-                    app:qmui_corner_radius="15dp" />
-
-                <com.qmuiteam.qmui.widget.QMUIRadiusImageView
-                    android:id="@+id/imageView16"
-                    android:layout_width="@dimen/dp_95"
-                    android:layout_height="@dimen/dp_95"
-                    android:layout_alignTop="@+id/imageView15"
-                    android:layout_alignBottom="@+id/imageView15"
-                    android:layout_marginStart="@dimen/dp_12"
-                    android:layout_toEndOf="@+id/imageView15"
-                    android:src="@drawable/h3"
-                    app:qmui_border_width="0dp"
-                    app:qmui_corner_radius="15dp" />
-
-                <com.qmuiteam.qmui.widget.QMUIRadiusImageView
-                    android:id="@+id/imageView18"
-                    android:layout_width="@dimen/dp_95"
-                    android:layout_height="@dimen/dp_95"
-                    android:layout_alignTop="@+id/imageView16"
-                    android:layout_alignBottom="@+id/imageView16"
-                    android:layout_marginStart="@dimen/dp_12"
-                    android:layout_toEndOf="@+id/imageView16"
-                    android:src="@drawable/h4"
-                    app:qmui_border_width="0dp"
-                    app:qmui_corner_radius="15dp" />
-
-                <com.qmuiteam.qmui.widget.QMUIRadiusImageView
-                    android:id="@+id/imageView19"
-                    android:layout_width="@dimen/dp_95"
-                    android:layout_height="@dimen/dp_95"
-                    android:layout_alignTop="@+id/imageView18"
-                    android:layout_alignBottom="@+id/imageView18"
-                    android:layout_marginStart="@dimen/dp_12"
-                    android:layout_toEndOf="@+id/imageView18"
-                    android:src="@drawable/h2"
-                    app:qmui_border_width="0dp"
-                    app:qmui_corner_radius="15dp" />
+                    android:layout_marginEnd="0dp" />
 
             </RelativeLayout>
 

@@ -1,5 +1,7 @@
 package com.example.app;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -13,6 +15,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.app.Adapter.FootprintAdapter;
 import com.example.app.Entity.Footprint;
+import com.example.app.Entity.MyApp;
+import com.example.app.cofig.DateUtil;
+import com.example.app.cofig.Preview;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,10 +92,34 @@ public class my_footprint extends AppCompatActivity {
 
     private void initData() {
         mArrayList = new ArrayList<Footprint>();
-        for (int i = 0; i < 6; i++) {
-            Footprint i1 = new Footprint("https://momeak.oss-cn-shenzhen.aliyuncs.com/dear1.png", "星坠-天空的幻想-林晓夜", "13.10", "点歌-阿军");
-            mArrayList.add(i1);
-        }
+
+        MyApp application = ((MyApp) this.getApplicationContext());
+        SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
+        // Long userid = sp.getLong("userid", 0);
+        Long userid = Long.valueOf("700647775");
+        OkGo.<String>post(application.getUrl()+"/app/user/getRoomHistory?token="+application.getToken())
+                .params("userId",userid)
+                .execute(new StringCallback() {
+
+                    @Override
+                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+
+                        Gson gson = new Gson();
+                        Preview prexiew = gson.fromJson(response.body(), Preview.class);
+                        JsonArray jsonArray =  prexiew.getData().getAsJsonArray("room");
+                        if(prexiew.getCode()==0){
+                            for (int i = 0; i < jsonArray.size(); i++) {
+
+                                Footprint i1 = new Footprint(jsonArray.get(i).getAsJsonObject().get("coverUrl").getAsString(), jsonArray.get(i).getAsJsonObject().get("ownerName").getAsString(), DateUtil.stampToDates(jsonArray.get(i).getAsJsonObject().get("createdTime").getAsString()), jsonArray.get(i).getAsJsonObject().get("roomName").getAsString());
+                                mArrayList.add(i1);
+                            }
+
+                        }else if(prexiew.getCode()==40000){
+                            Toast.makeText(my_footprint.this, prexiew.getMsg()+"", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                });
 
 
     }

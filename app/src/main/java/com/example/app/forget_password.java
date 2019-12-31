@@ -1,13 +1,22 @@
 package com.example.app;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.app.Entity.MyApp;
+import com.example.app.cofig.Gradesum;
+import com.example.app.cofig.Preview;
+import com.google.gson.Gson;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
@@ -75,6 +84,8 @@ public class forget_password extends AppCompatActivity {
                 break;
         }
     }
+
+
 
     @Override
     public void onBackPressed() {

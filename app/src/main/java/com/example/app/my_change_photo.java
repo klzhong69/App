@@ -1,6 +1,8 @@
 package com.example.app;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -12,6 +14,11 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.app.Entity.MyApp;
+import com.example.app.cofig.Preview;
+import com.google.gson.Gson;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
@@ -82,7 +89,7 @@ public class my_change_photo extends AppCompatActivity {
                 if(editText4.getText().equals("")){
                     if(editText5.getText().equals("")){
                         if(butnum){
-                            this.finish();
+                            okgo();
                         }else{
                             this.finish();
                             Intent intent2 = new Intent(my_change_photo.this, my_change_photo.class);
@@ -105,6 +112,36 @@ public class my_change_photo extends AppCompatActivity {
             case R.id.imageView111:
                 break;
         }
+    }
+
+    private void okgo() {
+        MyApp application = ((MyApp) this.getApplicationContext());
+        SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
+        // Long userid = sp.getLong("userid", 0);
+        Long userid = Long.valueOf("700647775");
+        OkGo.<String>post(application.getUrl()+"/app/user/changePhone?token="+application.getToken())
+                .params("userId",userid)
+                .params("phone",editText4.getText().toString())
+                .execute(new StringCallback() {
+
+                    @Override
+                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+
+                        Gson gson = new Gson();
+                        Preview prexiew = gson.fromJson(response.body(), Preview.class);
+
+                        if(prexiew.getCode()==0){
+
+                            Toast.makeText(my_change_photo.this, prexiew.getMsg()+"", Toast.LENGTH_SHORT).show();
+                            my_change_photo.this.finish();
+
+                        }else if(prexiew.getCode()==40000){
+                            Toast.makeText(my_change_photo.this, prexiew.getMsg()+"", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                });
+
     }
 
     @Override

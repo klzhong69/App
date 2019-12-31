@@ -18,6 +18,8 @@ import com.alibaba.sdk.android.oss.model.GetObjectRequest;
 import com.alibaba.sdk.android.oss.model.GetObjectResult;
 import com.alibaba.sdk.android.oss.model.PutObjectRequest;
 import com.alibaba.sdk.android.oss.model.PutObjectResult;
+import com.example.app.Entity.MyApp;
+import com.google.gson.Gson;
 import com.lzy.okgo.callback.StringCallback;
 
 import java.io.IOException;
@@ -32,7 +34,7 @@ public class OSSSet {
     private String testObject;
     private String uploadFilePath;
 
-    public static void OSSClient(Context context,String AccessKeyId,String SecretKeyId,String SecurityToken,String region){
+    public static void OSSClient(Context context,String AccessKeyId,String SecretKeyId,String SecurityToken,String region,String bucket){
 
         String endpoint = "http://"+region+".aliyuncs.com";
         OSSCredentialProvider credentialProvider = new OSSStsTokenCredentialProvider(AccessKeyId, SecretKeyId, SecurityToken);
@@ -133,16 +135,22 @@ public class OSSSet {
 
 
 
-    public static void Callback(String testBucket,String testObject,String uploadFilePath){
+    public static void Callback(String testBucket,String testObject,String uploadFilePath,String userId){
 
         PutObjectRequest put = new PutObjectRequest(testBucket, testObject, uploadFilePath);
 
+        System.out.println("userId"+userId);
         put.setCallbackParam(new HashMap<String, String>() {
             {
-                put("callbackUrl", "110.75.82.106/callback");
-                put("callbackHost", "oss-cn-shenzhen.aliyuncs.com");
+                put("callbackUrl", "http://pan.weiyunhezi.com:8360/app/user/editAvatar");
                 put("callbackBodyType", "application/json");
-                put("callbackBody", "{\"mimeType\":${mimeType},\"size\":${size}}");
+                put("callbackBody", "{\"userId\":${x:userId},\"avatarUrl\":${x:avatarUrl}}");
+            }
+        });
+        put.setCallbackVars(new HashMap<String, String>() {
+            {
+                put("x:userId", userId);
+                put("x:avatarUrl", testObject);
             }
         });
 
@@ -155,6 +163,7 @@ public class OSSSet {
                 String serverCallbackReturnJson = result.getServerCallbackReturnBody();
 
                 Log.d("servercallback", serverCallbackReturnJson);
+
             }
 
             @Override

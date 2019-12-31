@@ -1,12 +1,22 @@
 package com.example.app;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.app.Entity.MyApp;
+import com.example.app.cofig.Gradesum;
+import com.example.app.cofig.Preview;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
 import com.qmuiteam.qmui.widget.QMUIProgressBar;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 
@@ -66,8 +76,7 @@ public class my_grade extends AppCompatActivity {
         circleProgressBar.setMaxValue(100);
         circleProgressBar2.setMaxValue(100);
 
-        circleProgressBar.setProgress(90);
-        circleProgressBar2.setProgress(90);
+        okgo();
 
         circleProgressBar.setQMUIProgressBarTextGenerator(new QMUIProgressBar.QMUIProgressBarTextGenerator() {
             @Override
@@ -82,9 +91,68 @@ public class my_grade extends AppCompatActivity {
                 return 100 * value / maxValue + "%";
             }
         });
+
+
     }
 
-    @OnClick({R.id.fold, R.id.title, R.id.subtitle})
+
+    private void okgo() {
+        MyApp application = ((MyApp) this.getApplicationContext());
+        SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
+        // Long userid = sp.getLong("userid", 0);
+        Long userid = Long.valueOf("700647775");
+        OkGo.<String>post(application.getUrl()+"/app/user/getLevel?token="+application.getToken())
+                .params("userId",userid)
+                .execute(new StringCallback() {
+
+                    @Override
+                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+
+                        Gson gson = new Gson();
+                        Preview prexiew = gson.fromJson(response.body(), Preview.class);
+
+                        if(prexiew.getCode()==0){
+
+                            String gold = prexiew.getData().get("gold").getAsString();
+                            String diamond = prexiew.getData().get("diamond").getAsString();
+                            String rankGold = prexiew.getData().get("rankGold").getAsString();
+                            String rankDiamond = prexiew.getData().get("rankDiamond").getAsString();
+
+                            textView55.setText("财富 "+gold);
+                            textView61.setText("魅力 "+diamond);
+                            textView52.setText(rankGold);
+                            textView59.setText(rankDiamond);
+
+                           int goldn = (int) Gradesum.grades(Integer.parseInt(gold)).get("n");
+                            int goldf = (int) Gradesum.grades(Integer.parseInt(gold)).get("f");
+                            int diamondn = (int) Gradesum.diamonds(Integer.parseInt(diamond)).get("n");
+                            int diamondf = (int) Gradesum.diamonds(Integer.parseInt(diamond)).get("f");
+
+
+                            int goldnum = goldf -Integer.parseInt(gold);
+                            int diamondnum = diamondf -Integer.parseInt(diamond);
+
+                            textView56.setText("距离升级还需要消耗"+goldnum+"金币");
+                            textView62.setText("距离升级还需要获得"+diamondnum+"钻石");
+
+                            int goldsum = (int) ((double) Integer.parseInt(gold) / (double) goldf * 100);
+
+                            int diamondsum = (int) ((double) Integer.parseInt(diamond) / (double) diamondf * 100);
+
+                            circleProgressBar.setProgress(goldsum);
+                            circleProgressBar2.setProgress(diamondsum);
+
+                        }else if(prexiew.getCode()==40000){
+                            Toast.makeText(my_grade.this, prexiew.getMsg()+"", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                });
+
+    }
+
+
+    @OnClick({R.id.fold, R.id.title})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fold:
@@ -92,11 +160,9 @@ public class my_grade extends AppCompatActivity {
                 overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
                 break;
             case R.id.title:
-                title.setText("我的等级");
+
                 break;
-            case R.id.subtitle:
-                subtitle.setText("");
-                break;
+
         }
     }
 

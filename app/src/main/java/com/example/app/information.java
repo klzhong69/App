@@ -246,7 +246,7 @@ public class information extends AppCompatActivity {
                             String bucket = prexiew.getData().get("bucket").getAsString();
 
                             if (!AccessKeyId.equals("")) {
-                                OSSSet.OSSClient(information.this, AccessKeyId, AccessKeySecret, SecurityToken, region);
+                                OSSSet.OSSClient(information.this, AccessKeyId, AccessKeySecret, SecurityToken, region,bucket);
                                 String upload = OSSSet.Upload(bucket, "123.jpg", picturePath);
                                 Toast.makeText(information.this, upload + "", Toast.LENGTH_SHORT).show();
                             }

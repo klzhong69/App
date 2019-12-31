@@ -2,6 +2,7 @@ package com.example.app;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -12,12 +13,15 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.app.Entity.MyApp;
 import com.example.app.Model.HomePageModel;
 import com.example.app.cofig.Preview;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 
 import butterknife.BindView;
@@ -63,36 +67,22 @@ public class homepage extends AppCompatActivity {
     RelativeLayout relativeLayou;
     @BindView(R.id.imageView6)
     ImageView imageView6;
-    @BindView(R.id.imageView17)
-    QMUIRadiusImageView imageView17;
-    @BindView(R.id.imageView7)
-    QMUIRadiusImageView imageView7;
-    @BindView(R.id.imageView8)
-    QMUIRadiusImageView imageView8;
-    @BindView(R.id.imageView9)
-    QMUIRadiusImageView imageView9;
-    @BindView(R.id.imageView10)
-    QMUIRadiusImageView imageView10;
+    @BindView(R.id.recycler2)
+    RecyclerView recycler2;
     @BindView(R.id.relativeLayout)
     RelativeLayout relativeLayout;
     @BindView(R.id.imageView11)
     ImageView imageView11;
     @BindView(R.id.textView11)
     TextView textView11;
+    @BindView(R.id.imageView7)
+    ImageView imageView7;
     @BindView(R.id.relativeLayout1)
     RelativeLayout relativeLayout1;
     @BindView(R.id.imageView13)
     ImageView imageView13;
-    @BindView(R.id.imageView14)
-    QMUIRadiusImageView imageView14;
-    @BindView(R.id.imageView15)
-    QMUIRadiusImageView imageView15;
-    @BindView(R.id.imageView16)
-    QMUIRadiusImageView imageView16;
-    @BindView(R.id.imageView18)
-    QMUIRadiusImageView imageView18;
-    @BindView(R.id.imageView19)
-    QMUIRadiusImageView imageView19;
+    @BindView(R.id.recycler3)
+    RecyclerView recycler3;
     @BindView(R.id.relativeLayout2)
     RelativeLayout relativeLayout2;
     @BindView(R.id.imageView20)
@@ -153,6 +143,7 @@ public class homepage extends AppCompatActivity {
     RelativeLayout relativeLayout5;
     @BindView(R.id.largeLabel)
     RelativeLayout largeLabel;
+    private homepage context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -161,13 +152,12 @@ public class homepage extends AppCompatActivity {
         ButterKnife.bind(this);
         title.setText("个人主页");
         subtitle.setText("修改信息");
-        Context context = this;
-        HomePageModel.initData();
-        HomePageModel.initrecycler(context, recycler);
+        context = this;
+        initData();
     }
 
 
-    @OnClick({R.id.fold, R.id.subtitle,R.id.imageView34,R.id.textView31,R.id.imageView36,R.id.textView32})
+    @OnClick({R.id.fold, R.id.subtitle, R.id.imageView34, R.id.textView31, R.id.imageView36, R.id.textView32, R.id.imageView7})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fold:
@@ -185,30 +175,77 @@ public class homepage extends AppCompatActivity {
             case R.id.textView32:
                 Intent intent1 = new Intent(this, chat.class);
                 //intent1.putExtra("sendname",mArrayList.get(position).getName());
-               // intent1.putExtra("sendsrc",mArrayList.get(position).getImagesrc());
+                // intent1.putExtra("sendsrc",mArrayList.get(position).getImagesrc());
                 startActivity(intent1);
+                break;
+            case R.id.imageView7:
+
                 break;
         }
     }
 
-    private void okgo() {
+    private void initData() {
+
         MyApp application = ((MyApp) this.getApplicationContext());
-        OkGo.<String>post(application.getUrl()+"/app/user/follow?token="+application.getToken())
-                .params("userId","923883237")
-                .params("followId","692240405")
+        SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
+        // Long userid = sp.getLong("userid", 0);
+        Long userid = Long.valueOf("700647775");
+        OkGo.<String>post(application.getUrl() + "/app/user/getInfo?token=" + application.getToken())
+                .params("userId", userid)
+                .params("followId", 0)
                 .execute(new StringCallback() {
 
                     @Override
-                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+                    public void onSuccess(Response<String> response) {
+
+                        Gson gson = new Gson();
+                        Preview prexiew = gson.fromJson(response.body(), Preview.class);
+                        JsonArray friend = prexiew.getData().getAsJsonArray("friend");
+                        JsonArray photo = prexiew.getData().getAsJsonArray("photo");
+                        JsonArray giftWall = prexiew.getData().getAsJsonArray("giftWall");
+                        JsonArray honor = prexiew.getData().getAsJsonArray("honor");
+                        if (prexiew.getCode() == 0) {
+
+                            textView2.setText(prexiew.getData().get("nickname").getAsString());
+                            textView3.setText(prexiew.getData().get("userId").getAsString());
+                            Glide.with(homepage.this).load(prexiew.getData().get("avatarUrl").getAsString()).into(imageView2);
+                            textView11.setText(prexiew.getData().get("signtureText").getAsString());
+                            textView5.setText(prexiew.getData().get("followCount").getAsString());
+                            textView9.setText(prexiew.getData().get("fansCount").getAsString());
+
+                            HomePageModel.initData(honor,photo,giftWall);
+                            HomePageModel.initrecycler(context, recycler);
+                            HomePageModel.initrecyclers(context, recycler2);
+                            HomePageModel.initrecyclert(context, recycler3);
+
+                        } else if (prexiew.getCode() == 40000) {
+                            Toast.makeText(homepage.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                });
+
+
+    }
+
+    private void okgo() {
+        MyApp application = ((MyApp) this.getApplicationContext());
+        OkGo.<String>post(application.getUrl() + "/app/user/follow?token=" + application.getToken())
+                .params("userId", "923883237")
+                .params("followId", "692240405")
+                .execute(new StringCallback() {
+
+                    @Override
+                    public void onSuccess(Response<String> response) {
 
                         Gson gson = new Gson();
                         Preview prexiew = gson.fromJson(response.body(), Preview.class);
 
-                        if(prexiew.getCode()==0){
-                            Toast.makeText(homepage.this, prexiew.getMsg()+"", Toast.LENGTH_SHORT).show();
+                        if (prexiew.getCode() == 0) {
+                            Toast.makeText(homepage.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
 
-                        }else if(prexiew.getCode()==40000){
-                            Toast.makeText(homepage.this, prexiew.getMsg()+"", Toast.LENGTH_SHORT).show();
+                        } else if (prexiew.getCode() == 40000) {
+                            Toast.makeText(homepage.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
                         }
 
                     }

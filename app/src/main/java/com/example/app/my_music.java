@@ -1,6 +1,8 @@
 package com.example.app;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.LayoutInflater;
@@ -20,23 +22,32 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.didichuxing.doraemonkit.util.FileUtil;
 import com.example.app.Adapter.MusicViewAdapter;
+import com.example.app.Entity.MyApp;
 import com.example.app.Entity.Mymusic;
 import com.example.app.Model.ChatModel;
 import com.example.app.Model.GiftModel;
 import com.example.app.Model.HoldModel;
+import com.example.app.Model.HomePageModel;
 import com.example.app.Sqlentity.Chat;
 import com.example.app.Sqlentity.Music;
 import com.example.app.Sqlentity.User;
 import com.example.app.cofig.Initialization;
+import com.example.app.cofig.Preview;
 import com.example.app.dao.mChatDao;
 import com.example.app.dao.mMusicDao;
 import com.example.app.dao.mUserDao;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.liulishuo.filedownloader.BaseDownloadTask;
 import com.liulishuo.filedownloader.FileDownloadListener;
 import com.liulishuo.filedownloader.FileDownloadQueueSet;
 import com.liulishuo.filedownloader.FileDownloader;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
 import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
@@ -91,6 +102,7 @@ public class my_music extends AppCompatActivity {
     private int mCurrentDialogStyle = com.qmuiteam.qmui.R.style.QMUI_Dialog;
     private Observer<Integer> observers;
     private LinearLayoutManager layoutManager;
+    private ArrayList<Mymusic> mArray;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,26 +117,7 @@ public class my_music extends AppCompatActivity {
 
 
         initData();
-        List<Music> music = mMusicDao.queryAll();
-        mArrayLists = new ArrayList<Long>();
-        for (int i = 0; i < mArrayList.size(); i++) {
-
-            int a = 0;
-            for (int j = 0; j < music.size(); j++) {
-
-                if (music.get(j).getId().equals(mArrayList.get(i).getId())) {
-                    a++;
-                }
-            }
-            if (a == 0) {
-                mArrayLists.add(mArrayList.get(i).getId());
-
-            }
-        }
-
-        if(mArrayLists.size()>0){
-            showMessagePositiveDialog();
-        }
+        init();
 
         observers = new Observer<Integer>() {
             @Override
@@ -186,14 +179,72 @@ public class my_music extends AppCompatActivity {
     }
 
     private void initData() {
+        mArray = new ArrayList<Mymusic>();
+        MyApp application = ((MyApp) this.getApplicationContext());
+        SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
+        // Long userid = sp.getLong("userid", 0);
+        Long userid = Long.valueOf("100000013");
+        OkGo.<String>post(application.getUrl() + "/app/user/getInfo?token=" + application.getToken())
+                .params("userId", userid)
+                .execute(new StringCallback() {
+
+                    @Override
+                    public void onSuccess(Response<String> response) {
+
+                        Gson gson = new Gson();
+                        Preview prexiew = gson.fromJson(response.body(), Preview.class);
+                        JsonArray music = prexiew.getData().getAsJsonArray("music");
+
+                        if (prexiew.getCode() == 0) {
+
+                            for (int i = 0; i < music.size(); i++) {
+
+                                Mymusic i1 = new Mymusic(music.get(i).getAsJsonObject().get("id").getAsLong(), music.get(i).getAsJsonObject().get("musicName").getAsString(), music.get(i).getAsJsonObject().get("duration").getAsString(), "1", "100%", music.get(i).getAsJsonObject().get("md5").getAsString());
+                                mArray.add(i1);
+                            }
+
+                            List<Music> musics = mMusicDao.queryAll();
+                            mArrayLists = new ArrayList<Long>();
+                            for (int i = 0; i < mArray.size(); i++) {
+
+                                int a = 0;
+                                for (int j = 0; j < musics.size(); j++) {
+
+                                    if (musics.get(j).getId().equals(mArray.get(i).getId())) {
+                                        a++;
+                                    }
+                                }
+                                if (a == 0) {
+                                    mArrayLists.add(mArray.get(i).getId());
+
+                                }
+                            }
+
+                            if(mArrayLists.size()>0){
+                                showMessagePositiveDialog();
+                            }
+
+                        } else if (prexiew.getCode() == 40000) {
+                            Toast.makeText(my_music.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                });
+
+
+    }
+
+    private void init() {
 
         mArrayList = new ArrayList<Mymusic>();
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < mArray.size(); i++) {
             String publicPath = Objects.requireNonNull(this.getExternalCacheDir()).getPath();
-            String filePath = publicPath + "/music/music" + i + ".mp3";
-            Mymusic i1 = new Mymusic((long) i, "星坠-天空的幻想-林晓夜"+i, "03.00", "1", "100%", filePath);
+            String filePath = publicPath + "/music/"+mArray.get(i).getName();
+            Mymusic i1 = new Mymusic(mArray.get(i).getId(), mArray.get(i).getName(), mArray.get(i).getTime(), mArray.get(i).getType(), mArray.get(i).getTxt(), filePath);
             mArrayList.add(i1);
         }
+
+
 
 
         //适配器

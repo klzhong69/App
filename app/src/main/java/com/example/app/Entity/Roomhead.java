@@ -7,6 +7,38 @@ public class Roomhead {
     private String ima;
     private String msima;
 
+    private int uid;
+    // 音量值
+    private int audioVolum;
+    // 音频 mute 状态
+    private boolean audioMute;
+    // 是否是自己
+    private boolean isUserSelf;
+
+    public int getAudioVolum() {
+        return audioVolum;
+    }
+
+    public void setAudioVolum(int audioVolum) {
+        this.audioVolum = audioVolum;
+    }
+
+    public boolean isAudioMute() {
+        return audioMute;
+    }
+
+    public void setAudioMute(boolean audioMute) {
+        this.audioMute = audioMute;
+    }
+
+    public boolean isUserSelf() {
+        return isUserSelf;
+    }
+
+    public void setUserSelf(boolean userSelf) {
+        isUserSelf = userSelf;
+    }
+
     public String getUsersrc() {
         return usersrc;
     }
@@ -39,10 +71,23 @@ public class Roomhead {
         this.msima = msima;
     }
 
-    public Roomhead(String usersrc, String name, String ima, String msima) {
+    public int getUid() {
+        return uid;
+    }
+
+    public void setUid(int uid) {
+        this.uid = uid;
+    }
+
+
+    public Roomhead(String usersrc, String name, String ima, String msima, int uid, int audioVolum, boolean audioMute, boolean isUserSelf) {
         this.usersrc = usersrc;
         this.name = name;
         this.ima = ima;
         this.msima = msima;
+        this.uid = uid;
+        this.audioVolum = audioVolum;
+        this.audioMute = audioMute;
+        this.isUserSelf = isUserSelf;
     }
 }
