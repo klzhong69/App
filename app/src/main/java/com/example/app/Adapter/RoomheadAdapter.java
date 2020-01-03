@@ -62,7 +62,7 @@ public class RoomheadAdapter extends RecyclerView.Adapter {
             Glide.with(mContext).load(entity.getIma()).into(((RoomheadAdapter.DemoViewHolder)holder).mIma);
         }
 
-        if(entity.getMsima().equals("")){
+        if(entity.getAudioVolum()>0){
             ((DemoViewHolder)holder).msIma.setVisibility(View.GONE);
         }else{
             Glide.with(mContext).load(entity.getMsima()).into(((RoomheadAdapter.DemoViewHolder)holder).msIma);

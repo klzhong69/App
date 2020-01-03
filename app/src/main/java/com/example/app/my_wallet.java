@@ -110,14 +110,18 @@ public class my_wallet extends AppCompatActivity {
                         JsonArray jsonArray =  prexiew.getData().getAsJsonArray("wallet");
                         if(prexiew.getCode()==0){
 
-                             gold = jsonArray.get(0).getAsJsonObject().get("gold").getAsString();
-                             diamond = jsonArray.get(0).getAsJsonObject().get("diamond").getAsString();
-                             packageCount = jsonArray.get(0).getAsJsonObject().get("amount").getAsString();
+                            if(jsonArray.size()>0){
+                                gold = jsonArray.get(0).getAsJsonObject().get("gold").getAsString();
+                                diamond = jsonArray.get(0).getAsJsonObject().get("diamond").getAsString();
+                                packageCount = jsonArray.get(0).getAsJsonObject().get("amount").getAsString();
 
 
-                            textView53.setText(gold);
-                            textView55.setText(diamond);
-                            textView59.setText(packageCount);
+                                textView53.setText(gold);
+                                textView55.setText(diamond);
+                                textView59.setText(packageCount);
+                            }
+
+
 
 
                         }else if(prexiew.getCode()==40000){

@@ -117,6 +117,11 @@ dependencies {
 
     implementation project(path: ':pictureselector')
 
+
+    implementation 'org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.1.0'//MQTT
+    implementation 'org.eclipse.paho:org.eclipse.paho.android.service:1.1.1'
+
+
 }
 
 greendao {

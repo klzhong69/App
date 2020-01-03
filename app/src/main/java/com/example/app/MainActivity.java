@@ -84,6 +84,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
             Manifest.permission.BLUETOOTH,
             Manifest.permission.ACCESS_WIFI_STATE,
             Manifest.permission.CHANGE_WIFI_STATE,
+            Manifest.permission.WAKE_LOCK,
 
     };
 

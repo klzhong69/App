@@ -1,11 +1,14 @@
 package com.example.app;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -14,11 +17,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.app.Adapter.GoldViewAdapter;
+import com.example.app.Adapter.HoldpeopleAdapter;
 import com.example.app.Entity.Mygold;
+import com.example.app.Entity.Theme;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -62,7 +68,7 @@ public class my_gold extends AppCompatActivity {
     private List<Mygold> mData;
     private GoldViewAdapter mAdapters;
     private GridLayoutManager mLayoutManager;
-    private Observer<Integer> observer;
+    public static Observer<Integer> observer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +77,8 @@ public class my_gold extends AppCompatActivity {
         ButterKnife.bind(this);
         title.setText("我的金币");
         subtitle.setText("");
+
+
 
         Intent intent = getIntent();
         String gold = intent.getStringExtra("gold");
@@ -92,61 +100,9 @@ public class my_gold extends AppCompatActivity {
         mAdapters.setOnItemClickListener(new GoldViewAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                ImageView  imageView = view.findViewById(R.id.imageView41);
-                TextView textView = view.findViewById(R.id.textView64);
-                TextView textView2 = view.findViewById(R.id.textView65);
 
-                observer = new Observer<Integer>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
 
-                    }
 
-                    @Override
-                    public void onNext(Integer integer) {
-                        if(integer==0){
-                            textView.setTextColor(Color.WHITE);
-                            textView2.setTextColor(Color.WHITE);
-                            Glide.with(view).load(R.color.tabbarcolor).into(imageView);
-                        }else{
-                            textView.setTextColor(Color.BLACK);
-                            textView2.setTextColor(Color.BLACK);
-                            Glide.with(view).load(R.color.qmui_config_color_white).into(imageView);
-                        }
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                };
-
-                for (int i = 0; i < mData.size(); i++) {
-                    if (i == position) {
-
-                        Observable<Integer> observable = Observable.defer(new Callable<ObservableSource<? extends Integer>>() {
-                            @Override
-                            public ObservableSource<? extends Integer> call() throws Exception {
-                                return Observable.just(0);
-                            }
-                        });
-                        observable.subscribe(observer);
-                    } else {
-
-                        Observable<Integer> observable = Observable.defer(new Callable<ObservableSource<? extends Integer>>() {
-                            @Override
-                            public ObservableSource<? extends Integer> call() throws Exception {
-                                return Observable.just(1);
-                            }
-                        });
-                        observable.subscribe(observer);
-                    }
-                }
             }
 
             @Override
@@ -162,6 +118,29 @@ public class my_gold extends AppCompatActivity {
         defaultItemAnimator.setAddDuration(200);
         defaultItemAnimator.setRemoveDuration(200);
         recyclerView.setItemAnimator(defaultItemAnimator);
+
+        observer = new Observer<Integer>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(Integer integer) {
+                Toast.makeText(my_gold.this, integer + " click", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        };
+
     }
 
     private void init() {
@@ -173,16 +152,6 @@ public class my_gold extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-
-
-
-
-
-    }
 
     @OnClick({R.id.fold, R.id.title, R.id.subtitle})
     public void onViewClicked(View view) {

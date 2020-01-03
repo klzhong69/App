@@ -3,7 +3,6 @@ package com.example.app;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.http.HttpResponseCache;
@@ -14,27 +13,29 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.widget.NestedScrollView;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.app.Adapter.RoomheadAdapter;
+import com.example.app.Adapter.RoomtxtAdapter;
 import com.example.app.Entity.Chats;
-import com.example.app.Entity.MyApp;
 import com.example.app.Entity.Paimai;
+import com.example.app.Entity.Roomhead;
 import com.example.app.Entity.Roomtxt;
 import com.example.app.Model.ChatModel;
 import com.example.app.Model.ChatRoomModel;
@@ -46,9 +47,7 @@ import com.example.app.Model.MessModel;
 import com.example.app.Model.PaimaiModel;
 import com.example.app.cofig.AgoraToken;
 import com.example.app.cofig.DateUtil;
-import com.example.app.cofig.Gradesum;
 import com.example.app.cofig.KeyboardStateObserver;
-import com.example.app.cofig.Preview;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
@@ -399,6 +398,11 @@ public class chatroom extends AppCompatActivity {
     private String mChannelName;
     private String mTitleName;
     private boolean bIsBroadCaster;
+    private static ArrayList<Roomhead> mData = new ArrayList<Roomhead>();
+    private static ArrayList<Roomtxt> mEntityList = new ArrayList<Roomtxt>();
+    private static RoomtxtAdapter mAdapter;
+    private static RoomheadAdapter mAdapters;
+    private int mLocalUid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -406,16 +410,10 @@ public class chatroom extends AppCompatActivity {
         setContentView(R.layout.activity_chatroom);
         ButterKnife.bind(this);
 
-        /***
-         * 动态申请权限
-         */
-        if (checkSelfPermission(Manifest.permission.RECORD_AUDIO, PERMISSION_REQ_ID_RECORD_AUDIO)) {
-
-            initAgoraEngineAndJoinChannel();
-        }
         context = this;
+        ChatRoomModel.initrecycler(context, recyclerview);
+        ChatRoomModel.initrecyclers(context, gridview);
 
-        okgo();
         relativeLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
@@ -460,32 +458,6 @@ public class chatroom extends AppCompatActivity {
     }
 
 
-    private void okgo() {
-
-        OkGo.<String>post("https://1650905311379847.cn-shenzhen.fc.aliyuncs.com/2016-08-15/proxy/agora_test/getToken/")
-                .params("rtcChannel",mChannelName)
-                .params("uid","12345678")
-                .execute(new StringCallback() {
-
-                    @Override
-                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
-
-                        Gson gson = new Gson();
-                        AgoraToken agoraToken = gson.fromJson(response.body(), AgoraToken.class);
-
-                        if(agoraToken.getCode()==0){
-
-                            rtcChannel = agoraToken.getRtcChannel();
-                            agoraId = agoraToken.getRtcChannel();
-                            rtcToken = agoraToken.getRtcToken();
-                            uid = agoraToken.getUid();
-
-                        }
-
-                    }
-                });
-
-    }
 
     @Override
     protected void onPause(){
@@ -497,119 +469,6 @@ public class chatroom extends AppCompatActivity {
         super.onStop();
     }
 
-
-    public boolean checkSelfPermission(String permission, int requestCode) {
-
-        if (ContextCompat.checkSelfPermission(this,
-                permission)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            ActivityCompat.requestPermissions(this,
-                    new String[]{permission},
-                    requestCode);
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           @NonNull String permissions[], @NonNull int[] grantResults) {
-
-        switch (requestCode) {
-            case PERMISSION_REQ_ID_RECORD_AUDIO: {
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    initAgoraEngineAndJoinChannel();
-                } else {
-                    showLongToast("No permission for " + Manifest.permission.RECORD_AUDIO);
-                    finish();
-                }
-                break;
-            }
-
-        }
-    }
-
-    public final void showLongToast(final String msg) {
-        this.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
-            }
-        });
-    }
-
-    private void initAgoraEngineAndJoinChannel() {
-        String appID = agoraId;
-
-        try {
-            // 初始化SDK对象
-            mRtcEngine = RtcEngine.create(getBaseContext(), appID, ChatRoomModel.mRtcEventHandler);
-            mRtcEngine.setLogFile("/sdcard/chatRoom.log");
-
-        } catch (Exception e) {
-
-            throw new RuntimeException("NEED TO check rtc sdk init fatal error\n" + Log.getStackTraceString(e));
-        }
-
-        setupData();
-        setupUI();
-
-        /** 根据房间类型设置 audioProfile **/
-        switch (mRoomMode) {
-            case Constant.ChatRoomGamingStandard:
-                /** 开黑聊天室 */
-                mRtcEngine.setAudioProfile(Constants.AUDIO_PROFILE_SPEECH_STANDARD, Constants.AUDIO_SCENARIO_CHATROOM_GAMING);
-                break;
-            case Constant.ChatRoomEntertainmentStandard:
-                /** 娱乐聊天室 */
-                mRtcEngine.setAudioProfile(Constants.AUDIO_PROFILE_MUSIC_STANDARD, Constants.AUDIO_SCENARIO_CHATROOM_ENTERTAINMENT);
-                break;
-            case Constant.ChatRoomEntertainmentHighQuality:
-                /** K 歌房 */
-                mRtcEngine.setAudioProfile(Constants.AUDIO_PROFILE_MUSIC_HIGH_QUALITY, Constants.AUDIO_SCENARIO_CHATROOM_ENTERTAINMENT);
-                break;
-            case Constant.ChatRoomGamingHighQuality:
-                /** FM 超高音质**/
-                mRtcEngine.setAudioProfile(Constants.AUDIO_PROFILE_MUSIC_HIGH_QUALITY_STEREO, Constants.AUDIO_SCENARIO_CHATROOM_ENTERTAINMENT);
-                break;
-        }
-        // 设置直播模式
-        mRtcEngine.setChannelProfile(Constants.CHANNEL_PROFILE_LIVE_BROADCASTING);
-        // 启动音量监听
-        mRtcEngine.enableAudioVolumeIndication(1000, 3,false);
-
-        // 当 joinChannel api 中填入 0 时，agora 服务器会生成一个唯一的随机数，并在 onJoinChannelSuccess 回调中返回
-        String token = rtcToken;
-        mRtcEngine.joinChannel(token, mChannelName, "", 0);
-
-    }
-
-    /**
-     * 获取从上一个界面传过来的频道信息，角色信息
-     */
-    private void setupData() {
-        Intent intent = getIntent();
-        if (intent != null) {
-            //房间类型
-            mRoomMode = intent.getIntExtra(Constant.ACTION_KEY_ROOM_MODE, Constant.ChatRoomGamingStandard);
-            //是否为主播
-            bIsBroadCaster = intent.getIntExtra(Constant.ACTION_KEY_CROLE, Constants.CLIENT_ROLE_BROADCASTER) == Constants.CLIENT_ROLE_BROADCASTER;
-            //传到声望的房间代码
-            mChannelName = intent.getStringExtra(Constant.ACTION_KEY_ROOM_NAME);
-            //房间显示名称
-            mTitleName = intent.getStringExtra(Constant.ACTION_KEY_TITLE_NAME);
-        }
-
-        ChatRoomModel.initData(bIsBroadCaster);
-        ChatRoomModel.initrecycler(context, recyclerview);
-        ChatRoomModel.initrecyclers(context, gridview);
-    }
-
-    private void setupUI() {
-
-    }
 
 
     @Override
@@ -625,32 +484,40 @@ public class chatroom extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.imageView101:
-                QMUIPopups.quickAction(this,
-                        QMUIDisplayHelper.dp2px(this, 46),
-                        QMUIDisplayHelper.dp2px(this, 46))
-                        .shadow(true)
-                        .edgeProtection(QMUIDisplayHelper.dp2px(this, 20))
-                        .addAction(new QMUIQuickAction.Action().icon(R.drawable.sets).text("设置").onClick(
-                                new QMUIQuickAction.OnClickListener() {
-                                    @Override
-                                    public void onClick(QMUIQuickAction quickAction, QMUIQuickAction.Action action, int position) {
-                                        quickAction.dismiss();
-                                        Intent intent2 = new Intent(chatroom.this, room_set.class);
-                                        startActivity(intent2);
+                /**
+                 * 刚进入时根据是观众还是主播状态做一次UI控制，伴奏，变音，静音自己按钮不可点击
+                 * */
+                if (bIsBroadCaster) {
+                    QMUIPopups.quickAction(this,
+                            QMUIDisplayHelper.dp2px(this, 46),
+                            QMUIDisplayHelper.dp2px(this, 46))
+                            .shadow(true)
+                            .edgeProtection(QMUIDisplayHelper.dp2px(this, 20))
+                            .addAction(new QMUIQuickAction.Action().icon(R.drawable.sets).text("设置").onClick(
+                                    new QMUIQuickAction.OnClickListener() {
+                                        @Override
+                                        public void onClick(QMUIQuickAction quickAction, QMUIQuickAction.Action action, int position) {
+                                            quickAction.dismiss();
+                                            Intent intent2 = new Intent(chatroom.this, room_set.class);
+                                            startActivity(intent2);
+                                        }
                                     }
-                                }
-                        ))
-                        .addAction(new QMUIQuickAction.Action().icon(R.drawable.musics).text("音乐").onClick(
-                                new QMUIQuickAction.OnClickListener() {
-                                    @Override
-                                    public void onClick(QMUIQuickAction quickAction, QMUIQuickAction.Action action, int position) {
-                                        quickAction.dismiss();
-                                        Intent intent2 = new Intent(chatroom.this, my_music.class);
-                                        startActivity(intent2);
+                            ))
+                            .addAction(new QMUIQuickAction.Action().icon(R.drawable.musics).text("音乐").onClick(
+                                    new QMUIQuickAction.OnClickListener() {
+                                        @Override
+                                        public void onClick(QMUIQuickAction quickAction, QMUIQuickAction.Action action, int position) {
+                                            quickAction.dismiss();
+                                            Intent intent2 = new Intent(chatroom.this, my_music.class);
+                                            startActivity(intent2);
+                                        }
                                     }
-                                }
-                        ))
-                        .show(view);
+                            ))
+                            .show(view);
+                } else {
+                    Toast.makeText(chatroom.this, "上麦后可使用", Toast.LENGTH_SHORT).show();
+                }
+
                 break;
             case R.id.imageView102:
                 component5.setVisibility(View.VISIBLE);
@@ -674,10 +541,12 @@ public class chatroom extends AppCompatActivity {
                             public void onNext(Integer integer) {
                                 if (integer == 1) {
                                     Roomtxt entity = new Roomtxt("进入房间打赏", "周润发", "https://momeak.oss-cn-shenzhen.aliyuncs.com/l3.png", "");
-                                    ChatRoomModel.Add(recyclerview, entity);
+                                    mAdapter.addData(mEntityList.size(), entity);
+                                    recyclerview.smoothScrollToPosition(mEntityList.size());
                                 } else if (integer == 2) {
                                     Roomtxt entity = new Roomtxt("【房间公告】", "", "", "---为了更好的体验请大家文明用语---");
-                                    ChatRoomModel.Add(recyclerview, entity);
+                                    mAdapter.addData(mEntityList.size(), entity);
+                                    recyclerview.smoothScrollToPosition(mEntityList.size());
                                 }
 
                             }
