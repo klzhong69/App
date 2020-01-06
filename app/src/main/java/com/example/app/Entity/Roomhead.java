@@ -23,7 +23,7 @@ public class Roomhead {
         this.audioVolum = audioVolum;
     }
 
-    public boolean isAudioMute() {
+    public boolean getAudioMute() {
         return audioMute;
     }
 
@@ -31,7 +31,7 @@ public class Roomhead {
         this.audioMute = audioMute;
     }
 
-    public boolean isUserSelf() {
+    public boolean getUserSelf() {
         return isUserSelf;
     }
 

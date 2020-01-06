@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.app.Entity.Roomhead;
 import com.example.app.R;
+import com.skyfishjy.library.RippleBackground;
 
 import java.util.List;
 
@@ -62,10 +63,17 @@ public class RoomheadAdapter extends RecyclerView.Adapter {
             Glide.with(mContext).load(entity.getIma()).into(((RoomheadAdapter.DemoViewHolder)holder).mIma);
         }
 
-        if(entity.getAudioVolum()>0){
+        if(entity.getMsima().equals("")){
             ((DemoViewHolder)holder).msIma.setVisibility(View.GONE);
         }else{
-            Glide.with(mContext).load(entity.getMsima()).into(((RoomheadAdapter.DemoViewHolder)holder).msIma);
+            Glide.with(mContext).load(entity.getIma()).into(((RoomheadAdapter.DemoViewHolder)holder).msIma);
+        }
+
+        if(entity.getAudioVolum()>0){
+            System.out.println("音量" + entity.getAudioVolum());
+            ((RoomheadAdapter.DemoViewHolder)holder).rippleback.startRippleAnimation();
+        }else{
+            ((RoomheadAdapter.DemoViewHolder)holder).rippleback.stopRippleAnimation();
         }
 
         if (mOnItemClickListener != null)
@@ -105,6 +113,7 @@ public class RoomheadAdapter extends RecyclerView.Adapter {
         private TextView mName;
         private ImageView mIma;
         private ImageView msIma;
+        private RippleBackground rippleback;
 
         public DemoViewHolder(View itemView) {
             super(itemView);
@@ -112,6 +121,7 @@ public class RoomheadAdapter extends RecyclerView.Adapter {
             mName = (TextView) itemView.findViewById(R.id.textView39);
             mIma = (ImageView) itemView.findViewById(R.id.imageView46);
             msIma = (ImageView) itemView.findViewById(R.id.imageView107);
+            rippleback = (RippleBackground)  itemView.findViewById(R.id.rippleback);
         }
     }
 

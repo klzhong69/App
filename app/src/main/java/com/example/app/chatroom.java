@@ -3,9 +3,9 @@ package com.example.app;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.net.http.HttpResponseCache;
 import android.os.Bundle;
 import android.text.TextPaint;
 import android.util.Log;
@@ -26,31 +26,26 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.widget.NestedScrollView;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.example.app.Adapter.HoldpeopleAdapter;
 import com.example.app.Adapter.RoomheadAdapter;
-import com.example.app.Adapter.RoomtxtAdapter;
 import com.example.app.Entity.Chats;
-import com.example.app.Entity.Paimai;
+import com.example.app.Entity.Holdpeople;
+import com.example.app.Entity.Onlinepeople;
 import com.example.app.Entity.Roomhead;
 import com.example.app.Entity.Roomtxt;
 import com.example.app.Model.ChatModel;
 import com.example.app.Model.ChatRoomModel;
 import com.example.app.Model.GiftModel;
 import com.example.app.Model.GiftheadModel;
-import com.example.app.Model.HoldModel;
 import com.example.app.Model.MessFriendsModel;
 import com.example.app.Model.MessModel;
+import com.example.app.Model.OnlineModel;
 import com.example.app.Model.PaimaiModel;
-import com.example.app.cofig.AgoraToken;
 import com.example.app.cofig.DateUtil;
 import com.example.app.cofig.KeyboardStateObserver;
-import com.google.gson.Gson;
-import com.lzy.okgo.OkGo;
-import com.lzy.okgo.callback.StringCallback;
 import com.opensource.svgaplayer.SVGADrawable;
 import com.opensource.svgaplayer.SVGADynamicEntity;
 import com.opensource.svgaplayer.SVGAImageView;
@@ -63,16 +58,17 @@ import com.qmuiteam.qmui.widget.popup.QMUIPopup;
 import com.qmuiteam.qmui.widget.popup.QMUIPopups;
 import com.qmuiteam.qmui.widget.popup.QMUIQuickAction;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
+import com.skyfishjy.library.RippleBackground;
 import com.wildma.pictureselector.Constant;
 
 import org.greenrobot.greendao.annotation.NotNull;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.Callable;
 
 import butterknife.BindView;
@@ -375,11 +371,13 @@ public class chatroom extends AppCompatActivity {
     TextView textViewc2d;
     @BindView(R.id.textViewc2f)
     TextView textViewc2f;
+    @BindView(R.id.rippleback)
+    RippleBackground rippleback;
     private Disposable disposable;
     private chatroom context;
     public static Observer<Integer> observer;
     public static Observer<Integer> observerchat;
-    public static Observer<View> observers;
+    public static Observer<Integer> observers;
     private QMUIPopup mNormalPopup;
     private Long conver;
     private long sendid;
@@ -390,28 +388,155 @@ public class chatroom extends AppCompatActivity {
     private SVGAParser parser;
     private static final int PERMISSION_REQ_ID_RECORD_AUDIO = 22;
     private RtcEngine mRtcEngine;
-    private String rtcChannel;
-    private String agoraId;
-    private String rtcToken;
-    private String uid;
     private int mRoomMode;
     private String mChannelName;
     private String mTitleName;
     private boolean bIsBroadCaster;
-    private static ArrayList<Roomhead> mData = new ArrayList<Roomhead>();
-    private static ArrayList<Roomtxt> mEntityList = new ArrayList<Roomtxt>();
-    private static RoomtxtAdapter mAdapter;
-    private static RoomheadAdapter mAdapters;
     private int mLocalUid;
+    public static final String TAG = "chatroom";
+    private int position;
+
+
+    /**
+     * 声网频道内业务回调
+     */
+    private final IRtcEngineEventHandler mRtcEventHandler = new IRtcEngineEventHandler() {
+
+        @Override
+        public void onUserJoined(final int uid, int elapsed) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Log.e(TAG, "user加入" + uid);
+                    Onlinepeople online = new Onlinepeople("ID2698456", "https://momeak.oss-cn-shenzhen.aliyuncs.com/h5.jpg", "胡楠", "", "");
+
+                }
+            });
+        }
+
+        @Override
+        public void onUserOffline(final int uid, int reason) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    // 当用户离开时，从用户列表中清除
+                   ChatRoomModel.mUserList.remove(getUserIndex(uid));
+                    ChatRoomModel.mAdapters.notifyDataSetChanged();
+                }
+            });
+        }
+
+        @Override
+        public void onUserMuteAudio(final int uid, final boolean muted) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    // 收到某个uid mute 状态后刷新人员列表
+                    int index = getUserIndex(uid);
+                    ChatRoomModel.mUserList.get(index).setAudioMute(muted);
+                    ChatRoomModel.mAdapters.notifyDataSetChanged();
+                }
+            });
+        }
+
+        @Override
+        public void onJoinChannelSuccess(final String channel, final int uid, int elapsed) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    // onJoinChannelSuccess 回调中，uid 不会为0
+                    // 当 joinChannel api 中填入 0 时，agora 服务器会生成一个唯一的随机数，并在 onJoinChannelSuccess 回调中返回
+
+                    SharedPreferences sp = Objects.requireNonNull(getSharedPreferences("Room", Context.MODE_PRIVATE));
+                    String id = sp.getString("roomid", "");
+                    /** 进入频道，主播状态下将自己加入到 user 列表**/
+                    if (bIsBroadCaster) {
+                        Log.e(TAG, "主播加入" + uid);
+                        if (mChannelName.equals(id)) {
+                            Observable<Integer> observable = Observable.defer(new Callable<ObservableSource<? extends Integer>>() {
+                                @Override
+                                public ObservableSource<? extends Integer> call() throws Exception {
+                                    return Observable.just(11);
+                                }
+                            });
+                            observable.subscribe(observer);
+                        }
+                    } else {
+                        Log.e(TAG, "user加入s" + uid);
+                        Onlinepeople online = new Onlinepeople("ID2698456", "https://momeak.oss-cn-shenzhen.aliyuncs.com/h5.jpg", "胡楠", "", "");
+                        OnlineModel.mArrayList.add(online);
+                    }
+
+
+                }
+            });
+        }
+
+        @Override
+        public void onAudioVolumeIndication(final AudioVolumeInfo[] speakers, int totalVolume) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                        if (speakers != null) {
+                            for (AudioVolumeInfo audioVolumeInfo : speakers) {
+
+                                /**
+                                 * 根据uid判断是他人还是自己， uid 0 默认是自己，根据 uid = 0 的取本地音量值，和joinchannelsuccess 内
+                                 * 本地的 LocalUid 对应
+                                 *
+                                 */
+                                if (audioVolumeInfo.uid == 0) {
+                                    int index = getUserIndex(audioVolumeInfo.uid);
+                                    Log.e(TAG, "user" + index);
+                                    if (index >= 0) {
+                                        ChatRoomModel.mUserList.get(index).setAudioVolum(audioVolumeInfo.volume);
+                                        ChatRoomModel.mAdapters.notifyItemChanged(index);
+                                    }
+                                } else {
+                                    int index = getUserIndex(mLocalUid);
+                                    Log.e(TAG, "主持" + index);
+                                    if (index >= 0) {
+                                        rippleback.startRippleAnimation();
+                                    }else{
+                                        rippleback.stopRippleAnimation();
+                                    }
+                                }
+                            }
+
+                    }
+
+                }
+            });
+        }
+
+
+    };
+
+
+    private int getUserIndex(int uid) {
+        for (int i = 0; i < ChatRoomModel.mUserList.size(); i++) {
+            if (ChatRoomModel.mUserList.get(i).getUid() == uid) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chatroom);
         ButterKnife.bind(this);
-
         context = this;
+
+        if (checkSelfPermission(Manifest.permission.RECORD_AUDIO, PERMISSION_REQ_ID_RECORD_AUDIO)) {
+
+            initAgoraEngineAndJoinChannel();
+        }
+
         ChatRoomModel.initrecycler(context, recyclerview);
+        ChatRoomModel.initData();
         ChatRoomModel.initrecyclers(context, gridview);
 
         relativeLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -425,50 +550,123 @@ public class chatroom extends AppCompatActivity {
             }
         });
 
-        String[] array = {"https://github.com/yyued/SVGA-Samples/blob/master/posche.svga?raw=true", "https://github.com/yyued/SVGA-Samples/blob/master/kingset.svga?raw=true"};
-        Observable.fromArray(array)
-                .subscribe(new Observer<String>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
 
-                    }
+    }
 
-                    @Override
-                    public void onNext(String integer) {
-                        File cacheDir = new File(getCacheDir(), integer);
-                        try {
-                            HttpResponseCache tart = HttpResponseCache.install(cacheDir, 1024 * 1024 * 128);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
+    public boolean checkSelfPermission(String permission, int requestCode) {
 
-                    @Override
-                    public void onError(Throwable e) {
+        if (ContextCompat.checkSelfPermission(this,
+                permission)
+                != PackageManager.PERMISSION_GRANTED) {
 
-                    }
+            ActivityCompat.requestPermissions(this,
+                    new String[]{permission},
+                    requestCode);
+            return false;
+        }
+        return true;
+    }
 
-                    @Override
-                    public void onComplete() {
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String permissions[], @NonNull int[] grantResults) {
 
-                    }
-                });
+        switch (requestCode) {
+            case PERMISSION_REQ_ID_RECORD_AUDIO: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    initAgoraEngineAndJoinChannel();
+                } else {
+                    showLongToast("No permission for " + Manifest.permission.RECORD_AUDIO);
+                    finish();
+                }
+                break;
+            }
 
+        }
+    }
 
+    public final void showLongToast(final String msg) {
+        this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
 
 
+
+    public void initAgoraEngineAndJoinChannel() {
+        String appID = "cb1df47400774887bdc905241b4e7ea4";
+
+        try {
+            // 初始化SDK对象
+            mRtcEngine = RtcEngine.create(context, appID, mRtcEventHandler);
+            mRtcEngine.setLogFile("/sdcard/chatRoom.log");
+
+        } catch (Exception e) {
+
+            throw new RuntimeException("NEED TO check rtc sdk init fatal error\n" + Log.getStackTraceString(e));
+        }
+
+        setupData();
+
+        /** 根据房间类型设置 audioProfile **/
+        switch (mRoomMode) {
+            case Constant.ChatRoomGamingStandard:
+                /** 开黑聊天室 */
+                mRtcEngine.setAudioProfile(Constants.AUDIO_PROFILE_SPEECH_STANDARD, Constants.AUDIO_SCENARIO_CHATROOM_GAMING);
+                break;
+            case Constant.ChatRoomEntertainmentStandard:
+                /** 娱乐聊天室 */
+                mRtcEngine.setAudioProfile(Constants.AUDIO_PROFILE_MUSIC_STANDARD, Constants.AUDIO_SCENARIO_CHATROOM_ENTERTAINMENT);
+                break;
+            case Constant.ChatRoomEntertainmentHighQuality:
+                /** K 歌房 */
+                mRtcEngine.setAudioProfile(Constants.AUDIO_PROFILE_MUSIC_HIGH_QUALITY, Constants.AUDIO_SCENARIO_CHATROOM_ENTERTAINMENT);
+                break;
+            case Constant.ChatRoomGamingHighQuality:
+                /** FM 超高音质**/
+                mRtcEngine.setAudioProfile(Constants.AUDIO_PROFILE_MUSIC_HIGH_QUALITY_STEREO, Constants.AUDIO_SCENARIO_CHATROOM_ENTERTAINMENT);
+                break;
+        }
+        // 设置直播模式
+        mRtcEngine.setChannelProfile(Constants.CHANNEL_PROFILE_LIVE_BROADCASTING);
+        // 启动音量监听
+        mRtcEngine.enableAudioVolumeIndication(1000, 3, true);
+        // 当 joinChannel api 中填入 0 时，agora 服务器会生成一个唯一的随机数，并在 onJoinChannelSuccess 回调中返回
+        SharedPreferences sp = Objects.requireNonNull(getSharedPreferences("User", Context.MODE_PRIVATE));
+        //mLocalUid = sp.getInt("userid", 1234);
+        mLocalUid= 1234;
+        mRtcEngine.joinChannel(null, mChannelName, "", 1234);
+
+    }
+
+    /**
+     * 获取从上一个界面传过来的频道信息，角色信息
+     */
+    private void setupData() {
+        Intent intent = getIntent();
+        if (intent != null) {
+            mRoomMode = intent.getIntExtra(Constant.ACTION_KEY_ROOM_MODE, Constant.ChatRoomGamingStandard);
+            bIsBroadCaster = intent.getIntExtra(Constant.ACTION_KEY_CROLE, Constants.CLIENT_ROLE_AUDIENCE) == Constants.CLIENT_ROLE_BROADCASTER;
+            mChannelName = intent.getStringExtra(Constant.ACTION_KEY_ROOM_NAME);
+            mTitleName = intent.getStringExtra(Constant.ACTION_KEY_TITLE_NAME);
+        }
+    }
+
+
     @Override
-    protected void onPause(){
+    protected void onPause() {
         super.onPause();
     }
 
     @Override
-    protected void onStop(){
+    protected void onStop() {
         super.onStop();
     }
-
 
 
     @Override
@@ -480,12 +678,12 @@ public class chatroom extends AppCompatActivity {
         }
     }
 
-    @OnClick({R.id.fold, R.id.imageView98, R.id.imageView101, R.id.imageView102, R.id.imageView103, R.id.imageView99, R.id.textView124, R.id.imageView104, R.id.imageView105, R.id.textViewc7t, R.id.butc1, R.id.butc10, R.id.imageView4, R.id.imageViewc1t, R.id.imageViewc2t, R.id.imageViewc5s, R.id.recyclerbutc1, R.id.recyclerbutc2, R.id.recyclerbutc3, R.id.recyclerbutc4, R.id.recyclerbutc5, R.id.recyclerbutc7, R.id.recyclerbutc8, R.id.recyclerbutc8s, R.id.recyclerbutc9, R.id.recyclerbutc10, R.id.recyclerbutc10s, R.id.imageViewc1, R.id.imageViewc2, R.id.imageViewc3, R.id.imageViewc4, R.id.imageViewc5, R.id.imageViewc7, R.id.recyclerc8, R.id.imageViewc9, R.id.recyclerc10, R.id.relativec1, R.id.relativec2, R.id.relativec3, R.id.relativec4, R.id.relativec5, R.id.relativec7, R.id.relativec9})
+    @OnClick({R.id.fold, R.id.imageView98, R.id.imageView101, R.id.imageView102, R.id.imageView103, R.id.imageView99, R.id.textView124, R.id.imageView104, R.id.imageView105, R.id.textViewc3s, R.id.textViewc7t, R.id.butc1, R.id.butc10, R.id.imageView4, R.id.imageViewc1t, R.id.imageViewc2t, R.id.imageViewc5s, R.id.recyclerbutc1, R.id.recyclerbutc2, R.id.recyclerbutc3, R.id.recyclerbutc4, R.id.recyclerbutc5, R.id.recyclerbutc7, R.id.recyclerbutc8, R.id.recyclerbutc8s, R.id.recyclerbutc9, R.id.recyclerbutc10, R.id.recyclerbutc10s, R.id.imageViewc1, R.id.imageViewc2, R.id.imageViewc3, R.id.imageViewc4, R.id.imageViewc5, R.id.imageViewc7, R.id.recyclerc8, R.id.imageViewc9, R.id.recyclerc10, R.id.relativec1, R.id.relativec2, R.id.relativec3, R.id.relativec4, R.id.relativec5, R.id.relativec7, R.id.relativec9})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.imageView101:
                 /**
-                 * 刚进入时根据是观众还是主播状态做一次UI控制，伴奏，变音，静音自己按钮不可点击
+                 * 刚进入时根据是观众还是主播状态做一次UI控制，
                  * */
                 if (bIsBroadCaster) {
                     QMUIPopups.quickAction(this,
@@ -515,7 +713,7 @@ public class chatroom extends AppCompatActivity {
                             ))
                             .show(view);
                 } else {
-                    Toast.makeText(chatroom.this, "上麦后可使用", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(chatroom.this, "请上麦后使用", Toast.LENGTH_SHORT).show();
                 }
 
                 break;
@@ -525,9 +723,13 @@ public class chatroom extends AppCompatActivity {
                 MessModel.initrecycler(context, context, recyclerc5, 1);
                 break;
             case R.id.imageView103:
-                component7.setVisibility(View.VISIBLE);
-                PaimaiModel.initData();
-                PaimaiModel.initrecycler(context, recyclerc7);
+                if (!bIsBroadCaster) {
+                    component7.setVisibility(View.VISIBLE);
+                    PaimaiModel.initrecycler(context, recyclerc7);
+                    textViewc7s.setText(PaimaiModel.mArrayList.size() + "人");
+                } else {
+                    Toast.makeText(chatroom.this, "您已上麦 ", Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.imageView104:
                 Observable.just(1, 2)
@@ -541,12 +743,10 @@ public class chatroom extends AppCompatActivity {
                             public void onNext(Integer integer) {
                                 if (integer == 1) {
                                     Roomtxt entity = new Roomtxt("进入房间打赏", "周润发", "https://momeak.oss-cn-shenzhen.aliyuncs.com/l3.png", "");
-                                    mAdapter.addData(mEntityList.size(), entity);
-                                    recyclerview.smoothScrollToPosition(mEntityList.size());
+                                    ChatRoomModel.Add(recyclerview, entity);
                                 } else if (integer == 2) {
                                     Roomtxt entity = new Roomtxt("【房间公告】", "", "", "---为了更好的体验请大家文明用语---");
-                                    mAdapter.addData(mEntityList.size(), entity);
-                                    recyclerview.smoothScrollToPosition(mEntityList.size());
+                                    ChatRoomModel.Add(recyclerview, entity);
                                 }
 
                             }
@@ -592,12 +792,28 @@ public class chatroom extends AppCompatActivity {
                     PaimaiModel.Remove(i);
                     textViewc7t.setText("申请排麦");
                     bool = false;
+
                 } else {
-                    Paimai i1 = new Paimai("123456", "https://momeak.oss-cn-shenzhen.aliyuncs.com/h3.jpg", "胡楠我", "");
+                    Holdpeople i1 = new Holdpeople("123456", "https://momeak.oss-cn-shenzhen.aliyuncs.com/h3.jpg", "胡楠我", "", "0");
                     PaimaiModel.Add(recyclerc7, i1);
                     textViewc7t.setText("取消排麦");
                     bool = true;
                 }
+                textViewc7s.setText(PaimaiModel.mArrayList.size() + "人");
+                break;
+
+            case R.id.textViewc3s:
+                for (int i = 0; i < HoldpeopleAdapter.states.size(); i++) {
+                    if (HoldpeopleAdapter.states.get(i)) {
+                        Roomhead roomhead = new Roomhead(HoldpeopleAdapter.mEntityList.get(i).getUserima(), HoldpeopleAdapter.mEntityList.get(i).getName(), "", "", 1234, 0, false, false);
+                        ChatRoomModel.showBroadCast(mRtcEngine, 1234L, position, roomhead);
+                        component3.setVisibility(View.GONE);
+                        PaimaiModel.Remove(i);
+                        bIsBroadCaster = true;
+                    }
+                }
+
+
                 break;
 
             case R.id.imageViewc1t:
@@ -681,9 +897,11 @@ public class chatroom extends AppCompatActivity {
         }
     }
 
+
     @Override
     protected void onStart() {
         super.onStart();
+        //子页面回调
         observer = new Observer<Integer>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -738,6 +956,12 @@ public class chatroom extends AppCompatActivity {
                         break;
                     case 10:
                         break;
+                    case 11:
+                        Log.e(TAG, "主播加入回调");
+                        Glide.with(context).load("https://momeak.oss-cn-shenzhen.aliyuncs.com/h4.jpg").into(imageView2);
+                        textView39.setText("苗苗主播");
+                        textView19.setText("萌妹带你飞123");
+                        break;
                 }
 
             }
@@ -755,15 +979,17 @@ public class chatroom extends AppCompatActivity {
 
         };
 
-
-        observers = new Observer<View>() {
+        //坑位弹窗
+        observers = new Observer<Integer>() {
             @Override
             public void onSubscribe(Disposable d) {
 
             }
 
             @Override
-            public void onNext(View view) {
+            public void onNext(Integer view) {
+
+                position = view;
 
                 String[] listItems = new String[]{
                         "抱人",
@@ -783,8 +1009,7 @@ public class chatroom extends AppCompatActivity {
                         switch (i) {
                             case 0:
                                 component3.setVisibility(View.VISIBLE);
-                                HoldModel.initData();
-                                HoldModel.initrecycler(context, recyclerc3);
+                                PaimaiModel.initrecyclers(context, recyclerc3);
                                 break;
                             case 1:
                                 break;
@@ -819,7 +1044,7 @@ public class chatroom extends AppCompatActivity {
 
                             }
                         })
-                        .show(view);
+                        .show(gridview.getChildAt(view));
             }
 
             @Override
@@ -833,7 +1058,7 @@ public class chatroom extends AppCompatActivity {
             }
         };
 
-
+        //聊天
         observerchat = new Observer<Integer>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -876,7 +1101,7 @@ public class chatroom extends AppCompatActivity {
             }
         };
 
-
+        //svga动画
         observersvga = new Observer<Integer>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -916,6 +1141,7 @@ public class chatroom extends AppCompatActivity {
 
     }
 
+    //退出弹窗
     private void showSimpleBottomSheetList(boolean gravityCenter,
                                            boolean addCancelBtn,
                                            boolean withIcon,
@@ -934,6 +1160,9 @@ public class chatroom extends AppCompatActivity {
                     public void onClick(QMUIBottomSheet dialog, View itemView, int position, String tag) {
                         dialog.dismiss();
                         if (position == 0) {
+                            if (mRtcEngine != null) {
+                                mRtcEngine.leaveChannel();
+                            }
                             chatroom.this.finish();
                         } else {
                             Intent intent2 = new Intent(chatroom.this, MainActivity.class);
@@ -952,19 +1181,13 @@ public class chatroom extends AppCompatActivity {
         if (withMark) {
             builder.setCheckedIndex(40);
         }
-        /*for (int i = 1; i <= itemCount; i++) {
-            if(withIcon){
-                builder.addItem(ContextCompat.getDrawable(this, R.mipmap.icon_tabbar_lab), "Item " + i);
-            }else{
-                builder.addItem("Item " + i);
-            }
 
-        }*/
         builder.addItem("直接离开");
         builder.addItem("悬浮窗模式");
         builder.build().show();
     }
 
+    //分享弹窗
     private void showSimpleBottomSheetGrid() {
         final int TAG_SHARE_WECHAT_FRIEND = 0;
         final int TAG_SHARE_WECHAT_MOMENT = 1;
@@ -1009,6 +1232,7 @@ public class chatroom extends AppCompatActivity {
     }
 
 
+    //加载svga
     private void loadAnimation(SVGAImageView svga, int type, String url, String ima, String imaforkey, String txt, String txtforkey) {
         // new URL needs try catch.
         parser = new SVGAParser(this);

@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.app.Entity.Holdpeople;
 import com.example.app.Entity.Paimai;
 import com.example.app.R;
 
@@ -21,10 +22,10 @@ public class PaimaiAdapter extends RecyclerView.Adapter {
     private static final String TAG = PaimaiAdapter.class.getSimpleName();
 
     private Context mContext;
-    private List<Paimai> mEntityList;
+    private List<Holdpeople> mEntityList;
     private PaimaiAdapter.OnItemClickListener mOnItemClickListener;
 
-    public PaimaiAdapter(Context context, List<Paimai> entityList) {
+    public PaimaiAdapter(Context context, List<Holdpeople> entityList) {
         this.mContext = context;
         this.mEntityList = entityList;
     }
@@ -50,7 +51,7 @@ public class PaimaiAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        Paimai entity = mEntityList.get(position);
+        Holdpeople entity = mEntityList.get(position);
 
         ((PaimaiAdapter.DemoViewHolder) holder).id.setText("ID"+entity.getId());
         ((PaimaiAdapter.DemoViewHolder) holder).name.setText(entity.getName());
@@ -101,7 +102,7 @@ public class PaimaiAdapter extends RecyclerView.Adapter {
     }
 
 
-    public void addData(int position, Paimai entity) {
+    public void addData(int position, Holdpeople entity) {
         mEntityList.add(position, entity);
         notifyItemInserted(position);
     }

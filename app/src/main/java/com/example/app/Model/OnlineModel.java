@@ -20,18 +20,11 @@ import java.util.ArrayList;
 
 public class OnlineModel {
 
-    private static ArrayList<Onlinepeople> mArrayList;
+    public static ArrayList<Onlinepeople> mArrayList = new ArrayList<Onlinepeople>();
     private static OnlinepeopleAdapter mAdapter;
     private static Context context;
 
-    public static void initData() {
-        mArrayList = new ArrayList<Onlinepeople>();
-        for (int i = 0; i < 10; i++) {
-            Onlinepeople i1 = new Onlinepeople("ID2698456", "https://momeak.oss-cn-shenzhen.aliyuncs.com/h5.jpg", "胡楠"+i, "", i+"");
-            mArrayList.add(i1);
-        }
 
-    }
 
     public static void initrecycler(Context contexts, RecyclerView recycler13) {
         context = contexts;
@@ -82,10 +75,17 @@ public class OnlineModel {
     }
 
 
-    public static void Add(RecyclerView mRecyclerView,Onlinepeople entity){
-        mAdapter.addData(mArrayList.size(), entity);
-        mRecyclerView.smoothScrollToPosition(mArrayList.size());
+    public static void Add(Context contexts, RecyclerView recycler13,Onlinepeople entity){
+        if(mAdapter != null){
+            mAdapter.addData(mArrayList.size(), entity);
+        }else {
+            initrecycler(contexts,recycler13);
+            mAdapter.addData(mArrayList.size(), entity);
+        }
+
     }
+
+
     private static void showSimpleBottomSheetList(boolean gravityCenter,
                                                   boolean addCancelBtn,
                                                   boolean withIcon,
@@ -113,14 +113,6 @@ public class OnlineModel {
         if (withMark) {
             builder.setCheckedIndex(40);
         }
-        /*for (int i = 1; i <= itemCount; i++) {
-            if(withIcon){
-                builder.addItem(ContextCompat.getDrawable(this, R.mipmap.icon_tabbar_lab), "Item " + i);
-            }else{
-                builder.addItem("Item " + i);
-            }
-
-        }*/
         builder.addItem("设为管理");
         builder.addItem("禁麦");
         builder.addItem("拉黑");

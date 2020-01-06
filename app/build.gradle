@@ -48,8 +48,8 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0'
 
 
-    implementation 'com.jakewharton:butterknife:10.1.0'//butterknife注解框架
-    annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
+    implementation 'com.jakewharton:butterknife:10.2.0'//butterknife注解框架
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.0'
 
     implementation 'com.android.support:support-v4:29.0.0'
 
@@ -120,6 +120,8 @@ dependencies {
 
     implementation 'org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.1.0'//MQTT
     implementation 'org.eclipse.paho:org.eclipse.paho.android.service:1.1.1'
+
+    implementation 'com.skyfishjy.ripplebackground:library:1.0.1'//波纹控制
 
 
 }

@@ -1,6 +1,7 @@
 package com.example.app.Model;
 
 import android.content.Context;
+import android.preference.TwoStatePreference;
 import android.view.View;
 
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -12,35 +13,37 @@ import com.example.app.Adapter.RoomheadAdapter;
 import com.example.app.Adapter.RoomtxtAdapter;
 import com.example.app.Entity.Roomhead;
 import com.example.app.Entity.Roomtxt;
+import com.example.app.Sqlentity.User;
 import com.example.app.chatroom;
 
 import java.util.ArrayList;
 import java.util.concurrent.Callable;
 
+import io.agora.rtc.Constants;
+import io.agora.rtc.RtcEngine;
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 
 public class ChatRoomModel {
 
-    private static ArrayList<Roomhead> mData = new ArrayList<Roomhead>();
     private static ArrayList<Roomtxt> mEntityList = new ArrayList<Roomtxt>();
+    public static ArrayList<Roomhead> mUserList = new ArrayList<Roomhead>();
     private static RoomtxtAdapter mAdapter;
-    private static RoomheadAdapter mAdapters;
-    private int mLocalUid;
+    public static RoomheadAdapter mAdapters;
+
+    public static void initData(){
+        for(int i=0;i<8;i++){
+            Roomhead i1 = new Roomhead("https://momeak.oss-cn-shenzhen.aliyuncs.com/h1.jpg","","","",0,0,false,false);
+            mUserList.add(i1);
+        }
+    }
+
 
     public static void initrecycler(Context context, RecyclerView mRecyclerView) {
         //创建适配器，将数据传递给适配器
         mAdapter = new RoomtxtAdapter(context, mEntityList);
         //设置适配器adapter
         mRecyclerView.setAdapter(mAdapter);
-
-       /* //创建布局管理器，垂直设置LinearLayoutManager.VERTICAL，水平设置LinearLayoutManager.HORIZONTAL
-        mLinearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        mRecyclerView.setLayoutManager(mLinearLayoutManager);*/
-
-        /*//多列布局
-        mLayoutManager = new GridLayoutManager(this,4);
-        mRecyclerView.setLayoutManager(mLayoutManager);*/
 
 
         //布局管理器
@@ -80,32 +83,33 @@ public class ChatRoomModel {
     }
 
 
-    public static void initrecyclers(Context context, RecyclerView gridview) {
+
+    public static void initrecyclers(Context context, RecyclerView mRecyclerView) {
         //创建适配器，将数据传递给适配器
-        mAdapters = new RoomheadAdapter(context, mData);
+        mAdapters = new RoomheadAdapter(context, mUserList);
         //设置适配器adapter
-        gridview.setAdapter(mAdapters);
+        mRecyclerView.setAdapter(mAdapters);
 
         //多列布局
         GridLayoutManager mLayoutManager = new GridLayoutManager(context, 4);
-        gridview.setLayoutManager(mLayoutManager);
+        mRecyclerView.setLayoutManager(mLayoutManager);
 
 
-        gridview.setItemAnimator(new DefaultItemAnimator());
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
         mAdapters.setOnItemClickListener(new RoomheadAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
 
-                if(mData.get(position).getUsersrc().equals("0")){
-                    Observable<View> observable = Observable.defer(new Callable<ObservableSource<? extends View>>() {
+                if (mUserList.get(position).getName().equals("")) {
+                    Observable<Integer> observable = Observable.defer(new Callable<ObservableSource<? extends Integer>>() {
                         @Override
-                        public ObservableSource<? extends View> call() throws Exception {
-                            return Observable.just(view);
+                        public ObservableSource<? extends Integer> call() throws Exception {
+                            return Observable.just(position);
                         }
                     });
                     observable.subscribe(chatroom.observers);
-                }else{
+                } else {
                     Observable<Integer> observable = Observable.defer(new Callable<ObservableSource<? extends Integer>>() {
                         @Override
                         public ObservableSource<? extends Integer> call() throws Exception {
@@ -120,10 +124,10 @@ public class ChatRoomModel {
             @Override
             public void onItemLongClick(View view, int position) {
 
-                Observable<View> observable = Observable.defer(new Callable<ObservableSource<? extends View>>() {
+                Observable<Integer> observable = Observable.defer(new Callable<ObservableSource<? extends Integer>>() {
                     @Override
-                    public ObservableSource<? extends View> call() throws Exception {
-                        return Observable.just(view);
+                    public ObservableSource<? extends Integer> call() throws Exception {
+                        return Observable.just(position);
                     }
                 });
                 observable.subscribe(chatroom.observers);
@@ -138,8 +142,49 @@ public class ChatRoomModel {
         DefaultItemAnimator defaultItemAnimator = new DefaultItemAnimator();
         defaultItemAnimator.setAddDuration(200);
         defaultItemAnimator.setRemoveDuration(200);
-        gridview.setItemAnimator(defaultItemAnimator);
+        mRecyclerView.setItemAnimator(defaultItemAnimator);
 
 
+    }
+
+    /**
+     * 上麦界面
+     */
+    public static void showBroadCast(RtcEngine mRtcEngine,Long mLocalUid,int position,Roomhead roomhead) {
+
+        // 设置为主播
+        mRtcEngine.setClientRole(Constants.CLIENT_ROLE_BROADCASTER);
+        // role 改变后需要将自己添加到用户列表
+        if (mLocalUid != 0) {
+            mUserList.set(position,roomhead);
+            mAdapters.notifyItemChanged(position);
+            if(mRtcEngine.isSpeakerphoneEnabled()){
+                mRtcEngine.setEnableSpeakerphone(true);
+            }else{
+                mRtcEngine.setEnableSpeakerphone(false);
+            }
+        }
+
+
+    }
+
+    /**
+     * 下麦界面
+     */
+    public static void showAudience(RtcEngine mRtcEngine,int index) {
+        //设为观众
+        mRtcEngine.setClientRole(Constants.CLIENT_ROLE_AUDIENCE);
+        mRtcEngine.muteAllRemoteAudioStreams(true);
+        mRtcEngine.muteLocalAudioStream(true);
+        mRtcEngine.enableLocalAudio(false);
+        mUserList.remove(index);
+        mAdapters.notifyItemChanged(index);
+
+
+    }
+
+    public static void Add(RecyclerView mRecyclerView,Roomtxt entity){
+        mAdapter.addData(mEntityList.size(), entity);
+        mRecyclerView.smoothScrollToPosition(mEntityList.size());
     }
 }

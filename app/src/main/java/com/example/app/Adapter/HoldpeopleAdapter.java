@@ -14,21 +14,27 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.app.Entity.Chats;
 import com.example.app.Entity.Holdpeople;
 import com.example.app.Entity.Holdpeople;
+import com.example.app.Model.ChatModel;
 import com.example.app.R;
+import com.example.app.cofig.DateUtil;
 
 import java.util.HashMap;
 import java.util.List;
+
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 
 public class HoldpeopleAdapter extends RecyclerView.Adapter {
     private static final String TAG = HoldpeopleAdapter.class.getSimpleName();
 
     private Context mContext;
-    private List<Holdpeople> mEntityList;
+    public static List<Holdpeople> mEntityList;
     private HoldpeopleAdapter.OnItemClickListener mOnItemClickListener;
 
-    public HashMap<Integer, Boolean> states = new HashMap<Integer, Boolean>();  //在这里要做判断保证只有一个RadioButton被选中
+    public static HashMap<Integer, Boolean> states = new HashMap<Integer, Boolean>();  //在这里要做判断保证只有一个RadioButton被选中
 
     public HoldpeopleAdapter(Context context, List<Holdpeople> entityList) {
         this.mContext = context;
@@ -74,19 +80,17 @@ public class HoldpeopleAdapter extends RecyclerView.Adapter {
                     notifyDataSetChanged();//刷新适配器
                 }
             });
-            if (states.get(position) == null || states.get(position) == false) {  //true说明没有被选中
+            if (states.get(position) == null || states.get(position) == false) {
                 ((HoldpeopleAdapter.DemoViewHolder)holder).sum.setChecked(false);
             } else {
                 ((HoldpeopleAdapter.DemoViewHolder)holder).sum.setChecked(true);
             }
             ((HoldpeopleAdapter.DemoViewHolder) holder).sum.setVisibility(View.VISIBLE);
-            ((HoldpeopleAdapter.DemoViewHolder) holder).type.setVisibility(View.GONE);
         }else{
-            ((HoldpeopleAdapter.DemoViewHolder) holder).type.setText(entity.getType());
-            ((HoldpeopleAdapter.DemoViewHolder) holder).type.setVisibility(View.VISIBLE);
             ((HoldpeopleAdapter.DemoViewHolder) holder).sum.setVisibility(View.GONE);
 
         }
+
         Glide.with(mContext).load(entity.getUserima()).into(((HoldpeopleAdapter.DemoViewHolder)holder).userima);
         Glide.with(mContext).load(R.drawable.l3).into(((DemoViewHolder)holder).grade);
         if (mOnItemClickListener != null) {
@@ -120,7 +124,6 @@ public class HoldpeopleAdapter extends RecyclerView.Adapter {
         private ImageView userima;
         private TextView name;
         private ImageView grade;
-        private TextView type;
         private RadioButton sum;
 
         public DemoViewHolder(View itemView) {
@@ -130,7 +133,6 @@ public class HoldpeopleAdapter extends RecyclerView.Adapter {
             grade = (ImageView) itemView.findViewById(R.id.imageView66);
             sum = (RadioButton) itemView.findViewById(R.id.radioButton);
             userima = (ImageView) itemView.findViewById(R.id.imageView18);
-            type = (TextView) itemView.findViewById(R.id.textView113);
 
         }
     }

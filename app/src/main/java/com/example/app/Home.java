@@ -23,6 +23,7 @@ import com.example.app.Adapter.FamilyHomeAdapter;
 import com.example.app.Entity.Findmake;
 import com.example.app.Entity.Homes;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
+import com.wildma.pictureselector.Constant;
 
 import java.util.ArrayList;
 
@@ -30,6 +31,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import io.agora.rtc.Constants;
 
 public class Home extends Fragment {
 
@@ -189,6 +191,12 @@ public class Home extends Fragment {
             case R.id.relative12:
             case R.id.relative13:
                 Intent intent = new Intent(getContext(), chatroom.class);
+                //Constants.CLIENT_ROLE_AUDIENCE  听众
+                //Constants.CLIENT_ROLE_BROADCASTER 主播
+                intent.putExtra(Constant.ACTION_KEY_CROLE, Constants.CLIENT_ROLE_AUDIENCE);
+                intent.putExtra(Constant.ACTION_KEY_ROOM_MODE, Constant.ChatRoomEntertainmentStandard);
+                intent.putExtra(Constant.ACTION_KEY_ROOM_NAME, "123456");
+                intent.putExtra(Constant.ACTION_KEY_TITLE_NAME, "123456");
                 startActivity(intent);
                 break;
             case R.id.imageView152:

@@ -58,10 +58,10 @@ public class GiftModel {
 
             @Override
             public void onItemLongClick(View view, int position) {
-                Observable<View> observable = Observable.defer(new Callable<ObservableSource<? extends View>>() {
+                Observable<Integer> observable = Observable.defer(new Callable<ObservableSource<? extends Integer>>() {
                     @Override
-                    public ObservableSource<? extends View> call() throws Exception {
-                        return Observable.just(view);
+                    public ObservableSource<? extends Integer> call() throws Exception {
+                        return Observable.just(position);
                     }
                 });
                 observable.subscribe(chatroom.observers);
