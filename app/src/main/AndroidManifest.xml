@@ -62,7 +62,10 @@
         <activity android:name=".room_set" />
         <activity android:name=".chatroom_chat" />
         <activity android:name=".find_make" />
-        <activity android:name=".chatroom" />
+        <activity android:name=".chatroom"
+            android:configChanges="orientation|keyboardHidden|keyboard"
+            android:launchMode="singleInstance"
+            android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".chat" />
         <activity android:name=".mess_friends" />
         <activity android:name=".my_favorite" />

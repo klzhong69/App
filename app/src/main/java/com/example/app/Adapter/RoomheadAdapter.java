@@ -70,7 +70,6 @@ public class RoomheadAdapter extends RecyclerView.Adapter {
         }
 
         if(entity.getAudioVolum()>0){
-            System.out.println("音量" + entity.getAudioVolum());
             ((RoomheadAdapter.DemoViewHolder)holder).rippleback.startRippleAnimation();
         }else{
             ((RoomheadAdapter.DemoViewHolder)holder).rippleback.stopRippleAnimation();

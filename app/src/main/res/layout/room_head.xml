@@ -14,8 +14,8 @@
         android:layout_marginTop="@dimen/dp_10"
         app:rb_color="#0099CC"
         app:rb_duration="4000"
-        app:rb_radius="@dimen/dp_35"
-        app:rb_rippleAmount="4"
+        app:rb_radius="@dimen/dp_30"
+        app:rb_rippleAmount="3"
         app:rb_scale="2"
         app:rb_type="fillRipple">
 
@@ -33,15 +33,14 @@
     </com.skyfishjy.library.RippleBackground>
 
 
-
     <TextView
         android:id="@+id/textView39"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/rippleback"
         android:layout_alignStart="@+id/rippleback"
         android:layout_alignEnd="@+id/rippleback"
-        android:layout_marginTop="@dimen/dp_5"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/dp_10"
         android:background="@drawable/txtback"
         android:ellipsize="end"
         android:gravity="center"

@@ -27,13 +27,14 @@ import io.reactivex.ObservableSource;
 public class ChatRoomModel {
 
     private static ArrayList<Roomtxt> mEntityList = new ArrayList<Roomtxt>();
-    public static ArrayList<Roomhead> mUserList = new ArrayList<Roomhead>();
+    public static ArrayList<Roomhead> mUserList;
     private static RoomtxtAdapter mAdapter;
     public static RoomheadAdapter mAdapters;
 
     public static void initData(){
+        mUserList = new ArrayList<Roomhead>();
         for(int i=0;i<8;i++){
-            Roomhead i1 = new Roomhead("https://momeak.oss-cn-shenzhen.aliyuncs.com/h1.jpg","","","",0,0,false,false);
+            Roomhead i1 = new Roomhead("https://momeak.oss-cn-shenzhen.aliyuncs.com/h1.jpg","","","",0L,0,false,false);
             mUserList.add(i1);
         }
     }
@@ -156,8 +157,7 @@ public class ChatRoomModel {
         mRtcEngine.setClientRole(Constants.CLIENT_ROLE_BROADCASTER);
         // role 改变后需要将自己添加到用户列表
         if (mLocalUid != 0) {
-            mUserList.set(position,roomhead);
-            mAdapters.notifyItemChanged(position);
+            locsuser(position,roomhead);
             if(mRtcEngine.isSpeakerphoneEnabled()){
                 mRtcEngine.setEnableSpeakerphone(true);
             }else{
@@ -166,6 +166,11 @@ public class ChatRoomModel {
         }
 
 
+    }
+
+    public static void locsuser(int position,Roomhead roomhead){
+        mUserList.set(position,roomhead);
+        mAdapters.notifyItemChanged(position);
     }
 
     /**

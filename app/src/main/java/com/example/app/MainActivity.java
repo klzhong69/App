@@ -22,6 +22,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -95,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
      */
     private boolean isNeedCheck = true;
     public static Observer<Integer> observer;
-
+    private ArrayList<FragmentTouchListener> mFragmentTouchListeners = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -158,6 +159,31 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
 
 
     }
+
+
+    public void registerFragmentTouchListener(FragmentTouchListener listener) {
+        mFragmentTouchListeners.add(listener);
+    }
+
+
+    public void unRegisterFragmentTouchListener(FragmentTouchListener listener) {
+        mFragmentTouchListeners.remove(listener);
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        for (FragmentTouchListener listener : mFragmentTouchListeners) {
+            listener.onTouchEvent(event);
+        }
+
+        return super.dispatchTouchEvent(event);
+    }
+
+    public interface FragmentTouchListener {
+
+        boolean onTouchEvent(MotionEvent event);
+    }
+
 
     /**
      * 设置默认的

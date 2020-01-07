@@ -5,11 +5,18 @@ import android.animation.AnimatorInflater;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnticipateOvershootInterpolator;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -19,9 +26,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
-import com.example.app.Adapter.FamilyHomeAdapter;
-import com.example.app.Entity.Findmake;
 import com.example.app.Entity.Homes;
+import com.example.app.cofig.FlipCardAnimation;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.wildma.pictureselector.Constant;
 
@@ -63,13 +69,13 @@ public class Home extends Fragment {
     @BindView(R.id.textViewi8)
     TextView textViewi8;
     @BindView(R.id.imageViewi3)
-    QMUIRadiusImageView imageViewi3;
+    ImageView imageViewi3;
+    @BindView(R.id.imageViewi4)
+    QMUIRadiusImageView imageViewi4;
     @BindView(R.id.textViewi9)
     TextView textViewi9;
     @BindView(R.id.textViewi10)
     TextView textViewi10;
-    @BindView(R.id.imageViewi4)
-    QMUIRadiusImageView imageViewi4;
     @BindView(R.id.imageViewi5)
     QMUIRadiusImageView imageViewi5;
     @BindView(R.id.textViewi11)
@@ -103,13 +109,13 @@ public class Home extends Fragment {
     @BindView(R.id.textViewi8s)
     TextView textViewi8s;
     @BindView(R.id.imageViewi3s)
-    QMUIRadiusImageView imageViewi3s;
+    ImageView imageViewi3s;
+    @BindView(R.id.imageViewi4s)
+    QMUIRadiusImageView imageViewi4s;
     @BindView(R.id.textViewi9s)
     TextView textViewi9s;
     @BindView(R.id.textViewi10s)
     TextView textViewi10s;
-    @BindView(R.id.imageViewi4s)
-    QMUIRadiusImageView imageViewi4s;
     @BindView(R.id.imageViewi5s)
     QMUIRadiusImageView imageViewi5s;
     @BindView(R.id.textViewi11s)
@@ -137,6 +143,8 @@ public class Home extends Fragment {
     private AnimatorSet mLeftInSets; // 左出动画
     private ArrayList<Homes> mArrayList;
     private int sum = 0;
+    private FlipCardAnimation animation;
+    private GestureDetector gd;
 
     @Nullable
     @Override
@@ -149,10 +157,112 @@ public class Home extends Fragment {
         setAnimatorsd();
         setCameraDistance(); // 设置镜头距离
 
+        ((MainActivity) this.getActivity()).registerFragmentTouchListener(fragmentTouchListener);
+        
+        WindowManager mWindowManager = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics metrics = new DisplayMetrics();
+        mWindowManager.getDefaultDisplay().getMetrics(metrics);
+        float density = metrics.density;
+        int widthPixels = metrics.widthPixels;
+        int heightPixels = metrics.heightPixels;
+        float num = (float) 820 / 1920;
+        float sum = (float) (widthPixels / 0.5625);
+
+        System.out.println("屏幕大小" + widthPixels + "/" + heightPixels + "/" + density);
+
+        imageViewi3.post(new Runnable() {
+            @Override
+            public void run() {
+                int width = imageViewi3.getWidth();
+                float height;
+                if (heightPixels < sum) {
+                    height = (heightPixels * num) - ((sum - heightPixels) * 3 / density);
+                } else {
+                    height = heightPixels * num;
+                }
+
+                System.out.println("图片大小" + width + "/" + height + "/" + density);
+                imageViewi3.setLayoutParams(new RelativeLayout.LayoutParams(width, (int) height));
+            }
+        });
+
+        imageViewi3s.post(new Runnable() {
+            @Override
+            public void run() {
+                int width = imageViewi3s.getWidth();
+                float height;
+                if (heightPixels < sum) {
+                    height = heightPixels * num - ((sum - heightPixels) * 3 / density);
+                } else {
+                    height = heightPixels * num;
+                }
+                imageViewi3s.setLayoutParams(new RelativeLayout.LayoutParams(width, (int) height));
+            }
+        });
+
+
         initData();
+
+
+
+        gd = new GestureDetector(getContext(), new GestureDetector.OnGestureListener() {
+            @Override
+            public boolean onDown(MotionEvent e) {//按下
+                return false;
+            }
+
+            @Override
+            public void onShowPress(MotionEvent e) {//按下但是还未抬起
+
+            }
+
+            @Override
+            public boolean onSingleTapUp(MotionEvent e) {//轻按，按一下，立刻抬起
+                Intent intent = new Intent(getContext(), chatroom.class);
+                //Constants.CLIENT_ROLE_AUDIENCE  听众
+                //Constants.CLIENT_ROLE_BROADCASTER 主播
+                intent.putExtra(Constant.ACTION_KEY_CROLE, Constants.CLIENT_ROLE_AUDIENCE);
+                intent.putExtra(Constant.ACTION_KEY_ROOM_MODE, Constant.ChatRoomEntertainmentStandard);
+                intent.putExtra(Constant.ACTION_KEY_ROOM_NAME, "123456");
+                intent.putExtra(Constant.ACTION_KEY_TITLE_NAME, "123456");
+                startActivity(intent);
+                return false;
+            }
+
+            @Override//滚动
+            public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+                return false;
+            }
+
+            @Override
+            public void onLongPress(MotionEvent e) {//长按
+
+            }
+
+            @Override//拖动
+            public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+                if(e1.getX()-e2.getX()>100){//右滑下一张
+                    flipCards();
+
+                }
+                if(e2.getX()-e1.getX()>100){//左滑上一张
+                    flipCard();
+
+                }
+                return false;
+            }
+        });
         return view;
 
     }
+
+
+    MainActivity.FragmentTouchListener fragmentTouchListener = new MainActivity.FragmentTouchListener() {
+        @Override
+        public boolean onTouchEvent(MotionEvent event) {
+            return gd.onTouchEvent(event);
+        }
+    };
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -180,24 +290,13 @@ public class Home extends Fragment {
 
     }
 
-    @OnClick({R.id.imageView149, R.id.relative12, R.id.relative13, R.id.imageView152, R.id.imageView153, R.id.imageView154})
+    @OnClick({R.id.imageView149, R.id.imageView152, R.id.imageView153, R.id.imageView154})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.imageView149:
                 Intent intent2 = new Intent(getContext(), search.class);
                 startActivity(intent2);
                 getActivity().overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
-                break;
-            case R.id.relative12:
-            case R.id.relative13:
-                Intent intent = new Intent(getContext(), chatroom.class);
-                //Constants.CLIENT_ROLE_AUDIENCE  听众
-                //Constants.CLIENT_ROLE_BROADCASTER 主播
-                intent.putExtra(Constant.ACTION_KEY_CROLE, Constants.CLIENT_ROLE_AUDIENCE);
-                intent.putExtra(Constant.ACTION_KEY_ROOM_MODE, Constant.ChatRoomEntertainmentStandard);
-                intent.putExtra(Constant.ACTION_KEY_ROOM_NAME, "123456");
-                intent.putExtra(Constant.ACTION_KEY_TITLE_NAME, "123456");
-                startActivity(intent);
                 break;
             case R.id.imageView152:
                 flipCard();
@@ -210,11 +309,11 @@ public class Home extends Fragment {
         }
     }
 
-    private void initData(){
+    private void initData() {
 
         mArrayList = new ArrayList<Homes>();
         for (int i = 0; i < 10; i++) {
-            Homes i1 = new Homes("《点歌》生命歌手集"+i, "ID1315464", "al.粉丝团", "热门", "CV","德国","1234","https://momeak.oss-cn-shenzhen.aliyuncs.com/h4.jpg","【芭比】uud小可爱","2","","==《而福利社区点歌台》==","我做了这么多改变，只为了我心中不变");
+            Homes i1 = new Homes("《点歌》生命歌手集" + i, "ID1315464", "al.粉丝团", "热门", "CV", "德国", "1234", "https://momeak.oss-cn-shenzhen.aliyuncs.com/h4.jpg", "【芭比】uud小可爱", "2", "", "==《而福利社区点歌台》==", "我做了这么多改变，只为了我心中不变");
             mArrayList.add(i1);
         }
 
@@ -231,15 +330,15 @@ public class Home extends Fragment {
         Glide.with(this).load(mArrayList.get(0).getUserima()).into((imageViewi5s));
         textViewi11s.setText(mArrayList.get(0).getUsername());
 
-        if(mArrayList.get(0).getRoomtype().equals("2")){
+        if (mArrayList.get(0).getRoomtype().equals("2")) {
             textViewi12s.setText("黄金房间");
         }
 
     }
 
 
-    private void initView(int num){
-        if(num>0){
+    private void initView(int num) {
+        if (num > 0) {
             textViewi1.setText(mArrayList.get(num).getRoomname());
             textViewi2.setText(mArrayList.get(num).getId());
             textViewi3.setText(mArrayList.get(num).getFamilyname());
@@ -253,15 +352,16 @@ public class Home extends Fragment {
             Glide.with(this).load(mArrayList.get(num).getUserima()).into((imageViewi5));
             textViewi11.setText(mArrayList.get(num).getUsername());
 
-            if(mArrayList.get(num).getRoomtype().equals("2")){
+            if (mArrayList.get(num).getRoomtype().equals("2")) {
                 textViewi12.setText("黄金房间");
             }
         }
 
 
     }
-    private void initViews(int num){
-        if(num<mArrayList.size()){
+
+    private void initViews(int num) {
+        if (num < mArrayList.size()) {
             textViewi1s.setText(mArrayList.get(num).getRoomname());
             textViewi2s.setText(mArrayList.get(num).getId());
             textViewi3s.setText(mArrayList.get(num).getFamilyname());
@@ -275,14 +375,14 @@ public class Home extends Fragment {
             Glide.with(this).load(mArrayList.get(num).getUserima()).into((imageViewi5s));
             textViewi11s.setText(mArrayList.get(num).getUsername());
 
-            if(mArrayList.get(num).getRoomtype().equals("2")){
+            if (mArrayList.get(num).getRoomtype().equals("2")) {
                 textViewi12s.setText("黄金房间");
             }
         }
 
 
-
     }
+
     // 设置动画
     private void setAnimatorsd() {
         mRightOutSets = (AnimatorSet) AnimatorInflater.loadAnimator(getContext(), R.animator.anim_outs);
@@ -329,7 +429,7 @@ public class Home extends Fragment {
 
     // 改变视角距离, 贴近屏幕
     private void setCameraDistance() {
-        int distance = 3200;
+        int distance = 16000;
         float scale = getResources().getDisplayMetrics().density * distance;
         relative12.setCameraDistance(scale);
         relative13.setCameraDistance(scale);
@@ -340,9 +440,9 @@ public class Home extends Fragment {
         // 正面朝上
         if (!mIsShowBack) {
 
-            if(sum==0){
+            if (sum == 0) {
                 Toast.makeText(getContext(), "已是第一个", Toast.LENGTH_SHORT).show();
-            }else{
+            } else {
 
                 mRightOutSet.setTarget(relative13);
                 mLeftInSet.setTarget(relative12);
@@ -354,9 +454,9 @@ public class Home extends Fragment {
 
             }
         } else { // 背面朝上
-            if(sum==0){
+            if (sum == 0) {
                 Toast.makeText(getContext(), "已是第一个", Toast.LENGTH_SHORT).show();
-            }else{
+            } else {
 
                 mRightOutSet.setTarget(relative12);
                 mLeftInSet.setTarget(relative13);
@@ -375,9 +475,9 @@ public class Home extends Fragment {
     public void flipCards() {
         // 背面朝上
         if (!mIsShowBack) {
-            if(sum==mArrayList.size()-1){
+            if (sum == mArrayList.size() - 1) {
                 Toast.makeText(getContext(), "已是最后一个", Toast.LENGTH_SHORT).show();
-            }else{
+            } else {
                 mRightOutSets.setTarget(relative13);
                 mLeftInSets.setTarget(relative12);
                 mRightOutSets.start();
@@ -388,9 +488,9 @@ public class Home extends Fragment {
 
             }
         } else { // 正面朝上
-            if(sum==mArrayList.size()-1){
+            if (sum == mArrayList.size() - 1) {
                 Toast.makeText(getContext(), "已是最后一个", Toast.LENGTH_SHORT).show();
-            }else{
+            } else {
 
                 mRightOutSets.setTarget(relative12);
                 mLeftInSets.setTarget(relative13);
@@ -405,22 +505,4 @@ public class Home extends Fragment {
         }
     }
 
-    /**
-     * 缩小动画
-     *
-     * @param view
-     */
-    public static void zoomIn(final View view, float scale, float dist) {
-        view.setPivotY(view.getHeight());
-        view.setPivotX(view.getWidth() / 2);
-        AnimatorSet mAnimatorSet = new AnimatorSet();
-        ObjectAnimator mAnimatorScaleX = ObjectAnimator.ofFloat(view, "scaleX", 1.0f, scale);
-        ObjectAnimator mAnimatorScaleY = ObjectAnimator.ofFloat(view, "scaleY", 1.0f, scale);
-        ObjectAnimator mAnimatorTranslateY = ObjectAnimator.ofFloat(view, "translationY", 0.0f, -dist);
-
-        mAnimatorSet.play(mAnimatorTranslateY).with(mAnimatorScaleX);
-        mAnimatorSet.play(mAnimatorScaleX).with(mAnimatorScaleY);
-        mAnimatorSet.setDuration(300);
-        mAnimatorSet.start();
-    }
 }

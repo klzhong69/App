@@ -392,7 +392,7 @@ public class chatroom extends AppCompatActivity {
     private String mChannelName;
     private String mTitleName;
     private boolean bIsBroadCaster;
-    private int mLocalUid;
+    private Long  mLocalUid= 123456L;
     public static final String TAG = "chatroom";
     private int position;
 
@@ -407,8 +407,15 @@ public class chatroom extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    Log.e(TAG, "user加入" + uid);
-                    Onlinepeople online = new Onlinepeople("ID2698456", "https://momeak.oss-cn-shenzhen.aliyuncs.com/h5.jpg", "胡楠", "", "");
+                    Log.e(TAG, "远端主播加入" + uid+"/"+elapsed);
+
+                    for(int i=0;i<ChatRoomModel.mUserList.size();i++){
+                        if(ChatRoomModel.mUserList.get(i).getUid()==0){
+                            Roomhead roomhead = new Roomhead("https://momeak.oss-cn-shenzhen.aliyuncs.com/h4.jpg", "苗苗", "", "", (long) uid, 0, false, false);
+                            ChatRoomModel.locsuser(i,roomhead);
+                            break;
+                        }
+                    }
 
                 }
             });
@@ -420,7 +427,9 @@ public class chatroom extends AppCompatActivity {
                 @Override
                 public void run() {
                     // 当用户离开时，从用户列表中清除
-                   ChatRoomModel.mUserList.remove(getUserIndex(uid));
+                    int uids = getUserIndex((long) uid);
+                    Roomhead i1 = new Roomhead("https://momeak.oss-cn-shenzhen.aliyuncs.com/h1.jpg","","","",0L,0,false,false);
+                    ChatRoomModel.mUserList.set(uids,i1);
                     ChatRoomModel.mAdapters.notifyDataSetChanged();
                 }
             });
@@ -432,7 +441,7 @@ public class chatroom extends AppCompatActivity {
                 @Override
                 public void run() {
                     // 收到某个uid mute 状态后刷新人员列表
-                    int index = getUserIndex(uid);
+                    int index = getUserIndex((long) uid);
                     ChatRoomModel.mUserList.get(index).setAudioMute(muted);
                     ChatRoomModel.mAdapters.notifyDataSetChanged();
                 }
@@ -461,10 +470,6 @@ public class chatroom extends AppCompatActivity {
                             });
                             observable.subscribe(observer);
                         }
-                    } else {
-                        Log.e(TAG, "user加入s" + uid);
-                        Onlinepeople online = new Onlinepeople("ID2698456", "https://momeak.oss-cn-shenzhen.aliyuncs.com/h5.jpg", "胡楠", "", "");
-                        OnlineModel.mArrayList.add(online);
                     }
 
 
@@ -485,21 +490,23 @@ public class chatroom extends AppCompatActivity {
                                  * 本地的 LocalUid 对应
                                  *
                                  */
-                                if (audioVolumeInfo.uid == 0) {
-                                    int index = getUserIndex(audioVolumeInfo.uid);
-                                    Log.e(TAG, "user" + index);
+                                if (audioVolumeInfo.uid != 0) {
+                                    int index = getUserIndex((long) audioVolumeInfo.uid);
                                     if (index >= 0) {
                                         ChatRoomModel.mUserList.get(index).setAudioVolum(audioVolumeInfo.volume);
-                                        ChatRoomModel.mAdapters.notifyItemChanged(index);
+                                        ChatRoomModel.mAdapters.notifyItemChanged(index,R.id.rippleback);
                                     }
                                 } else {
                                     int index = getUserIndex(mLocalUid);
-                                    Log.e(TAG, "主持" + index);
                                     if (index >= 0) {
+                                        ChatRoomModel.mUserList.get(index).setAudioVolum(audioVolumeInfo.volume);
+                                        ChatRoomModel.mAdapters.notifyItemChanged(index,R.id.rippleback);
+                                    }
+                                    /*if (index >= 0) {
                                         rippleback.startRippleAnimation();
                                     }else{
                                         rippleback.stopRippleAnimation();
-                                    }
+                                    }*/
                                 }
                             }
 
@@ -513,9 +520,9 @@ public class chatroom extends AppCompatActivity {
     };
 
 
-    private int getUserIndex(int uid) {
+    private int getUserIndex(Long uid) {
         for (int i = 0; i < ChatRoomModel.mUserList.size(); i++) {
-            if (ChatRoomModel.mUserList.get(i).getUid() == uid) {
+            if (ChatRoomModel.mUserList.get(i).getUid().equals(uid)) {
                 return i;
             }
         }
@@ -569,20 +576,16 @@ public class chatroom extends AppCompatActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode,
-                                           @NonNull String permissions[], @NonNull int[] grantResults) {
+                                           @NonNull String[] permissions, @NonNull int[] grantResults) {
 
-        switch (requestCode) {
-            case PERMISSION_REQ_ID_RECORD_AUDIO: {
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    initAgoraEngineAndJoinChannel();
-                } else {
-                    showLongToast("No permission for " + Manifest.permission.RECORD_AUDIO);
-                    finish();
-                }
-                break;
+        if (requestCode == PERMISSION_REQ_ID_RECORD_AUDIO) {
+            if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                initAgoraEngineAndJoinChannel();
+            } else {
+                showLongToast("No permission for " + Manifest.permission.RECORD_AUDIO);
+                finish();
             }
-
         }
     }
 
@@ -639,8 +642,8 @@ public class chatroom extends AppCompatActivity {
         // 当 joinChannel api 中填入 0 时，agora 服务器会生成一个唯一的随机数，并在 onJoinChannelSuccess 回调中返回
         SharedPreferences sp = Objects.requireNonNull(getSharedPreferences("User", Context.MODE_PRIVATE));
         //mLocalUid = sp.getInt("userid", 1234);
-        mLocalUid= 1234;
-        mRtcEngine.joinChannel(null, mChannelName, "", 1234);
+
+        mRtcEngine.joinChannel(null, mChannelName, "", Math.toIntExact(mLocalUid));
 
     }
 
@@ -805,8 +808,8 @@ public class chatroom extends AppCompatActivity {
             case R.id.textViewc3s:
                 for (int i = 0; i < HoldpeopleAdapter.states.size(); i++) {
                     if (HoldpeopleAdapter.states.get(i)) {
-                        Roomhead roomhead = new Roomhead(HoldpeopleAdapter.mEntityList.get(i).getUserima(), HoldpeopleAdapter.mEntityList.get(i).getName(), "", "", 1234, 0, false, false);
-                        ChatRoomModel.showBroadCast(mRtcEngine, 1234L, position, roomhead);
+                        Roomhead roomhead = new Roomhead(HoldpeopleAdapter.mEntityList.get(i).getUserima(), HoldpeopleAdapter.mEntityList.get(i).getName(), "", "", mLocalUid, 0, false, false);
+                        ChatRoomModel.showBroadCast(mRtcEngine, mLocalUid, position, roomhead);
                         component3.setVisibility(View.GONE);
                         PaimaiModel.Remove(i);
                         bIsBroadCaster = true;
@@ -1162,11 +1165,11 @@ public class chatroom extends AppCompatActivity {
                         if (position == 0) {
                             if (mRtcEngine != null) {
                                 mRtcEngine.leaveChannel();
+                                RtcEngine.destroy();
                             }
                             chatroom.this.finish();
                         } else {
-                            Intent intent2 = new Intent(chatroom.this, MainActivity.class);
-                            startActivity(intent2);
+                            moveTaskToBack(true);
                             Observable<Integer> observable = Observable.defer(new Callable<ObservableSource<? extends Integer>>() {
                                 @Override
                                 public ObservableSource<? extends Integer> call() throws Exception {

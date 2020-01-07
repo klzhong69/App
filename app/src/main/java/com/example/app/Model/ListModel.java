@@ -40,7 +40,7 @@ public class ListModel {
         mArrayList = new ArrayList<Listleader>();
         MyApp application = ((MyApp) context.getApplicationContext());
         JSONArray json = null;
-        OkGo.<String>post(application.getUrl() + "/app/user/ranklist")
+        OkGo.<String>post(application.getUrl() + "/app/bage/ranklist")
                 .params("rankListCategory", rankListCategory)
                 .params("durationCategory", durationCategory)
                 .execute(new StringCallback() {
