@@ -7,6 +7,8 @@ import org.greenrobot.greendao.annotation.Generated;
 
 import java.util.Date;
 
+import io.reactivex.Observer;
+
 @Entity
 public class Chat {
 
@@ -14,15 +16,14 @@ public class Chat {
     @Index(unique = true)//设置唯一性
     private Long id;
 
-    private Long conversation;//会话
+    private String conversation;//会话
 
     private Long sendId;//发送人员编号
 
-    private Long receiveId;//接受人员编号
+    private String sendname;//发送人员编号
 
     private String sendsrc;//发送人员头像
 
-    private String receivesrc;//接受人员头像
 
     private Long data;//时间
 
@@ -30,15 +31,14 @@ public class Chat {
 
     private int state;//状态
 
-    @Generated(hash = 1781089175)
-    public Chat(Long id, Long conversation, Long sendId, Long receiveId,
-            String sendsrc, String receivesrc, Long data, String txt, int state) {
+    @Generated(hash = 1286426264)
+    public Chat(Long id, String conversation, Long sendId, String sendname,
+            String sendsrc, Long data, String txt, int state) {
         this.id = id;
         this.conversation = conversation;
         this.sendId = sendId;
-        this.receiveId = receiveId;
+        this.sendname = sendname;
         this.sendsrc = sendsrc;
-        this.receivesrc = receivesrc;
         this.data = data;
         this.txt = txt;
         this.state = state;
@@ -56,11 +56,11 @@ public class Chat {
         this.id = id;
     }
 
-    public Long getConversation() {
+    public String getConversation() {
         return this.conversation;
     }
 
-    public void setConversation(Long conversation) {
+    public void setConversation(String conversation) {
         this.conversation = conversation;
     }
 
@@ -72,12 +72,12 @@ public class Chat {
         this.sendId = sendId;
     }
 
-    public Long getReceiveId() {
-        return this.receiveId;
+    public String getSendname() {
+        return this.sendname;
     }
 
-    public void setReceiveId(Long receiveId) {
-        this.receiveId = receiveId;
+    public void setSendname(String sendname) {
+        this.sendname = sendname;
     }
 
     public String getSendsrc() {
@@ -86,14 +86,6 @@ public class Chat {
 
     public void setSendsrc(String sendsrc) {
         this.sendsrc = sendsrc;
-    }
-
-    public String getReceivesrc() {
-        return this.receivesrc;
-    }
-
-    public void setReceivesrc(String receivesrc) {
-        this.receivesrc = receivesrc;
     }
 
     public Long getData() {
@@ -120,12 +112,7 @@ public class Chat {
         this.state = state;
     }
 
-
-
-
-
   
-   
-
+    
     
 }

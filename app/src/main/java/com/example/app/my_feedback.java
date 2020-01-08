@@ -150,14 +150,14 @@ public class my_feedback extends AppCompatActivity {
     private void okgo() {
         MyApp application = ((MyApp) this.getApplicationContext());
         SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
-        // Long userid = sp.getLong("userid", 0);
-        Long userid = Long.valueOf("923883237");
+        String userid = sp.getString("userid","");
+        String token = sp.getString("token","");
 
         String[] pic = {};
         for(int i=0;i<map.size();i++){
             pic[i]=map.get(i);
         }
-        OkGo.<String>post(application.getUrl()+"/app/user/getWallet?token="+application.getToken())
+        OkGo.<String>post(application.getUrl()+"/app/user/getWallet?token="+token)
                 .params("userId",userid)
                 .params("phone",editText.getText().toString())
                 .params("question",editText3.getText().toString())
@@ -251,9 +251,9 @@ public class my_feedback extends AppCompatActivity {
     private void okgoima() {
         MyApp application = ((MyApp) this.getApplicationContext());
         SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
-        // Long userid = sp.getLong("userid", 0);
-        String userid = "700647775";
-        String phone = "15913420136";
+        String userid = sp.getString("userid","");
+        String token = sp.getString("token","");
+        String phone = sp.getString("phone","");
         OkGo.<String>post(application.getUrl() + "/app/alioss/getUserUploadToken")
                 .params("phone", phone)
                 .execute(new StringCallback() {

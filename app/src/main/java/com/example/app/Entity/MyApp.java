@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import com.didichuxing.doraemonkit.DoraemonKit;
 import com.example.app.MainActivity;
 import com.example.app.R;
+import com.example.app.Sqlentity.Chat;
 import com.example.app.chatroom;
 import com.lzf.easyfloat.EasyFloat;
 import com.lzf.easyfloat.anim.AppFloatDefaultAnimator;
@@ -32,7 +33,9 @@ import com.lzy.okgo.interceptor.HttpLoggingInterceptor;
 
 import org.greenrobot.greendao.annotation.NotNull;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
@@ -44,15 +47,26 @@ public class MyApp extends Application {
 
     private String url;
 
-    private String token;
 
-    public String getToken() {
-        return token;
+    private List<Chat> usermess = new ArrayList<Chat>();
+    private List<Chat> officmess = new ArrayList<Chat>();
+
+    public List<Chat> getUsermess() {
+        return usermess;
     }
 
-    public void setToken(String token) {
-        this.token = token;
+    public void setUsermess(List<Chat> usermess) {
+        this.usermess = usermess;
     }
+
+    public List<Chat> getOfficmess() {
+        return officmess;
+    }
+
+    public void setOfficmess(List<Chat> officmess) {
+        this.officmess = officmess;
+    }
+
 
 
     public String getUrl() {
@@ -102,7 +116,6 @@ public class MyApp extends Application {
         EasyFloat.init(this,true);//悬浮窗
         initOkGo();
         setUrl("http://192.168.120.91:8360");
-        setToken("f37135f4-2514-4d49-a958-c2765b6dae81");
         setScore(0); //初始化全局变量
         setScoret(0);
 

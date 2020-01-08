@@ -11,6 +11,8 @@ import android.text.TextPaint;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -30,10 +32,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.app.Adapter.HoldpeopleAdapter;
-import com.example.app.Adapter.RoomheadAdapter;
 import com.example.app.Entity.Chats;
 import com.example.app.Entity.Holdpeople;
-import com.example.app.Entity.Onlinepeople;
 import com.example.app.Entity.Roomhead;
 import com.example.app.Entity.Roomtxt;
 import com.example.app.Model.ChatModel;
@@ -42,7 +42,6 @@ import com.example.app.Model.GiftModel;
 import com.example.app.Model.GiftheadModel;
 import com.example.app.Model.MessFriendsModel;
 import com.example.app.Model.MessModel;
-import com.example.app.Model.OnlineModel;
 import com.example.app.Model.PaimaiModel;
 import com.example.app.cofig.DateUtil;
 import com.example.app.cofig.KeyboardStateObserver;
@@ -85,6 +84,8 @@ import io.reactivex.disposables.Disposable;
 public class chatroom extends AppCompatActivity {
 
 
+    @BindView(R.id.view)
+    RelativeLayout views;
     @BindView(R.id.imageView4)
     ImageView imageView4;
     @BindView(R.id.textView121)
@@ -99,16 +100,22 @@ public class chatroom extends AppCompatActivity {
     TextView textView124;
     @BindView(R.id.imageView100)
     ImageView imageView100;
+    @BindView(R.id.fold)
+    ImageView fold;
     @BindView(R.id.relativeLayout2)
     RelativeLayout relativeLayout2;
     @BindView(R.id.imageView2)
     QMUIRadiusImageView imageView2;
+    @BindView(R.id.rippleback)
+    RippleBackground rippleback;
     @BindView(R.id.textView39)
     TextView textView39;
     @BindView(R.id.gridview)
     RecyclerView gridview;
     @BindView(R.id.recyclerview)
     RecyclerView recyclerview;
+    @BindView(R.id.relativeLayout)
+    NestedScrollView relativeLayout;
     @BindView(R.id.textView19)
     TextView textView19;
     @BindView(R.id.imageView96)
@@ -133,18 +140,8 @@ public class chatroom extends AppCompatActivity {
     ImageView imageView105;
     @BindView(R.id.relativeLayout3)
     RelativeLayout relativeLayout3;
-    @BindView(R.id.imageViewc10)
-    QMUIRadiusImageView imageViewc10;
-    @BindView(R.id.imageViewc10s)
-    ImageView imageViewc10s;
-    @BindView(R.id.textViewc10)
-    TextView textViewc10;
-    @BindView(R.id.butc10)
-    QMUIRoundButton butc10;
     @BindView(R.id.textView148)
     TextView textView148;
-    @BindView(R.id.component10)
-    RelativeLayout component10;
     @BindView(R.id.recyclerbutc1)
     RelativeLayout recyclerbutc1;
     @BindView(R.id.imageViewc1)
@@ -153,10 +150,14 @@ public class chatroom extends AppCompatActivity {
     TextView textViewc1;
     @BindView(R.id.imageViewc1t)
     ImageView imageViewc1t;
+    @BindView(R.id.recyclerc1)
+    RecyclerView recyclerc1;
     @BindView(R.id.editTextc1)
     EditText editTextc1;
     @BindView(R.id.butc1)
     QMUIRoundButton butc1;
+    @BindView(R.id.relativeLayout11)
+    RelativeLayout relativeLayout11;
     @BindView(R.id.relativec1)
     RelativeLayout relativec1;
     @BindView(R.id.component1)
@@ -169,6 +170,10 @@ public class chatroom extends AppCompatActivity {
     TextView textViewc2s;
     @BindView(R.id.textViewc2t)
     TextView textViewc2t;
+    @BindView(R.id.textViewc2d)
+    TextView textViewc2d;
+    @BindView(R.id.textViewc2f)
+    TextView textViewc2f;
     @BindView(R.id.recyclerc2)
     RecyclerView recyclerc2;
     @BindView(R.id.relativec2)
@@ -255,8 +260,12 @@ public class chatroom extends AppCompatActivity {
     RecyclerView recyclerc7;
     @BindView(R.id.relativec7)
     RelativeLayout relativec7;
+    @BindView(R.id.textViewc7t)
+    TextView textViewc7t;
     @BindView(R.id.component7)
     RelativeLayout component7;
+    @BindView(R.id.recyclerbutc8)
+    RelativeLayout recyclerbutc8;
     @BindView(R.id.imageViewc8)
     QMUIRadiusImageView imageViewc8;
     @BindView(R.id.imageViewc8s)
@@ -289,6 +298,12 @@ public class chatroom extends AppCompatActivity {
     ImageView imageViewc8g;
     @BindView(R.id.imageViewc8h)
     ImageView imageViewc8h;
+    @BindView(R.id.imageView12)
+    ImageView imageView12;
+    @BindView(R.id.recyclerc8)
+    RelativeLayout recyclerc8;
+    @BindView(R.id.recyclerbutc8s)
+    RelativeLayout recyclerbutc8s;
     @BindView(R.id.component8)
     RelativeLayout component8;
     @BindView(R.id.recyclerbutc9)
@@ -329,28 +344,6 @@ public class chatroom extends AppCompatActivity {
     RelativeLayout relativec9;
     @BindView(R.id.component9)
     RelativeLayout component9;
-    @BindView(R.id.recyclerbutc10)
-    RelativeLayout recyclerbutc10;
-    @BindView(R.id.recyclerbutc8)
-    RelativeLayout recyclerbutc8;
-    @BindView(R.id.recyclerbutc8s)
-    RelativeLayout recyclerbutc8s;
-    @BindView(R.id.recyclerbutc10s)
-    RelativeLayout recyclerbutc10s;
-    @BindView(R.id.recyclerc10)
-    RelativeLayout recyclerc10;
-    @BindView(R.id.recyclerc8)
-    RelativeLayout recyclerc8;
-    @BindView(R.id.fold)
-    ImageView fold;
-    @BindView(R.id.relativeLayout)
-    NestedScrollView relativeLayout;
-    @BindView(R.id.relativeLayout11)
-    RelativeLayout relativeLayout11;
-    @BindView(R.id.imageView12)
-    ImageView imageView12;
-    @BindView(R.id.textViewc7t)
-    TextView textViewc7t;
     @BindView(R.id.svga1)
     SVGAImageView svga1;
     @BindView(R.id.svga2)
@@ -365,22 +358,30 @@ public class chatroom extends AppCompatActivity {
     SVGAImageView gift2;
     @BindView(R.id.gift)
     ConstraintLayout gift;
-    @BindView(R.id.recyclerc1)
-    RecyclerView recyclerc1;
-    @BindView(R.id.textViewc2d)
-    TextView textViewc2d;
-    @BindView(R.id.textViewc2f)
-    TextView textViewc2f;
-    @BindView(R.id.rippleback)
-    RippleBackground rippleback;
+    @BindView(R.id.recyclerbutc11)
+    RelativeLayout recyclerbutc11;
+    @BindView(R.id.imageViewc11)
+    QMUIRadiusImageView imageViewc11;
+    @BindView(R.id.imageViewc11s)
+    ImageView imageViewc11s;
+    @BindView(R.id.textViewc11)
+    TextView textViewc11;
+    @BindView(R.id.butc11)
+    QMUIRoundButton butc11;
+    @BindView(R.id.recyclerc11)
+    RelativeLayout recyclerc11;
+    @BindView(R.id.recyclerbutc11s)
+    RelativeLayout recyclerbutc11s;
+    @BindView(R.id.component11)
+    RelativeLayout component11;
     private Disposable disposable;
     private chatroom context;
     public static Observer<Integer> observer;
     public static Observer<Integer> observerchat;
     public static Observer<Integer> observers;
     private QMUIPopup mNormalPopup;
-    private Long conver;
-    private long sendid;
+    private String conver;
+    private Long sendid;
     private String sendname;
     private String sendsrc;
     private boolean bool = false;
@@ -392,7 +393,7 @@ public class chatroom extends AppCompatActivity {
     private String mChannelName;
     private String mTitleName;
     private boolean bIsBroadCaster;
-    private Long  mLocalUid= 123456L;
+    private Long mLocalUid = 123456L;
     public static final String TAG = "chatroom";
     private int position;
 
@@ -407,12 +408,12 @@ public class chatroom extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    Log.e(TAG, "远端主播加入" + uid+"/"+elapsed);
+                    Log.e(TAG, "远端主播加入" + uid + "/" + elapsed);
 
-                    for(int i=0;i<ChatRoomModel.mUserList.size();i++){
-                        if(ChatRoomModel.mUserList.get(i).getUid()==0){
+                    for (int i = 0; i < ChatRoomModel.mUserList.size(); i++) {
+                        if (ChatRoomModel.mUserList.get(i).getUid() == 0) {
                             Roomhead roomhead = new Roomhead("https://momeak.oss-cn-shenzhen.aliyuncs.com/h4.jpg", "苗苗", "", "", (long) uid, 0, false, false);
-                            ChatRoomModel.locsuser(i,roomhead);
+                            ChatRoomModel.locsuser(i, roomhead);
                             break;
                         }
                     }
@@ -428,8 +429,8 @@ public class chatroom extends AppCompatActivity {
                 public void run() {
                     // 当用户离开时，从用户列表中清除
                     int uids = getUserIndex((long) uid);
-                    Roomhead i1 = new Roomhead("https://momeak.oss-cn-shenzhen.aliyuncs.com/h1.jpg","","","",0L,0,false,false);
-                    ChatRoomModel.mUserList.set(uids,i1);
+                    Roomhead i1 = new Roomhead("https://momeak.oss-cn-shenzhen.aliyuncs.com/h1.jpg", "", "", "", 0L, 0, false, false);
+                    ChatRoomModel.mUserList.set(uids, i1);
                     ChatRoomModel.mAdapters.notifyDataSetChanged();
                 }
             });
@@ -482,33 +483,33 @@ public class chatroom extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                        if (speakers != null) {
-                            for (AudioVolumeInfo audioVolumeInfo : speakers) {
+                    if (speakers != null) {
+                        for (AudioVolumeInfo audioVolumeInfo : speakers) {
 
-                                /**
-                                 * 根据uid判断是他人还是自己， uid 0 默认是自己，根据 uid = 0 的取本地音量值，和joinchannelsuccess 内
-                                 * 本地的 LocalUid 对应
-                                 *
-                                 */
-                                if (audioVolumeInfo.uid != 0) {
-                                    int index = getUserIndex((long) audioVolumeInfo.uid);
-                                    if (index >= 0) {
-                                        ChatRoomModel.mUserList.get(index).setAudioVolum(audioVolumeInfo.volume);
-                                        ChatRoomModel.mAdapters.notifyItemChanged(index,R.id.rippleback);
-                                    }
-                                } else {
-                                    int index = getUserIndex(mLocalUid);
-                                    if (index >= 0) {
-                                        ChatRoomModel.mUserList.get(index).setAudioVolum(audioVolumeInfo.volume);
-                                        ChatRoomModel.mAdapters.notifyItemChanged(index,R.id.rippleback);
-                                    }
+                            /**
+                             * 根据uid判断是他人还是自己， uid 0 默认是自己，根据 uid = 0 的取本地音量值，和joinchannelsuccess 内
+                             * 本地的 LocalUid 对应
+                             *
+                             */
+                            if (audioVolumeInfo.uid != 0) {
+                                int index = getUserIndex((long) audioVolumeInfo.uid);
+                                if (index >= 0) {
+                                    ChatRoomModel.mUserList.get(index).setAudioVolum(audioVolumeInfo.volume);
+                                    ChatRoomModel.mAdapters.notifyItemChanged(index, R.id.rippleback);
+                                }
+                            } else {
+                                int index = getUserIndex(mLocalUid);
+                                if (index >= 0) {
+                                    ChatRoomModel.mUserList.get(index).setAudioVolum(audioVolumeInfo.volume);
+                                    ChatRoomModel.mAdapters.notifyItemChanged(index, R.id.rippleback);
+                                }
                                     /*if (index >= 0) {
                                         rippleback.startRippleAnimation();
                                     }else{
                                         rippleback.stopRippleAnimation();
                                     }*/
-                                }
                             }
+                        }
 
                     }
 
@@ -518,6 +519,7 @@ public class chatroom extends AppCompatActivity {
 
 
     };
+    private Window window;
 
 
     private int getUserIndex(Long uid) {
@@ -536,6 +538,30 @@ public class chatroom extends AppCompatActivity {
         setContentView(R.layout.activity_chatroom);
         ButterKnife.bind(this);
         context = this;
+        window = this.getWindow();
+        //21表示5.0
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.setStatusBarColor(Color.TRANSPARENT);
+
+        View decor = window.getDecorView();
+        int ui = decor.getSystemUiVisibility();
+        // ui |=View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR; //设置状态栏中字体的颜色为黑色
+        ui &= ~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR; //设置状态栏中字体颜色为白色
+        decor.setSystemUiVisibility(ui);
+
+        views.post(new Runnable() {
+            @Override
+            public void run() {
+                int width = views.getWidth();
+                int height = getStatusBarHeight();
+
+                views.setLayoutParams(new ConstraintLayout.LayoutParams(width, height));
+            }
+        });
+
 
         if (checkSelfPermission(Manifest.permission.RECORD_AUDIO, PERMISSION_REQ_ID_RECORD_AUDIO)) {
 
@@ -559,6 +585,16 @@ public class chatroom extends AppCompatActivity {
 
 
     }
+
+    public int getStatusBarHeight() {
+        int result = 0;
+        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            result = getResources().getDimensionPixelSize(resourceId);
+        }
+        return result;
+    }
+
 
     public boolean checkSelfPermission(String permission, int requestCode) {
 
@@ -597,8 +633,6 @@ public class chatroom extends AppCompatActivity {
             }
         });
     }
-
-
 
 
     public void initAgoraEngineAndJoinChannel() {
@@ -681,7 +715,7 @@ public class chatroom extends AppCompatActivity {
         }
     }
 
-    @OnClick({R.id.fold, R.id.imageView98, R.id.imageView101, R.id.imageView102, R.id.imageView103, R.id.imageView99, R.id.textView124, R.id.imageView104, R.id.imageView105, R.id.textViewc3s, R.id.textViewc7t, R.id.butc1, R.id.butc10, R.id.imageView4, R.id.imageViewc1t, R.id.imageViewc2t, R.id.imageViewc5s, R.id.recyclerbutc1, R.id.recyclerbutc2, R.id.recyclerbutc3, R.id.recyclerbutc4, R.id.recyclerbutc5, R.id.recyclerbutc7, R.id.recyclerbutc8, R.id.recyclerbutc8s, R.id.recyclerbutc9, R.id.recyclerbutc10, R.id.recyclerbutc10s, R.id.imageViewc1, R.id.imageViewc2, R.id.imageViewc3, R.id.imageViewc4, R.id.imageViewc5, R.id.imageViewc7, R.id.recyclerc8, R.id.imageViewc9, R.id.recyclerc10, R.id.relativec1, R.id.relativec2, R.id.relativec3, R.id.relativec4, R.id.relativec5, R.id.relativec7, R.id.relativec9})
+    @OnClick({R.id.fold, R.id.imageView98, R.id.imageView101, R.id.imageView102, R.id.imageView103, R.id.imageView99, R.id.textView124, R.id.imageView104, R.id.imageView105, R.id.textViewc3s, R.id.textViewc7t, R.id.butc1, R.id.butc11, R.id.imageView4, R.id.imageViewc1t, R.id.imageViewc2t, R.id.imageViewc5s, R.id.recyclerbutc1, R.id.recyclerbutc2, R.id.recyclerbutc3, R.id.recyclerbutc4, R.id.recyclerbutc5, R.id.recyclerbutc7, R.id.recyclerbutc8, R.id.recyclerbutc8s, R.id.recyclerbutc9, R.id.recyclerbutc11, R.id.recyclerbutc11s, R.id.imageViewc1, R.id.imageViewc2, R.id.imageViewc3, R.id.imageViewc4, R.id.imageViewc5, R.id.imageViewc7, R.id.recyclerc8, R.id.imageViewc9, R.id.recyclerc11, R.id.relativec1, R.id.relativec2, R.id.relativec3, R.id.relativec4, R.id.relativec5, R.id.relativec7, R.id.relativec9})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.imageView101:
@@ -722,7 +756,7 @@ public class chatroom extends AppCompatActivity {
                 break;
             case R.id.imageView102:
                 component5.setVisibility(View.VISIBLE);
-                MessModel.initData();
+                MessModel.initData(context);
                 MessModel.initrecycler(context, context, recyclerc5, 1);
                 break;
             case R.id.imageView103:
@@ -833,8 +867,8 @@ public class chatroom extends AppCompatActivity {
                 ChatModel.Add(recyclerc1, i1);
                 editTextc1.setText("");
                 break;
-            case R.id.butc10:
-                component10.setVisibility(View.GONE);
+            case R.id.butc11:
+                component11.setVisibility(View.GONE);
                 break;
             case R.id.imageViewc5s:
                 component5.setVisibility(View.GONE);
@@ -876,8 +910,8 @@ public class chatroom extends AppCompatActivity {
             case R.id.recyclerbutc9:
                 component9.setVisibility(View.GONE);
                 break;
-            case R.id.recyclerbutc10:
-            case R.id.recyclerbutc10s:
+            case R.id.recyclerbutc11:
+            case R.id.recyclerbutc11s:
                 break;
 
             case R.id.imageViewc1:
@@ -888,7 +922,7 @@ public class chatroom extends AppCompatActivity {
             case R.id.imageViewc7:
             case R.id.recyclerc8:
             case R.id.imageViewc9:
-            case R.id.recyclerc10:
+            case R.id.recyclerc11:
             case R.id.relativec1:
             case R.id.relativec2:
             case R.id.relativec3:
@@ -928,23 +962,23 @@ public class chatroom extends AppCompatActivity {
                     case 5:
                         component5.setVisibility(View.GONE);
                         component1.setVisibility(View.VISIBLE);
-                        conver = 1L;
+                        conver = "";
                         sendid = 0L;
                         sendname = "苗苗";
                         sendsrc = "https://momeak.oss-cn-shenzhen.aliyuncs.com/h2.jpg";
                         textViewc1.setText(sendname);
-                        ChatModel.initData();
+                        ChatModel.initData(conver,0,10);
                         ChatModel.initrecycler(chatroom.this, recyclerc1);
                         KeyboardStateObserver.getKeyboardStateObserver(chatroom.this).
                                 setKeyboardVisibilityListener(new KeyboardStateObserver.OnKeyboardVisibilityListener() {
                                     @Override
                                     public void onKeyboardShow() {
-                                        ChatModel.recly(recyclerc1);
+                                        ChatModel.recly(recyclerc1,0);
                                     }
 
                                     @Override
                                     public void onKeyboardHide() {
-                                        ChatModel.recly(recyclerc1);
+                                        ChatModel.recly(recyclerc1,0);
                                     }
                                 });
                         break;

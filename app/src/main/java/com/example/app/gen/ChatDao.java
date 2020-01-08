@@ -25,14 +25,13 @@ public class ChatDao extends AbstractDao<Chat, Long> {
      */
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
-        public final static Property Conversation = new Property(1, Long.class, "conversation", false, "CONVERSATION");
+        public final static Property Conversation = new Property(1, String.class, "conversation", false, "CONVERSATION");
         public final static Property SendId = new Property(2, Long.class, "sendId", false, "SEND_ID");
-        public final static Property ReceiveId = new Property(3, Long.class, "receiveId", false, "RECEIVE_ID");
+        public final static Property Sendname = new Property(3, String.class, "sendname", false, "SENDNAME");
         public final static Property Sendsrc = new Property(4, String.class, "sendsrc", false, "SENDSRC");
-        public final static Property Receivesrc = new Property(5, String.class, "receivesrc", false, "RECEIVESRC");
-        public final static Property Data = new Property(6, Long.class, "data", false, "DATA");
-        public final static Property Txt = new Property(7, String.class, "txt", false, "TXT");
-        public final static Property State = new Property(8, int.class, "state", false, "STATE");
+        public final static Property Data = new Property(5, Long.class, "data", false, "DATA");
+        public final static Property Txt = new Property(6, String.class, "txt", false, "TXT");
+        public final static Property State = new Property(7, int.class, "state", false, "STATE");
     }
 
 
@@ -49,14 +48,13 @@ public class ChatDao extends AbstractDao<Chat, Long> {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"CHAT\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
-                "\"CONVERSATION\" INTEGER," + // 1: conversation
+                "\"CONVERSATION\" TEXT," + // 1: conversation
                 "\"SEND_ID\" INTEGER," + // 2: sendId
-                "\"RECEIVE_ID\" INTEGER," + // 3: receiveId
+                "\"SENDNAME\" TEXT," + // 3: sendname
                 "\"SENDSRC\" TEXT," + // 4: sendsrc
-                "\"RECEIVESRC\" TEXT," + // 5: receivesrc
-                "\"DATA\" INTEGER," + // 6: data
-                "\"TXT\" TEXT," + // 7: txt
-                "\"STATE\" INTEGER NOT NULL );"); // 8: state
+                "\"DATA\" INTEGER," + // 5: data
+                "\"TXT\" TEXT," + // 6: txt
+                "\"STATE\" INTEGER NOT NULL );"); // 7: state
         // Add Indexes
         db.execSQL("CREATE UNIQUE INDEX " + constraint + "IDX_CHAT__id ON \"CHAT\"" +
                 " (\"_id\" ASC);");
@@ -77,9 +75,9 @@ public class ChatDao extends AbstractDao<Chat, Long> {
             stmt.bindLong(1, id);
         }
  
-        Long conversation = entity.getConversation();
+        String conversation = entity.getConversation();
         if (conversation != null) {
-            stmt.bindLong(2, conversation);
+            stmt.bindString(2, conversation);
         }
  
         Long sendId = entity.getSendId();
@@ -87,9 +85,9 @@ public class ChatDao extends AbstractDao<Chat, Long> {
             stmt.bindLong(3, sendId);
         }
  
-        Long receiveId = entity.getReceiveId();
-        if (receiveId != null) {
-            stmt.bindLong(4, receiveId);
+        String sendname = entity.getSendname();
+        if (sendname != null) {
+            stmt.bindString(4, sendname);
         }
  
         String sendsrc = entity.getSendsrc();
@@ -97,21 +95,16 @@ public class ChatDao extends AbstractDao<Chat, Long> {
             stmt.bindString(5, sendsrc);
         }
  
-        String receivesrc = entity.getReceivesrc();
-        if (receivesrc != null) {
-            stmt.bindString(6, receivesrc);
-        }
- 
         Long data = entity.getData();
         if (data != null) {
-            stmt.bindLong(7, data);
+            stmt.bindLong(6, data);
         }
  
         String txt = entity.getTxt();
         if (txt != null) {
-            stmt.bindString(8, txt);
+            stmt.bindString(7, txt);
         }
-        stmt.bindLong(9, entity.getState());
+        stmt.bindLong(8, entity.getState());
     }
 
     @Override
@@ -123,9 +116,9 @@ public class ChatDao extends AbstractDao<Chat, Long> {
             stmt.bindLong(1, id);
         }
  
-        Long conversation = entity.getConversation();
+        String conversation = entity.getConversation();
         if (conversation != null) {
-            stmt.bindLong(2, conversation);
+            stmt.bindString(2, conversation);
         }
  
         Long sendId = entity.getSendId();
@@ -133,9 +126,9 @@ public class ChatDao extends AbstractDao<Chat, Long> {
             stmt.bindLong(3, sendId);
         }
  
-        Long receiveId = entity.getReceiveId();
-        if (receiveId != null) {
-            stmt.bindLong(4, receiveId);
+        String sendname = entity.getSendname();
+        if (sendname != null) {
+            stmt.bindString(4, sendname);
         }
  
         String sendsrc = entity.getSendsrc();
@@ -143,21 +136,16 @@ public class ChatDao extends AbstractDao<Chat, Long> {
             stmt.bindString(5, sendsrc);
         }
  
-        String receivesrc = entity.getReceivesrc();
-        if (receivesrc != null) {
-            stmt.bindString(6, receivesrc);
-        }
- 
         Long data = entity.getData();
         if (data != null) {
-            stmt.bindLong(7, data);
+            stmt.bindLong(6, data);
         }
  
         String txt = entity.getTxt();
         if (txt != null) {
-            stmt.bindString(8, txt);
+            stmt.bindString(7, txt);
         }
-        stmt.bindLong(9, entity.getState());
+        stmt.bindLong(8, entity.getState());
     }
 
     @Override
@@ -169,14 +157,13 @@ public class ChatDao extends AbstractDao<Chat, Long> {
     public Chat readEntity(Cursor cursor, int offset) {
         Chat entity = new Chat( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
-            cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1), // conversation
+            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // conversation
             cursor.isNull(offset + 2) ? null : cursor.getLong(offset + 2), // sendId
-            cursor.isNull(offset + 3) ? null : cursor.getLong(offset + 3), // receiveId
+            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // sendname
             cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // sendsrc
-            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // receivesrc
-            cursor.isNull(offset + 6) ? null : cursor.getLong(offset + 6), // data
-            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // txt
-            cursor.getInt(offset + 8) // state
+            cursor.isNull(offset + 5) ? null : cursor.getLong(offset + 5), // data
+            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // txt
+            cursor.getInt(offset + 7) // state
         );
         return entity;
     }
@@ -184,14 +171,13 @@ public class ChatDao extends AbstractDao<Chat, Long> {
     @Override
     public void readEntity(Cursor cursor, Chat entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
-        entity.setConversation(cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1));
+        entity.setConversation(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
         entity.setSendId(cursor.isNull(offset + 2) ? null : cursor.getLong(offset + 2));
-        entity.setReceiveId(cursor.isNull(offset + 3) ? null : cursor.getLong(offset + 3));
+        entity.setSendname(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
         entity.setSendsrc(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
-        entity.setReceivesrc(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
-        entity.setData(cursor.isNull(offset + 6) ? null : cursor.getLong(offset + 6));
-        entity.setTxt(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
-        entity.setState(cursor.getInt(offset + 8));
+        entity.setData(cursor.isNull(offset + 5) ? null : cursor.getLong(offset + 5));
+        entity.setTxt(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
+        entity.setState(cursor.getInt(offset + 7));
      }
     
     @Override

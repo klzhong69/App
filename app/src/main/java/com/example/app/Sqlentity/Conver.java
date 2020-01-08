@@ -12,8 +12,6 @@ public class Conver {
     private Long id;
 
     @Index(unique = true)//设置唯一性
-    private Long conversations;//会话
-
     private Long sendId;//发送人员编号
 
     private String sendname;//接受人员姓名
@@ -22,15 +20,23 @@ public class Conver {
 
     private int type;//是否为挚友
 
-    @Generated(hash = 1313486526)
-    public Conver(Long id, Long conversations, Long sendId, String sendname,
-            String sendsrc, int type) {
+    private Long data;//时间
+
+    private String txt;//内容
+
+    private int sum;//未读数量
+
+    @Generated(hash = 2008604360)
+    public Conver(Long id, Long sendId, String sendname, String sendsrc, int type,
+            Long data, String txt, int sum) {
         this.id = id;
-        this.conversations = conversations;
         this.sendId = sendId;
         this.sendname = sendname;
         this.sendsrc = sendsrc;
         this.type = type;
+        this.data = data;
+        this.txt = txt;
+        this.sum = sum;
     }
 
     @Generated(hash = 2111202836)
@@ -43,14 +49,6 @@ public class Conver {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Long getConversations() {
-        return this.conversations;
-    }
-
-    public void setConversations(Long conversations) {
-        this.conversations = conversations;
     }
 
     public Long getSendId() {
@@ -85,10 +83,30 @@ public class Conver {
         this.type = type;
     }
 
-   
+    public Long getData() {
+        return this.data;
+    }
+
+    public void setData(Long data) {
+        this.data = data;
+    }
+
+    public String getTxt() {
+        return this.txt;
+    }
+
+    public void setTxt(String txt) {
+        this.txt = txt;
+    }
+
+    public int getSum() {
+        return this.sum;
+    }
+
+    public void setSum(int sum) {
+        this.sum = sum;
+    }
 
 
-
-
-   
+    
 }

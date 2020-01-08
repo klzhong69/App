@@ -5,12 +5,21 @@ import android.os.Parcelable;
 
 public class Message  {
 
+    private Long userid;
     private String name;
     private String txt;
     private String time;
-    private String sum;
+    private int sum;
     private String imagesrc;
     private String icon;
+
+    public Long getUserid() {
+        return userid;
+    }
+
+    public void setUserid(Long userid) {
+        this.userid = userid;
+    }
 
     public String getName() {
         return name;
@@ -36,11 +45,11 @@ public class Message  {
         this.time = time;
     }
 
-    public String getSum() {
+    public int getSum() {
         return sum;
     }
 
-    public void setSum(String sum) {
+    public void setSum(int sum) {
         this.sum = sum;
     }
 
@@ -60,10 +69,8 @@ public class Message  {
         this.icon = icon;
     }
 
-
-
-
-    public Message(String name, String txt, String time, String sum, String imagesrc, String icon) {
+    public Message(Long userid, String name, String txt, String time, int sum, String imagesrc, String icon) {
+        this.userid = userid;
         this.name = name;
         this.txt = txt;
         this.time = time;
@@ -71,5 +78,4 @@ public class Message  {
         this.imagesrc = imagesrc;
         this.icon = icon;
     }
-
 }

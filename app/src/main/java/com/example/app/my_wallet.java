@@ -95,9 +95,9 @@ public class my_wallet extends AppCompatActivity {
     private void okgo() {
         MyApp application = ((MyApp) this.getApplicationContext());
         SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
-        // Long userid = sp.getLong("userid", 0);
-        Long userid = Long.valueOf("923883237");
-        OkGo.<String>post(application.getUrl()+"/app/user/getWallet?token="+application.getToken())
+        String userid = sp.getString("userid","");
+        String token = sp.getString("token","");
+        OkGo.<String>post(application.getUrl()+"/app/user/getWallet?token="+token)
                 .params("userId",userid)
                 .execute(new StringCallback() {
 

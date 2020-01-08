@@ -1,6 +1,8 @@
 package com.example.app;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -134,9 +136,9 @@ public class information extends AppCompatActivity {
                 data();
                 break;
             case R.id.imageView2:
-                PictureSelector
+               /* PictureSelector
                         .create(information.this, PictureSelector.SELECT_REQUEST_CODE)
-                        .selectPicture(true, 400, 400, 1, 1);
+                        .selectPicture(true, 400, 400, 1, 1);*/
                 break;
         }
     }
@@ -151,12 +153,13 @@ public class information extends AppCompatActivity {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        String finalDate = date;
         OkGo.<String>post(application.getUrl() + "/app/user/register")
                 .params("phone", phone)
                 .params("password", pass)
                 .params("nickname", editText.getText().toString())
                 .params("gender", sex)
-                .params("birthday", date)
+                .params("birthday", finalDate)
                 .params("avatarUrl", "https://momeak.oss-cn-shenzhen.aliyuncs.com/h3.jpg")
                 .execute(new StringCallback() {
 
@@ -169,6 +172,12 @@ public class information extends AppCompatActivity {
                         if (prexiew.getCode() == 0) {
                             Toast.makeText(information.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
                             Intent intent2 = new Intent(information.this, login.class);
+                            SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
+                            sp.edit().putString("phone", phone).apply();
+                            sp.edit().putString("nickname", editText.getText().toString()).apply();
+                            sp.edit().putString("gender", String.valueOf(sex)).apply();
+                            sp.edit().putString("birthday", finalDate).apply();
+                            sp.edit().putString("avatarUrl", "https://momeak.oss-cn-shenzhen.aliyuncs.com/h3.jpg").apply();
                             startActivity(intent2);
                         } else if (prexiew.getCode() == 40000) {
                             Toast.makeText(information.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
@@ -186,10 +195,9 @@ public class information extends AppCompatActivity {
 
     }
 
-    @Override
+    /*@Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        /*结果回调*/
         if (requestCode == PictureSelector.SELECT_REQUEST_CODE) {
             if (data != null) {
                 picturePath = data.getStringExtra(PictureSelector.PICTURE_PATH);
@@ -225,7 +233,7 @@ public class information extends AppCompatActivity {
             }
         }
 
-    }
+    }*/
 
     private void okgoima() {
         MyApp application = ((MyApp) this.getApplicationContext());

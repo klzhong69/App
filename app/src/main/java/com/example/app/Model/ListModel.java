@@ -40,7 +40,7 @@ public class ListModel {
         mArrayList = new ArrayList<Listleader>();
         MyApp application = ((MyApp) context.getApplicationContext());
         JSONArray json = null;
-        OkGo.<String>post(application.getUrl() + "/app/bage/ranklist")
+        OkGo.<String>post(application.getUrl() + "/app/page/ranklist")
                 .params("rankListCategory", rankListCategory)
                 .params("durationCategory", durationCategory)
                 .execute(new StringCallback() {
@@ -53,30 +53,29 @@ public class ListModel {
 
                         if (prexiew.getCode() == 0) {
 
-                           JsonArray jsonArray =  prexiew.getData().getAsJsonArray("user");
-                            for (int i = 0; i < jsonArray.size(); i++) {
-                                String type = "";
-                                if (rankListCategory == 1) {
-                                    type = "财富值";
-                                } else if(rankListCategory == 2){
-                                    type = "魅力值";
-                                }
-                                if (i >2) {
-                                    Listleader i1 = new Listleader(i+1 + "", jsonArray.get(i).getAsJsonObject().get("avatarUrl").getAsString(), jsonArray.get(i).getAsJsonObject().get("nickname").getAsString(), type, jsonArray.get(i).getAsJsonObject().get("count").getAsString());
-                                    mArrayList.add(i1);
+                                JsonArray jsonArray =  prexiew.getData().getAsJsonArray("users");
+                                for (int i = 0; i < jsonArray.size(); i++) {
+                                    String type = "";
+                                    if (rankListCategory == 1) {
+                                        type = "财富值";
+                                    } else if(rankListCategory == 2){
+                                        type = "魅力值";
+                                    }
+                                    if (i >2) {
+                                        Listleader i1 = new Listleader(i+1 + "", jsonArray.get(i).getAsJsonObject().get("avatarUrl").getAsString(), jsonArray.get(i).getAsJsonObject().get("nickname").getAsString(), type, jsonArray.get(i).getAsJsonObject().get("count").getAsString());
+                                        mArrayList.add(i1);
+
+                                    }
+
 
                                 }
-
-
-                            }
-                            Observable<JsonArray> observable = Observable.defer(new Callable<ObservableSource<? extends JsonArray>>() {
-                                @Override
-                                public ObservableSource<? extends JsonArray> call() throws Exception {
-                                    return Observable.just(jsonArray);
-                                }
-                            });
-                            observable.subscribe(List.observer);
-
+                                Observable<JsonArray> observable = Observable.defer(new Callable<ObservableSource<? extends JsonArray>>() {
+                                    @Override
+                                    public ObservableSource<? extends JsonArray> call() throws Exception {
+                                        return Observable.just(jsonArray);
+                                    }
+                                });
+                                observable.subscribe(List.observer);
 
                         } else if (prexiew.getCode() == 40000) {
                             Toast.makeText(context, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();

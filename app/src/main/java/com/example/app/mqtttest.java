@@ -39,10 +39,8 @@ public class mqtttest extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mqtttest);
         ButterKnife.bind(this);
-        //初始化mqtt配置
-        MqttMessageService.initMqtt(this);
-        //连接mqtt
-        MqttMessageService.connectMqtt();
+
+        MqttMessageService.create(this);
 
         observer = new Observer<String>() {
             @Override
@@ -82,12 +80,12 @@ public class mqtttest extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.button:
-                MqttMessageService.subscribeToTopic("room/1001", 1);
+                MqttMessageService.subscribeToTopic("room/1001");
                 //System.out.println(map.size()+"/"+maps.size());
                 break;
             case R.id.button2:
                 i++;
-                MqttMessageService.publishMessage("room/1001", "测试" + i, 1);
+                MqttMessageService.publishMessage("room/1001", "测试" + i);
                 break;
             case R.id.button3:
                 if (bool) {
@@ -97,9 +95,7 @@ public class mqtttest extends AppCompatActivity {
                     map.clear();
                 } else {
                     //初始化mqtt配置
-                    MqttMessageService.initMqtt(this);
-                    //连接mqtt
-                    MqttMessageService.connectMqtt();
+                    MqttMessageService.create(this);
                     bool=true;
                 }
                 break;

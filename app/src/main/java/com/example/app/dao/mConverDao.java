@@ -42,8 +42,8 @@ public class mConverDao {
      *
      * @return
      */
-    public static List<Conver> query(Long conver) {
-        return Initialization.getDaoInstantConver().getConverDao().queryBuilder().where(ConverDao.Properties.Conversations.eq(conver)).list();
+    public static List<Conver> query(Long sendid) {
+        return Initialization.getDaoInstantConver().getConverDao().queryBuilder().where(ConverDao.Properties.SendId.eq(sendid)).list();
     }
 
 
@@ -57,9 +57,9 @@ public class mConverDao {
     /**
      * 分页
      */
-    public static List<Conver> queryBuilder(Long conver,int set , int lim) {
+    public static List<Conver> queryBuilder(Long sendid,int set , int lim) {
 
-        return Initialization.getDaoInstantConver().getConverDao().queryBuilder().where(ConverDao.Properties.Conversations.eq(conver)).offset(set).limit(lim).list();
+        return Initialization.getDaoInstantConver().getConverDao().queryBuilder().where(ConverDao.Properties.SendId.eq(sendid)).offset(set).limit(lim).list();
     }
 
     /**

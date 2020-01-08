@@ -232,9 +232,9 @@ public class modify_information extends AppCompatActivity {
     private void okgo(String txt) {
         MyApp application = ((MyApp) this.getApplicationContext());
         SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
-        // Long userid = sp.getLong("userid", 0);
-        Long userid = Long.valueOf("700647775");
-        OkGo.<String>post(application.getUrl()+"/editUserInfoNickname?token="+application.getToken())
+        String userid = sp.getString("userid","");
+        String token = sp.getString("token","");
+        OkGo.<String>post(application.getUrl()+"/editUserInfoNickname?token="+token)
                 .params("userId",userid)
                 .params("nickname",txt)
                 .execute(new StringCallback() {
@@ -291,9 +291,9 @@ public class modify_information extends AppCompatActivity {
     private void okgos(String txt) {
         MyApp application = ((MyApp) this.getApplicationContext());
         SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
-        // Long userid = sp.getLong("userid", 0);
-        Long userid = Long.valueOf("700647775");
-        OkGo.<String>post(application.getUrl()+"/editUserInfoNickname?token="+application.getToken())
+        String userid = sp.getString("userid","");
+        String token = sp.getString("token","");
+        OkGo.<String>post(application.getUrl()+"/editUserInfoNickname?token="+token)
                 .params("userId",userid)
                 .params("signtureText",txt)
                 .execute(new StringCallback() {
@@ -370,8 +370,8 @@ public class modify_information extends AppCompatActivity {
     private void okgoima() {
         MyApp application = ((MyApp) this.getApplicationContext());
         SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
-        // Long userid = sp.getLong("userid", 0);
-        String userid = "700647775";
+        String userid = sp.getString("userid","");
+        String token = sp.getString("token","");
         String phone = "15913420136";
         OkGo.<String>post(application.getUrl() + "/app/alioss/getUserUploadToken")
                 .params("phone",phone)

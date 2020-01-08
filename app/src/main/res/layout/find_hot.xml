@@ -1,58 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.scwang.smart.refresh.layout.SmartRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/refreshLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <RelativeLayout
-            android:id="@+id/relative9"
+
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_80"
-            android:background="@color/qmui_config_color_white">
+            android:layout_height="match_parent"
+            android:fillViewport="true">
 
-
-            <TextView
-                android:id="@+id/textView115"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginStart="@dimen/dp_20"
-                android:gravity="center_vertical"
-                android:text="热门"
-                android:textSize="@dimen/sp_28" />
+                android:orientation="vertical" >
 
-            <TextView
-                android:id="@+id/textView116"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginStart="@dimen/dp_20"
-                android:layout_toEndOf="@+id/textView115"
-                android:gravity="center_vertical"
-                android:text="广播"
-                android:textSize="@dimen/sp_24" />
-        </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/view"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_30"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginEnd="0dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler14"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/relative9"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="@dimen/dp_10" />
+                <RelativeLayout
+                    android:id="@+id/relative9"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_80"
+                    android:layout_below="@+id/view"
+                    android:background="@color/qmui_config_color_white">
+
+
+                    <TextView
+                        android:id="@+id/textView115"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginStart="@dimen/dp_20"
+                        android:gravity="center_vertical"
+                        android:text="热门"
+                        android:textSize="@dimen/sp_28" />
+
+                    <TextView
+                        android:id="@+id/textView116"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginStart="@dimen/dp_20"
+                        android:layout_toEndOf="@+id/textView115"
+                        android:gravity="center_vertical"
+                        android:text="广播"
+                        android:textSize="@dimen/sp_24" />
+                </RelativeLayout>
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler14"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/relative9"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true" />
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
 
     </RelativeLayout>
 
-
+    <com.scwang.smart.refresh.footer.ClassicsFooter
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
 
 </com.scwang.smart.refresh.layout.SmartRefreshLayout>

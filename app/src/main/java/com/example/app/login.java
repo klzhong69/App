@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.app.Entity.MyApp;
+import com.example.app.MQ.MqttMessageService;
 import com.example.app.Sqlentity.User;
 import com.example.app.cofig.Initialization;
 import com.example.app.cofig.Preview;
@@ -93,6 +94,8 @@ public class login extends AppCompatActivity {
 
         Intent intent = getIntent();
         state = intent.getIntExtra("type", 0);
+
+
     }
 
     @OnClick({R.id.fold,R.id.but, R.id.textView156, R.id.textView157, R.id.textView159, R.id.imageView132, R.id.imageView133, R.id.imageView134})
@@ -151,23 +154,23 @@ public class login extends AppCompatActivity {
                         if(prexiew.getCode()==0){
                             Toast.makeText(login.this, prexiew.getMsg()+"", Toast.LENGTH_SHORT).show();
 
-                            long id = prexiew.getData().get("uniqueId").getAsLong();
+                            String id = prexiew.getData().get("uniqueId").getAsString();
                             String name = prexiew.getData().get("nickname").getAsString();
                             String userima = prexiew.getData().get("avatarUrl").getAsString();
                             String token = prexiew.getData().get("token").getAsString();
-                            application.setToken(token);
 
                             if(state==1){
                                 User user = new User();
                                 user.setName(name);
                                 user.setUsersrc(userima);
                                 user.setState(0);
-                                user.setUserId(id);
+                                user.setUserId(Long.valueOf(id));
                                 mUserDao.insert(user);
                             }
 
                             SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
-                            sp.edit().putLong("userid", id).apply();
+                            sp.edit().putString("userid", id).apply();
+                            sp.edit().putString("token", token).apply();
                             Intent intent1 = new Intent(login.this, MainActivity.class);
                             intent1.putExtra("id", 4);
                             startActivity(intent1);

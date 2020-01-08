@@ -40,7 +40,7 @@ public class mChatDao {
      *
      * @return
      */
-    public static List<Chat> query(Long conver) {
+    public static List<Chat> query(String conver) {
         return Initialization.getDaoInstantChat().getChatDao().queryBuilder().where(ChatDao.Properties.Conversation.eq(conver)).list();
     }
 
@@ -55,7 +55,7 @@ public class mChatDao {
     /**
      * 分页
      */
-    public static List<Chat> queryBuilder(Long conver,int set , int lim) {
+    public static List<Chat> queryBuilder(String conver,int set , int lim) {
 
         return Initialization.getDaoInstantChat().getChatDao().queryBuilder().where(ChatDao.Properties.Conversation.eq(conver)).offset(set).limit(lim).list();
     }

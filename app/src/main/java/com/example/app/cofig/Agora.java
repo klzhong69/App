@@ -51,17 +51,10 @@ import io.reactivex.ObservableSource;
 public class Agora extends Activity {
 
 
-    private static RoomheadAdapter mAdapter;
-    private static final int PERMISSION_REQ_ID_RECORD_AUDIO = 22;
-    private static RtcEngine mRtcEngine;
-    private static RoomheadAdapter mAdapters;
-    private int mLocalUid;
-    private boolean bIsBroadCaster;
-
     /**
      * 静音别人
      */
-    private void AllRemoteAudioStreams(Boolean isChecked) {
+    private void AllRemoteAudioStreams(RtcEngine mRtcEngine,Boolean isChecked) {
 
         mRtcEngine.muteAllRemoteAudioStreams(isChecked);
 
@@ -70,7 +63,7 @@ public class Agora extends Activity {
     /**
      * 静音自己
      */
-    private void LocalAudioStream(Boolean isChecked) {
+    private void LocalAudioStream(RtcEngine mRtcEngine,Boolean isChecked) {
 
         mRtcEngine.muteLocalAudioStream(isChecked);
 
@@ -79,7 +72,7 @@ public class Agora extends Activity {
     /**
      * 切换听筒还是外放
      */
-    private void EnableSpeakerphone(Boolean isChecked) {
+    private void EnableSpeakerphone(RtcEngine mRtcEngine,Boolean isChecked) {
 
         mRtcEngine.setEnableSpeakerphone(isChecked);
 
@@ -89,7 +82,7 @@ public class Agora extends Activity {
     /**
      * 播放伴奏音乐
      */
-    private void AudioMixing(Boolean isChecked) {
+    private void AudioMixing(RtcEngine mRtcEngine,Boolean isChecked) {
 
         if (isChecked) {
             mRtcEngine.startAudioMixing("/assets/mixing.mp3", false, false, 1);

@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.app.Adapter.ChatAdapter;
 import com.example.app.Entity.Chats;
+import com.example.app.Sqlentity.Chat;
+import com.example.app.dao.mChatDao;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,21 +21,27 @@ public class ChatModel {
     private static ChatAdapter mAdapter;
     private static List<Chats> mArrayList;
 
-    public static void initData() {
+    public static void initData(String conver,int set,int lim) {
         mArrayList = new ArrayList<Chats>();
-        for (int i = 0; i < 20; i++) {
-            int type=0;
-            if(i<=5 && i>0){
-                type=1;
-            }else if(i>5 && i<=10){
-                type=2;
-            }else if(i>10){
-                type=1;
+        datas(conver,set,lim);
+    }
+
+    public static void datas(String conver,int set,int lim) {
+        List<Chat> list = mChatDao.queryBuilder(conver,set,lim);
+        for(int i=0;i<list.size();i++){
+            if(i==0){
+                Chats i1 = new Chats(list.get(i).getSendsrc(), list.get(i).getTxt(), list.get(i).getData().toString(), 0);
+                mArrayList.add(i1);
+            }else{
+                Long longs = (list.get(i).getData())-(list.get(i-1).getData());
+                if(longs>600000L){
+                    Chats i1 = new Chats(list.get(i).getSendsrc(), list.get(i).getTxt(), list.get(i).getData().toString(), 0);
+                    mArrayList.add(i1);
+                }
             }
-            Chats i1 = new Chats("https://momeak.oss-cn-shenzhen.aliyuncs.com/h3.jpg", "你好", "2019-12-27", type);
+            Chats i1 = new Chats(list.get(i).getSendsrc(), list.get(i).getTxt(), list.get(i).getData().toString(), list.get(i).getState()+1);
             mArrayList.add(i1);
         }
-
     }
 
     public static void initrecycler(Context context, RecyclerView recycler13) {
@@ -86,8 +94,13 @@ public class ChatModel {
         mRecyclerView.smoothScrollToPosition(mArrayList.size());
     }
 
-    public static void recly(RecyclerView mRecyclerView){
-        mRecyclerView.smoothScrollToPosition(mArrayList.size());
+    public static void recly(RecyclerView mRecyclerView,int poaition){
+        if(poaition==0){
+            mRecyclerView.smoothScrollToPosition(mArrayList.size());
+        }else{
+            mRecyclerView.smoothScrollToPosition(poaition);
+        }
+
     }
 
     /*private static View convertView;

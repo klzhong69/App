@@ -139,9 +139,9 @@ public class my_change_pass extends AppCompatActivity {
     private void okgo() {
         MyApp application = ((MyApp) this.getApplicationContext());
         SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
-        // Long userid = sp.getLong("userid", 0);
-        Long userid = Long.valueOf("700647775");
-        OkGo.<String>post(application.getUrl()+"/app/user/changePassword?token="+application.getToken())
+        String userid = sp.getString("userid","");
+        String token = sp.getString("token","");
+        OkGo.<String>post(application.getUrl()+"/app/user/changePassword?token="+token)
                 .params("userId",userid)
                 .params("olaPassword",editText.getText().toString())
                 .params("newPassword",editText4.getText().toString())

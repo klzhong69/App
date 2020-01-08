@@ -6,6 +6,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <RelativeLayout
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_30"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <RelativeLayout
         android:id="@+id/relative11"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_80"
@@ -15,7 +23,7 @@
         android:background="#ffffff"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/view">
 
         <TextView
             android:id="@+id/title"
@@ -46,6 +54,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/relative11"
+        android:layout_marginTop="@dimen/dp_20"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         app:layout_constraintEnd_toEndOf="parent"
@@ -73,7 +82,6 @@
         android:layout_below="@+id/relative12"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="0dp"
         android:layout_marginBottom="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/relative12"
         app:layout_constraintEnd_toEndOf="parent"

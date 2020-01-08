@@ -54,8 +54,8 @@ public class my_switch extends AppCompatActivity {
         subtitle.setText("");
 
         SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
-        Long userid = sp.getLong("userid", 0);
-        initData(userid);
+        String userid = sp.getString("userid","");
+        initData(Long.parseLong(userid));
         //适配器
         SwitchAdapter mAdapter = new SwitchAdapter(this, user);
         //设置适配器adapter

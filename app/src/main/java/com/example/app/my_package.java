@@ -222,11 +222,11 @@ public class my_package extends AppCompatActivity {
         mDatat = new ArrayList<Package2>();
 
         SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
-        // Long userid = sp.getLong("userid", 0);
-        Long userid = Long.valueOf("923883237");
+        String userid = sp.getString("userid","");
+        String token = sp.getString("token","");
         MyApp application = ((MyApp) getApplicationContext());
 
-        OkGo.<String>post(application.getUrl() + "/app/user/getPackage?token=" + application.getToken())
+        OkGo.<String>post(application.getUrl() + "/app/user/getPackage?token=" + token)
                 .params("userId", userid)
                 .execute(new StringCallback() {
 
@@ -239,9 +239,9 @@ public class my_package extends AppCompatActivity {
                         if (prexiew.getCode() == 0) {
 
 
-                            JsonArray jsonArray1 = prexiew.getData().getAsJsonArray("gifts");
-                            JsonArray jsonArray2 = prexiew.getData().getAsJsonArray("headwears");
-                            JsonArray jsonArray3 = prexiew.getData().getAsJsonArray("friendCards");
+                            JsonArray jsonArray1 = prexiew.getData().getAsJsonArray("friendCards");
+                            JsonArray jsonArray2 = prexiew.getData().getAsJsonArray("gifts");
+                            JsonArray jsonArray3 = prexiew.getData().getAsJsonArray("headwears");
 
                             for (int i = 0; i < jsonArray1.size(); i++) {
                                 Package1 i1 = new Package1(jsonArray1.get(i).getAsJsonObject().get("picUrl").getAsString(), jsonArray1.get(i).getAsJsonObject().get("cardName").getAsString());
@@ -254,7 +254,7 @@ public class my_package extends AppCompatActivity {
                             }
 
                             for (int i = 0; i < jsonArray3.size(); i++) {
-                                Package2 i3 = new Package2(jsonArray2.get(i).getAsJsonObject().get("headwearPicUrl").getAsString(), jsonArray2.get(i).getAsJsonObject().get("headwearName").getAsString(), "有效期:"+ DateUtil.stampToDate(jsonArray2.get(i).getAsJsonObject().get("endTime").getAsString()));
+                                Package2 i3 = new Package2(jsonArray3.get(i).getAsJsonObject().get("headwearPicUrl").getAsString(), jsonArray3.get(i).getAsJsonObject().get("headwearName").getAsString(), "有效期:"+ DateUtil.stampToDate(jsonArray2.get(i).getAsJsonObject().get("endTime").getAsString()));
                                 mDatat.add(i3);
                             }
 

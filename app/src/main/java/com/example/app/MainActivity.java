@@ -1,18 +1,11 @@
 package com.example.app;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.core.widget.NestedScrollView;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.Manifest;
 import android.animation.ObjectAnimator;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
@@ -26,12 +19,24 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
+import android.widget.RelativeLayout;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.widget.NestedScrollView;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.ashokvarma.bottomnavigation.TextBadgeItem;
-import com.example.app.cofig.DateUtil;
+import com.example.app.Entity.MyApp;
+import com.example.app.MQ.MqttMessageService;
+import com.example.app.cofig.Mess;
 import com.lzf.easyfloat.EasyFloat;
 import com.lzf.easyfloat.anim.AppFloatDefaultAnimator;
 import com.lzf.easyfloat.anim.DefaultAnimator;
@@ -41,10 +46,9 @@ import com.lzf.easyfloat.interfaces.OnInvokeView;
 import com.lzf.easyfloat.interfaces.OnPermissionResult;
 import com.lzf.easyfloat.permission.PermissionUtils;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.Callable;
 
 import butterknife.BindView;
@@ -69,9 +73,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
     private Messages messages;
     private My my;
 
-    private TextBadgeItem mBadgeItem;
-    private int num = 1;
-    private ImageView mIconView;
+    private static TextBadgeItem mBadgeItem;
+    private int num = 0;
+    private static ImageView mIconView;
     private BottomNavigationBar bottomNavigationBar;
     protected String[] needPermissions = {
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
@@ -96,7 +100,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
      */
     private boolean isNeedCheck = true;
     public static Observer<Integer> observer;
+    public static Observer<Mess> observers;
     private ArrayList<FragmentTouchListener> mFragmentTouchListeners = new ArrayList<>();
+    private Map<String, String> map = new HashMap<String, String>();
+    private int sum = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,8 +111,28 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         init();
+
+
+
+        SharedPreferences sp = this.getSharedPreferences("User", Context.MODE_PRIVATE);
+        String userid = sp.getString("userid","");
+        if(!userid.equals("")){
+            MqttMessageService.create(this);
+            MyApp application = ((MyApp) this.getApplicationContext());
+            num = application.getOfficmess().size()+application.getUsermess().size();
+            setBadgeNum(num);
+        }else{
+            Intent intent1 = new Intent(MainActivity.this, login.class);
+            intent1.putExtra("type", 0);
+            startActivity(intent1);
+            overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
+        }
+
         setDefaultFragment();
+
     }
+
+
 
 
     private void init() {
@@ -173,7 +200,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
         for (FragmentTouchListener listener : mFragmentTouchListeners) {
-            listener.onTouchEvent(event);
+            if(sum ==0){
+                listener.onTouchEvent(event);
+            }
+
         }
 
         return super.dispatchTouchEvent(event);
@@ -194,7 +224,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
         home = Home.newInstance();
         transaction.replace(R.id.layout1, home);
         transaction.commit();
-        setBadgeNum(num);
+
     }
 
 
@@ -209,6 +239,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
         bottomNavigationBar.setFirstSelectedPosition(id).initialise();
         onTabSelected(id);
 
+    }
+
+    protected void onDestroy() {
+        super.onDestroy();
+        MqttMessageService.unsubscribeToTopic("room/1001");
+        MqttMessageService.destroy();
     }
 
     private void showAppFloat() {
@@ -285,14 +321,14 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
         PermissionUtils.requestPermission(this, new OnPermissionResult() {
             @Override
             public void permissionResult(boolean b) {
-                System.out.println("状态："+EasyFloat.appFloatIsShow("testFloat"));
+                System.out.println("状态：" + EasyFloat.appFloatIsShow("testFloat"));
             }
         });
     }
 
     @Override
     public void onTabSelected(int position) {
-        Log.d("onTabSelected", "onTabSelected: " + position);
+        sum = position;
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();
         switch (position) {
@@ -304,10 +340,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
                 setBadgeNum(num);
                 break;
             case 1:
-
                 if (find == null) {
                     find = Find.newInstance();
                 }
+
                 transaction.replace(R.id.layout1, find);
                 setBadgeNum(num);
                 break;
@@ -324,6 +360,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
                 if (messages == null) {
                     messages = Messages.newInstance();
                 }
+
                 transaction.replace(R.id.layout1, messages);
                 num = 0;
                 setBadgeNum(num);
@@ -365,7 +402,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
     /**
      * 设置tab数字提示加缩放动画
      */
-    private void setBadgeNum(int num) {
+    public static void setBadgeNum(int num) {
         mBadgeItem.setText(String.valueOf(num));
         if (num == 0) {
             mBadgeItem.hide();

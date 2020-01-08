@@ -138,7 +138,7 @@ public class my_set extends AppCompatActivity {
                 break;
             case R.id.but:
                 SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
-                sp.edit().putLong("userid", 0).apply();
+                sp.edit().putString("userid", "").apply();
                 Intent intent7 = new Intent(my_set.this, MainActivity.class);
                 intent7.putExtra("id",4);
                 startActivity(intent7);

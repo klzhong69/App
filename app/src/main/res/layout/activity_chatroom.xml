@@ -8,12 +8,23 @@
     tools:context=".chatroom">
 
     <RelativeLayout
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_30"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <RelativeLayout
         android:id="@+id/relativeLayout2"
         android:layout_width="0dp"
         android:layout_height="@dimen/dp_80"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/view">
 
 
         <ImageView
@@ -52,7 +63,7 @@
             android:paddingBottom="@dimen/dp_2"
             android:text="情感频道"
             android:textColor="#ffffff"
-            android:textSize="@dimen/sp_18"/>
+            android:textSize="@dimen/sp_18" />
 
         <TextView
             android:id="@+id/textView123"
@@ -100,13 +111,15 @@
 
         <ImageView
             android:id="@+id/fold"
-            android:layout_width="@dimen/dp_30"
+            android:layout_width="@dimen/dp_50"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="@dimen/dp_20"
+            android:paddingLeft="@dimen/dp_20"
             app:srcCompat="@drawable/fold_white" />
+
+
     </RelativeLayout>
 
     <com.skyfishjy.library.RippleBackground
@@ -346,10 +359,10 @@
         layout="@layout/room_announcement"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.app.Adapter.MessageAdapter;
 import com.example.app.Entity.Message;
+import com.example.app.Entity.MyApp;
 import com.example.app.Messages;
 import com.example.app.R;
 import com.example.app.Sqlentity.Chat;
@@ -34,19 +35,58 @@ import io.reactivex.ObservableSource;
 public class MessModel {
 
     private static  ArrayList<Message> mArrayList;
-    private static List<Conver> list;
 
-    public static void initData() {
+    public static void initData(Context context) {
         mArrayList = new ArrayList<Message>();
-
+        MyApp application = ((MyApp) context.getApplicationContext());
         try{
-           // list = mConverDao.queryAll();
-            for(int i=0;i<5;i++){
-                int sum = 0;
-                if(i==0){
-                    sum = 3;
+            if(application.getUsermess().size()>0){
+
+                List<Conver> listall =  mConverDao.queryAll();
+                for(int i=0;i<mConverDao.queryAll().size();i++){
+                    Conver conver = new Conver();
+                    Conver convers = new Conver();
+                    Chat chat = new Chat();
+                    int a=0;
+                    int b=0;
+                    for(int j=0;j<application.getUsermess().size();j++){
+                        if(application.getUsermess().get(j).getSendId().equals(listall.get(i).getSendId())){
+                            a++;
+                            conver.setSendsrc(application.getUsermess().get(j).getSendsrc());
+                            conver.setSendname(application.getUsermess().get(j).getSendsrc());
+                            conver.setSendId(application.getUsermess().get(j).getSendId());
+                            conver.setData(application.getUsermess().get(j).getData());
+                            conver.setSum(a);
+                            conver.setTxt(application.getUsermess().get(j).getTxt());
+                            conver.setType(1);
+                        }else{
+                            b++;
+                            convers.setSendsrc(application.getUsermess().get(j).getSendsrc());
+                            convers.setSendname(application.getUsermess().get(j).getSendsrc());
+                            convers.setSendId(application.getUsermess().get(j).getSendId());
+                            convers.setData(application.getUsermess().get(j).getData());
+                            convers.setSum(b);
+                            convers.setTxt(application.getUsermess().get(j).getTxt());
+                            convers.setType(1);
+                        }
+                    }
+                    if(a!=0){
+                        mConverDao.update(conver);
+                    }
+                    if(b!=0){
+                        mConverDao.insert(convers);
+                    }
+
+
+
                 }
-                Message i1 = new Message("苗苗"+i, "你好", "19:20", sum+"", "https://momeak.oss-cn-shenzhen.aliyuncs.com/h2.jpg", i+"");
+
+            }
+
+            List<Conver> listalls = mConverDao.queryAll();
+
+            for(int i=0;i<listalls.size();i++){
+                Message i1 = new Message(listalls.get(i).getSendId(), listalls.get(i).getSendname(), listalls.get(i).getTxt(), listalls.get(i).getData().toString(), listalls.get(i).getSum(), listalls.get(i).getSendsrc(),"1");
                 mArrayList.add(i1);
 
             }
@@ -79,8 +119,8 @@ public class MessModel {
             public void onItemClick(View view, int position) {
                 if(a==0){
                     Intent intent2 = new Intent(context, chat.class);
-                    //intent2.putExtra("conver",list.get(position).getConversations());
-                    //intent2.putExtra("sendid",list.get(position).getSendId());
+                    intent2.putExtra("conver","user/"+mArrayList.get(position).getUserid());
+                    intent2.putExtra("sendid",mArrayList.get(position).getUserid());
                     intent2.putExtra("sendname","苗苗"+position);
                     intent2.putExtra("sendsrc","https://momeak.oss-cn-shenzhen.aliyuncs.com/h2.jpg");
                     context.startActivity(intent2);

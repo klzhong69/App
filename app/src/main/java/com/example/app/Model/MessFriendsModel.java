@@ -36,17 +36,17 @@ public class MessFriendsModel {
     public static void initData(Context context,int a) {
         mArrayList = new ArrayList<Friends>();
         SharedPreferences sp = context.getSharedPreferences("User", Context.MODE_PRIVATE);
-        // Long userid = sp.getLong("userid", 0);
-        Long userid = Long.valueOf("923883237");
+        String userid = sp.getString("userid","");
+        String token = sp.getString("token","");
         MyApp application = ((MyApp) context.getApplicationContext());
         String url = "";
         if(a==1){
 
-            url = "/app/user/getFollows?token="+application.getToken();
+            url = "/app/user/getFollows?token="+token;
 
         }else if(a==2){
 
-            url = "/app/user/getFans?token="+application.getToken();
+            url = "/app/user/getFans?token="+token;
 
         }
         OkGo.<String>post(application.getUrl() + url)
@@ -63,9 +63,9 @@ public class MessFriendsModel {
 
                             JsonArray jsonArray = new JsonArray();
                             if(a==1){
-                                 jsonArray = prexiew.getData().getAsJsonArray("follow");
+                                 jsonArray = prexiew.getData().getAsJsonArray("follows");
                             }else if(a==2){
-                                jsonArray = prexiew.getData().getAsJsonArray("fan");
+                                jsonArray = prexiew.getData().getAsJsonArray("fans");
                             }
 
                             for(int i=0;i<jsonArray.size();i++){

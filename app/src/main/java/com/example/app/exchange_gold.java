@@ -82,9 +82,9 @@ public class exchange_gold extends AppCompatActivity {
     private void okgo() {
         MyApp application = ((MyApp) this.getApplicationContext());
         SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
-        // Long userid = sp.getLong("userid", 0);
-        Long userid = Long.valueOf("923883237");
-        OkGo.<String>post(application.getUrl()+"/app/user/exchangeGold?token="+application.getToken())
+        String userid = sp.getString("userid","");
+        String token = sp.getString("token","");
+        OkGo.<String>post(application.getUrl()+"/app/user/exchangeGold?token="+token)
                 .params("userId",userid)
                 .params("diamond",editText.getText().toString())
                 .execute(new StringCallback() {

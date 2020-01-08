@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/component10">
+    android:id="@+id/component11">
 
     <RelativeLayout
-        android:id="@+id/recyclerbutc10"
+        android:id="@+id/recyclerbutc11"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_400"
         android:layout_alignParentStart="true"
@@ -17,10 +17,10 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/recyclerc10"
+        android:id="@+id/recyclerc11"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/recyclerbutc10"
+        android:layout_below="@+id/recyclerbutc11"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="0dp"
@@ -28,13 +28,13 @@
        >
 
         <com.qmuiteam.qmui.widget.QMUIRadiusImageView
-            android:id="@+id/imageViewc10"
+            android:id="@+id/imageViewc11"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/textViewc10"
-            android:layout_alignTop="@+id/imageViewc10s"
-            android:layout_alignEnd="@+id/textViewc10"
-            android:layout_alignBottom="@+id/butc10"
+            android:layout_alignStart="@+id/textViewc11"
+            android:layout_alignTop="@+id/imageViewc11s"
+            android:layout_alignEnd="@+id/textViewc11"
+            android:layout_alignBottom="@+id/butc11"
             android:layout_marginBottom="@dimen/dp_m_20"
             android:src="@color/qmui_config_color_white"
             app:layout_constraintEnd_toEndOf="parent"
@@ -44,17 +44,17 @@
 
 
         <ImageView
-            android:id="@+id/imageViewc10s"
+            android:id="@+id/imageViewc11s"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_60"
-            android:layout_alignStart="@+id/textViewc10"
-            android:layout_alignEnd="@+id/textViewc10"
+            android:layout_alignStart="@+id/textViewc11"
+            android:layout_alignEnd="@+id/textViewc11"
             android:layout_alignParentTop="true"
             android:layout_marginTop="@dimen/dp_30"
             app:srcCompat="@drawable/ima" />
 
         <TextView
-            android:id="@+id/textViewc10"
+            android:id="@+id/textViewc11"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textView148"
@@ -68,12 +68,12 @@
             android:text="欢迎来到6354589" />
 
         <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
-            android:id="@+id/butc10"
+            android:id="@+id/butc11"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/dp_50"
-            android:layout_below="@+id/textViewc10"
-            android:layout_alignStart="@+id/textViewc10"
-            android:layout_alignEnd="@+id/textViewc10"
+            android:layout_below="@+id/textViewc11"
+            android:layout_alignStart="@+id/textViewc11"
+            android:layout_alignEnd="@+id/textViewc11"
             android:layout_marginStart="@dimen/dp_100"
             android:layout_marginTop="@dimen/dp_20"
             android:layout_marginEnd="@dimen/dp_100"
@@ -94,10 +94,10 @@
             android:id="@+id/textView148"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/imageViewc10s"
-            android:layout_alignTop="@+id/imageViewc10s"
-            android:layout_alignEnd="@+id/imageViewc10s"
-            android:layout_alignBottom="@+id/imageViewc10s"
+            android:layout_alignStart="@+id/imageViewc11s"
+            android:layout_alignTop="@+id/imageViewc11s"
+            android:layout_alignEnd="@+id/imageViewc11s"
+            android:layout_alignBottom="@+id/imageViewc11s"
             android:gravity="center"
             android:padding="@dimen/dp_10"
             android:text="房间公告"
@@ -107,10 +107,10 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/recyclerbutc10s"
+        android:id="@+id/recyclerbutc11s"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/recyclerc10"
+        android:layout_below="@+id/recyclerc11"
         android:layout_alignParentStart="true">
 
     </RelativeLayout>

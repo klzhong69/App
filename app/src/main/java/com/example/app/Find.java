@@ -1,15 +1,19 @@
 package com.example.app;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -17,9 +21,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.app.Adapter.FindListAdapter;
 import com.example.app.Entity.Findlist;
+import com.scwang.smart.refresh.footer.ClassicsFooter;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
+import com.scwang.smart.refresh.layout.api.RefreshLayout;
+import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,6 +47,8 @@ public class Find extends Fragment {
     RecyclerView recycler14;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
+    @BindView(R.id.view)
+    RelativeLayout views;
     private Unbinder unbinder;
     private ArrayList<Findlist> mArrayList;
 
@@ -48,12 +58,51 @@ public class Find extends Fragment {
         View view = inflater.inflate(R.layout.find_hot, container, false);
         unbinder = ButterKnife.bind(this, view);
 
+        refreshLayout.setRefreshFooter(new ClassicsFooter(getContext()));
+        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(RefreshLayout refreshlayout) {
+                refreshlayout.finishLoadMore(2000);//传入false表示加载失败
+            }
+        });
+
+        Window window = Objects.requireNonNull(getActivity()).getWindow();
+        //21表示5.0
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.setStatusBarColor(Color.WHITE);
+
+        View decor = window.getDecorView();
+        int ui = decor.getSystemUiVisibility();
+        ui |= View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR; //设置状态栏中字体的颜色为黑色
+        //ui &= ~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR; //设置状态栏中字体颜色为白色
+        decor.setSystemUiVisibility(ui);
+
+        views.post(new Runnable() {
+            @Override
+            public void run() {
+                int width = views.getWidth();
+                int height = getStatusBarHeight();
+
+                views.setLayoutParams(new LinearLayout.LayoutParams(width, height));
+            }
+        });
+
         initData();
         init();
         return view;
 
     }
-
+    public int getStatusBarHeight() {
+        int result = 0;
+        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            result = getResources().getDimensionPixelSize(resourceId);
+        }
+        return result;
+    }
     private void init() {
         //适配器
         FindListAdapter mAdapter = new FindListAdapter(getContext(), mArrayList);
@@ -97,13 +146,13 @@ public class Find extends Fragment {
     private void initData() {
         mArrayList = new ArrayList<Findlist>();
         for (int i = 0; i < 8; i++) {
-            int sum ;
-            if(i>5){
-                sum = i-5;
-            }else{
-                sum = i+1;
+            int sum;
+            if (i > 5) {
+                sum = i - 5;
+            } else {
+                sum = i + 1;
             }
-            Findlist i1 = new Findlist("PHakamile Sikali", "Muria Moura", "2345", "https://momeak.oss-cn-shenzhen.aliyuncs.com/h"+sum+".jpg", "", "热门", "CV", "德国");
+            Findlist i1 = new Findlist("PHakamile Sikali", "Muria Moura", "2345", "https://momeak.oss-cn-shenzhen.aliyuncs.com/h" + sum + ".jpg", "", "热门", "CV", "德国");
             mArrayList.add(i1);
         }
 

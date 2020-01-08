@@ -3,12 +3,23 @@ package com.example.app.MQ;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.IBinder;
 import android.util.Log;
+import android.widget.Switch;
 
 import androidx.annotation.Nullable;
 
+import com.example.app.Entity.MyApp;
+import com.example.app.MainActivity;
+import com.example.app.Sqlentity.Chat;
+import com.example.app.chat;
+import com.example.app.chatroom;
+import com.example.app.cofig.Mess;
+import com.example.app.cofig.Preview;
+import com.example.app.dao.mChatDao;
 import com.example.app.mqtttest;
+import com.google.gson.Gson;
 
 import org.eclipse.paho.android.service.MqttAndroidClient;
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
@@ -20,6 +31,7 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.Callable;
 
 import io.reactivex.Observable;
@@ -53,15 +65,16 @@ public class MqttMessageService extends Service {
      */
     public static void initMqtt(Context context) {
         try {
-            sum = 0;
-            String username = "55556666";
+            SharedPreferences sp = context.getSharedPreferences("User", Context.MODE_PRIVATE);
+            String userid = sp.getString("userid", "");
+            String token = sp.getString("token", "");
             String password = "";
             //写上自己的url
             String uri = "tcp://mqtt2.weiyunhezi.com:1883";
-            subTopic = "user/55556666";
+            subTopic = "user/" + userid;
             mqttAndroidClient = new MqttAndroidClient(
                     context,
-                    uri, "test");
+                    uri, token);
 
             mqttAndroidClient.setCallback(new MqttCallbackExtended() {
                 @Override
@@ -81,14 +94,52 @@ public class MqttMessageService extends Service {
 
                 @Override
                 public void messageArrived(String topic, MqttMessage message) {
-                    Observable<String> observable = Observable.defer(new Callable<ObservableSource<? extends String>>() {
-                        @Override
-                        public ObservableSource<? extends String> call() throws Exception {
-                            return Observable.just(topic + "~" + message.toString() + "~" + sum+ "~" + bool);
+                    if (!message.toString().equals("")) {
+                        MyApp application = ((MyApp) context.getApplicationContext());
+                        Gson gson = new Gson();
+                        Mess mess = gson.fromJson(message.toString(), Mess.class);
+                        if (mess.getType() > 0) {
+                            switch (mess.getType()) {
+                                case 1:
+                                case 2:
+                                case 3:
+                                    if(mess.getType()==1){
+                                        Chat chat1 = new Chat();
+                                        chat1.setConversation("Offic");
+                                        chat1.setState(0);
+                                        chat1.setSendsrc(mess.getData().getAsJsonObject("senderAvatarUrl").getAsString());
+                                        chat1.setTxt(mess.getData().getAsJsonObject("content").getAsString());
+                                        chat1.setData(mess.getSendTime());
+                                        chat1.setSendname(mess.getData().getAsJsonObject("senderName").getAsString());
+                                        chat1.setSendId(mess.getData().getAsJsonObject("sendId").getAsLong());
+                                        mChatDao.insert(chat1);
+                                        application.getOfficmess().add(chat1);
+                                    }else if(mess.getType()==3){
+                                        Chat chat3 = new Chat();
+                                        chat3.setConversation(topic);
+                                        chat3.setState(0);
+                                        chat3.setSendsrc(mess.getData().getAsJsonObject("senderAvatarUrl").getAsString());
+                                        chat3.setTxt(mess.getData().getAsJsonObject("content").getAsString());
+                                        chat3.setData(mess.getSendTime());
+                                        chat3.setSendname(mess.getData().getAsJsonObject("senderName").getAsString());
+                                        chat3.setSendId(mess.getData().getAsJsonObject("sendId").getAsLong());
+                                        mChatDao.insert(chat3);
+                                        application.getUsermess().add(chat3);
+                                        Observable<Integer> observable = Observable.defer(new Callable<ObservableSource<? extends Integer>>() {
+                                            @Override
+                                            public ObservableSource<? extends Integer> call() throws Exception {
+                                                return Observable.just(0);
+                                            }
+                                        });
+                                        observable.subscribe(chat.observerchat);
+                                    }
+
+                                    break;
+                            }
                         }
-                    });
-                    observable.subscribe(mqtttest.observer);
-                    sum++;
+
+                    }
+
 
                 }
 
@@ -106,7 +157,7 @@ public class MqttMessageService extends Service {
 
             // 新建连接设置
             mqttConnectOptions = new MqttConnectOptions();
-            mqttConnectOptions.setUserName(username);
+            mqttConnectOptions.setUserName(userid);
             mqttConnectOptions.setPassword(password.toCharArray());
             //断开后，是否自动连接
             mqttConnectOptions.setAutomaticReconnect(true);
@@ -164,7 +215,7 @@ public class MqttMessageService extends Service {
      */
     private static void subscribeAllTopics() {
         //订阅主消息主题和更新消息主题
-        subscribeToTopic(subTopic, 1);
+        subscribeToTopic(subTopic);
 
     }
 
@@ -174,13 +225,13 @@ public class MqttMessageService extends Service {
      *
      * @param subTopic 主题名称
      */
-    public static void subscribeToTopic(String subTopic, int qos) {
+    public static void subscribeToTopic(String subTopic) {
         try {
-            mqttAndroidClient.subscribe(subTopic, qos, null, new IMqttActionListener() {
+            mqttAndroidClient.subscribe(subTopic, 1, null, new IMqttActionListener() {
                 @Override
                 public void onSuccess(IMqttToken asyncActionToken) {
                     Log.i(TAG, "MQTT订阅消息成功：" + subTopic);
-                    bool=true;
+                    bool = true;
                 }
 
                 @Override
@@ -199,13 +250,12 @@ public class MqttMessageService extends Service {
      *
      * @param topic 主题
      * @param msg   内容
-     * @param qos   qos
      */
-    public static void publishMessage(String topic, String msg, int qos) {
+    public static void publishMessage(String topic, String msg) {
         if (mqttAndroidClient != null && mqttAndroidClient.isConnected()) {
             try {
                 Log.d(TAG, "publishMessage: 发送" + msg);
-                mqttAndroidClient.publish(topic, msg.getBytes(), qos, false);
+                mqttAndroidClient.publish(topic, msg.getBytes(), 1, false);
             } catch (Exception e) {
                 Log.e(TAG, "publishMessage: Error Publishing: " + e.getMessage());
                 e.printStackTrace();
@@ -214,7 +264,6 @@ public class MqttMessageService extends Service {
             Log.e(TAG, "publishMessage失败，MQTT未连接 ");
         }
     }
-
 
 
     /**

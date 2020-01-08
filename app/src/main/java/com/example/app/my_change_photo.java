@@ -117,9 +117,9 @@ public class my_change_photo extends AppCompatActivity {
     private void okgo() {
         MyApp application = ((MyApp) this.getApplicationContext());
         SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
-        // Long userid = sp.getLong("userid", 0);
-        Long userid = Long.valueOf("700647775");
-        OkGo.<String>post(application.getUrl()+"/app/user/changePhone?token="+application.getToken())
+        String userid = sp.getString("userid","");
+        String token = sp.getString("token","");
+        OkGo.<String>post(application.getUrl()+"/app/user/changePhone?token="+token)
                 .params("userId",userid)
                 .params("phone",editText4.getText().toString())
                 .execute(new StringCallback() {
