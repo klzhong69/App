@@ -1,10 +1,14 @@
 package com.example.app.MQ;
 
+import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.Service;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.IBinder;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Switch;
 
@@ -30,6 +34,7 @@ import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.Callable;
@@ -94,37 +99,39 @@ public class MqttMessageService extends Service {
 
                 @Override
                 public void messageArrived(String topic, MqttMessage message) {
+
                     if (!message.toString().equals("")) {
                         MyApp application = ((MyApp) context.getApplicationContext());
                         Gson gson = new Gson();
                         Mess mess = gson.fromJson(message.toString(), Mess.class);
                         if (mess.getType() > 0) {
-                            switch (mess.getType()) {
-                                case 1:
-                                case 2:
-                                case 3:
-                                    if(mess.getType()==1){
-                                        Chat chat1 = new Chat();
-                                        chat1.setConversation("Offic");
-                                        chat1.setState(0);
-                                        chat1.setSendsrc(mess.getData().getAsJsonObject("senderAvatarUrl").getAsString());
-                                        chat1.setTxt(mess.getData().getAsJsonObject("content").getAsString());
-                                        chat1.setData(mess.getSendTime());
-                                        chat1.setSendname(mess.getData().getAsJsonObject("senderName").getAsString());
-                                        chat1.setSendId(mess.getData().getAsJsonObject("sendId").getAsLong());
-                                        mChatDao.insert(chat1);
-                                        application.getOfficmess().add(chat1);
-                                    }else if(mess.getType()==3){
-                                        Chat chat3 = new Chat();
-                                        chat3.setConversation(topic);
-                                        chat3.setState(0);
-                                        chat3.setSendsrc(mess.getData().getAsJsonObject("senderAvatarUrl").getAsString());
-                                        chat3.setTxt(mess.getData().getAsJsonObject("content").getAsString());
-                                        chat3.setData(mess.getSendTime());
-                                        chat3.setSendname(mess.getData().getAsJsonObject("senderName").getAsString());
-                                        chat3.setSendId(mess.getData().getAsJsonObject("sendId").getAsLong());
-                                        mChatDao.insert(chat3);
-                                        application.getUsermess().add(chat3);
+                            if (mess.getType() == 1) {
+                                Chat chat1 = new Chat();
+                                chat1.setConversation("Offic");
+                                chat1.setState(0);
+                                chat1.setSendsrc(mess.getData().getAsJsonObject("senderAvatarUrl").getAsString());
+                                chat1.setTxt(mess.getData().getAsJsonObject("content").getAsString());
+                                chat1.setData(mess.getSendTime());
+                                chat1.setSendname(mess.getData().getAsJsonObject("senderName").getAsString());
+                                chat1.setSendId(mess.getData().getAsJsonObject("sendId").getAsLong());
+                                mChatDao.insert(chat1);
+                                List<Chat> offic = application.getOfficmess();
+                                offic.add(chat1);
+                                application.setOfficmess(offic);
+                            } else if (mess.getType() == 3) {
+                                Chat chat3 = new Chat();
+                                chat3.setConversation(topic);
+                                chat3.setState(0);
+                                chat3.setSendsrc(mess.getData().getAsJsonObject("senderAvatarUrl").getAsString());
+                                chat3.setTxt(mess.getData().getAsJsonObject("content").getAsString());
+                                chat3.setData(mess.getSendTime());
+                                chat3.setSendname(mess.getData().getAsJsonObject("senderName").getAsString());
+                                chat3.setSendId(mess.getData().getAsJsonObject("sendId").getAsLong());
+                                mChatDao.insert(chat3);
+
+                                if (chat.isForeground()) {
+                                    Log.i(TAG, "消息内容" + "/" + mess.getData());
+                                    if(chat.sendid == mess.getData().getAsJsonObject("sendId").getAsLong()){
                                         Observable<Integer> observable = Observable.defer(new Callable<ObservableSource<? extends Integer>>() {
                                             @Override
                                             public ObservableSource<? extends Integer> call() throws Exception {
@@ -134,8 +141,23 @@ public class MqttMessageService extends Service {
                                         observable.subscribe(chat.observerchat);
                                     }
 
-                                    break;
+                                } else {
+                                    List<Chat> user = application.getUsermess();
+                                    user.add(chat3);
+                                    application.setUsermess(user);
+                                    Log.i(TAG, "消息内容" + topic + "/" + mess.getData());
+                                    Observable<Integer> observables = Observable.defer(new Callable<ObservableSource<? extends Integer>>() {
+                                        @Override
+                                        public ObservableSource<? extends Integer> call() throws Exception {
+                                            return Observable.just(1);
+                                        }
+                                    });
+                                    observables.subscribe(MainActivity.observer);
+                                }
+
+
                             }
+
                         }
 
                     }
@@ -173,6 +195,7 @@ public class MqttMessageService extends Service {
             e.printStackTrace();
         }
     }
+
 
 
     /**

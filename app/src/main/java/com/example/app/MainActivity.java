@@ -36,6 +36,7 @@ import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.ashokvarma.bottomnavigation.TextBadgeItem;
 import com.example.app.Entity.MyApp;
 import com.example.app.MQ.MqttMessageService;
+import com.example.app.cofig.Initialization;
 import com.example.app.cofig.Mess;
 import com.lzf.easyfloat.EasyFloat;
 import com.lzf.easyfloat.anim.AppFloatDefaultAnimator;
@@ -100,10 +101,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
      */
     private boolean isNeedCheck = true;
     public static Observer<Integer> observer;
-    public static Observer<Mess> observers;
     private ArrayList<FragmentTouchListener> mFragmentTouchListeners = new ArrayList<>();
     private Map<String, String> map = new HashMap<String, String>();
     private int sum = 0;
+    private String userid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,29 +112,22 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         init();
-
-
+        Initialization.setupDatabaseChat(this);
+        Initialization.setupDatabaseConver(this);
 
         SharedPreferences sp = this.getSharedPreferences("User", Context.MODE_PRIVATE);
-        String userid = sp.getString("userid","");
+         userid = sp.getString("userid","");
         if(!userid.equals("")){
             MqttMessageService.create(this);
-            MyApp application = ((MyApp) this.getApplicationContext());
-            num = application.getOfficmess().size()+application.getUsermess().size();
-            setBadgeNum(num);
         }else{
             Intent intent1 = new Intent(MainActivity.this, login.class);
             intent1.putExtra("type", 0);
             startActivity(intent1);
             overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
         }
-
         setDefaultFragment();
 
     }
-
-
-
 
     private void init() {
         bottomNavigationBar = (BottomNavigationBar) findViewById(R.id.navbar1);
@@ -238,6 +232,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
         int id = intent.getIntExtra("id", 0);
         bottomNavigationBar.setFirstSelectedPosition(id).initialise();
         onTabSelected(id);
+
 
     }
 
@@ -427,6 +422,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
 
             @Override
             public void onNext(Integer integer) {
+                if(integer==1){
+                    MyApp application = ((MyApp) MainActivity.this.getApplicationContext());
+                    num = application.getOfficmess().size()+application.getUsermess().size();
+                    Log.i(TAG, "离线消息数量:" + num);
+                    setBadgeNum(num);
+                }
                 if (!EasyFloat.appFloatIsShow("testFloat")) {
                     checkPermission();
                 }
@@ -445,6 +446,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
 
 
         };
+
+
+
     }
 
 

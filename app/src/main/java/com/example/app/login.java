@@ -89,7 +89,7 @@ public class login extends AppCompatActivity {
         Initialization.setupDatabaseUser(this);
         title.setText("登陆");
         subtitle.setText("");
-        editText.setText("15913420136");
+        editText.setText("13562141841");
         editText4.setText("131721..");
 
         Intent intent = getIntent();
@@ -158,7 +158,9 @@ public class login extends AppCompatActivity {
                             String name = prexiew.getData().get("nickname").getAsString();
                             String userima = prexiew.getData().get("avatarUrl").getAsString();
                             String token = prexiew.getData().get("token").getAsString();
-
+                            String phone = prexiew.getData().get("phone").getAsString();
+                            String birthday = prexiew.getData().get("birthday").getAsString();
+                            String gender = prexiew.getData().get("gender").getAsString();
                             if(state==1){
                                 User user = new User();
                                 user.setName(name);
@@ -171,6 +173,11 @@ public class login extends AppCompatActivity {
                             SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
                             sp.edit().putString("userid", id).apply();
                             sp.edit().putString("token", token).apply();
+                            sp.edit().putString("phone", phone).apply();
+                            sp.edit().putString("nickname", name).apply();
+                            sp.edit().putString("gender", gender).apply();
+                            sp.edit().putString("birthday", birthday).apply();
+                            sp.edit().putString("avatarUrl", userima).apply();
                             Intent intent1 = new Intent(login.this, MainActivity.class);
                             intent1.putExtra("id", 4);
                             startActivity(intent1);

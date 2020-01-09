@@ -386,7 +386,7 @@
         android:layout_alignTop="@+id/imageView73"
         android:layout_marginStart="@dimen/dp_80"
         android:layout_toEndOf="@+id/imageView72"
-        app:srcCompat="@drawable/people" />
+        app:srcCompat="@drawable/peoples" />
 
     <TextView
         android:id="@+id/textView85"

@@ -63,6 +63,7 @@ public class Messages extends Fragment {
     private ArrayList<Message> mArrayList;
     private ArrayList<Message> mArrayLists;
     private Observer<Integer> observer;
+    private Context context;
 
 
     @Nullable
@@ -70,10 +71,9 @@ public class Messages extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.mess_message, container, false);
         unbinder = ButterKnife.bind(this, view);
-        Context context = getContext();
+        context = getContext();
         Initialization.setupDatabaseConver(getContext());
-        MessModel.initData(context);
-        MessModel.initrecycler(context, getActivity(), recycler10, 0);
+
 
         Window window = Objects.requireNonNull(getActivity()).getWindow();
         //21表示5.0
@@ -101,6 +101,14 @@ public class Messages extends Fragment {
         return view;
 
     }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        MessModel.initData(context);
+        MessModel.initrecycler(context, getActivity(), recycler10, 0);
+    }
+
     public int getStatusBarHeight() {
         int result = 0;
         int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");

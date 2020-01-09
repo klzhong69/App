@@ -86,6 +86,8 @@ public class modify_information extends AppCompatActivity {
     private int in;
     private String picturePath;
     private int mCurrentDialogStyle = com.qmuiteam.qmui.R.style.QMUI_Dialog;
+    private SharedPreferences sp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,6 +96,8 @@ public class modify_information extends AppCompatActivity {
         title.setText("修改信息");
         subtitle.setText("");
         init();
+
+        sp = getSharedPreferences("User", Context.MODE_PRIVATE);
 
         //创建适配器，将数据传递给适配器
         mAdapters = new ModifyViewAdapter(this, mData);
@@ -220,6 +224,7 @@ public class modify_information extends AppCompatActivity {
                         if (text != null && text.length() > 0) {
                             textView35.setText(text.toString());
                             okgo(text.toString());
+                            sp.edit().putString("nickname", text.toString()).apply();
                             dialog.dismiss();
                         } else {
                             Toast.makeText(modify_information.this, "请填入昵称", Toast.LENGTH_SHORT).show();
@@ -234,7 +239,7 @@ public class modify_information extends AppCompatActivity {
         SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
         String userid = sp.getString("userid","");
         String token = sp.getString("token","");
-        OkGo.<String>post(application.getUrl()+"/editUserInfoNickname?token="+token)
+        OkGo.<String>post(application.getUrl()+"/app/user/editNickname?token="+token)
                 .params("userId",userid)
                 .params("nickname",txt)
                 .execute(new StringCallback() {
@@ -293,7 +298,7 @@ public class modify_information extends AppCompatActivity {
         SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
         String userid = sp.getString("userid","");
         String token = sp.getString("token","");
-        OkGo.<String>post(application.getUrl()+"/editUserInfoNickname?token="+token)
+        OkGo.<String>post(application.getUrl()+"/app/user/editSignture?token="+token)
                 .params("userId",userid)
                 .params("signtureText",txt)
                 .execute(new StringCallback() {
@@ -372,7 +377,7 @@ public class modify_information extends AppCompatActivity {
         SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
         String userid = sp.getString("userid","");
         String token = sp.getString("token","");
-        String phone = "15913420136";
+        String phone = sp.getString("phone","");
         OkGo.<String>post(application.getUrl() + "/app/alioss/getUserUploadToken")
                 .params("phone",phone)
                 .execute(new StringCallback() {
@@ -392,12 +397,43 @@ public class modify_information extends AppCompatActivity {
                             if (!AccessKeyId.equals("")) {
                                 OSSSet.OSSClient(modify_information.this, AccessKeyId, AccessKeySecret, SecurityToken, region,bucket);
                                 OSSSet.Callback(bucket, phone+"/avatar.jpg", picturePath,userid);
+                                okgot(phone+"/avatar.jpg");
                             }
 
                         } else if (prexiew.getCode() == 40000) {
                             Toast.makeText(modify_information.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
                         }
 
+
+                    }
+                });
+
+    }
+
+    private void okgot(String txt) {
+        MyApp application = ((MyApp) this.getApplicationContext());
+        SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
+        String userid = sp.getString("userid","");
+        String token = sp.getString("token","");
+        OkGo.<String>post(application.getUrl()+"/app/user/editAvatar?token="+token)
+                .params("userId",userid)
+                .params("avatarUrl",txt)
+                .execute(new StringCallback() {
+
+                    @Override
+                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+
+                        Gson gson = new Gson();
+                        Preview prexiew = gson.fromJson(response.body(), Preview.class);
+
+                        if(prexiew.getCode()==0){
+
+                            Toast.makeText(modify_information.this, prexiew.getMsg()+"", Toast.LENGTH_SHORT).show();
+
+
+                        }else if(prexiew.getCode()==40000){
+                            Toast.makeText(modify_information.this, prexiew.getMsg()+"", Toast.LENGTH_SHORT).show();
+                        }
 
                     }
                 });

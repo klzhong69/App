@@ -160,7 +160,7 @@ public class information extends AppCompatActivity {
                 .params("nickname", editText.getText().toString())
                 .params("gender", sex)
                 .params("birthday", finalDate)
-                .params("avatarUrl", "https://momeak.oss-cn-shenzhen.aliyuncs.com/h3.jpg")
+                .params("avatarUrl", "https://momeak.oss-cn-shenzhen.aliyuncs.com/h1.jpg")
                 .execute(new StringCallback() {
 
                     @Override
@@ -172,12 +172,6 @@ public class information extends AppCompatActivity {
                         if (prexiew.getCode() == 0) {
                             Toast.makeText(information.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
                             Intent intent2 = new Intent(information.this, login.class);
-                            SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
-                            sp.edit().putString("phone", phone).apply();
-                            sp.edit().putString("nickname", editText.getText().toString()).apply();
-                            sp.edit().putString("gender", String.valueOf(sex)).apply();
-                            sp.edit().putString("birthday", finalDate).apply();
-                            sp.edit().putString("avatarUrl", "https://momeak.oss-cn-shenzhen.aliyuncs.com/h3.jpg").apply();
                             startActivity(intent2);
                         } else if (prexiew.getCode() == 40000) {
                             Toast.makeText(information.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();

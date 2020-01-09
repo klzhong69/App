@@ -41,12 +41,11 @@ public class MessModel {
         MyApp application = ((MyApp) context.getApplicationContext());
         try{
             if(application.getUsermess().size()>0){
-
+                System.out.println("大雨");
                 List<Conver> listall =  mConverDao.queryAll();
                 for(int i=0;i<mConverDao.queryAll().size();i++){
                     Conver conver = new Conver();
                     Conver convers = new Conver();
-                    Chat chat = new Chat();
                     int a=0;
                     int b=0;
                     for(int j=0;j<application.getUsermess().size();j++){
@@ -84,9 +83,9 @@ public class MessModel {
             }
 
             List<Conver> listalls = mConverDao.queryAll();
-
+            System.out.println("数量："+listalls.size());
             for(int i=0;i<listalls.size();i++){
-                Message i1 = new Message(listalls.get(i).getSendId(), listalls.get(i).getSendname(), listalls.get(i).getTxt(), listalls.get(i).getData().toString(), listalls.get(i).getSum(), listalls.get(i).getSendsrc(),"1");
+                Message i1 = new Message(listalls.get(i).getSendId(), listalls.get(i).getSendname(), listalls.get(i).getTxt(), DateUtil.stampToDates(String.valueOf((listalls.get(i).getData()*1000))), listalls.get(i).getSum(), listalls.get(i).getSendsrc(),"1");
                 mArrayList.add(i1);
 
             }
@@ -121,8 +120,7 @@ public class MessModel {
                     Intent intent2 = new Intent(context, chat.class);
                     intent2.putExtra("conver","user/"+mArrayList.get(position).getUserid());
                     intent2.putExtra("sendid",mArrayList.get(position).getUserid());
-                    intent2.putExtra("sendname","苗苗"+position);
-                    intent2.putExtra("sendsrc","https://momeak.oss-cn-shenzhen.aliyuncs.com/h2.jpg");
+                    intent2.putExtra("sendname",mArrayList.get(position).getName());
                     context.startActivity(intent2);
                     fragmentActivity.overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
                 }else{

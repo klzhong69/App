@@ -15,14 +15,23 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.app.Entity.MyApp;
+import com.example.app.MQ.MqttMessageService;
 import com.example.app.Model.HomePageModel;
+import com.example.app.Sqlentity.Chat;
+import com.example.app.Sqlentity.Conver;
+import com.example.app.cofig.Initialization;
 import com.example.app.cofig.Preview;
+import com.example.app.dao.mChatDao;
+import com.example.app.dao.mConverDao;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
+
+import java.io.File;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -144,6 +153,10 @@ public class homepage extends AppCompatActivity {
     @BindView(R.id.largeLabel)
     RelativeLayout largeLabel;
     private homepage context;
+    private Long followId;
+    public String userid;
+    private String nickname;
+    private String avatarUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -153,7 +166,13 @@ public class homepage extends AppCompatActivity {
         title.setText("个人主页");
         subtitle.setText("修改信息");
         context = this;
+        followId = 103542886L;
         initData();
+        Initialization.setupDatabaseChat(this);
+        Initialization.setupDatabaseConver(this);
+
+        SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
+        userid = sp.getString("userid","");
     }
 
 
@@ -165,7 +184,9 @@ public class homepage extends AppCompatActivity {
                 overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
                 break;
             case R.id.subtitle:
-
+                Intent intent = new Intent(homepage.this, modify_information.class);
+                startActivity(intent);
+                overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
                 break;
             case R.id.imageView34:
             case R.id.textView31:
@@ -173,10 +194,29 @@ public class homepage extends AppCompatActivity {
                 break;
             case R.id.imageView36:
             case R.id.textView32:
-                Intent intent1 = new Intent(this, chat.class);
-                //intent1.putExtra("sendname",mArrayList.get(position).getName());
-                // intent1.putExtra("sendsrc",mArrayList.get(position).getImagesrc());
-                startActivity(intent1);
+
+                if(mConverDao.query(followId).size()==0){
+                    SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
+                    String usersrc = sp.getString("avatarUrl","");
+                    String username = sp.getString("nickname","");
+                    long data =  System.currentTimeMillis()/1000;
+                    Conver convers = new Conver();
+                    convers.setSendsrc(avatarUrl);
+                    convers.setSendname(nickname);
+                    convers.setSendId(Long.valueOf(followId));
+                    convers.setData(data);
+                    convers.setSum(0);
+                    convers.setTxt("我是"+nickname);
+                    convers.setType(1);
+                    mConverDao.insert(convers);
+                    chat.send(userid,usersrc,username,followId,"我是"+nickname,"user/"+followId);
+                }
+
+                Intent intent2 = new Intent(context, chat.class);
+                intent2.putExtra("conver","user/"+followId);
+                intent2.putExtra("sendid",followId);
+                intent2.putExtra("sendname",nickname);
+                context.startActivity(intent2);
                 break;
             case R.id.imageView7:
 
@@ -190,9 +230,10 @@ public class homepage extends AppCompatActivity {
         SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
         String userid = sp.getString("userid","");
         String token = sp.getString("token","");
+        System.out.println(token);
         OkGo.<String>post(application.getUrl() + "/app/user/getInfo?token=" + token)
                 .params("userId", userid)
-                .params("followId", 0)
+                .params("followId", followId)
                 .execute(new StringCallback() {
 
                     @Override
@@ -200,11 +241,15 @@ public class homepage extends AppCompatActivity {
 
                         Gson gson = new Gson();
                         Preview prexiew = gson.fromJson(response.body(), Preview.class);
-                        JsonArray friend = prexiew.getData().getAsJsonArray("friend");
-                        JsonArray photo = prexiew.getData().getAsJsonArray("photo");
-                        JsonArray giftWall = prexiew.getData().getAsJsonArray("giftWall");
-                        JsonArray honor = prexiew.getData().getAsJsonArray("honor");
+
                         if (prexiew.getCode() == 0) {
+
+                            JsonArray friend = prexiew.getData().getAsJsonArray("friend");
+                            JsonArray photo = prexiew.getData().getAsJsonArray("photo");
+                            JsonArray giftWall = prexiew.getData().getAsJsonArray("giftWall");
+                            JsonArray honor = prexiew.getData().getAsJsonArray("honor");
+                            nickname = prexiew.getData().get("nickname").getAsString();
+                            avatarUrl = prexiew.getData().get("avatarUrl").getAsString();
 
                             textView2.setText(prexiew.getData().get("nickname").getAsString());
                             textView3.setText(prexiew.getData().get("userId").getAsString());

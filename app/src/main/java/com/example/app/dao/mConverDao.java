@@ -1,9 +1,7 @@
 package com.example.app.dao;
 
-import com.example.app.Sqlentity.Chat;
 import com.example.app.Sqlentity.Conver;
 import com.example.app.cofig.Initialization;
-import com.example.app.gen.ChatDao;
 import com.example.app.gen.ConverDao;
 
 import java.util.List;

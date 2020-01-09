@@ -13,14 +13,23 @@ public class Mess {
         return type;
     }
 
+    public void setType(int type) {
+        this.type = type;
+    }
+
     public Long getSendTime() {
         return sendTime;
     }
 
+    public void setSendTime(Long sendTime) {
+        this.sendTime = sendTime;
+    }
 
     public JsonObject getData() {
         return data;
     }
 
-
+    public void setData(JsonObject data) {
+        this.data = data;
+    }
 }
