@@ -194,11 +194,12 @@ public class homepage extends AppCompatActivity {
                 break;
             case R.id.imageView36:
             case R.id.textView32:
+                SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
+                String userid = sp.getString("userid","");
+                String usersrc = sp.getString("avatarUrl","");
+                String username = sp.getString("nickname","");
+                if(mConverDao.query(followId, Long.valueOf(userid)).size()==0){
 
-                if(mConverDao.query(followId).size()==0){
-                    SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
-                    String usersrc = sp.getString("avatarUrl","");
-                    String username = sp.getString("nickname","");
                     long data =  System.currentTimeMillis()/1000;
                     Conver convers = new Conver();
                     convers.setSendsrc(avatarUrl);

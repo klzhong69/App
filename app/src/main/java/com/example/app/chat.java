@@ -86,6 +86,9 @@ public class chat extends AppCompatActivity {
     public static Observer<Integer> observerchat;
     private int a =0;
     private static Context context;
+    private String userid;
+    private String avatarUrl;
+    private String nickname;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,6 +122,11 @@ public class chat extends AppCompatActivity {
             }
         });
 
+        SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
+         userid = sp.getString("userid", "");
+         avatarUrl = sp.getString("avatarUrl", "");
+         nickname = sp.getString("nickname", "");
+
         ChatModel.initData(conver,0,10);
         ChatModel.initrecycler(this, recycler);
 
@@ -130,7 +138,7 @@ public class chat extends AppCompatActivity {
 
         }
 
-        List<Conver> list =  mConverDao.query(sendid);
+        List<Conver> list =  mConverDao.query(sendid, Long.valueOf(userid));
         if(list.size()>0){
             if(list.get(0).getSum() !=0){
                 list.get(0).setSum(0);
@@ -227,10 +235,7 @@ public class chat extends AppCompatActivity {
             case R.id.but:
                 if (!editText.getText().toString().equals("")) {
 
-                    SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
-                    String userid = sp.getString("userid", "");
-                    String avatarUrl = sp.getString("avatarUrl", "");
-                    String nickname = sp.getString("nickname", "");
+
 
                     String time = DateUtil.getCurrentTimeYMDHMS();
                     String txt = editText.getText().toString();
@@ -260,13 +265,14 @@ public class chat extends AppCompatActivity {
         Chat chat = new Chat();
         chat.setConversation(conver);
         chat.setData(data);
+        chat.setUserId(Long.valueOf(userid));
         chat.setSendId(Long.valueOf(userid));
         chat.setSendsrc(avatarUrl);
         chat.setTxt(txt);
         chat.setState(1);
         mChatDao.insert(chat);
 
-        List<Conver> list = mConverDao.query(sendid);
+        List<Conver> list = mConverDao.query(sendid, Long.valueOf(userid));
         if(list.size()>0){
             Conver convers = list.get(0);
             convers.setData(data);

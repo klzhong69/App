@@ -18,6 +18,8 @@ public class Chat {
 
     private String conversation;//会话
 
+    private Long userId;//接收人员编号
+
     private Long sendId;//发送人员编号
 
     private String sendname;//发送人员编号
@@ -31,11 +33,12 @@ public class Chat {
 
     private int state;//状态
 
-    @Generated(hash = 1286426264)
-    public Chat(Long id, String conversation, Long sendId, String sendname,
-            String sendsrc, Long data, String txt, int state) {
+    @Generated(hash = 926689697)
+    public Chat(Long id, String conversation, Long userId, Long sendId,
+            String sendname, String sendsrc, Long data, String txt, int state) {
         this.id = id;
         this.conversation = conversation;
+        this.userId = userId;
         this.sendId = sendId;
         this.sendname = sendname;
         this.sendsrc = sendsrc;
@@ -62,6 +65,14 @@ public class Chat {
 
     public void setConversation(String conversation) {
         this.conversation = conversation;
+    }
+
+    public Long getUserId() {
+        return this.userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public Long getSendId() {
@@ -112,6 +123,7 @@ public class Chat {
         this.state = state;
     }
 
+  
   
     
     

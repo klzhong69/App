@@ -40,16 +40,16 @@ public class mChatDao {
      *
      * @return
      */
-    public static List<Chat> query(String conver) {
-        return Initialization.getDaoInstantChat().getChatDao().queryBuilder().where(ChatDao.Properties.Conversation.eq(conver)).list();
+    public static List<Chat> query(String conver,Long userid) {
+        return Initialization.getDaoInstantChat().getChatDao().queryBuilder().where(ChatDao.Properties.Conversation.eq(conver)).where(ChatDao.Properties.UserId.eq(userid)).list();
     }
 
 
     /**
      * 查询全部数据
      */
-    public static List<Chat> queryAll() {
-        return Initialization.getDaoInstantChat().getChatDao().loadAll();
+    public static List<Chat> queryAll(Long id) {
+        return Initialization.getDaoInstantChat().getChatDao().queryBuilder().where(ChatDao.Properties.UserId.eq(id)).list();
     }
 
     /**

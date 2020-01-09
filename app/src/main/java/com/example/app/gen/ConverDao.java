@@ -26,12 +26,13 @@ public class ConverDao extends AbstractDao<Conver, Long> {
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property SendId = new Property(1, Long.class, "sendId", false, "SEND_ID");
-        public final static Property Sendname = new Property(2, String.class, "sendname", false, "SENDNAME");
-        public final static Property Sendsrc = new Property(3, String.class, "sendsrc", false, "SENDSRC");
-        public final static Property Type = new Property(4, int.class, "type", false, "TYPE");
-        public final static Property Data = new Property(5, Long.class, "data", false, "DATA");
-        public final static Property Txt = new Property(6, String.class, "txt", false, "TXT");
-        public final static Property Sum = new Property(7, int.class, "sum", false, "SUM");
+        public final static Property UserId = new Property(2, Long.class, "userId", false, "USER_ID");
+        public final static Property Sendname = new Property(3, String.class, "sendname", false, "SENDNAME");
+        public final static Property Sendsrc = new Property(4, String.class, "sendsrc", false, "SENDSRC");
+        public final static Property Type = new Property(5, int.class, "type", false, "TYPE");
+        public final static Property Data = new Property(6, Long.class, "data", false, "DATA");
+        public final static Property Txt = new Property(7, String.class, "txt", false, "TXT");
+        public final static Property Sum = new Property(8, int.class, "sum", false, "SUM");
     }
 
 
@@ -49,12 +50,13 @@ public class ConverDao extends AbstractDao<Conver, Long> {
         db.execSQL("CREATE TABLE " + constraint + "\"CONVER\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
                 "\"SEND_ID\" INTEGER," + // 1: sendId
-                "\"SENDNAME\" TEXT," + // 2: sendname
-                "\"SENDSRC\" TEXT," + // 3: sendsrc
-                "\"TYPE\" INTEGER NOT NULL ," + // 4: type
-                "\"DATA\" INTEGER," + // 5: data
-                "\"TXT\" TEXT," + // 6: txt
-                "\"SUM\" INTEGER NOT NULL );"); // 7: sum
+                "\"USER_ID\" INTEGER," + // 2: userId
+                "\"SENDNAME\" TEXT," + // 3: sendname
+                "\"SENDSRC\" TEXT," + // 4: sendsrc
+                "\"TYPE\" INTEGER NOT NULL ," + // 5: type
+                "\"DATA\" INTEGER," + // 6: data
+                "\"TXT\" TEXT," + // 7: txt
+                "\"SUM\" INTEGER NOT NULL );"); // 8: sum
         // Add Indexes
         db.execSQL("CREATE UNIQUE INDEX " + constraint + "IDX_CONVER_SEND_ID ON \"CONVER\"" +
                 " (\"SEND_ID\" ASC);");
@@ -80,27 +82,32 @@ public class ConverDao extends AbstractDao<Conver, Long> {
             stmt.bindLong(2, sendId);
         }
  
+        Long userId = entity.getUserId();
+        if (userId != null) {
+            stmt.bindLong(3, userId);
+        }
+ 
         String sendname = entity.getSendname();
         if (sendname != null) {
-            stmt.bindString(3, sendname);
+            stmt.bindString(4, sendname);
         }
  
         String sendsrc = entity.getSendsrc();
         if (sendsrc != null) {
-            stmt.bindString(4, sendsrc);
+            stmt.bindString(5, sendsrc);
         }
-        stmt.bindLong(5, entity.getType());
+        stmt.bindLong(6, entity.getType());
  
         Long data = entity.getData();
         if (data != null) {
-            stmt.bindLong(6, data);
+            stmt.bindLong(7, data);
         }
  
         String txt = entity.getTxt();
         if (txt != null) {
-            stmt.bindString(7, txt);
+            stmt.bindString(8, txt);
         }
-        stmt.bindLong(8, entity.getSum());
+        stmt.bindLong(9, entity.getSum());
     }
 
     @Override
@@ -117,27 +124,32 @@ public class ConverDao extends AbstractDao<Conver, Long> {
             stmt.bindLong(2, sendId);
         }
  
+        Long userId = entity.getUserId();
+        if (userId != null) {
+            stmt.bindLong(3, userId);
+        }
+ 
         String sendname = entity.getSendname();
         if (sendname != null) {
-            stmt.bindString(3, sendname);
+            stmt.bindString(4, sendname);
         }
  
         String sendsrc = entity.getSendsrc();
         if (sendsrc != null) {
-            stmt.bindString(4, sendsrc);
+            stmt.bindString(5, sendsrc);
         }
-        stmt.bindLong(5, entity.getType());
+        stmt.bindLong(6, entity.getType());
  
         Long data = entity.getData();
         if (data != null) {
-            stmt.bindLong(6, data);
+            stmt.bindLong(7, data);
         }
  
         String txt = entity.getTxt();
         if (txt != null) {
-            stmt.bindString(7, txt);
+            stmt.bindString(8, txt);
         }
-        stmt.bindLong(8, entity.getSum());
+        stmt.bindLong(9, entity.getSum());
     }
 
     @Override
@@ -150,12 +162,13 @@ public class ConverDao extends AbstractDao<Conver, Long> {
         Conver entity = new Conver( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1), // sendId
-            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // sendname
-            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // sendsrc
-            cursor.getInt(offset + 4), // type
-            cursor.isNull(offset + 5) ? null : cursor.getLong(offset + 5), // data
-            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // txt
-            cursor.getInt(offset + 7) // sum
+            cursor.isNull(offset + 2) ? null : cursor.getLong(offset + 2), // userId
+            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // sendname
+            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // sendsrc
+            cursor.getInt(offset + 5), // type
+            cursor.isNull(offset + 6) ? null : cursor.getLong(offset + 6), // data
+            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // txt
+            cursor.getInt(offset + 8) // sum
         );
         return entity;
     }
@@ -164,12 +177,13 @@ public class ConverDao extends AbstractDao<Conver, Long> {
     public void readEntity(Cursor cursor, Conver entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setSendId(cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1));
-        entity.setSendname(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
-        entity.setSendsrc(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
-        entity.setType(cursor.getInt(offset + 4));
-        entity.setData(cursor.isNull(offset + 5) ? null : cursor.getLong(offset + 5));
-        entity.setTxt(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
-        entity.setSum(cursor.getInt(offset + 7));
+        entity.setUserId(cursor.isNull(offset + 2) ? null : cursor.getLong(offset + 2));
+        entity.setSendname(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
+        entity.setSendsrc(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
+        entity.setType(cursor.getInt(offset + 5));
+        entity.setData(cursor.isNull(offset + 6) ? null : cursor.getLong(offset + 6));
+        entity.setTxt(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
+        entity.setSum(cursor.getInt(offset + 8));
      }
     
     @Override

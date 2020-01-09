@@ -3,6 +3,7 @@ package com.example.app.Model;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.View;
 import android.widget.Toast;
 
@@ -38,12 +39,14 @@ public class MessModel {
 
     public static void initData(Context context) {
         mArrayList = new ArrayList<Message>();
+        SharedPreferences sp = context.getSharedPreferences("User", Context.MODE_PRIVATE);
+        String userid = sp.getString("userid", "");
         MyApp application = ((MyApp) context.getApplicationContext());
         try{
             if(application.getUsermess().size()>0){
                 System.out.println("大雨");
-                List<Conver> listall =  mConverDao.queryAll();
-                for(int i=0;i<mConverDao.queryAll().size();i++){
+                List<Conver> listall =  mConverDao.queryAll(Long.valueOf(userid));
+                for(int i = 0; i<mConverDao.queryAll(Long.valueOf(userid)).size(); i++){
                     Conver conver = new Conver();
                     Conver convers = new Conver();
                     int a=0;
@@ -56,6 +59,7 @@ public class MessModel {
                             conver.setSendId(application.getUsermess().get(j).getSendId());
                             conver.setData(application.getUsermess().get(j).getData());
                             conver.setSum(a);
+                            conver.setUserId(Long.valueOf(userid));
                             conver.setTxt(application.getUsermess().get(j).getTxt());
                             conver.setType(1);
                         }else{
@@ -65,6 +69,7 @@ public class MessModel {
                             convers.setSendId(application.getUsermess().get(j).getSendId());
                             convers.setData(application.getUsermess().get(j).getData());
                             convers.setSum(b);
+                            convers.setUserId(Long.valueOf(userid));
                             convers.setTxt(application.getUsermess().get(j).getTxt());
                             convers.setType(1);
                         }
@@ -82,7 +87,7 @@ public class MessModel {
 
             }
 
-            List<Conver> listalls = mConverDao.queryAll();
+            List<Conver> listalls = mConverDao.queryAll(Long.valueOf(userid));
             System.out.println("数量："+listalls.size());
             for(int i=0;i<listalls.size();i++){
                 Message i1 = new Message(listalls.get(i).getSendId(), listalls.get(i).getSendname(), listalls.get(i).getTxt(), DateUtil.stampToDates(String.valueOf((listalls.get(i).getData()*1000))), listalls.get(i).getSum(), listalls.get(i).getSendsrc(),"1");

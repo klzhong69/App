@@ -230,7 +230,7 @@ public class Home extends Fragment {
             public void run() {
                 int width = views.getWidth();
                 int height = getStatusBarHeight();
-
+               // System.out.println("系统栏高度："+height);
                 views.setLayoutParams(new ConstraintLayout.LayoutParams(width, height));
             }
         });

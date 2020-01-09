@@ -14,7 +14,9 @@ public class Conver {
     @Index(unique = true)//设置唯一性
     private Long sendId;//发送人员编号
 
-    private String sendname;//接受人员姓名
+    private Long userId;//接收人员编号
+
+    private String sendname;//发送人员姓名
 
     private String sendsrc;//发送人员头像
 
@@ -26,11 +28,12 @@ public class Conver {
 
     private int sum;//未读数量
 
-    @Generated(hash = 2008604360)
-    public Conver(Long id, Long sendId, String sendname, String sendsrc, int type,
-            Long data, String txt, int sum) {
+    @Generated(hash = 1846104937)
+    public Conver(Long id, Long sendId, Long userId, String sendname,
+            String sendsrc, int type, Long data, String txt, int sum) {
         this.id = id;
         this.sendId = sendId;
+        this.userId = userId;
         this.sendname = sendname;
         this.sendsrc = sendsrc;
         this.type = type;
@@ -57,6 +60,14 @@ public class Conver {
 
     public void setSendId(Long sendId) {
         this.sendId = sendId;
+    }
+
+    public Long getUserId() {
+        return this.userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public String getSendname() {
@@ -106,6 +117,8 @@ public class Conver {
     public void setSum(int sum) {
         this.sum = sum;
     }
+
+
 
 
     
