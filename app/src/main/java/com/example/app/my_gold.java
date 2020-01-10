@@ -18,8 +18,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.app.Adapter.GoldViewAdapter;
 import com.example.app.Adapter.HoldpeopleAdapter;
+import com.example.app.Entity.MyApp;
 import com.example.app.Entity.Mygold;
 import com.example.app.Entity.Theme;
+import com.example.app.cofig.Preview;
+import com.google.gson.Gson;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 

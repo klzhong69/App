@@ -60,9 +60,9 @@ public class registered extends AppCompatActivity {
         ButterKnife.bind(this);
         title.setText("立即注册");
         subtitle.setText("");
-        editText4.setText("15913420136");
+        editText4.setText("");
         editText5.setText("7364");
-        editText.setText("131721..");
+        editText.setText("");
     }
 
     @OnClick({R.id.fold, R.id.textView150, R.id.but, R.id.textView159})

@@ -77,9 +77,15 @@ import io.agora.rtc.Constants;
 import io.agora.rtc.IRtcEngineEventHandler;
 import io.agora.rtc.RtcEngine;
 import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.ObservableSource;
 import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
+import rx.functions.Action1;
 
 public class chatroom extends AppCompatActivity {
 
@@ -374,7 +380,6 @@ public class chatroom extends AppCompatActivity {
     RelativeLayout recyclerbutc11s;
     @BindView(R.id.component11)
     RelativeLayout component11;
-    private Disposable disposable;
     private chatroom context;
     public static Observer<Integer> observer;
     public static Observer<Integer> observerchat;
@@ -520,6 +525,7 @@ public class chatroom extends AppCompatActivity {
 
     };
     private Window window;
+    private QMUIBottomSheet.BottomListSheetBuilder builder;
 
 
     private int getUserIndex(Long uid) {
@@ -706,14 +712,6 @@ public class chatroom extends AppCompatActivity {
     }
 
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (disposable != null && !disposable.isDisposed()) {
-            disposable.dispose();
-            disposable = null;
-        }
-    }
 
     @OnClick({R.id.fold, R.id.imageView98, R.id.imageView101, R.id.imageView102, R.id.imageView103, R.id.imageView99, R.id.textView124, R.id.imageView104, R.id.imageView105, R.id.textViewc3s, R.id.textViewc7t, R.id.butc1, R.id.butc11, R.id.imageView4, R.id.imageViewc1t, R.id.imageViewc2t, R.id.imageViewc5s, R.id.recyclerbutc1, R.id.recyclerbutc2, R.id.recyclerbutc3, R.id.recyclerbutc4, R.id.recyclerbutc5, R.id.recyclerbutc7, R.id.recyclerbutc8, R.id.recyclerbutc8s, R.id.recyclerbutc9, R.id.recyclerbutc11, R.id.recyclerbutc11s, R.id.imageViewc1, R.id.imageViewc2, R.id.imageViewc3, R.id.imageViewc4, R.id.imageViewc5, R.id.imageViewc7, R.id.recyclerc8, R.id.imageViewc9, R.id.recyclerc11, R.id.relativec1, R.id.relativec2, R.id.relativec3, R.id.relativec4, R.id.relativec5, R.id.relativec7, R.id.relativec9})
     public void onViewClicked(View view) {
@@ -949,6 +947,10 @@ public class chatroom extends AppCompatActivity {
             public void onNext(Integer integer) {
                 switch (integer) {
                     case 0:
+                        if (mRtcEngine != null) {
+                            mRtcEngine.leaveChannel();
+                        }
+                        RtcEngine.destroy();
                         chatroom.this.finish();
                         break;
                     case 1:
@@ -967,18 +969,18 @@ public class chatroom extends AppCompatActivity {
                         sendname = "苗苗";
                         sendsrc = "https://momeak.oss-cn-shenzhen.aliyuncs.com/h2.jpg";
                         textViewc1.setText(sendname);
-                        ChatModel.initData(conver,0L,0,10);
+                        ChatModel.initData(conver, 0L, 0, 10);
                         ChatModel.initrecycler(chatroom.this, recyclerc1);
                         KeyboardStateObserver.getKeyboardStateObserver(chatroom.this).
                                 setKeyboardVisibilityListener(new KeyboardStateObserver.OnKeyboardVisibilityListener() {
                                     @Override
                                     public void onKeyboardShow() {
-                                        ChatModel.recly(recyclerc1,0);
+                                        ChatModel.recly(recyclerc1, 0);
                                     }
 
                                     @Override
                                     public void onKeyboardHide() {
-                                        ChatModel.recly(recyclerc1,0);
+                                        ChatModel.recly(recyclerc1, 0);
                                     }
                                 });
                         break;
@@ -1186,7 +1188,7 @@ public class chatroom extends AppCompatActivity {
                                            int itemCount,
                                            boolean allowDragDismiss,
                                            boolean withMark) {
-        QMUIBottomSheet.BottomListSheetBuilder builder = new QMUIBottomSheet.BottomListSheetBuilder(this);
+        builder = new QMUIBottomSheet.BottomListSheetBuilder(this);
         builder.setGravityCenter(gravityCenter)
                 .setTitle(title)
                 .setAddCancelBtn(addCancelBtn)
@@ -1197,11 +1199,13 @@ public class chatroom extends AppCompatActivity {
                     public void onClick(QMUIBottomSheet dialog, View itemView, int position, String tag) {
                         dialog.dismiss();
                         if (position == 0) {
-                            if (mRtcEngine != null) {
-                                mRtcEngine.leaveChannel();
-                                RtcEngine.destroy();
-                            }
-                            chatroom.this.finish();
+                            Observable<Integer> observable = Observable.defer(new Callable<ObservableSource<? extends Integer>>() {
+                                @Override
+                                public ObservableSource<? extends Integer> call() throws Exception {
+                                    return Observable.just(0);
+                                }
+                            });
+                            observable.subscribe(chatroom.observer);
                         } else {
                             moveTaskToBack(true);
                             Observable<Integer> observable = Observable.defer(new Callable<ObservableSource<? extends Integer>>() {
@@ -1223,6 +1227,7 @@ public class chatroom extends AppCompatActivity {
         builder.addItem("悬浮窗模式");
         builder.build().show();
     }
+
 
     //分享弹窗
     private void showSimpleBottomSheetGrid() {

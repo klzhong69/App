@@ -22,8 +22,10 @@ import com.example.app.chatroom;
 import com.example.app.cofig.Mess;
 import com.example.app.cofig.Preview;
 import com.example.app.dao.mChatDao;
+import com.example.app.find_make;
 import com.example.app.mqtttest;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import org.eclipse.paho.android.service.MqttAndroidClient;
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
@@ -101,6 +103,7 @@ public class MqttMessageService extends Service {
                 public void messageArrived(String topic, MqttMessage message) {
                     SharedPreferences sp = context.getSharedPreferences("User", Context.MODE_PRIVATE);
                     String userid = sp.getString("userid","");
+                    System.out.println("消息"+message.toString());
                     if (!message.toString().equals("")) {
                         MyApp application = ((MyApp) context.getApplicationContext());
                         Gson gson = new Gson();
@@ -155,10 +158,15 @@ public class MqttMessageService extends Service {
                                         observable.subscribe(chat.observerchat);
                                     }
                                 }
-
-
-
-
+                                break;
+                            case 4:
+                                Observable<JsonObject> observable4 = Observable.defer(new Callable<ObservableSource<? extends JsonObject>>() {
+                                    @Override
+                                    public ObservableSource<? extends JsonObject> call() throws Exception {
+                                        return Observable.just(mess.getData());
+                                    }
+                                });
+                                observable4.subscribe(find_make.observer);
                                 break;
                         }
                     }
@@ -241,6 +249,7 @@ public class MqttMessageService extends Service {
         //订阅主消息主题和更新消息主题
         subscribeToTopic(subTopic);
         subscribeToTopic("office");
+        subscribeToTopic("broadcast");
     }
 
 

@@ -93,7 +93,7 @@ dependencies {
 
     implementation 'cn.yc:WebViewLib:1.2.0'//webview库
 
-    implementation 'com.yanzhenjie.recyclerview:support:1.3.2'//侧滑
+    implementation 'com.github.limxing:LFRecyclerView-Android:1.0.5'//RecyclerView刷新
 
 
     //必须使用
@@ -124,6 +124,7 @@ dependencies {
 
     implementation 'com.skyfishjy.ripplebackground:library:1.0.1'//波纹控制
 
+    implementation 'com.github.zackratos.ultimatebar:ultimatebar3:3.1.1'//沉浸式
 
 }
 

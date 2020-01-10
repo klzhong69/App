@@ -230,7 +230,7 @@ public class Home extends Fragment {
             public void run() {
                 int width = views.getWidth();
                 int height = getStatusBarHeight();
-               // System.out.println("系统栏高度："+height);
+                // System.out.println("系统栏高度："+height);
                 views.setLayoutParams(new ConstraintLayout.LayoutParams(width, height));
             }
         });
@@ -324,7 +324,7 @@ public class Home extends Fragment {
 
     }
 
-    @OnClick({R.id.imageView149,R.id.relative12,R.id.relative13, R.id.imageView152, R.id.imageView153, R.id.imageView154})
+    @OnClick({R.id.imageView149, R.id.relative12, R.id.relative13, R.id.imageView152, R.id.imageView153, R.id.imageView154})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.imageView149:

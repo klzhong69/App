@@ -31,12 +31,12 @@
             android:id="@+id/textView66"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/imageView66"
-            android:layout_alignBottom="@+id/imageView66"
-            android:layout_marginStart="@dimen/dp_10"
-            android:layout_toEndOf="@+id/imageView66"
-            android:text="胡楠健身"
+            android:layout_alignTop="@+id/imageView18"
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginTop="4dp"
+            android:layout_toEndOf="@+id/imageView18"
             android:gravity="center"
+            android:text="胡楠健身"
             android:textSize="@dimen/sp_20" />
 
         <ImageView
@@ -44,17 +44,18 @@
             android:layout_width="@dimen/dp_40"
             android:layout_height="@dimen/dp_30"
             android:layout_alignTop="@+id/imageView18"
-            android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginStart="@dimen/dp_10"
             android:layout_marginTop="@dimen/dp_5"
-            android:layout_toEndOf="@+id/imageView18"
+            android:layout_toEndOf="@+id/textView66"
             app:srcCompat="@drawable/l3" />
 
         <TextView
             android:id="@+id/textView114"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/imageView66"
+            android:layout_alignStart="@+id/textView66"
             android:layout_alignBottom="@+id/imageView18"
+            android:layout_marginStart="0dp"
             android:layout_marginBottom="@dimen/dp_5"
             android:gravity="center_vertical"
             android:text="我是哒哒哒" />

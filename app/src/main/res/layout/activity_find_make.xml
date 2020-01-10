@@ -1,91 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.scwang.smart.refresh.layout.SmartRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/refreshLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".find_make">
-
-    <include
-        android:id="@+id/include"
-        layout="@layout/head"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/dp_80"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:fillViewport="true"
-        app:layout_constraintBottom_toTopOf="@+id/relativeLayout11"
-        app:layout_constraintTop_toBottomOf="@+id/include">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler15"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </androidx.core.widget.NestedScrollView>
-
+    android:layout_height="match_parent">
 
     <RelativeLayout
-        android:id="@+id/relativeLayout11"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_80"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:background="#ffffff">
+        android:layout_height="match_parent">
 
-
-        <EditText
-            android:id="@+id/editText"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+        <include
+            android:id="@+id/include"
+            layout="@layout/head"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_80"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="@dimen/dp_20"
-            android:layout_marginTop="@dimen/dp_15"
-            android:layout_marginEnd="@dimen/dp_20"
-            android:layout_marginBottom="@dimen/dp_15"
-            android:layout_toStartOf="@+id/but"
-            android:background="@drawable/rounded"
-            android:gravity="center_vertical"
-            android:hint="请文明发言以防禁言"
-            android:imeOptions="actionSend"
-            android:inputType="textMultiLine"
-            android:minLines="1"
-            android:paddingStart="@dimen/dp_20"
-            android:paddingTop="@dimen/dp_10"
-            android:paddingEnd="@dimen/dp_20"
-            android:paddingBottom="@dimen/dp_10"
-            android:textColorHint="#66000000"
-            android:textSize="@dimen/sp_20" />
+            android:layout_alignParentEnd="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
-            android:id="@+id/but"
-            android:layout_width="@dimen/dp_60"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_above="@+id/relativeLayout11"
+            android:layout_below="@+id/include"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginBottom="0dp"
+            android:fillViewport="true"
+            app:layout_constraintBottom_toTopOf="@+id/relativeLayout11"
+            app:layout_constraintTop_toBottomOf="@+id/include">
+
+            <me.leefeng.lfrecyclerview.LFRecyclerView
+                android:id="@+id/recycler15"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </androidx.core.widget.NestedScrollView>
+
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout11"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_80"
+            android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginTop="@dimen/dp_20"
-            android:layout_marginEnd="@dimen/dp_20"
-            android:layout_marginBottom="@dimen/dp_20"
-            android:gravity="center"
-            android:padding="@dimen/dp_5"
-            android:text="发送"
-            android:textColor="@color/qmui_config_color_white"
-            app:qmui_backgroundColor="@color/tabbarcolor"
-            app:qmui_borderWidth="0px"
-            app:qmui_radius="@dimen/dp_10" />
+            android:layout_gravity="bottom"
+            android:background="#ffffff"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
+
+            <EditText
+                android:id="@+id/editText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="@dimen/dp_20"
+                android:layout_marginTop="@dimen/dp_15"
+                android:layout_marginEnd="@dimen/dp_20"
+                android:layout_marginBottom="@dimen/dp_15"
+                android:layout_toStartOf="@+id/but"
+                android:background="@drawable/rounded"
+                android:gravity="center_vertical"
+                android:hint="请文明发言以防禁言"
+                android:imeOptions="actionSend"
+                android:inputType="textMultiLine"
+                android:minLines="1"
+                android:paddingStart="@dimen/dp_20"
+                android:paddingTop="@dimen/dp_10"
+                android:paddingEnd="@dimen/dp_20"
+                android:paddingBottom="@dimen/dp_10"
+                android:textColorHint="#66000000"
+                android:textSize="@dimen/sp_20" />
+
+            <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
+                android:id="@+id/but"
+                android:layout_width="@dimen/dp_60"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="@dimen/dp_20"
+                android:layout_marginEnd="@dimen/dp_20"
+                android:layout_marginBottom="@dimen/dp_20"
+                android:gravity="center"
+                android:padding="@dimen/dp_5"
+                android:text="发送"
+                android:textColor="@color/qmui_config_color_white"
+                app:qmui_backgroundColor="@color/tabbarcolor"
+                app:qmui_borderWidth="0px"
+                app:qmui_radius="@dimen/dp_10" />
+
+
+        </RelativeLayout>
 
     </RelativeLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.scwang.smart.refresh.layout.SmartRefreshLayout>

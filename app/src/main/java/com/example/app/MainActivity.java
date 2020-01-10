@@ -40,6 +40,7 @@ import com.example.app.Sqlentity.Conver;
 import com.example.app.cofig.Initialization;
 import com.example.app.cofig.Mess;
 import com.example.app.dao.mConverDao;
+import com.github.zackratos.ultimatebar.UltimateBar;
 import com.lzf.easyfloat.EasyFloat;
 import com.lzf.easyfloat.anim.AppFloatDefaultAnimator;
 import com.lzf.easyfloat.anim.DefaultAnimator;
@@ -220,8 +221,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();
         home = Home.newInstance();
+
         transaction.replace(R.id.layout1, home);
         transaction.commit();
+        setBadgeNum(num);
 
     }
 
@@ -335,7 +338,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
                 if (home == null) {
                     home = Home.newInstance();
                 }
+
                 transaction.replace(R.id.layout1, home);
+
                 setBadgeNum(num);
                 break;
             case 1:

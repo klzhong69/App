@@ -220,8 +220,6 @@ public class List extends Fragment {
     }
 
     private void initData(JsonArray jsonArray) {
-        SharedPreferences sp = Objects.requireNonNull(getContext()).getSharedPreferences("User", Context.MODE_PRIVATE);
-        // Long userid = sp.getLong("userid", 0);
         Long userid = Long.valueOf("923883237");
         if (rankListCategory == 1) {
             textView93.setText("财富值");
