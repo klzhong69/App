@@ -41,7 +41,7 @@ public class mChatDao {
      * @return
      */
     public static List<Chat> query(String conver,Long userid) {
-        return Initialization.getDaoInstantChat().getChatDao().queryBuilder().where(ChatDao.Properties.Conversation.eq(conver)).where(ChatDao.Properties.UserId.eq(userid)).list();
+        return Initialization.getDaoInstantChat().getChatDao().queryBuilder().where(ChatDao.Properties.Conversation.eq(conver),ChatDao.Properties.UserId.eq(userid)).list();
     }
 
 
@@ -55,9 +55,9 @@ public class mChatDao {
     /**
      * 分页
      */
-    public static List<Chat> queryBuilder(String conver,int set , int lim) {
+    public static List<Chat> queryBuilder(String conver,Long userid,int set , int lim) {
 
-        return Initialization.getDaoInstantChat().getChatDao().queryBuilder().where(ChatDao.Properties.Conversation.eq(conver)).offset(set).limit(lim).list();
+        return Initialization.getDaoInstantChat().getChatDao().queryBuilder().where(ChatDao.Properties.Conversation.eq(conver),ChatDao.Properties.UserId.eq(userid)).orderDesc(ChatDao.Properties.Id).offset(set).limit(lim).list();
     }
 
     /**

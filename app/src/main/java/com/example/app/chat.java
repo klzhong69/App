@@ -52,10 +52,13 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
@@ -80,15 +83,16 @@ public class chat extends AppCompatActivity {
     SmartRefreshLayout refreshLayout;
     private LayoutInflater inflater;
     private static DaoSession daoSession;
-    private String conver;
+    private String convers;
     public static Long sendid;
     private String sendname;
-    public static Observer<Integer> observerchat;
+    public static Observer<Chat> observerchat;
     private int a =0;
     private static Context context;
     private String userid;
     private String avatarUrl;
     private String nickname;
+    public static boolean isFront = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,50 +106,32 @@ public class chat extends AppCompatActivity {
         context = this;
 
         Intent intent = getIntent();
-        conver = intent.getStringExtra("conver");
+        convers = intent.getStringExtra("conver");
         sendid = intent.getLongExtra("sendid", 0L);
         sendname = intent.getStringExtra("sendname");
         title.setText(sendname);
-        subtitle.setText("  ");
+        subtitle.setText(" ");
+        SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
+        userid = sp.getString("userid", "");
+        avatarUrl = sp.getString("avatarUrl", "");
+        nickname = sp.getString("nickname", "");
 
         refreshLayout.setRefreshHeader(new MaterialHeader(this).setScrollableWhenRefreshing(true));
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshlayout) {
-                a++;
                 refreshlayout.autoRefresh();
-                ChatModel.datas(conver,a,10);
-                ChatModel.initrecycler(chat.this, recycler);
-                ChatModel.recly(recycler,a*10);
+                a++;
+                ChatModel.Adddata(recycler,convers, Long.valueOf(userid),a*10,10);
                 refreshlayout.finishRefresh();
 
             }
         });
 
-        SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
-         userid = sp.getString("userid", "");
-         avatarUrl = sp.getString("avatarUrl", "");
-         nickname = sp.getString("nickname", "");
 
-        ChatModel.initData(conver,0,10);
+        ChatModel.initData(convers, Long.valueOf(userid),0,10);
         ChatModel.initrecycler(this, recycler);
 
-        MyApp application = ((MyApp) this.getApplicationContext());
-        for(int i=0;i<application.getUsermess().size();i++){
-            if(application.getUsermess().get(i).getSendId().equals(sendid)){
-                application.getUsermess().remove(i);
-            }
-
-        }
-
-        List<Conver> list =  mConverDao.query(sendid, Long.valueOf(userid));
-        if(list.size()>0){
-            if(list.get(0).getSum() !=0){
-                list.get(0).setSum(0);
-                mConverDao.update(list.get(0));
-            }
-
-        }
 
         KeyboardStateObserver.getKeyboardStateObserver(this).
                 setKeyboardVisibilityListener(new KeyboardStateObserver.OnKeyboardVisibilityListener() {
@@ -160,46 +146,16 @@ public class chat extends AppCompatActivity {
                     }
                 });
 
-
-
-
+        del();
     }
 
-    /**
-     * 判断某个界面是否在前台
-     *
-     *
-     * @return 是否在前台显示
-     */
-    public static boolean isForeground() {
-        return isForeground(context, context.getClass().getName());
-    }
-
-    /**
-     * 判断某个界面是否在前台
-     *
-     * @param context   Context
-     * @param className 界面的类名
-     * @return 是否在前台显示
-     */
-    public static boolean isForeground(Context context, String className) {
-        if (context == null || TextUtils.isEmpty(className))
-            return false;
-        ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-        List<ActivityManager.RunningTaskInfo> list = am.getRunningTasks(1);
-        if (list != null && list.size() > 0) {
-            ComponentName cpn = list.get(0).topActivity;
-            if (className.equals(cpn.getClassName()))
-                return true;
-        }
-        return false;
-    }
 
     @Override
     protected void onResume(){
         super.onResume();
+        isFront = true;
         //聊天
-        observerchat = new Observer<Integer>() {
+        observerchat = new Observer<Chat>() {
             @Override
             public void onSubscribe(Disposable d) {
 
@@ -207,10 +163,11 @@ public class chat extends AppCompatActivity {
             }
 
             @Override
-            public void onNext(Integer integer) {
+            public void onNext(Chat integer) {
 
-                ChatModel.recly(recycler, 0);
-
+                Chats i1 = new Chats(integer.getSendsrc(), integer.getTxt(), integer.getData().toString(), 1);
+                ChatModel.Add(recycler, i1);
+                del();
             }
 
             @Override
@@ -235,14 +192,12 @@ public class chat extends AppCompatActivity {
             case R.id.but:
                 if (!editText.getText().toString().equals("")) {
 
-
-
                     String time = DateUtil.getCurrentTimeYMDHMS();
                     String txt = editText.getText().toString();
                     Chats i1 = new Chats(avatarUrl, txt, time, 2);
                     ChatModel.Add(recycler, i1);
                     editText.setText("");
-                    send(userid,avatarUrl,nickname,sendid,txt,conver);
+                    send(userid,avatarUrl,nickname,sendid,txt,convers);
 
                 } else {
                     Toast.makeText(chat.this, "请输入发送内容", Toast.LENGTH_SHORT).show();
@@ -297,6 +252,41 @@ public class chat extends AppCompatActivity {
 
         String meg = gson.toJson(mess);
         MqttMessageService.publishMessage("user/"+sendid, meg);
+    }
+
+
+    private void del(){
+        MyApp application = ((MyApp) this.getApplicationContext());
+        for(int i=0;i<application.getUsermess().size();i++){
+            if(application.getUsermess().get(i).getSendId().equals(sendid)){
+                application.getUsermess().remove(i);
+            }
+
+        }
+
+        List<Conver> list =  mConverDao.query(sendid, Long.valueOf(userid));
+        if(list.size()>0){
+            if(list.get(0).getSum() !=0){
+                list.get(0).setSum(0);
+                mConverDao.update(list.get(0));
+            }
+
+        }
+        Observable<Integer> observables = Observable.defer(new Callable<ObservableSource<? extends Integer>>() {
+            @Override
+            public ObservableSource<? extends Integer> call() throws Exception {
+                return Observable.just(2);
+            }
+        });
+        observables.subscribe(MainActivity.observers);
+    }
+
+
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        isFront = false;
     }
 
    /* private void showSimpleBottomSheetGrid() {

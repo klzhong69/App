@@ -8,9 +8,7 @@ import org.greenrobot.greendao.annotation.Generated;
 @Entity
 public class Conver {
 
-    @Id(autoincrement = true)//设置自增长
-    private Long id;
-
+    @Id//设置自增长
     @Index(unique = true)//设置唯一性
     private Long sendId;//发送人员编号
 
@@ -28,10 +26,9 @@ public class Conver {
 
     private int sum;//未读数量
 
-    @Generated(hash = 1846104937)
-    public Conver(Long id, Long sendId, Long userId, String sendname,
-            String sendsrc, int type, Long data, String txt, int sum) {
-        this.id = id;
+    @Generated(hash = 593796514)
+    public Conver(Long sendId, Long userId, String sendname, String sendsrc,
+            int type, Long data, String txt, int sum) {
         this.sendId = sendId;
         this.userId = userId;
         this.sendname = sendname;
@@ -44,14 +41,6 @@ public class Conver {
 
     @Generated(hash = 2111202836)
     public Conver() {
-    }
-
-    public Long getId() {
-        return this.id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public Long getSendId() {
@@ -118,8 +107,7 @@ public class Conver {
         this.sum = sum;
     }
 
-
-
-
+   
+   
     
 }

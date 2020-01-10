@@ -128,7 +128,7 @@ dependencies {
 }
 
 greendao {
-    schemaVersion 6
+    schemaVersion 7
     daoPackage 'com.example.app.gen'
     targetGenDir 'src/main/java'
 }

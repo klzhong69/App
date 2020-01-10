@@ -18,9 +18,12 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.app.Entity.Chats;
 import com.example.app.Entity.Message;
 import com.example.app.MQ.MqttMessageService;
+import com.example.app.Model.ChatModel;
 import com.example.app.Model.MessModel;
+import com.example.app.Sqlentity.Chat;
 import com.example.app.cofig.Initialization;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 
@@ -32,6 +35,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 
 public class Messages extends Fragment {
 
@@ -65,6 +69,8 @@ public class Messages extends Fragment {
     private ArrayList<Message> mArrayLists;
     private Observer<Integer> observer;
     private Context context;
+    public static Observer<Integer> observermess;
+    public static boolean isFront;
 
 
     @Nullable
@@ -106,8 +112,40 @@ public class Messages extends Fragment {
     @Override
     public void onResume(){
         super.onResume();
+        isFront = true;
         MessModel.initData(context);
         MessModel.initrecycler(context, getActivity(), recycler10, 0);
+        //聊天
+        observermess = new Observer<Integer>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+
+            }
+
+            @Override
+            public void onNext(Integer integer) {
+
+                MessModel.initData(context);
+                MessModel.initrecycler(context, getActivity(), recycler10, 0);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        };
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        isFront = false;
     }
 
     public int getStatusBarHeight() {

@@ -2,7 +2,6 @@ package com.example.app.dao;
 
 import com.example.app.Sqlentity.Conver;
 import com.example.app.cofig.Initialization;
-import com.example.app.gen.ChatDao;
 import com.example.app.gen.ConverDao;
 
 import java.util.List;
@@ -42,7 +41,7 @@ public class mConverDao {
      * @return
      */
     public static List<Conver> query(Long sendid,Long userid) {
-        return Initialization.getDaoInstantConver().getConverDao().queryBuilder().where(ConverDao.Properties.SendId.eq(sendid)).where(ConverDao.Properties.UserId.eq(userid)).list();
+        return Initialization.getDaoInstantConver().getConverDao().queryBuilder().where(ConverDao.Properties.SendId.eq(sendid), ConverDao.Properties.UserId.eq(userid)).list();
     }
 
 

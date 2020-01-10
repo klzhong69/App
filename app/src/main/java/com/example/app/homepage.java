@@ -166,7 +166,7 @@ public class homepage extends AppCompatActivity {
         title.setText("个人主页");
         subtitle.setText("修改信息");
         context = this;
-        followId = 103542886L;
+        followId = 127167100L;
         initData();
         Initialization.setupDatabaseChat(this);
         Initialization.setupDatabaseConver(this);
@@ -198,6 +198,7 @@ public class homepage extends AppCompatActivity {
                 String userid = sp.getString("userid","");
                 String usersrc = sp.getString("avatarUrl","");
                 String username = sp.getString("nickname","");
+                System.out.println("dhauhdu"+mConverDao.query(followId, Long.valueOf(userid)).size());
                 if(mConverDao.query(followId, Long.valueOf(userid)).size()==0){
 
                     long data =  System.currentTimeMillis()/1000;
@@ -205,12 +206,13 @@ public class homepage extends AppCompatActivity {
                     convers.setSendsrc(avatarUrl);
                     convers.setSendname(nickname);
                     convers.setSendId(Long.valueOf(followId));
+                    convers.setUserId(Long.valueOf(userid));
                     convers.setData(data);
                     convers.setSum(0);
-                    convers.setTxt("我是"+nickname);
+                    convers.setTxt("我是"+username);
                     convers.setType(1);
                     mConverDao.insert(convers);
-                    chat.send(userid,usersrc,username,followId,"我是"+nickname,"user/"+followId);
+                    chat.send(userid,usersrc,username,followId,"我是"+username,"user/"+followId);
                 }
 
                 Intent intent2 = new Intent(context, chat.class);

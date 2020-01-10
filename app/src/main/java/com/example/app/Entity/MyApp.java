@@ -117,6 +117,7 @@ public class MyApp extends Application {
         initOkGo();
         //setUrl("http://192.168.120.91:8360");
         setUrl("http://mqtt2.weiyunhezi.com:8360");
+        //setUrl("http://52hertz.weiyunhezi.com:8360");
         setScore(0); //初始化全局变量
         setScoret(0);
 

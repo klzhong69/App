@@ -967,7 +967,7 @@ public class chatroom extends AppCompatActivity {
                         sendname = "苗苗";
                         sendsrc = "https://momeak.oss-cn-shenzhen.aliyuncs.com/h2.jpg";
                         textViewc1.setText(sendname);
-                        ChatModel.initData(conver,0,10);
+                        ChatModel.initData(conver,0L,0,10);
                         ChatModel.initrecycler(chatroom.this, recyclerc1);
                         KeyboardStateObserver.getKeyboardStateObserver(chatroom.this).
                                 setKeyboardVisibilityListener(new KeyboardStateObserver.OnKeyboardVisibilityListener() {

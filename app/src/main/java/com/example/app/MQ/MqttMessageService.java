@@ -101,7 +101,6 @@ public class MqttMessageService extends Service {
                 public void messageArrived(String topic, MqttMessage message) {
                     SharedPreferences sp = context.getSharedPreferences("User", Context.MODE_PRIVATE);
                     String userid = sp.getString("userid","");
-
                     if (!message.toString().equals("")) {
                         MyApp application = ((MyApp) context.getApplicationContext());
                         Gson gson = new Gson();
@@ -126,7 +125,7 @@ public class MqttMessageService extends Service {
                                 break;
                             case 3:
                                 Chat chat3 = new Chat();
-                                chat3.setConversation(topic);
+                                chat3.setConversation("user/"+mess.getData().get("sendId").getAsLong());
                                 chat3.setData(mess.getSendTime());
                                 chat3.setUserId(Long.valueOf(userid));
                                 chat3.setSendId(mess.getData().get("sendId").getAsLong());
@@ -135,32 +134,31 @@ public class MqttMessageService extends Service {
                                 chat3.setSendname(mess.getData().get("senderName").getAsString());
                                 chat3.setState(0);
                                 mChatDao.insert(chat3);
-                                Log.i(TAG, "消息" + topic + "/" + mess.getData());
-                                if (chat.isForeground()) {
-                                    if(chat.sendid == mess.getData().getAsJsonObject("sendId").getAsLong()){
-                                        Observable<Integer> observable = Observable.defer(new Callable<ObservableSource<? extends Integer>>() {
+                                List<Chat> user = application.getUsermess();
+                                user.add(chat3);
+                                application.setUsermess(user);
+                                Observable<Integer> observables = Observable.defer(new Callable<ObservableSource<? extends Integer>>() {
+                                    @Override
+                                    public ObservableSource<? extends Integer> call() throws Exception {
+                                        return Observable.just(1);
+                                    }
+                                });
+                                observables.subscribe(MainActivity.observers);
+                                if(chat.isFront){
+                                    if(chat.sendid == mess.getData().get("sendId").getAsLong()){
+                                        Observable<Chat> observable = Observable.defer(new Callable<ObservableSource<? extends Chat>>() {
                                             @Override
-                                            public ObservableSource<? extends Integer> call() throws Exception {
-                                                return Observable.just(0);
+                                            public ObservableSource<? extends Chat> call() throws Exception {
+                                                return Observable.just(chat3);
                                             }
                                         });
                                         observable.subscribe(chat.observerchat);
                                     }
-
-                                } else {
-                                    List<Chat> user = application.getUsermess();
-                                    Log.i(TAG, "消息内容s" + user.size());
-                                    user.add(chat3);
-                                    application.setUsermess(user);
-                                    Log.i(TAG, "消息内容" + user.size());
-                                    Observable<Integer> observables = Observable.defer(new Callable<ObservableSource<? extends Integer>>() {
-                                        @Override
-                                        public ObservableSource<? extends Integer> call() throws Exception {
-                                            return Observable.just(1);
-                                        }
-                                    });
-                                    observables.subscribe(MainActivity.observer);
                                 }
+
+
+
+
                                 break;
                         }
                     }

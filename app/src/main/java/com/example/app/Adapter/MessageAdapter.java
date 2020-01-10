@@ -56,7 +56,7 @@ public class MessageAdapter extends RecyclerView.Adapter {
         ((MessageAdapter.DemoViewHolder) holder).txt.setText(entity.getTxt());
         ((MessageAdapter.DemoViewHolder) holder).time.setText(entity.getTime());
         if(entity.getSum()>0){
-            ((MessageAdapter.DemoViewHolder) holder).sum.setText(entity.getSum());
+            ((MessageAdapter.DemoViewHolder) holder).sum.setText(entity.getSum()+"");
         }else{
             ((MessageAdapter.DemoViewHolder) holder).sum.setVisibility(View.GONE);
         }

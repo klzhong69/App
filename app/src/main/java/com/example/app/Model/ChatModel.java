@@ -24,29 +24,22 @@ public class ChatModel {
     private static ChatAdapter mAdapter;
     private static List<Chats> mArrayList;
 
-    public static void initData(String conver,int set,int lim) {
+    public static void initData(String conver, Long userid, int set, int lim) {
         mArrayList = new ArrayList<Chats>();
-        datas(conver,set,lim);
-
-
-    }
-
-    public static void datas(String conver,int set,int lim) {
-        List<Chat> list = mChatDao.queryBuilder(conver,set,lim);
-        for(int i=0;i<list.size();i++){
-            if(i==0){
-                Chats i1 = new Chats(list.get(i).getSendsrc(), list.get(i).getTxt(), DateUtil.stampToDates(String.valueOf((list.get(i).getData()*1000))), 0);
-                mArrayList.add(i1);
-            }else{
-                Long longs = (list.get(i).getData())-(list.get(i-1).getData());
-                if(longs>600000L){
-                    Chats i1 = new Chats(list.get(i).getSendsrc(), list.get(i).getTxt(), DateUtil.stampToDates(String.valueOf((list.get(i).getData()*1000))), 0);
-                    mArrayList.add(i1);
+        List<Chat> list = mChatDao.queryBuilder(conver, userid, set, lim);
+        for (int i = 0; i < list.size(); i++) {
+            Chats i1 = new Chats(list.get(i).getSendsrc(), list.get(i).getTxt(), list.get(i).getData().toString(), list.get(i).getState() + 1);
+            mArrayList.add(0,i1);
+            if(i>0){
+                Long longs = (list.get(i-1).getData()) - (list.get(i).getData());
+                if (longs > 60L) {
+                    Chats i2 = new Chats(list.get(i).getSendsrc(), list.get(i).getTxt(), DateUtil.stampToDates(String.valueOf((list.get(i).getData() * 1000))), 0);
+                    mArrayList.add(0,i2);
                 }
             }
-            Chats i1 = new Chats(list.get(i).getSendsrc(), list.get(i).getTxt(), list.get(i).getData().toString(), list.get(i).getState()+1);
-            mArrayList.add(i1);
+
         }
+
     }
 
     public static void initrecycler(Context context, RecyclerView recycler13) {
@@ -64,7 +57,7 @@ public class ChatModel {
             mLinearLayoutManager.scrollToPositionWithOffset(mAdapter.getItemCount() - 1, Integer.MIN_VALUE);
 
         }
-        recycler13.scrollToPosition(mAdapter.getItemCount()-1);
+        recycler13.scrollToPosition(mAdapter.getItemCount() - 1);
         recycler13.setLayoutManager(mLinearLayoutManager);
 
         recycler13.setItemAnimator(new DefaultItemAnimator());
@@ -93,16 +86,34 @@ public class ChatModel {
     }
 
 
-
-    public static void Add(RecyclerView mRecyclerView, Chats entity){
+    public static void Add(RecyclerView mRecyclerView, Chats entity) {
         mAdapter.addData(mArrayList.size(), entity);
         mRecyclerView.smoothScrollToPosition(mArrayList.size());
     }
 
-    public static void recly(RecyclerView mRecyclerView,int poaition){
-        if(poaition==0){
+    public static void Adddata(RecyclerView mRecyclerView, String conver, Long userid, int set, int lim) {
+        List<Chat> list = mChatDao.queryBuilder(conver, userid, set, lim);
+        for (int i = 0; i < list.size(); i++) {
+            Chats i1 = new Chats(list.get(i).getSendsrc(), list.get(i).getTxt(), list.get(i).getData().toString(), list.get(i).getState() + 1);
+            mArrayList.add(0,i1);
+            mAdapter.notifyItemInserted(0);
+            if(i>0){
+                Long longs = (list.get(i-1).getData()) - (list.get(i).getData());
+                if (longs > 60L) {
+                    Chats i2 = new Chats(list.get(i).getSendsrc(), list.get(i).getTxt(), DateUtil.stampToDates(String.valueOf((list.get(i).getData() * 1000))), 0);
+                    mArrayList.add(0,i2);
+                    mAdapter.notifyItemInserted(0);
+                }
+            }
+
+        }
+        mRecyclerView.smoothScrollToPosition(mArrayList.size() - 10);
+    }
+
+    public static void recly(RecyclerView mRecyclerView, int poaition) {
+        if (poaition == 0) {
             mRecyclerView.smoothScrollToPosition(mArrayList.size());
-        }else{
+        } else {
             mRecyclerView.smoothScrollToPosition(poaition);
         }
 

@@ -36,8 +36,10 @@ import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.ashokvarma.bottomnavigation.TextBadgeItem;
 import com.example.app.Entity.MyApp;
 import com.example.app.MQ.MqttMessageService;
+import com.example.app.Sqlentity.Conver;
 import com.example.app.cofig.Initialization;
 import com.example.app.cofig.Mess;
+import com.example.app.dao.mConverDao;
 import com.lzf.easyfloat.EasyFloat;
 import com.lzf.easyfloat.anim.AppFloatDefaultAnimator;
 import com.lzf.easyfloat.anim.DefaultAnimator;
@@ -101,6 +103,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
      */
     private boolean isNeedCheck = true;
     public static Observer<Integer> observer;
+    public static Observer<Integer> observers;
     private ArrayList<FragmentTouchListener> mFragmentTouchListeners = new ArrayList<>();
     private Map<String, String> map = new HashMap<String, String>();
     private int sum = 0;
@@ -116,11 +119,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
         Initialization.setupDatabaseConver(this);
 
         SharedPreferences sp = this.getSharedPreferences("User", Context.MODE_PRIVATE);
-         userid = sp.getString("userid","");
-        if(!userid.equals("")){
+        userid = sp.getString("userid", "");
+        if (!userid.equals("")) {
             MqttMessageService.create(this);
 
-        }else{
+        } else {
             Intent intent1 = new Intent(MainActivity.this, login.class);
             intent1.putExtra("type", 0);
             startActivity(intent1);
@@ -195,7 +198,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
         for (FragmentTouchListener listener : mFragmentTouchListeners) {
-            if(sum ==0){
+            if (sum == 0) {
                 listener.onTouchEvent(event);
             }
 
@@ -356,10 +359,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
                 if (messages == null) {
                     messages = Messages.newInstance();
                 }
-
-                transaction.replace(R.id.layout1, messages);
-                num = 0;
                 setBadgeNum(num);
+                transaction.replace(R.id.layout1, messages);
+
                 break;
             case 4:
 
@@ -399,11 +401,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
      * 设置tab数字提示加缩放动画
      */
     public static void setBadgeNum(int num) {
-        mBadgeItem.setText(String.valueOf(num));
+
         if (num == 0) {
             mBadgeItem.hide();
         } else {
             mBadgeItem.show();
+            mBadgeItem.setText(String.valueOf(num));
             ObjectAnimator.ofFloat(mIconView, "translationX", 2000, 0).start();
         }
     }
@@ -423,12 +426,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
 
             @Override
             public void onNext(Integer integer) {
-                if(integer==1){
-                    MyApp application = ((MyApp) MainActivity.this.getApplicationContext());
-                    num = application.getOfficmess().size()+application.getUsermess().size();
-                    Log.i(TAG, "离线消息数量:" + num);
-                    setBadgeNum(num);
-                }
                 if (!EasyFloat.appFloatIsShow("testFloat")) {
                     checkPermission();
                 }
@@ -448,7 +445,106 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
 
         };
 
+        observers = new Observer<Integer>() {
+            @Override
+            public void onSubscribe(Disposable d) {
 
+            }
+
+            @Override
+            public void onNext(Integer integer) {
+
+                MyApp application = ((MyApp) MainActivity.this.getApplicationContext());
+                Conver conver = new Conver();
+                Conver convers = new Conver();
+                java.util.List<Conver> listall = mConverDao.queryAll(Long.valueOf(userid));
+                if (integer == 1) {
+                    if (application.getUsermess().size() > 0) {
+                        if (listall.size() > 0) {
+                            for (int i = 0; i < mConverDao.queryAll(Long.valueOf(userid)).size(); i++) {
+                                int a = 0;
+                                int b = 0;
+                                for (int j = 0; j < application.getUsermess().size(); j++) {
+                                    if (application.getUsermess().get(j).getSendId().equals(listall.get(i).getSendId())) {
+                                        a++;
+                                        conver.setSendsrc(application.getUsermess().get(j).getSendsrc());
+                                        conver.setSendname(application.getUsermess().get(j).getSendname());
+                                        conver.setSendId(application.getUsermess().get(j).getSendId());
+                                        conver.setData(application.getUsermess().get(j).getData());
+                                        conver.setSum(a);
+                                        conver.setUserId(Long.valueOf(userid));
+                                        conver.setTxt(application.getUsermess().get(j).getTxt());
+                                        conver.setType(1);
+                                    } else {
+                                        b++;
+                                        convers.setSendsrc(application.getUsermess().get(j).getSendsrc());
+                                        convers.setSendname(application.getUsermess().get(j).getSendname());
+                                        convers.setSendId(application.getUsermess().get(j).getSendId());
+                                        convers.setData(application.getUsermess().get(j).getData());
+                                        convers.setSum(b);
+                                        convers.setUserId(Long.valueOf(userid));
+                                        convers.setTxt(application.getUsermess().get(j).getTxt());
+                                        convers.setType(1);
+                                    }
+                                }
+                                if (a != 0) {
+                                    Log.i(TAG, "0:" + a);
+                                    mConverDao.update(conver);
+                                }
+                                if (b != 0) {
+                                    Log.i(TAG, "1:" + b);
+                                    mConverDao.insert(convers);
+                                }
+                            }
+                        } else {
+                            int c = 0;
+                            for (int k = 0; k < application.getUsermess().size(); k++) {
+                                c++;
+                                convers.setSendsrc(application.getUsermess().get(k).getSendsrc());
+                                convers.setSendname(application.getUsermess().get(k).getSendname());
+                                convers.setSendId(application.getUsermess().get(k).getSendId());
+                                convers.setData(application.getUsermess().get(k).getData());
+                                convers.setSum(c);
+                                convers.setUserId(Long.valueOf(userid));
+                                convers.setTxt(application.getUsermess().get(k).getTxt());
+                                convers.setType(1);
+                            }
+                            if (c != 0) {
+                                Log.i(TAG, "2:" + c);
+                                mConverDao.insert(convers);
+                            }
+                        }
+
+                    }
+                }
+                num = application.getOfficmess().size() + application.getUsermess().size();
+                Log.i(TAG, "消息数量:" + num);
+                setBadgeNum(num);
+                if(Messages.isFront){
+                    Observable<Integer> observables = Observable.defer(new Callable<ObservableSource<? extends Integer>>() {
+                        @Override
+                        public ObservableSource<? extends Integer> call() throws Exception {
+                            return Observable.just(1);
+                        }
+                    });
+                    observables.subscribe(Messages.observermess);
+                }
+
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+
+
+        };
 
     }
 
