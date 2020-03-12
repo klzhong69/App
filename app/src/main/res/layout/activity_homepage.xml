@@ -314,16 +314,6 @@
                     android:gravity="center_vertical"
                     android:text="我是芭比王国的大巫师" />
 
-                <ImageView
-                    android:id="@+id/imageView7"
-                    android:layout_width="@dimen/dp_30"
-                    android:layout_height="@dimen/dp_30"
-                    android:layout_below="@+id/imageView11"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginTop="@dimen/dp_10"
-                    android:layout_marginEnd="@dimen/dp_20"
-                    app:srcCompat="@drawable/yuyin" />
-
             </RelativeLayout>
 
             <RelativeLayout
