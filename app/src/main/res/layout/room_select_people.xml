@@ -75,7 +75,6 @@
             android:paddingEnd="@dimen/dp_10"
             android:paddingBottom="@dimen/dp_2"
             android:text="删除"
-            android:textColor="@color/background_error"
             android:textSize="@dimen/sp_20" />
 
     </RelativeLayout>

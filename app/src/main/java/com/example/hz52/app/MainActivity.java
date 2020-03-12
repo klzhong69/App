@@ -11,12 +11,14 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -105,6 +107,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
     private Map<String, String> map = new HashMap<String, String>();
     private int sum = 0;
     private String userid;
+    public static float density;
+    public static float numder;
+    public static float sumder;
+    public int widthPixels;
+    public static int heightPixels;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,12 +129,20 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
 
         } else {
             Intent intent1 = new Intent(MainActivity.this, login.class);
-            intent1.putExtra("type", 0);
+            intent1.putExtra("type", 1);
             startActivity(intent1);
             overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
         }
         setDefaultFragment();
 
+        WindowManager mWindowManager = (WindowManager) this.getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics metrics = new DisplayMetrics();
+        mWindowManager.getDefaultDisplay().getMetrics(metrics);
+         density = metrics.density;
+         widthPixels = metrics.widthPixels;
+         heightPixels = metrics.heightPixels;
+         numder = (float) 820 / 1920;
+         sumder = (float) (widthPixels / 0.5625);
     }
 
     private void init() {

@@ -185,7 +185,7 @@
         android:layout_marginEnd="@dimen/dp_20"
         app:layout_constraintEnd_toEndOf="@+id/imageView17"
         app:layout_constraintTop_toTopOf="@+id/imageView17"
-        app:srcCompat="@drawable/dk_close_white" />
+        app:srcCompat="@drawable/qmui_icon_quick_action_more_arrow_right" />
 
 
     <androidx.recyclerview.widget.RecyclerView

@@ -63,5 +63,5 @@
         app:layout_constraintBottom_toBottomOf="@+id/imageView44"
         app:layout_constraintEnd_toEndOf="@+id/imageView44"
         app:layout_constraintTop_toTopOf="@+id/imageView44"
-        app:srcCompat="@drawable/dk_more_icon" />
+        app:srcCompat="@drawable/dk_close_white" />
 </androidx.constraintlayout.widget.ConstraintLayout>

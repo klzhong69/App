@@ -185,44 +185,15 @@ public class Home extends Fragment {
 
         ((MainActivity) getActivity()).registerFragmentTouchListener(fragmentTouchListener);
 
-        WindowManager mWindowManager = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
-        DisplayMetrics metrics = new DisplayMetrics();
-        mWindowManager.getDefaultDisplay().getMetrics(metrics);
-        float density = metrics.density;
-        int widthPixels = metrics.widthPixels;
-        int heightPixels = metrics.heightPixels;
-        float num = (float) 820 / 1920;
-        float sum = (float) (widthPixels / 0.5625);
+        ViewGroup.LayoutParams para1;
+        para1 = imageViewi3.getLayoutParams();
+        para1.height = (int) (MainActivity.heightPixels * MainActivity.numder);
+        imageViewi3.setLayoutParams(para1);
 
-        imageViewi3.post(new Runnable() {
-            @Override
-            public void run() {
-                int width = imageViewi3.getWidth();
-                float height;
-                if (heightPixels < sum) {
-                    height = (heightPixels * num) - ((sum - heightPixels) * 3 / density);
-                } else {
-                    height = heightPixels * num;
-                }
-
-                imageViewi3.setLayoutParams(new RelativeLayout.LayoutParams(width, (int) height));
-            }
-        });
-
-        imageViewi3s.post(new Runnable() {
-            @Override
-            public void run() {
-                int width = imageViewi3s.getWidth();
-                float height;
-                if (heightPixels < sum) {
-                    height = heightPixels * num - ((sum - heightPixels) * 3 / density);
-                } else {
-                    height = heightPixels * num;
-                }
-                imageViewi3s.setLayoutParams(new RelativeLayout.LayoutParams(width, (int) height));
-            }
-        });
-
+        ViewGroup.LayoutParams para2;
+        para2 = imageViewi3s.getLayoutParams();
+        para2.height = (int) (MainActivity.heightPixels * MainActivity.numder);
+        imageViewi3s.setLayoutParams(para2);
 
         initData();
 

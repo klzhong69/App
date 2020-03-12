@@ -131,7 +131,7 @@
             android:layout_below="@+id/textView92"
             android:layout_alignStart="@+id/textView92"
             android:layout_marginTop="@dimen/dp_5"
-            android:text="ID2569874"
+            android:text="ID"
             android:textColor="#ffffff"
             android:textSize="@dimen/sp_16"
             android:visibility="gone" />

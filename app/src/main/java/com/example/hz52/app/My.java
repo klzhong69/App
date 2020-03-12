@@ -142,7 +142,7 @@ public class My extends Fragment {
         SharedPreferences sp = Objects.requireNonNull(getContext()).getSharedPreferences("User", Context.MODE_PRIVATE);
         textView92.setText(sp.getString("nickname", ""));
         Glide.with(My.this).load(sp.getString("avatarUrl", "")).into(imageView28);
-
+        textView93.setText("ID "+sp.getString("userid", ""));
         Window window = Objects.requireNonNull(getActivity()).getWindow();
         //21表示5.0
         //取消设置透明状态栏,使 ContentView 内容不再覆盖状态栏
@@ -290,6 +290,7 @@ public class My extends Fragment {
             case R.id.imageView74:
             case R.id.textView85:
                 Intent intent8 = new Intent(getContext(), homepage.class);
+                intent8.putExtra("id", Long.parseLong(userid));
                 startActivity(intent8);
                 getActivity().overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
                 break;

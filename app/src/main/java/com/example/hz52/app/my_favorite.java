@@ -22,6 +22,7 @@ import com.google.gson.JsonArray;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
+import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +43,7 @@ public class my_favorite extends AppCompatActivity {
     @BindView(R.id.subtitle)
     TextView subtitle;
     private List<Footprint> mArrayList;
-
+    private QMUITipDialog tipDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +51,11 @@ public class my_favorite extends AppCompatActivity {
         ButterKnife.bind(this);
         title.setText("我的收藏");
         subtitle.setText("");
+        tipDialog = new QMUITipDialog.Builder(this)
+                .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
+                .setTipWord("正在加载")
+                .create();
+        tipDialog.show();
         initData();
         //适配器
         FootprintAdapter mAdapter = new FootprintAdapter(this, mArrayList);
@@ -116,6 +122,7 @@ public class my_favorite extends AppCompatActivity {
                                         mArrayList.add(i1);
                                     }
                                 }
+                                tipDialog.dismiss();
                             }else if(prexiew.getCode()==40000){
                                 Toast.makeText(my_favorite.this, prexiew.getMsg()+"", Toast.LENGTH_SHORT).show();
                             }

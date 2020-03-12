@@ -60,11 +60,11 @@ public class MusicViewAdapter extends RecyclerView.Adapter {
         }else if(entity.getType().equals("1")){
            ((MusicViewAdapter.DemoViewHolder) holder).txt.setVisibility(View.GONE);
            ((DemoViewHolder) holder).type.setVisibility(View.VISIBLE);
-            Glide.with(mContext).load(R.drawable.dk_ic_play_disable).into(((DemoViewHolder)holder).type);
+            Glide.with(mContext).load(R.drawable.play).into(((DemoViewHolder)holder).type);
         }else if(entity.getType().equals("2")){
            ((MusicViewAdapter.DemoViewHolder) holder).txt.setVisibility(View.GONE);
            ((MusicViewAdapter.DemoViewHolder) holder).type.setVisibility(View.VISIBLE);
-           Glide.with(mContext).load(R.drawable.dk_ic_pause_disable).into(((DemoViewHolder)holder).type);
+           Glide.with(mContext).load(R.drawable.stop).into(((DemoViewHolder)holder).type);
        }
         if (mOnItemClickListener != null) {
             holder.itemView.setOnClickListener(new View.OnClickListener() {

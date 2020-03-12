@@ -18,16 +18,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/imageView115"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_40"
+    <com.qmuiteam.qmui.widget.QMUIRadiusImageView
+        android:id="@+id/imageView28"
+        android:layout_width="@dimen/dp_100"
+        android:layout_height="@dimen/dp_100"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/h4"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/include"
-        app:srcCompat="@drawable/dk_doraemon" />
+        app:qmui_border_width="0dp"
+        app:qmui_corner_radius="@dimen/dp_50" />
 
     <TextView
         android:id="@+id/textView155"
@@ -35,9 +39,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_20"
         android:text="软件名"
-        app:layout_constraintEnd_toEndOf="@+id/imageView115"
-        app:layout_constraintStart_toStartOf="@+id/imageView115"
-        app:layout_constraintTop_toBottomOf="@+id/imageView115" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView28" />
 
     <com.qmuiteam.qmui.widget.QMUIRadiusImageView
         android:id="@+id/imageView19"

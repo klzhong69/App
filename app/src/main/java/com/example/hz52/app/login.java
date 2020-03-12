@@ -29,8 +29,6 @@ import butterknife.OnClick;
 
 public class login extends AppCompatActivity {
 
-    @BindView(R.id.imageView115)
-    ImageView imageView115;
     @BindView(R.id.textView155)
     TextView textView155;
     @BindView(R.id.imageView19)
@@ -156,6 +154,7 @@ public class login extends AppCompatActivity {
                             String phone = prexiew.getData().get("phone").getAsString();
                             String birthday = prexiew.getData().get("birthday").getAsString();
                             String gender = prexiew.getData().get("gender").getAsString();
+
                             if(state==1){
                                 User user = new User();
                                 user.setName(name);

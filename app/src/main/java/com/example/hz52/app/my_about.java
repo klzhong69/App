@@ -21,8 +21,6 @@ public class my_about extends AppCompatActivity {
     TextView title;
     @BindView(R.id.subtitle)
     TextView subtitle;
-    @BindView(R.id.imageView115)
-    ImageView imageView115;
     @BindView(R.id.textView155)
     TextView textView155;
     @BindView(R.id.imageView119)

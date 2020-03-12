@@ -91,7 +91,7 @@
         app:layout_constraintTop_toTopOf="@+id/imageView17"
         app:layout_constraintVertical_bias="0.3"
         app:qmui_background_color="@color/qmui_config_color_gray_8"
-        app:qmui_progress_color="@color/dk_color_ff00C9F4"
+        app:qmui_progress_color="@color/btn_ghost_blue_text_normal"
         app:qmui_stroke_width="@dimen/dp_16"
         app:qmui_type="type_circle" />
 

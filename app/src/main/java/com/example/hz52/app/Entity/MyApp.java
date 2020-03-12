@@ -89,7 +89,6 @@ public class MyApp extends Application {
     public void onCreate() {
         // TODO Auto-generated method stub
         super.onCreate();
-        //DoraemonKit.install(this);//测试
         OkGo.getInstance().init(this);//网络请求
         EasyFloat.init(this,true);//悬浮窗
         initOkGo();

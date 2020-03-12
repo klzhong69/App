@@ -123,8 +123,8 @@ public class my_footprint extends AppCompatActivity {
                                     Footprint i1 = new Footprint(jsonArray.get(i).getAsJsonObject().get("coverUrl").getAsString(), jsonArray.get(i).getAsJsonObject().get("ownerName").getAsString(), DateUtil.stampToDates(jsonArray.get(i).getAsJsonObject().get("createdTime").getAsString()), jsonArray.get(i).getAsJsonObject().get("roomName").getAsString());
                                     mArrayList.add(i1);
                                 }
-                                tipDialog.dismiss();
                             }
+                            tipDialog.dismiss();
                         }else if(prexiew.getCode()==40000){
                             Toast.makeText(my_footprint.this, prexiew.getMsg()+"", Toast.LENGTH_SHORT).show();
                         }
@@ -132,7 +132,7 @@ public class my_footprint extends AppCompatActivity {
                     }
                 });
 
-
+                          
     }
 
     @OnClick({R.id.fold, R.id.title, R.id.subtitle})

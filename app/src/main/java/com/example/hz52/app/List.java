@@ -1,6 +1,7 @@
 package com.example.hz52.app;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -152,7 +153,7 @@ public class List extends Fragment {
                 .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
                 .setTipWord("正在加载")
                 .create();
-        tipDialog.show();
+
         ListModel.okgo(context, rankListCategory, durationCategory);
         ListModel.initrecycler(context, recycler13);
 
@@ -189,8 +190,9 @@ public class List extends Fragment {
 
             @Override
             public void onNext(JsonArray integer) {
+                tipDialog.show();
                 initData(integer);
-                tipDialog.dismiss();
+
             }
 
             @Override
@@ -253,6 +255,7 @@ public class List extends Fragment {
 
     private void initData(JsonArray jsonArray) {
         try {
+
             Long userid = Long.valueOf("923883237");
             if (rankListCategory == 1) {
                 textView93.setText("财富值");
@@ -296,6 +299,7 @@ public class List extends Fragment {
                 }
 
             }
+            tipDialog.dismiss();
         }catch (Exception e){
 
         }
@@ -325,9 +329,16 @@ public class List extends Fragment {
     }
 
 
-    @OnClick({R.id.textView108, R.id.textView109, R.id.textView118, R.id.textView119, R.id.textView110, R.id.textView111, R.id.textView112, R.id.textView120, R.id.textView121, R.id.textView122})
+    @OnClick({R.id.imageView90, R.id.imageView87, R.id.textView108, R.id.textView109, R.id.textView118, R.id.textView119, R.id.textView110, R.id.textView111, R.id.textView112, R.id.textView120, R.id.textView121, R.id.textView122})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.imageView90:
+            case R.id.imageView87:
+                Intent intent8 = new Intent(getContext(), homepage.class);
+                intent8.putExtra("id", 127167100L);
+                startActivity(intent8);
+                getActivity().overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
+                break;
             case R.id.textView108:
                 rankListCategory = 1;
                 ListModel.okgo(context, rankListCategory, durationCategory);

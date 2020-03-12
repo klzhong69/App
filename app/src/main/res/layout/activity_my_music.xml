@@ -34,6 +34,6 @@
         app:layout_constraintBottom_toBottomOf="@+id/include"
         app:layout_constraintEnd_toEndOf="@+id/include"
         app:layout_constraintTop_toTopOf="@+id/include"
-        app:srcCompat="@drawable/dk_search_icon" />
+        app:srcCompat="@drawable/saoma" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

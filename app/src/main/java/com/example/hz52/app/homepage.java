@@ -159,21 +159,29 @@ public class homepage extends AppCompatActivity {
         ButterKnife.bind(this);
         title.setText("个人主页");
         subtitle.setText("修改信息");
+
+        Intent intent = getIntent();
+        followId = intent.getLongExtra("id",0L);
+        System.out.println(followId);
         context = this;
-        followId = 127167100L;
         tipDialog = new QMUITipDialog.Builder(this)
                 .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
                 .setTipWord("正在加载")
                 .create();
         tipDialog.show();
         SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
-        textView2.setText(sp.getString("nickname", ""));
-        Glide.with(homepage.this).load(sp.getString("avatarUrl", "")).into(imageView2);
+
         initData();
         Initialization.setupDatabaseChat(this);
         Initialization.setupDatabaseConver(this);
 
         userid = sp.getString("userid", "");
+
+        if(!userid.equals(String.valueOf(followId))){
+            subtitle.setVisibility(View.GONE);
+        }else{
+            relativeLayout5.setVisibility(View.GONE);
+        }
     }
 
 
@@ -234,8 +242,8 @@ public class homepage extends AppCompatActivity {
         String token = sp.getString("token", "");
         System.out.println(token);
         OkGo.<String>post(application.getUrl() + "/app/user/getInfo?token=" + token)
-                .params("userId", userid)
-                .params("followId", followId)
+                .params("userId", followId)
+                .params("followId", userid)
                 .execute(new StringCallback() {
 
                     @Override
@@ -256,11 +264,12 @@ public class homepage extends AppCompatActivity {
                             }else{
                                 textView11.setText(prexiew.getData().get("signtureText").getAsString());
                             }
+
+                            avatarUrl = prexiew.getData().get("avatarUrl").getAsString();
+                            nickname = prexiew.getData().get("nickname").getAsString();
                             userids=prexiew.getData().get("userId").getAsString();
-                            System.out.println("a"+userid+"b"+userids);
-                            if(userid.equals(userids)) {
-                                relativeLayout5.setVisibility(View.GONE);
-                            }
+                            textView2.setText(prexiew.getData().get("nickname").getAsString());
+                            Glide.with(homepage.this).load(prexiew.getData().get("avatarUrl").getAsString()).into(imageView2);
                             textView5.setText(prexiew.getData().get("followCount").getAsString());
                             textView9.setText(prexiew.getData().get("fansCount").getAsString());
 

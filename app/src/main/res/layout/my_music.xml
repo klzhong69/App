@@ -67,9 +67,8 @@
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/textView66"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="@dimen/dp_10"
-            android:layout_marginEnd="@dimen/dp_20"
-            app:srcCompat="@drawable/dk_ic_play_disable" />
+            android:layout_marginEnd="@dimen/dp_22"
+            app:srcCompat="@drawable/dower" />
     </RelativeLayout>
 
 

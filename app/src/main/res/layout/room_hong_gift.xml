@@ -227,7 +227,7 @@
             android:layout_marginStart="@dimen/dp_10"
             android:layout_marginTop="@dimen/dp_5"
             android:layout_marginBottom="@dimen/dp_5"
-            app:srcCompat="@drawable/dk_network_pie" />
+            app:srcCompat="@drawable/chongzhi" />
 
         <TextView
             android:id="@+id/textViewc4c"

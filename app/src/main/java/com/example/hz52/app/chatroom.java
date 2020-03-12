@@ -83,9 +83,6 @@ import io.reactivex.disposables.Disposable;
 
 public class chatroom extends AppCompatActivity {
 
-
-    @BindView(R.id.view)
-    RelativeLayout views;
     @BindView(R.id.imageView4)
     ImageView imageView4;
     @BindView(R.id.textView121)
@@ -540,11 +537,12 @@ public class chatroom extends AppCompatActivity {
         context = this;
         window = this.getWindow();
         //21表示5.0
+        //取消设置透明状态栏,使 ContentView 内容不再覆盖状态栏
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+        //需要设置这个 flag 才能调用 setStatusBarColor 来设置状态栏颜色
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.setStatusBarColor(Color.TRANSPARENT);
+        //设置状态栏颜色
+        window.setStatusBarColor(ContextCompat.getColor(this, R.color.black));
 
         View decor = window.getDecorView();
         int ui = decor.getSystemUiVisibility();
@@ -552,15 +550,7 @@ public class chatroom extends AppCompatActivity {
         ui &= ~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR; //设置状态栏中字体颜色为白色
         decor.setSystemUiVisibility(ui);
 
-        views.post(new Runnable() {
-            @Override
-            public void run() {
-                int width = views.getWidth();
-                int height = getStatusBarHeight();
 
-                views.setLayoutParams(new ConstraintLayout.LayoutParams(width, height));
-            }
-        });
 
 
         if (checkSelfPermission(Manifest.permission.RECORD_AUDIO, PERMISSION_REQ_ID_RECORD_AUDIO)) {

@@ -21,10 +21,11 @@
         android:layout_alignStart="@+id/imageView151"
         android:layout_alignEnd="@+id/imageView151"
         android:layout_alignBottom="@+id/imageView151"
-        android:background="@color/dk_color_999999"
+        android:background="@color/back"
         android:gravity="center"
         android:padding="@dimen/dp_5"
-        android:text="默认主题" />
+        android:text="默认主题"
+        android:textColor="@color/background" />
 
     <TextView
         android:id="@+id/textView186"
