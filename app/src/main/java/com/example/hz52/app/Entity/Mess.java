@@ -1,4 +1,4 @@
-package com.example.hz52.app.cofig;
+package com.example.hz52.app.Entity;
 
 import com.google.gson.JsonObject;
 

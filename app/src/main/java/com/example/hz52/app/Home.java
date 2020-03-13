@@ -4,11 +4,9 @@ import android.animation.Animator;
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -26,7 +24,6 @@ import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.example.hz52.app.Entity.Homes;
-import com.example.hz52.app.cofig.FlipCardAnimation;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.wildma.pictureselector.Constant;
 
@@ -155,7 +152,6 @@ public class Home extends Fragment {
     private AnimatorSet mLeftInSets; // 左出动画
     private ArrayList<Homes> mArrayList;
     private int sum = 0;
-    private FlipCardAnimation animation;
     private GestureDetector gd;
 
     @Nullable
@@ -298,8 +294,8 @@ public class Home extends Fragment {
                 //Constants.CLIENT_ROLE_BROADCASTER 主播
                 intent.putExtra(Constant.ACTION_KEY_CROLE, Constants.CLIENT_ROLE_AUDIENCE);
                 intent.putExtra(Constant.ACTION_KEY_ROOM_MODE, Constant.ChatRoomEntertainmentStandard);
-                intent.putExtra(Constant.ACTION_KEY_ROOM_NAME, "123456");
-                intent.putExtra(Constant.ACTION_KEY_TITLE_NAME, "123456");
+                intent.putExtra(Constant.ACTION_KEY_ROOM_NAME, "579184939");
+                intent.putExtra(Constant.ACTION_KEY_TITLE_NAME, "测试房间");
                 startActivity(intent);
                 break;
             case R.id.imageView152:

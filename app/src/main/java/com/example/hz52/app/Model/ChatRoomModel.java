@@ -32,7 +32,7 @@ public class ChatRoomModel {
     public static void initData(){
         mUserList = new ArrayList<Roomhead>();
         for(int i=0;i<8;i++){
-            Roomhead i1 = new Roomhead("https://momeak.oss-cn-shenzhen.aliyuncs.com/h1.jpg","","","",0L,0,false,false);
+            Roomhead i1 = new Roomhead("","","","",0L,0,false,false);
             mUserList.add(i1);
         }
     }
@@ -165,6 +165,17 @@ public class ChatRoomModel {
 
 
     }
+
+
+    /**
+     * 禁言
+     */
+    public static void self(RtcEngine mRtcEngine,int id) {
+        //mRtcEngine.muteLocalAudioStream(true);
+        System.out.println("用户ID"+mUserList.get(id).getUid());
+        System.out.println("禁用"+mRtcEngine.muteRemoteAudioStream(Math.toIntExact(mUserList.get(id).getUid()),true));;
+    }
+
 
     public static void locsuser(int position,Roomhead roomhead){
         mUserList.set(position,roomhead);

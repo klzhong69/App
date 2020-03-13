@@ -82,7 +82,7 @@ dependencies {
     implementation 'com.scwang.smart:refresh-header-falsify:2.0.0-alpha-1'     //虚拟刷新头
     implementation 'com.scwang.smart:refresh-header-material:2.0.0-alpha-1'    //谷歌刷新头
     implementation 'com.scwang.smart:refresh-footer-classics:2.0.0-alpha-1'    //经典加载
-    implementation  'com.scwang.smart:refresh-footer-ball:2.0.0-alpha-1'       //球脉冲加载
+    implementation 'com.scwang.smart:refresh-footer-ball:2.0.0-alpha-1'       //球脉冲加载
 
 
     implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:5.5.8'//微信支付

@@ -70,6 +70,6 @@
         android:layout_height="@dimen/dp_30"
         android:layout_alignEnd="@+id/rippleback"
         android:layout_alignBottom="@+id/rippleback"
-        app:srcCompat="@drawable/maikefeng" />
+        app:srcCompat="@drawable/jingyin" />
 
 </RelativeLayout>

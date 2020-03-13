@@ -13,7 +13,7 @@ import com.example.hz52.app.Entity.MyApp;
 import com.example.hz52.app.MainActivity;
 import com.example.hz52.app.Sqlentity.Chat;
 import com.example.hz52.app.chat;
-import com.example.hz52.app.cofig.Mess;
+import com.example.hz52.app.Entity.Mess;
 import com.example.hz52.app.dao.mChatDao;
 import com.example.hz52.app.find_make;
 import com.google.gson.Gson;

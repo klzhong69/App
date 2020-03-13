@@ -24,6 +24,7 @@ import com.scwang.smart.refresh.footer.ClassicsFooter;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
+import com.wildma.pictureselector.Constant;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -32,6 +33,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import io.agora.rtc.Constants;
 
 public class Find extends Fragment {
 
@@ -90,14 +92,7 @@ public class Find extends Fragment {
         return view;
 
     }
-    public int getStatusBarHeight() {
-        int result = 0;
-        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
-        if (resourceId > 0) {
-            result = getResources().getDimensionPixelSize(resourceId);
-        }
-        return result;
-    }
+
     private void init() {
         //适配器
         FindListAdapter mAdapter = new FindListAdapter(getContext(), mArrayList);
@@ -120,6 +115,12 @@ public class Find extends Fragment {
             @Override
             public void onItemClick(View view, int position) {
                 Intent intent = new Intent(getContext(), chatroom.class);
+                //Constants.CLIENT_ROLE_AUDIENCE  听众
+                //Constants.CLIENT_ROLE_BROADCASTER 主播
+                intent.putExtra(Constant.ACTION_KEY_CROLE, Constants.CLIENT_ROLE_AUDIENCE);
+                intent.putExtra(Constant.ACTION_KEY_ROOM_MODE, Constant.ChatRoomEntertainmentStandard);
+                intent.putExtra(Constant.ACTION_KEY_ROOM_NAME, "127167100");
+                intent.putExtra(Constant.ACTION_KEY_TITLE_NAME, "测试房间");
                 startActivity(intent);
 
             }

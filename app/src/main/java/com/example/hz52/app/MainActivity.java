@@ -240,20 +240,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
     }
 
 
-    /**
-     * Activity创建或者从后台重新回到前台时被调用
-     */
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Intent intent = getIntent();
-        int id = intent.getIntExtra("id", 0);
-        bottomNavigationBar.setFirstSelectedPosition(id).initialise();
-        onTabSelected(id);
-
-
-    }
-
     protected void onDestroy() {
         super.onDestroy();
         MqttMessageService.unsubscribeToTopic("room/1001");
@@ -431,6 +417,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
     @Override
     public void onResume() {
         super.onResume();
+
         if (isNeedCheck) {
             checkPermissions(needPermissions);
         }

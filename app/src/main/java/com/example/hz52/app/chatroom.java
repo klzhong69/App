@@ -388,10 +388,14 @@ public class chatroom extends AppCompatActivity {
     private int mRoomMode;
     private String mChannelName;
     private String mTitleName;
-    private boolean bIsBroadCaster;
-    private Long mLocalUid = 123456L;
+    private Long mLocalUid;
     public static final String TAG = "chatroom";
     private int position;
+
+    private Boolean bIsBroadCaster = false;//上麦权限
+    private Boolean administrator = false;//房主权限
+    private Boolean Anchor = false;//管理员权限
+    private Boolean host = false;//主持人权限
 
 
     /**
@@ -406,11 +410,13 @@ public class chatroom extends AppCompatActivity {
                 public void run() {
                     Log.e(TAG, "远端主播加入" + uid + "/" + elapsed);
 
-                    for (int i = 0; i < ChatRoomModel.mUserList.size(); i++) {
-                        if (ChatRoomModel.mUserList.get(i).getUid() == 0) {
-                            Roomhead roomhead = new Roomhead("https://momeak.oss-cn-shenzhen.aliyuncs.com/h4.jpg", "苗苗", "", "", (long) uid, 0, false, false);
-                            ChatRoomModel.locsuser(i, roomhead);
-                            break;
+                    if (ChatRoomModel.mUserList.size() < 9) {
+                        for (int i = 0; i < ChatRoomModel.mUserList.size(); i++) {
+                            if (ChatRoomModel.mUserList.get(i).getUid() == 0) {
+                                Roomhead roomhead = new Roomhead("https://momeak.oss-cn-shenzhen.aliyuncs.com/h4.jpg", "苗苗", "", "", (long) uid, 0, false, false);
+                                ChatRoomModel.locsuser(i, roomhead);
+                                break;
+                            }
                         }
                     }
 
@@ -425,7 +431,7 @@ public class chatroom extends AppCompatActivity {
                 public void run() {
                     // 当用户离开时，从用户列表中清除
                     int uids = getUserIndex((long) uid);
-                    Roomhead i1 = new Roomhead("https://momeak.oss-cn-shenzhen.aliyuncs.com/h1.jpg", "", "", "", 0L, 0, false, false);
+                    Roomhead i1 = new Roomhead("", "", "", "", 0L, 0, false, false);
                     ChatRoomModel.mUserList.set(uids, i1);
                     ChatRoomModel.mAdapters.notifyDataSetChanged();
                 }
@@ -440,12 +446,12 @@ public class chatroom extends AppCompatActivity {
                     // 收到某个uid mute 状态后刷新人员列表
                     int index = getUserIndex((long) uid);
                     ChatRoomModel.mUserList.get(index).setAudioMute(muted);
-                    ChatRoomModel.mAdapters.notifyDataSetChanged();
+                    ChatRoomModel.mAdapters.notifyItemChanged(index);
                 }
             });
         }
 
-        @Override
+       /* @Override
         public void onJoinChannelSuccess(final String channel, final int uid, int elapsed) {
             runOnUiThread(new Runnable() {
                 @Override
@@ -455,7 +461,7 @@ public class chatroom extends AppCompatActivity {
 
                     SharedPreferences sp = Objects.requireNonNull(getSharedPreferences("Room", Context.MODE_PRIVATE));
                     String id = sp.getString("roomid", "");
-                    /** 进入频道，主播状态下将自己加入到 user 列表**/
+
                     if (bIsBroadCaster) {
                         Log.e(TAG, "主播加入" + uid);
                         if (mChannelName.equals(id)) {
@@ -472,7 +478,7 @@ public class chatroom extends AppCompatActivity {
 
                 }
             });
-        }
+        }*/
 
         @Override
         public void onAudioVolumeIndication(final AudioVolumeInfo[] speakers, int totalVolume) {
@@ -482,31 +488,14 @@ public class chatroom extends AppCompatActivity {
                     if (speakers != null) {
                         for (AudioVolumeInfo audioVolumeInfo : speakers) {
 
-                            /**
-                             * 根据uid判断是他人还是自己， uid 0 默认是自己，根据 uid = 0 的取本地音量值，和joinchannelsuccess 内
-                             * 本地的 LocalUid 对应
-                             *
-                             */
-                            if (audioVolumeInfo.uid != 0) {
                                 int index = getUserIndex((long) audioVolumeInfo.uid);
                                 if (index >= 0) {
+                                    System.out.println("音量"+audioVolumeInfo.volume);
                                     ChatRoomModel.mUserList.get(index).setAudioVolum(audioVolumeInfo.volume);
-                                    ChatRoomModel.mAdapters.notifyItemChanged(index, R.id.rippleback);
+                                    ChatRoomModel.mAdapters.notifyItemChanged(index);
                                 }
-                            } else {
-                                int index = getUserIndex(mLocalUid);
-                                if (index >= 0) {
-                                    ChatRoomModel.mUserList.get(index).setAudioVolum(audioVolumeInfo.volume);
-                                    ChatRoomModel.mAdapters.notifyItemChanged(index, R.id.rippleback);
-                                }
-                                    /*if (index >= 0) {
-                                        rippleback.startRippleAnimation();
-                                    }else{
-                                        rippleback.stopRippleAnimation();
-                                    }*/
-                            }
-                        }
 
+                        }
                     }
 
                 }
@@ -520,6 +509,7 @@ public class chatroom extends AppCompatActivity {
 
 
     private int getUserIndex(Long uid) {
+
         for (int i = 0; i < ChatRoomModel.mUserList.size(); i++) {
             if (ChatRoomModel.mUserList.get(i).getUid().equals(uid)) {
                 return i;
@@ -551,8 +541,6 @@ public class chatroom extends AppCompatActivity {
         decor.setSystemUiVisibility(ui);
 
 
-
-
         if (checkSelfPermission(Manifest.permission.RECORD_AUDIO, PERMISSION_REQ_ID_RECORD_AUDIO)) {
 
             initAgoraEngineAndJoinChannel();
@@ -574,15 +562,6 @@ public class chatroom extends AppCompatActivity {
         });
 
 
-    }
-
-    public int getStatusBarHeight() {
-        int result = 0;
-        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
-        if (resourceId > 0) {
-            result = getResources().getDimensionPixelSize(resourceId);
-        }
-        return result;
     }
 
 
@@ -662,11 +641,13 @@ public class chatroom extends AppCompatActivity {
         // 设置直播模式
         mRtcEngine.setChannelProfile(Constants.CHANNEL_PROFILE_LIVE_BROADCASTING);
         // 启动音量监听
-        mRtcEngine.enableAudioVolumeIndication(1000, 3, true);
+        mRtcEngine.enableAudioVolumeIndication(500, 5, true);
         // 当 joinChannel api 中填入 0 时，agora 服务器会生成一个唯一的随机数，并在 onJoinChannelSuccess 回调中返回
         SharedPreferences sp = Objects.requireNonNull(getSharedPreferences("User", Context.MODE_PRIVATE));
-        //mLocalUid = sp.getInt("userid", 1234);
-
+        mLocalUid = Long.valueOf(sp.getString("userid", ""));
+        if (mChannelName.equals(sp.getString("userid", ""))) {
+            administrator = true;
+        }
         mRtcEngine.joinChannel(null, mChannelName, "", Math.toIntExact(mLocalUid));
 
     }
@@ -681,6 +662,7 @@ public class chatroom extends AppCompatActivity {
             bIsBroadCaster = intent.getIntExtra(Constant.ACTION_KEY_CROLE, Constants.CLIENT_ROLE_AUDIENCE) == Constants.CLIENT_ROLE_BROADCASTER;
             mChannelName = intent.getStringExtra(Constant.ACTION_KEY_ROOM_NAME);
             mTitleName = intent.getStringExtra(Constant.ACTION_KEY_TITLE_NAME);
+            textView123.setText(mTitleName);
         }
     }
 
@@ -696,44 +678,42 @@ public class chatroom extends AppCompatActivity {
     }
 
 
-
     @OnClick({R.id.fold, R.id.imageView98, R.id.imageView101, R.id.imageView102, R.id.imageView103, R.id.imageView99, R.id.textView124, R.id.imageView104, R.id.imageView105, R.id.textViewc3s, R.id.textViewc7t, R.id.butc1, R.id.butc11, R.id.imageView4, R.id.imageViewc1t, R.id.imageViewc2t, R.id.imageViewc5s, R.id.recyclerbutc1, R.id.recyclerbutc2, R.id.recyclerbutc3, R.id.recyclerbutc4, R.id.recyclerbutc5, R.id.recyclerbutc7, R.id.recyclerbutc8, R.id.recyclerbutc8s, R.id.recyclerbutc9, R.id.recyclerbutc11, R.id.recyclerbutc11s, R.id.imageViewc1, R.id.imageViewc2, R.id.imageViewc3, R.id.imageViewc4, R.id.imageViewc5, R.id.imageViewc7, R.id.recyclerc8, R.id.imageViewc9, R.id.recyclerc11, R.id.relativec1, R.id.relativec2, R.id.relativec3, R.id.relativec4, R.id.relativec5, R.id.relativec7, R.id.relativec9})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.imageView101:
-                /**
-                 * 刚进入时根据是观众还是主播状态做一次UI控制，
-                 * */
-                if (bIsBroadCaster) {
-                    QMUIPopups.quickAction(this,
-                            QMUIDisplayHelper.dp2px(this, 46),
-                            QMUIDisplayHelper.dp2px(this, 46))
-                            .shadow(true)
-                            .edgeProtection(QMUIDisplayHelper.dp2px(this, 20))
-                            .addAction(new QMUIQuickAction.Action().icon(R.drawable.sets).text("设置").onClick(
-                                    new QMUIQuickAction.OnClickListener() {
-                                        @Override
-                                        public void onClick(QMUIQuickAction quickAction, QMUIQuickAction.Action action, int position) {
+                QMUIPopups.quickAction(this,
+                        QMUIDisplayHelper.dp2px(this, 46),
+                        QMUIDisplayHelper.dp2px(this, 46))
+                        .shadow(true)
+                        .edgeProtection(QMUIDisplayHelper.dp2px(this, 20))
+                        .addAction(new QMUIQuickAction.Action().icon(R.drawable.sets).text("设置").onClick(
+                                new QMUIQuickAction.OnClickListener() {
+                                    @Override
+                                    public void onClick(QMUIQuickAction quickAction, QMUIQuickAction.Action action, int position) {
+                                        if (administrator) {
                                             quickAction.dismiss();
                                             Intent intent2 = new Intent(chatroom.this, room_set.class);
                                             startActivity(intent2);
+                                        } else {
+                                            Toast.makeText(chatroom.this, "您没有此权限", Toast.LENGTH_SHORT).show();
                                         }
+
                                     }
-                            ))
-                            .addAction(new QMUIQuickAction.Action().icon(R.drawable.musics).text("音乐").onClick(
-                                    new QMUIQuickAction.OnClickListener() {
-                                        @Override
-                                        public void onClick(QMUIQuickAction quickAction, QMUIQuickAction.Action action, int position) {
-                                            quickAction.dismiss();
-                                            Intent intent2 = new Intent(chatroom.this, my_music.class);
-                                            startActivity(intent2);
-                                        }
+                                }
+                        ))
+                        .addAction(new QMUIQuickAction.Action().icon(R.drawable.musics).text("音乐").onClick(
+                                new QMUIQuickAction.OnClickListener() {
+                                    @Override
+                                    public void onClick(QMUIQuickAction quickAction, QMUIQuickAction.Action action, int position) {
+                                        quickAction.dismiss();
+                                        Intent intent2 = new Intent(chatroom.this, my_music.class);
+                                        startActivity(intent2);
                                     }
-                            ))
-                            .show(view);
-                } else {
-                    Toast.makeText(chatroom.this, "请上麦后使用", Toast.LENGTH_SHORT).show();
-                }
+                                }
+                        ))
+                        .show(view);
+
 
                 break;
             case R.id.imageView102:
@@ -806,14 +786,19 @@ public class chatroom extends AppCompatActivity {
                 break;
 
             case R.id.textViewc7t:
+                SharedPreferences sp = Objects.requireNonNull(getSharedPreferences("User", Context.MODE_PRIVATE));
+                String userid = sp.getString("userid", "");
+                String nickname = sp.getString("nickname", "");
+                String avatarUrl = sp.getString("avatarUrl", "");
+                String gender = sp.getString("gender", "");
                 if (bool) {
-                    int i = PaimaiModel.get("123456");
+                    int i = PaimaiModel.get(userid);
                     PaimaiModel.Remove(i);
                     textViewc7t.setText("申请排麦");
                     bool = false;
 
                 } else {
-                    Holdpeople i1 = new Holdpeople("123456", "https://momeak.oss-cn-shenzhen.aliyuncs.com/h3.jpg", "胡楠我", "", "0");
+                    Holdpeople i1 = new Holdpeople(userid, avatarUrl, nickname, gender, "0");
                     PaimaiModel.Add(recyclerc7, i1);
                     textViewc7t.setText("取消排麦");
                     bool = true;
@@ -916,11 +901,20 @@ public class chatroom extends AppCompatActivity {
         }
     }
 
-
+    /**
+     * Activity创建或者从后台重新回到前台时被调用
+     */
     @Override
     protected void onStart() {
         super.onStart();
-        //子页面回调
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        /**
+         * 子页面回调（按页面顺序）
+         */
         observer = new Observer<Integer>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -980,7 +974,7 @@ public class chatroom extends AppCompatActivity {
                     case 10:
                         break;
                     case 11:
-                        Log.e(TAG, "主播加入回调");
+                        Log.e(TAG, "主持人");
                         Glide.with(context).load("https://momeak.oss-cn-shenzhen.aliyuncs.com/h4.jpg").into(imageView2);
                         textView39.setText("苗苗主播");
                         textView19.setText("萌妹带你飞123");
@@ -1002,7 +996,9 @@ public class chatroom extends AppCompatActivity {
 
         };
 
-        //坑位弹窗
+        /**
+         * 坑位
+         */
         observers = new Observer<Integer>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -1011,63 +1007,12 @@ public class chatroom extends AppCompatActivity {
 
             @Override
             public void onNext(Integer view) {
-
+System.out.println("坑位"+view);
                 position = view;
+                if(administrator||Anchor||host){
+                    onClickBtn2(gridview.getChildAt(view));
+                }
 
-                String[] listItems = new String[]{
-                        "抱人",
-                        "禁言",
-                        "加锁",
-                        "一键全锁",
-                        "礼物",
-                };
-                List<String> data = new ArrayList<>();
-
-                Collections.addAll(data, listItems);
-
-                ArrayAdapter adapter = new ArrayAdapter<>(context, R.layout.simple_list_item, data);
-                AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        switch (i) {
-                            case 0:
-                                component3.setVisibility(View.VISIBLE);
-                                PaimaiModel.initrecyclers(context, recyclerc3);
-                                break;
-                            case 1:
-                                break;
-                            case 2:
-
-                                break;
-                            case 3:
-                                break;
-                            case 4:
-                                component9.setVisibility(View.VISIBLE);
-                                GiftModel.initData();
-                                GiftModel.initrecycler(context, recyclerc9);
-                                break;
-                        }
-                        if (mNormalPopup != null) {
-                            mNormalPopup.dismiss();
-                        }
-                    }
-                };
-                mNormalPopup = QMUIPopups.listPopup(context,
-                        QMUIDisplayHelper.dp2px(context, 250),
-                        QMUIDisplayHelper.dp2px(context, 300),
-                        adapter,
-                        onItemClickListener)
-                        .animStyle(QMUIPopup.ANIM_GROW_FROM_CENTER)
-                        .preferredDirection(QMUIPopup.DIRECTION_TOP)
-                        .shadow(true)
-                        .offsetYIfTop(QMUIDisplayHelper.dp2px(context, 5))
-                        .onDismiss(new PopupWindow.OnDismissListener() {
-                            @Override
-                            public void onDismiss() {
-
-                            }
-                        })
-                        .show(gridview.getChildAt(view));
             }
 
             @Override
@@ -1081,7 +1026,9 @@ public class chatroom extends AppCompatActivity {
             }
         };
 
-        //聊天
+        /**
+         * 私聊
+         */
         observerchat = new Observer<Integer>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -1124,7 +1071,9 @@ public class chatroom extends AppCompatActivity {
             }
         };
 
-        //svga动画
+        /**
+         * 显示svga动画
+         */
         observersvga = new Observer<Integer>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -1164,7 +1113,80 @@ public class chatroom extends AppCompatActivity {
 
     }
 
-    //退出弹窗
+    @Override
+    public void onBackPressed() {
+        showSimpleBottomSheetList(
+                true, true, false, "您确定要离开房间吗？",
+                2, true, false);
+    }
+
+    /**
+     * 坑位弹窗
+     */
+    private void onClickBtn2(View v) {
+        String[] listItems = new String[]{
+                "抱人",
+                "禁言",
+                "加锁",
+                "一键全锁",
+                "礼物",
+        };
+        List<String> data = new ArrayList<>();
+
+        Collections.addAll(data, listItems);
+
+        ArrayAdapter adapter = new ArrayAdapter<>(context, R.layout.simple_list_item, data);
+        AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                switch (i) {
+                    case 0:
+                        component3.setVisibility(View.VISIBLE);
+                        PaimaiModel.initrecyclers(context, recyclerc3);
+                        break;
+                    case 1:
+                        ChatRoomModel.self(mRtcEngine,position);
+                        ChatRoomModel.mUserList.get(position).setAudioVolum(0);
+                        ChatRoomModel.mUserList.get(position).setMsima("1");
+                        ChatRoomModel.mAdapters.notifyItemChanged(position);
+                        break;
+                    case 2:
+
+                        break;
+                    case 3:
+                        break;
+                    case 4:
+                        component9.setVisibility(View.VISIBLE);
+                        GiftModel.initData();
+                        GiftModel.initrecycler(context, recyclerc9);
+                        break;
+                }
+                if (mNormalPopup != null) {
+                    mNormalPopup.dismiss();
+                }
+            }
+        };
+        mNormalPopup = QMUIPopups.listPopup(context,
+                QMUIDisplayHelper.dp2px(context, 250),
+                QMUIDisplayHelper.dp2px(context, 300),
+                adapter,
+                onItemClickListener)
+                .animStyle(QMUIPopup.ANIM_GROW_FROM_CENTER)
+                .preferredDirection(QMUIPopup.DIRECTION_TOP)
+                .shadow(true)
+                .offsetYIfTop(QMUIDisplayHelper.dp2px(context, 5))
+                .onDismiss(new PopupWindow.OnDismissListener() {
+                    @Override
+                    public void onDismiss() {
+
+                    }
+                })
+                .show(v);
+    }
+
+    /**
+     * 退出弹窗
+     */
     private void showSimpleBottomSheetList(boolean gravityCenter,
                                            boolean addCancelBtn,
                                            boolean withIcon,
@@ -1213,7 +1235,9 @@ public class chatroom extends AppCompatActivity {
     }
 
 
-    //分享弹窗
+    /**
+     * 分享弹窗
+     */
     private void showSimpleBottomSheetGrid() {
         final int TAG_SHARE_WECHAT_FRIEND = 0;
         final int TAG_SHARE_WECHAT_MOMENT = 1;
@@ -1250,15 +1274,10 @@ public class chatroom extends AppCompatActivity {
 
     }
 
-    @Override
-    public void onBackPressed() {
-        showSimpleBottomSheetList(
-                true, true, false, "您确定要离开房间吗？",
-                2, true, false);
-    }
 
-
-    //加载svga
+    /**
+     * 加载svga
+     */
     private void loadAnimation(SVGAImageView svga, int type, String url, String ima, String imaforkey, String txt, String txtforkey) {
         // new URL needs try catch.
         parser = new SVGAParser(this);

@@ -25,12 +25,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".mqtttest">
+        <activity android:name=".startup_page">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
-
+        <activity android:name=".mqtttest" />
         <service android:name="org.eclipse.paho.android.service.MqttService" />
-
         <activity android:name=".room_theme" />
         <activity android:name=".room_online" />
         <activity android:name=".system_information" />
@@ -62,10 +65,7 @@
         <activity android:name=".room_set" />
         <activity android:name=".chatroom_chat" />
         <activity android:name=".find_make" />
-        <activity android:name=".chatroom"
-            android:configChanges="orientation|keyboardHidden|keyboard"
-            android:launchMode="singleInstance"
-            android:windowSoftInputMode="adjustResize"/>
+        <activity android:name=".chatroom"/>
         <activity android:name=".chat" />
         <activity android:name=".mess_friends" />
         <activity android:name=".my_favorite" />
@@ -82,13 +82,7 @@
         <activity android:name=".family_search" />
         <activity android:name=".modify_information" />
         <activity android:name=".homepage" />
-        <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>

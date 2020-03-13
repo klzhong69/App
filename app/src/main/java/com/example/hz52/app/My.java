@@ -281,10 +281,10 @@ public class My extends Fragment {
                 SharedPreferences sp = getActivity().getSharedPreferences("Room", Context.MODE_PRIVATE);
                 sp.edit().putString("roomid", "123456").apply();
                 Intent intent7 = new Intent(getContext(), chatroom.class);
-                intent7.putExtra(Constant.ACTION_KEY_CROLE, Constants.CLIENT_ROLE_BROADCASTER);
+                intent7.putExtra(Constant.ACTION_KEY_CROLE, Constants.CLIENT_ROLE_AUDIENCE);
                 intent7.putExtra(Constant.ACTION_KEY_ROOM_MODE, Constant.ChatRoomEntertainmentStandard);
-                intent7.putExtra(Constant.ACTION_KEY_ROOM_NAME, "123456");
-                intent7.putExtra(Constant.ACTION_KEY_TITLE_NAME, "123456");
+                intent7.putExtra(Constant.ACTION_KEY_ROOM_NAME, "127167100");
+                intent7.putExtra(Constant.ACTION_KEY_TITLE_NAME, "测试房间");
                 startActivity(intent7);
                 break;
             case R.id.imageView74:
