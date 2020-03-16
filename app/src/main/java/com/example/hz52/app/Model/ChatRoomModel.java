@@ -28,6 +28,7 @@ public class ChatRoomModel {
     public static ArrayList<Roomhead> mUserList;
     private static RoomtxtAdapter mAdapter;
     public static RoomheadAdapter mAdapters;
+    public static GridLayoutManager mLayoutManager;
 
     public static void initData(){
         mUserList = new ArrayList<Roomhead>();
@@ -90,7 +91,7 @@ public class ChatRoomModel {
         mRecyclerView.setAdapter(mAdapters);
 
         //多列布局
-        GridLayoutManager mLayoutManager = new GridLayoutManager(context, 4);
+         mLayoutManager = new GridLayoutManager(context, 4);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
 
@@ -172,12 +173,12 @@ public class ChatRoomModel {
      */
     public static void self(RtcEngine mRtcEngine,int id) {
         //mRtcEngine.muteLocalAudioStream(true);
-        System.out.println("用户ID"+mUserList.get(id).getUid());
         System.out.println("禁用"+mRtcEngine.muteRemoteAudioStream(Math.toIntExact(mUserList.get(id).getUid()),true));;
     }
 
 
     public static void locsuser(int position,Roomhead roomhead){
+        System.out.println("坑位"+position);
         mUserList.set(position,roomhead);
         mAdapters.notifyItemChanged(position);
     }

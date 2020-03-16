@@ -32,6 +32,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.hz52.app.Adapter.HoldpeopleAdapter;
+import com.example.hz52.app.Adapter.RoomheadAdapter;
 import com.example.hz52.app.Entity.Chats;
 import com.example.hz52.app.Entity.Holdpeople;
 import com.example.hz52.app.Entity.Roomhead;
@@ -488,12 +489,45 @@ public class chatroom extends AppCompatActivity {
                     if (speakers != null) {
                         for (AudioVolumeInfo audioVolumeInfo : speakers) {
 
+                            if (audioVolumeInfo.uid != 0) {
                                 int index = getUserIndex((long) audioVolumeInfo.uid);
                                 if (index >= 0) {
-                                    System.out.println("音量"+audioVolumeInfo.volume);
-                                    ChatRoomModel.mUserList.get(index).setAudioVolum(audioVolumeInfo.volume);
-                                    ChatRoomModel.mAdapters.notifyItemChanged(index);
+                                    View view = ChatRoomModel.mLayoutManager.findViewByPosition(index);
+                                    RippleBackground rippleBackground;
+                                    if (view != null) {
+                                        rippleBackground = view.findViewById(R.id.rippleback);
+                                        if (audioVolumeInfo.volume > 0) {
+                                            if(!rippleBackground.isRippleAnimationRunning()){
+                                                rippleBackground.startRippleAnimation();
+                                            }
+                                        }else{
+                                            if(rippleBackground.isRippleAnimationRunning()){
+                                                rippleBackground.stopRippleAnimation();
+                                            }
+                                        }
+                                    }
                                 }
+                            } else {
+                                int index = getUserIndex(mLocalUid);
+                                if (index >= 0) {
+                                    System.out.println("音量"+audioVolumeInfo.volume);
+                                    View view = ChatRoomModel.mLayoutManager.findViewByPosition(position);
+                                    RippleBackground rippleBackground;
+                                    if (view != null) {
+                                        rippleBackground = view.findViewById(R.id.rippleback);
+                                        if (audioVolumeInfo.volume > 0) {
+                                            if(!rippleBackground.isRippleAnimationRunning()){
+                                                rippleBackground.startRippleAnimation();
+                                            }
+                                        }else{
+                                            if(rippleBackground.isRippleAnimationRunning()){
+                                                rippleBackground.stopRippleAnimation();
+                                            }
+                                        }
+                                    }
+
+                                }
+                            }
 
                         }
                     }
@@ -663,6 +697,7 @@ public class chatroom extends AppCompatActivity {
             mChannelName = intent.getStringExtra(Constant.ACTION_KEY_ROOM_NAME);
             mTitleName = intent.getStringExtra(Constant.ACTION_KEY_TITLE_NAME);
             textView123.setText(mTitleName);
+            textView121.setText("ID " + mChannelName);
         }
     }
 
@@ -811,8 +846,8 @@ public class chatroom extends AppCompatActivity {
                     if (HoldpeopleAdapter.states.get(i)) {
                         Roomhead roomhead = new Roomhead(HoldpeopleAdapter.mEntityList.get(i).getUserima(), HoldpeopleAdapter.mEntityList.get(i).getName(), "", "", mLocalUid, 0, false, false);
                         ChatRoomModel.showBroadCast(mRtcEngine, mLocalUid, position, roomhead);
-                        component3.setVisibility(View.GONE);
                         PaimaiModel.Remove(i);
+                        component3.setVisibility(View.GONE);
                         bIsBroadCaster = true;
                     }
                 }
@@ -1007,9 +1042,9 @@ public class chatroom extends AppCompatActivity {
 
             @Override
             public void onNext(Integer view) {
-System.out.println("坑位"+view);
+                System.out.println("坑位" + view);
                 position = view;
-                if(administrator||Anchor||host){
+                if (administrator || Anchor || host) {
                     onClickBtn2(gridview.getChildAt(view));
                 }
 
@@ -1145,8 +1180,7 @@ System.out.println("坑位"+view);
                         PaimaiModel.initrecyclers(context, recyclerc3);
                         break;
                     case 1:
-                        ChatRoomModel.self(mRtcEngine,position);
-                        ChatRoomModel.mUserList.get(position).setAudioVolum(0);
+                        ChatRoomModel.self(mRtcEngine, position);
                         ChatRoomModel.mUserList.get(position).setMsima("1");
                         ChatRoomModel.mAdapters.notifyItemChanged(position);
                         break;

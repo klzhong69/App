@@ -27,9 +27,29 @@
             android:layout_alignParentTop="true"
             android:layout_marginStart="@dimen/dp_10"
             android:layout_marginTop="@dimen/dp_10"
-            android:src="@drawable/toux"
+            android:src="@drawable/add2"
             app:qmui_border_width="0dp"
             app:qmui_corner_radius="@dimen/dp_50" />
+
+        <ImageView
+            android:id="@+id/imageView107"
+            android:layout_width="@dimen/dp_25"
+            android:layout_height="@dimen/dp_25"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="@dimen/dp_5"
+            android:layout_marginBottom="@dimen/dp_5"
+            app:srcCompat="@drawable/jingyin" />
+
+        <ImageView
+            android:id="@+id/imageView46"
+            android:layout_width="@dimen/dp_25"
+            android:layout_height="@dimen/dp_25"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="@dimen/dp_5"
+            android:layout_marginBottom="@dimen/dp_5"
+            app:srcCompat="@drawable/l_love" />
     </com.skyfishjy.library.RippleBackground>
 
 
@@ -55,21 +75,5 @@
         app:layout_constraintEnd_toEndOf="@+id/rippleback"
         app:layout_constraintStart_toStartOf="@+id/rippleback"
         app:layout_constraintTop_toBottomOf="@+id/rippleback" />
-
-    <ImageView
-        android:id="@+id/imageView46"
-        android:layout_width="@dimen/dp_30"
-        android:layout_height="@dimen/dp_30"
-        android:layout_alignStart="@+id/rippleback"
-        android:layout_alignBottom="@+id/rippleback"
-        app:srcCompat="@drawable/l_love" />
-
-    <ImageView
-        android:id="@+id/imageView107"
-        android:layout_width="@dimen/dp_30"
-        android:layout_height="@dimen/dp_30"
-        android:layout_alignEnd="@+id/rippleback"
-        android:layout_alignBottom="@+id/rippleback"
-        app:srcCompat="@drawable/jingyin" />
 
 </RelativeLayout>
