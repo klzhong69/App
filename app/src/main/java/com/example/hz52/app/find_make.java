@@ -212,7 +212,7 @@ public class find_make extends AppCompatActivity implements OnItemClickListener,
 
         OkGo.<String>post(application.getUrl() + "/app/user/sendBroadcast?token=" + token)
                 .params("userId", userid)
-                .params("content", editText.getText().toString())
+                .params("broadcast", editText.getText().toString())
                 .execute(new StringCallback() {
 
                     @Override

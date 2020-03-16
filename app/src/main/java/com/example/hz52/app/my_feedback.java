@@ -105,6 +105,7 @@ public class my_feedback extends AppCompatActivity {
             case R.id.but:
                 if (editText.getText().equals("")) {
                     if (editText3.getText().equals("")) {
+                        okgo();
                         Toast.makeText(my_feedback.this, "提交成功", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(my_feedback.this, "请输入意见", Toast.LENGTH_SHORT).show();
@@ -156,11 +157,11 @@ public class my_feedback extends AppCompatActivity {
         for(int i=0;i<map.size();i++){
             pic[i]=map.get(i);
         }
-        OkGo.<String>post(application.getUrl()+"/app/user/getWallet?token="+token)
+        OkGo.<String>post(application.getUrl()+"/app/user/feedback?token="+token)
                 .params("userId",userid)
                 .params("phone",editText.getText().toString())
                 .params("question",editText3.getText().toString())
-                .params("pictures",pic.toString())
+                .params("pictures",map.toString())
                 .execute(new StringCallback() {
 
                     @Override
@@ -273,7 +274,7 @@ public class my_feedback extends AppCompatActivity {
                                 OSSSet.OSSClient(my_feedback.this, AccessKeyId, AccessKeySecret, SecurityToken, region, bucket);
                                 String name = "feedback"+ DateUtil.getCurrentMillis()+".jpg";
                                 OSSSet.Callback(bucket, phone + "/"+ name, picturePath, userid);
-                                map.put(in,name);
+                                map.put(in,phone + "/"+ name);
                             }
 
                         } else if (prexiew.getCode() == 40000) {

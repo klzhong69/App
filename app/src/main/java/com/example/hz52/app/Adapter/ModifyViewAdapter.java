@@ -10,8 +10,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.hz52.app.Entity.Modify;
 import com.example.hz52.app.R;
+import com.example.hz52.app.modify_information;
 
 import java.util.List;
 
@@ -47,10 +50,15 @@ public class ModifyViewAdapter extends RecyclerView.Adapter {
         Modify entity = mEntityList.get(position);
 
 
-        if(entity.getImagesrc().equals("0")){
+        if(entity.getType().equals("0")){
             Glide.with(mContext).load(R.drawable.add3).into(((ModifyViewAdapter.DemoViewHolder)holder).mIma);
-        }else{
+        }else if(entity.getType().equals("1")){
             Glide.with(mContext).load(entity.getImagesrc()).into(((ModifyViewAdapter.DemoViewHolder)holder).mIma);
+        }else{
+            RequestOptions requestOptions = new RequestOptions()
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .skipMemoryCache(true);
+            Glide.with(mContext).load(entity.getImagesrc()).apply(requestOptions).into(((ModifyViewAdapter.DemoViewHolder)holder).mIma);
         }
 
 

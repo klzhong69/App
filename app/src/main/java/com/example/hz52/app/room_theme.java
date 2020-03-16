@@ -1,9 +1,12 @@
 package com.example.hz52.app;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -11,7 +14,15 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hz52.app.Adapter.ThemeAdapter;
+import com.example.hz52.app.Entity.Findlist;
+import com.example.hz52.app.Entity.MyApp;
 import com.example.hz52.app.Entity.Theme;
+import com.example.hz52.app.cofig.Preview;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
 
 import java.util.ArrayList;
 
@@ -69,6 +80,75 @@ public class room_theme extends AppCompatActivity {
             Theme i1 = new Theme("https://momeak.oss-cn-shenzhen.aliyuncs.com/h5.jpg", "默认主题", "免费", type);
             mArrayList.add(i1);
         }
+
+    }
+
+    private void okgo() {
+        MyApp application = ((MyApp) this.getApplicationContext());
+        SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
+        String userid = sp.getString("userid", "");
+        String roomid = sp.getString("roomid", "");
+        String token = sp.getString("token", "");
+        OkGo.<String>post(application.getUrl() + "/app/room/getAllBackground?token=" + token)
+                .params("userId", userid)
+                .execute(new StringCallback() {
+
+                    @Override
+                    public void onSuccess(Response<String> response) {
+
+                        Gson gson = new Gson();
+                        Preview prexiew = gson.fromJson(response.body(), Preview.class);
+
+                        if (prexiew.getCode() == 0) {
+                            JsonArray broadcasts = prexiew.getData().getAsJsonArray("backgrounds");
+
+                            if (broadcasts.size() > 0) {
+                                for (int i = 0; i < broadcasts.size(); i++) {
+                                    String isActive = broadcasts.get(i).getAsJsonObject().get("isActive").getAsString();
+                                    String id = broadcasts.get(i).getAsJsonObject().get("id").getAsString();
+                                    String smallPicUrl = broadcasts.get(i).getAsJsonObject().get("smallPicUrl").getAsString();
+                                    String bigPicUrl = broadcasts.get(i).getAsJsonObject().get("bigPicUrl").getAsString();
+                                    String backgroundName = broadcasts.get(i).getAsJsonObject().get("backgroundName").getAsString();
+                                    String backgroundCategory = broadcasts.get(i).getAsJsonObject().get("backgroundCategory").getAsString();
+                                }
+
+                            }
+
+                        } else if (prexiew.getCode() == 40000) {
+                            Toast.makeText(room_theme.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+    }
+
+    private void okgos() {
+        MyApp application = ((MyApp) this.getApplicationContext());
+        SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
+        String userid = sp.getString("userid", "");
+        String roomid = sp.getString("roomid", "");
+        String token = sp.getString("token", "");
+        OkGo.<String>post(application.getUrl() + "/app/room/setBackground?token=" + token)
+                .params("userId", userid)
+                .params("roomId", roomid)
+                .params("newBackgroundId", 2)
+                .execute(new StringCallback() {
+
+                    @Override
+                    public void onSuccess(Response<String> response) {
+
+                        Gson gson = new Gson();
+                        Preview prexiew = gson.fromJson(response.body(), Preview.class);
+
+                        if (prexiew.getCode() == 0) {
+                            Toast.makeText(room_theme.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
+
+                        } else if (prexiew.getCode() == 40000) {
+                            Toast.makeText(room_theme.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                });
 
     }
 

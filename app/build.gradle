@@ -121,8 +121,6 @@ dependencies {
 
     implementation 'com.skyfishjy.ripplebackground:library:1.0.1'//波纹控制
 
-    implementation 'com.github.zackratos.ultimatebar:ultimatebar3:3.1.1'//沉浸式
-
 }
 
 greendao {

@@ -329,4 +329,9 @@ public class My extends Fragment {
         }
     }
 
+    /*RequestOptions options = new RequestOptions()
+            .placeholder(R.drawable.img_default)//图片加载出来前，显示的图片
+            .fallback( R.drawable.img_blank) //url为空的时候,显示的图片
+            .error(drawable.img_load_failure);//图片加载失败后，显示的图片*/
+
 }

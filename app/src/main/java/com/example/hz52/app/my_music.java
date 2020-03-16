@@ -154,7 +154,7 @@ public class my_music extends AppCompatActivity {
         SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
         String userid = sp.getString("userid","");
         String token = sp.getString("token","");
-        OkGo.<String>post(application.getUrl() + "/app/user/getInfo?token=" + token)
+        OkGo.<String>post(application.getUrl() + "/app/user/getMusicList?token=" + token)
                 .params("userId", userid)
                 .execute(new StringCallback() {
 

@@ -254,8 +254,8 @@ public class homepage extends AppCompatActivity {
 
                         if (prexiew.getCode() == 0) {
 
-                            JsonArray friend = prexiew.getData().getAsJsonArray("friend");
-                            JsonArray photo = prexiew.getData().getAsJsonArray("photo");
+                            JsonArray friend = prexiew.getData().getAsJsonArray("friends");
+                            JsonArray photo = prexiew.getData().getAsJsonArray("photos");
                             JsonArray giftWall = prexiew.getData().getAsJsonArray("giftWall");
                             JsonArray honor = prexiew.getData().getAsJsonArray("honor");
 
@@ -264,19 +264,33 @@ public class homepage extends AppCompatActivity {
                             }else{
                                 textView11.setText(prexiew.getData().get("signtureText").getAsString());
                             }
-
+                            String userId = prexiew.getData().get("userId").getAsString();
                             avatarUrl = prexiew.getData().get("avatarUrl").getAsString();
                             nickname = prexiew.getData().get("nickname").getAsString();
-                            userids=prexiew.getData().get("userId").getAsString();
+                            String gold = prexiew.getData().get("gold").getAsString();
+                            String diamond = prexiew.getData().get("diamond").getAsString();
+
+                            String followCount = prexiew.getData().get("followCount").getAsString();
+                            String fansCount = prexiew.getData().get("fansCount").getAsString();
+                            String signtureVoiceUrl = prexiew.getData().get("signtureVoiceUrl").getAsString();
+                            String isFollow = prexiew.getData().get("isFollow").getAsString();
+
                             textView2.setText(prexiew.getData().get("nickname").getAsString());
                             Glide.with(homepage.this).load(prexiew.getData().get("avatarUrl").getAsString()).into(imageView2);
                             textView5.setText(prexiew.getData().get("followCount").getAsString());
                             textView9.setText(prexiew.getData().get("fansCount").getAsString());
 
-                            HomePageModel.initData(honor, photo, giftWall);
-                            HomePageModel.initrecycler(context, recycler);
-                            HomePageModel.initrecyclers(context, recycler2);
-                            HomePageModel.initrecyclert(context, recycler3);
+                                if (photo != null || giftWall!= null) {
+                                    if (honor != null) {
+                                        HomePageModel.initData(honor, photo, giftWall);
+                                        HomePageModel.initrecycler(context, recycler);
+                                        HomePageModel.initrecyclers(context, recycler2);
+                                        HomePageModel.initrecyclert(context, recycler3);
+                                    }
+
+                                }
+
+
                             tipDialog.dismiss();
                         } else if (prexiew.getCode() == 40000) {
                             Toast.makeText(homepage.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
@@ -294,8 +308,8 @@ public class homepage extends AppCompatActivity {
         String userid = sp.getString("userid", "");
         String token = sp.getString("token", "");
         OkGo.<String>post(application.getUrl() + "/app/user/follows?token=" + token)
-                .params("userId", "923883237")
-                .params("followId", "692240405")
+                .params("userId", userid)
+                .params("followId", followId)
                 .execute(new StringCallback() {
 
                     @Override

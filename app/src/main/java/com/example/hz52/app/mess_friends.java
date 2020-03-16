@@ -1,17 +1,28 @@
 package com.example.hz52.app;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.hz52.app.Entity.Footprint;
 import com.example.hz52.app.Entity.Friends;
+import com.example.hz52.app.Entity.MyApp;
+import com.example.hz52.app.Entity.Mymusic;
 import com.example.hz52.app.Model.MessFriendsModel;
+import com.example.hz52.app.cofig.Preview;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
 
 import java.util.List;
 
@@ -94,4 +105,5 @@ public class mess_friends extends AppCompatActivity {
         this.finish();
         overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
     }
+
 }

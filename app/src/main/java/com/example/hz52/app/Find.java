@@ -1,6 +1,8 @@
 package com.example.hz52.app;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,6 +12,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -19,6 +22,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hz52.app.Adapter.FindListAdapter;
 import com.example.hz52.app.Entity.Findlist;
+import com.example.hz52.app.Entity.Findmake;
+import com.example.hz52.app.Entity.MyApp;
+import com.example.hz52.app.cofig.Preview;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.scwang.smart.refresh.footer.ClassicsFooter;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
@@ -152,6 +163,44 @@ public class Find extends Fragment {
             mArrayList.add(i1);
         }
         tipDialog.dismiss();
+
+    }
+
+    private void okgos() {
+        MyApp application = ((MyApp) getContext().getApplicationContext());
+        OkGo.<String>post(application.getUrl() + "/app/page/getHot" )
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+
+                        Gson gson = new Gson();
+                        Preview prexiew = gson.fromJson(response.body(), Preview.class);
+
+                        if (prexiew.getCode() == 0) {
+
+                            JsonArray broadcasts = prexiew.getData().getAsJsonArray("hot");
+
+                            if (broadcasts.size() > 0) {
+                                for (int i = 0; i < broadcasts.size(); i++) {
+                                    String hot = broadcasts.get(i).getAsJsonObject().get("hot").getAsString();
+                                    String ownerId = broadcasts.get(i).getAsJsonObject().get("ownerId").getAsString();
+                                    String uniqueId = broadcasts.get(i).getAsJsonObject().get("uniqueId").getAsString();
+                                    String coverUrl = broadcasts.get(i).getAsJsonObject().get("coverUrl").getAsString();
+                                    String roomName = broadcasts.get(i).getAsJsonObject().get("roomName").getAsString();
+                                    String welcomeText = broadcasts.get(i).getAsJsonObject().get("welcomeText").getAsString();
+                                    JsonArray tag = broadcasts.get(i).getAsJsonObject().get("tag").getAsJsonArray();
+                                    String ownerName = broadcasts.get(i).getAsJsonObject().get("ownerName").getAsString();
+                                    Findlist i1 = new Findlist(roomName, welcomeText, hot, coverUrl, "", tag.get(0).getAsString(), tag.get(1).getAsString(), tag.get(2).getAsString());
+                                    mArrayList.add(i1);
+                                }
+
+                            } else if (prexiew.getCode() == 40000) {
+                                Toast.makeText(getContext(), prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                }
+                });
 
     }
 

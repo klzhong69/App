@@ -3,6 +3,7 @@ package com.example.hz52.app;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
@@ -113,8 +114,6 @@ public class modify_information extends AppCompatActivity {
                     PictureSelector
                             .create(modify_information.this, PictureSelector.SELECT_REQUEST_CODE)
                             .selectPicture(true, 200, 200, 1, 1);
-                } else {
-                    Toast.makeText(modify_information.this, position + " click", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -157,12 +156,12 @@ public class modify_information extends AppCompatActivity {
 
     private void init() {
         mData = new ArrayList<Modify>();
-        for (int i = 0; i < 12; i++) {
-            Modify i1 = new Modify("https://momeak.oss-cn-shenzhen.aliyuncs.com/h2.jpg");
+        for (int i = 0; i < 2; i++) {
+            Modify i1 = new Modify("https://momeak.oss-cn-shenzhen.aliyuncs.com/h2.jpg","1");
             mData.add(i1);
         }
 
-        Modify i1 = new Modify("0");
+        Modify i1 = new Modify("0","0");
         mData.add(mData.size(), i1);
 
 
@@ -341,11 +340,15 @@ public class modify_information extends AppCompatActivity {
                                                 .circleCropTransform()
                                                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                                                 .skipMemoryCache(true);
+                                        System.out.println("图片地址："+picturePath);
                                         Glide.with(modify_information.this).load(picturePath).apply(requestOptions).into(imageView2);
                                         okgoima();
                                         break;
-
                                     case 1:
+                                        Modify i1 = new Modify(picturePath,"2");
+                                        mAdapters.addData(mData.size()-1, i1);
+                                        mAdapters.notifyItemChanged(mData.size()-1);
+                                        //okgoimas();
                                         break;
                                 }
                             }

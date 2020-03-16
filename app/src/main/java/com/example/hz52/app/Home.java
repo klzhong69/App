@@ -23,7 +23,15 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+import com.example.hz52.app.Entity.Findlist;
 import com.example.hz52.app.Entity.Homes;
+import com.example.hz52.app.Entity.MyApp;
+import com.example.hz52.app.cofig.Preview;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.wildma.pictureselector.Constant;
 
@@ -336,6 +344,42 @@ public class  Home extends Fragment {
 
     }
 
+    private void okgos() {
+        MyApp application = ((MyApp) getContext().getApplicationContext());
+        OkGo.<String>post(application.getUrl() + "/app/page/getHome" )
+                .params("count", 2)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+
+                        Gson gson = new Gson();
+                        Preview prexiew = gson.fromJson(response.body(), Preview.class);
+
+                        if (prexiew.getCode() == 0) {
+
+                            JsonArray broadcasts = prexiew.getData().getAsJsonArray("home");
+
+                            if (broadcasts.size() > 0) {
+                                for (int i = 0; i < broadcasts.size(); i++) {
+                                    String hot = broadcasts.get(i).getAsJsonObject().get("roomInfo").getAsString();
+                                    String ownerId = broadcasts.get(i).getAsJsonObject().get("ownerId").getAsString();
+                                    String uniqueId = broadcasts.get(i).getAsJsonObject().get("uniqueId").getAsString();
+                                    String coverUrl = broadcasts.get(i).getAsJsonObject().get("coverUrl").getAsString();
+                                    String roomName = broadcasts.get(i).getAsJsonObject().get("roomName").getAsString();
+                                    String welcomeText = broadcasts.get(i).getAsJsonObject().get("welcomeText").getAsString();
+                                    JsonArray tag = broadcasts.get(i).getAsJsonObject().get("tag").getAsJsonArray();
+                                    String ownerName = broadcasts.get(i).getAsJsonObject().get("ownerName").getAsString();
+                                }
+
+                            } else if (prexiew.getCode() == 40000) {
+                                Toast.makeText(getContext(), prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                    }
+                });
+
+    }
 
     private void initView(int num) {
         if (num > 0) {

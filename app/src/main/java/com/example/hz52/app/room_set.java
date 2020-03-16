@@ -1,15 +1,24 @@
 package com.example.hz52.app;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.hz52.app.Entity.MyApp;
+import com.example.hz52.app.cofig.Preview;
+import com.google.gson.Gson;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
 import butterknife.BindView;
@@ -71,6 +80,7 @@ public class room_set extends AppCompatActivity {
     @BindView(R.id.imageView126)
     ImageView imageView126;
 
+    private String mode;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,9 +88,78 @@ public class room_set extends AppCompatActivity {
         ButterKnife.bind(this);
         title.setText("房间设置");
         subtitle.setText("");
+        but.setBackgroundColor(Color.parseColor("#DFEF6598"));
+        but2.setBackgroundColor(Color.parseColor("#ABABAB"));
+        but3.setBackgroundColor(Color.parseColor("#ABABAB"));
+        but4.setBackgroundColor(Color.parseColor("#ABABAB"));
+    }
+
+    private void okgo() {
+        MyApp application = ((MyApp) this.getApplicationContext());
+        SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
+        String userid = sp.getString("userid", "");
+        String roomid = sp.getString("roomid", "");
+        String token = sp.getString("token", "");
+        OkGo.<String>post(application.getUrl() + "/app/room/getInfo?token=" + token)
+                .params("userId", userid)
+                .params("roomId", roomid)
+                .execute(new StringCallback() {
+
+                    @Override
+                    public void onSuccess(Response<String> response) {
+
+                        Gson gson = new Gson();
+                        Preview prexiew = gson.fromJson(response.body(), Preview.class);
+
+                        if (prexiew.getCode() == 0) {
+                            String roomName = prexiew.getData().get("roomName").getAsString();
+                            String announce = prexiew.getData().get("announce").getAsString();
+                            String mode = prexiew.getData().get("mode").getAsString();
+                            String backgroundId = prexiew.getData().get("backgroundId").getAsString();
+                            String password = prexiew.getData().get("password").getAsString();
+
+                        } else if (prexiew.getCode() == 40000) {
+                            Toast.makeText(room_set.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                });
+
     }
 
 
+    private void okgos() {
+        MyApp application = ((MyApp) this.getApplicationContext());
+        SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
+        String userid = sp.getString("userid", "");
+        String roomid = sp.getString("roomid", "");
+        String token = sp.getString("token", "");
+        OkGo.<String>post(application.getUrl() + "/app/room/getInfo?token=" + token)
+                .params("userId", userid)
+                .params("roomId", roomid)
+                .params("roomName", editText.getText().toString())
+                .params("announce", editText3.getText().toString())
+                .params("password", editText2.getText().toString())
+                .params("mode", mode)
+                .execute(new StringCallback() {
+
+                    @Override
+                    public void onSuccess(Response<String> response) {
+
+                        Gson gson = new Gson();
+                        Preview prexiew = gson.fromJson(response.body(), Preview.class);
+
+                        if (prexiew.getCode() == 0) {
+                            Toast.makeText(room_set.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
+
+                        } else if (prexiew.getCode() == 40000) {
+                            Toast.makeText(room_set.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                });
+
+    }
     @OnClick({R.id.fold, R.id.but, R.id.but2, R.id.but3, R.id.but4, R.id.imageView119, R.id.textView137, R.id.imageView120, R.id.imageView121, R.id.textView138, R.id.imageView124, R.id.imageView122, R.id.textView139, R.id.imageView125, R.id.imageView123, R.id.textView140, R.id.imageView126})
     public void onViewClicked(View view) {
         switch (view.getId()) {
