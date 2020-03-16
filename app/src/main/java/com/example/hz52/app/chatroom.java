@@ -842,19 +842,16 @@ public class chatroom extends AppCompatActivity {
                 break;
 
             case R.id.textViewc3s:
-                for (int i = 0; i < HoldpeopleAdapter.states.size(); i++) {
-                    if (HoldpeopleAdapter.states.get(i)) {
-                        Roomhead roomhead = new Roomhead(HoldpeopleAdapter.mEntityList.get(i).getUserima(), HoldpeopleAdapter.mEntityList.get(i).getName(), "", "", mLocalUid, 0, false, false);
-                        ChatRoomModel.showBroadCast(mRtcEngine, mLocalUid, position, roomhead);
-                        PaimaiModel.Remove(i);
-                        component3.setVisibility(View.GONE);
-                        bIsBroadCaster = true;
-                    }
+                    for (int i = 0; i < HoldpeopleAdapter.states.size(); i++) {
+                        if (HoldpeopleAdapter.states.get(i) != null) {
+                            Roomhead roomhead = new Roomhead(HoldpeopleAdapter.mEntityList.get(i).getUserima(), HoldpeopleAdapter.mEntityList.get(i).getName(), "", "", mLocalUid, 0, false, false);
+                            ChatRoomModel.showBroadCast(mRtcEngine, mLocalUid, position, roomhead);
+                            PaimaiModel.Remove(i);
+                            component3.setVisibility(View.GONE);
+                            bIsBroadCaster = true;
+                        }
                 }
-
-
                 break;
-
             case R.id.imageViewc1t:
                 component1.setVisibility(View.GONE);
                 component5.setVisibility(View.VISIBLE);

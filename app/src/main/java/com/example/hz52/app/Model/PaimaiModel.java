@@ -91,7 +91,6 @@ public class PaimaiModel {
             @Override
             public void onItemLongClick(View view, int position) {
 
-                Toast.makeText(context, position + " Long click", Toast.LENGTH_SHORT).show();
             }
         });
 

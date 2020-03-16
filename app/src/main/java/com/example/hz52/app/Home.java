@@ -36,7 +36,7 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import io.agora.rtc.Constants;
 
-public class Home extends Fragment {
+public class  Home extends Fragment {
 
 
     @BindView(R.id.title)

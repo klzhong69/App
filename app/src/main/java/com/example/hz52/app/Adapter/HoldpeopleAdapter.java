@@ -71,10 +71,16 @@ public class HoldpeopleAdapter extends RecyclerView.Adapter {
                     notifyDataSetChanged();//刷新适配器
                 }
             });
-            if (states.get(position) == null || states.get(position) == false) {
-                ((HoldpeopleAdapter.DemoViewHolder)holder).sum.setChecked(false);
-            } else {
-                ((HoldpeopleAdapter.DemoViewHolder)holder).sum.setChecked(true);
+            if (states.get(position) != null) {
+                if(states.get(position)){
+                    System.out.println("这里");
+                    ((HoldpeopleAdapter.DemoViewHolder)holder).sum.setChecked(true);
+                }else{
+                    System.out.println("这里2");
+                    ((HoldpeopleAdapter.DemoViewHolder)holder).sum.setChecked(false);
+                }
+
+
             }
             ((HoldpeopleAdapter.DemoViewHolder) holder).sum.setVisibility(View.VISIBLE);
         }else{

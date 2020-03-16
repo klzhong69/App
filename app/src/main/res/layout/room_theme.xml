@@ -41,12 +41,12 @@
 
     <RadioButton
         android:id="@+id/radioButton"
-        android:layout_width="@dimen/dp_40"
+        android:layout_width="@dimen/dp_50"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/imageView151"
         android:layout_alignEnd="@+id/imageView151"
         android:layout_marginTop="@dimen/dp_m_10"
-        android:layout_marginEnd="@dimen/dp_m_10"
+        android:layout_marginEnd="@dimen/dp_m_20"
         android:button="@drawable/radio"
         android:checked="true" />
 
