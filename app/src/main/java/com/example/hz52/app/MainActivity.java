@@ -141,7 +141,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
          density = metrics.density;
          widthPixels = metrics.widthPixels;
          heightPixels = metrics.heightPixels;
-         numder = (float) 820 / 1920;
+         numder = (float) 700 / 1920;
          sumder = (float) (widthPixels / 0.5625);
     }
 
