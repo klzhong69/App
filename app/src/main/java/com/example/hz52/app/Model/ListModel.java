@@ -90,20 +90,18 @@ public class ListModel {
     public static void initrecycler(Context context, RecyclerView recycler13) {
         //适配器
         mAdapter = new ListLeaderAdapter(context, mArrayList);
+
         //设置适配器adapter
         recycler13.setAdapter(mAdapter);
 
-        /*LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-        mListView.setLayoutManager(mLinearLayoutManager);*/
+        LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+        recycler13.setLayoutManager(mLinearLayoutManager);
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(context) {
-            @Override
-            public boolean canScrollVertically() {
-                return false;
-            }
-        };
-        recycler13.setLayoutManager(layoutManager);
+
         recycler13.setItemAnimator(new DefaultItemAnimator());
+
+
+
 
         mAdapter.setOnItemClickListener(new ListLeaderAdapter.OnItemClickListener() {
             @Override
@@ -129,9 +127,6 @@ public class ListModel {
 
     }
 
-    public static void refule(){
-        mAdapter.notifyDataSetChanged();
-    }
 
     public static void Add(RecyclerView mRecyclerView, Listleader entity) {
         mAdapter.addData(mArrayList.size(), entity);

@@ -282,7 +282,7 @@ public class My extends Fragment {
                 sp.edit().putString("roomid", "123456").apply();
                 Intent intent7 = new Intent(getContext(), chatroom.class);
                 intent7.putExtra(Constant.ACTION_KEY_CROLE, Constants.CLIENT_ROLE_AUDIENCE);
-                intent7.putExtra(Constant.ACTION_KEY_ROOM_MODE, Constant.ChatRoomEntertainmentStandard);
+                intent7.putExtra(Constant.ACTION_KEY_ROOM_MODE, Constant.ChatRoomGamingHighQuality);
                 intent7.putExtra(Constant.ACTION_KEY_ROOM_NAME, "127167100");
                 intent7.putExtra(Constant.ACTION_KEY_TITLE_NAME, "测试房间");
                 startActivity(intent7);

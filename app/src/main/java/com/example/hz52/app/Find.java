@@ -129,7 +129,7 @@ public class Find extends Fragment {
                 //Constants.CLIENT_ROLE_AUDIENCE  听众
                 //Constants.CLIENT_ROLE_BROADCASTER 主播
                 intent.putExtra(Constant.ACTION_KEY_CROLE, Constants.CLIENT_ROLE_AUDIENCE);
-                intent.putExtra(Constant.ACTION_KEY_ROOM_MODE, Constant.ChatRoomEntertainmentStandard);
+                intent.putExtra(Constant.ACTION_KEY_ROOM_MODE, Constant.ChatRoomGamingHighQuality);
                 intent.putExtra(Constant.ACTION_KEY_ROOM_NAME, "127167100");
                 intent.putExtra(Constant.ACTION_KEY_TITLE_NAME, "测试房间");
                 startActivity(intent);

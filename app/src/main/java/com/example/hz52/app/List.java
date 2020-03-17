@@ -2,6 +2,7 @@ package com.example.hz52.app;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +28,8 @@ import com.scwang.smart.refresh.header.MaterialHeader;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
+
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -124,6 +127,7 @@ public class List extends Fragment {
     public static Observer<JsonArray> observer;
     private Window window;
     private QMUITipDialog tipDialog;
+    private String userid;
 
     @Nullable
     @Override
@@ -139,7 +143,8 @@ public class List extends Fragment {
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         //设置状态栏颜色
         window.setStatusBarColor(ContextCompat.getColor(getActivity(), R.color.tabbarcolor));
-
+        SharedPreferences sp = Objects.requireNonNull(getContext()).getSharedPreferences("User", Context.MODE_PRIVATE);
+        userid = sp.getString("userid", "");
 
         View decor = window.getDecorView();
         int ui = decor.getSystemUiVisibility();
@@ -153,7 +158,7 @@ public class List extends Fragment {
                 .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
                 .setTipWord("正在加载")
                 .create();
-
+        tipDialog.show();
         ListModel.okgo(context, rankListCategory, durationCategory);
         ListModel.initrecycler(context, recycler13);
 
@@ -190,7 +195,7 @@ public class List extends Fragment {
 
             @Override
             public void onNext(JsonArray integer) {
-                tipDialog.show();
+
                 initData(integer);
 
             }
@@ -244,19 +249,8 @@ public class List extends Fragment {
         return view;
     }
 
-    public int getStatusBarHeight() {
-        int result = 0;
-        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
-        if (resourceId > 0) {
-            result = getResources().getDimensionPixelSize(resourceId);
-        }
-        return result;
-    }
-
     private void initData(JsonArray jsonArray) {
         try {
-
-            Long userid = Long.valueOf("923883237");
             if (rankListCategory == 1) {
                 textView93.setText("财富值");
                 textView92.setText("财富值");
@@ -284,7 +278,7 @@ public class List extends Fragment {
 
                 }
 
-                if (jsonArray.get(i).getAsJsonObject().get("uniqueId").getAsLong() == userid) {
+                if (jsonArray.get(i).getAsJsonObject().get("uniqueId").getAsLong() == Long.parseLong(userid)) {
                     textView67.setText(i + 1 + "");
                     Glide.with(this).load(jsonArray.get(i).getAsJsonObject().get("avatarUrl").getAsString()).into(imageView21);
                     textView66.setText(jsonArray.get(i).getAsJsonObject().get("nickname").getAsString());
@@ -341,6 +335,7 @@ public class List extends Fragment {
                 break;
             case R.id.textView108:
                 rankListCategory = 1;
+                tipDialog.show();
                 ListModel.okgo(context, rankListCategory, durationCategory);
                 ListModel.initrecycler(context, recycler13);
                 textView108.setVisibility(View.GONE);
@@ -351,6 +346,7 @@ public class List extends Fragment {
                 break;
             case R.id.textView109:
                 rankListCategory = 2;
+                tipDialog.show();
                 ListModel.okgo(context, rankListCategory, durationCategory);
                 ListModel.initrecycler(context, recycler13);
                 textView108.setVisibility(View.VISIBLE);
@@ -361,16 +357,19 @@ public class List extends Fragment {
                 break;
             case R.id.textView118:
                 rankListCategory = 1;
+                tipDialog.show();
                 ListModel.okgo(context, rankListCategory, durationCategory);
                 ListModel.initrecycler(context, recycler13);
                 break;
             case R.id.textView119:
                 rankListCategory = 2;
+                tipDialog.show();
                 ListModel.okgo(context, rankListCategory, durationCategory);
                 ListModel.initrecycler(context, recycler13);
                 break;
             case R.id.textView110:
                 durationCategory = 1;
+                tipDialog.show();
                 ListModel.okgo(context, rankListCategory, durationCategory);
                 ListModel.initrecycler(context, recycler13);
                 textView110.setVisibility(View.GONE);
@@ -382,6 +381,7 @@ public class List extends Fragment {
                 break;
             case R.id.textView111:
                 durationCategory = 2;
+                tipDialog.show();
                 ListModel.okgo(context, rankListCategory, durationCategory);
                 ListModel.initrecycler(context, recycler13);
                 textView110.setVisibility(View.VISIBLE);
@@ -393,6 +393,7 @@ public class List extends Fragment {
                 break;
             case R.id.textView112:
                 durationCategory = 3;
+                tipDialog.show();
                 ListModel.okgo(context, rankListCategory, durationCategory);
                 ListModel.initrecycler(context, recycler13);
                 textView110.setVisibility(View.VISIBLE);
@@ -404,16 +405,19 @@ public class List extends Fragment {
                 break;
             case R.id.textView120:
                 durationCategory = 1;
+                tipDialog.show();
                 ListModel.okgo(context, rankListCategory, durationCategory);
                 ListModel.initrecycler(context, recycler13);
                 break;
             case R.id.textView121:
                 durationCategory = 2;
+                tipDialog.show();
                 ListModel.okgo(context, rankListCategory, durationCategory);
                 ListModel.initrecycler(context, recycler13);
                 break;
             case R.id.textView122:
                 durationCategory = 3;
+                tipDialog.show();
                 ListModel.okgo(context, rankListCategory, durationCategory);
                 ListModel.initrecycler(context, recycler13);
                 break;
