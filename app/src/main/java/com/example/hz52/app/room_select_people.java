@@ -1,10 +1,13 @@
 package com.example.hz52.app;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -12,7 +15,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hz52.app.Adapter.SelectPeopleAdapter;
+import com.example.hz52.app.Entity.MyApp;
 import com.example.hz52.app.Entity.Onlinepeople;
+import com.example.hz52.app.cofig.Preview;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
 
 import java.util.ArrayList;
 
@@ -33,6 +43,7 @@ public class room_select_people extends AppCompatActivity {
     RecyclerView recycler16;
     private SelectPeopleAdapter mAdapter;
     private int id;
+    private String url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +87,113 @@ public class room_select_people extends AppCompatActivity {
 
     }
 
+
+    //获取房间黑名单
+    private void okgo() {
+        MyApp application = ((MyApp) this.getApplicationContext());
+        SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
+        String userid = sp.getString("userid", "");
+        String roomid = sp.getString("roomid", "");
+        String token = sp.getString("token", "");
+        if(id==0){
+            url = application.getUrl() + "/app/room/getBlack?token=" + token;
+        }else if(id==1){
+            url = application.getUrl() + "/app/room/getAdmin?token=" + token;
+        }
+        OkGo.<String>post(url)
+                .params("userId", userid)
+                .params("roomId", roomid)
+                .execute(new StringCallback() {
+
+                    @Override
+                    public void onSuccess(Response<String> response) {
+
+                        Gson gson = new Gson();
+                        Preview prexiew = gson.fromJson(response.body(), Preview.class);
+
+                        if (prexiew.getCode() == 0) {
+                            JsonArray blacks = prexiew.getData().getAsJsonArray("blacks");
+
+                        } else if (prexiew.getCode() == 40000) {
+                            Toast.makeText(room_select_people.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                });
+
+    }
+
+    //添加房间黑名单
+    private void okgos() {
+        MyApp application = ((MyApp) this.getApplicationContext());
+        SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
+        String userid = sp.getString("userid", "");
+        String roomid = sp.getString("roomid", "");
+        String token = sp.getString("token", "");
+        if(id==0){
+            url = application.getUrl() + "/app/room/addBlack?token=" + token;
+        }else if(id==1){
+            url = application.getUrl() + "/app/room/addAdmin?token=" + token;
+        }
+        OkGo.<String>post(url)
+                .params("userId", userid)
+                .params("roomId", roomid)
+                .params("who", userid)
+                .execute(new StringCallback() {
+
+                    @Override
+                    public void onSuccess(Response<String> response) {
+
+                        Gson gson = new Gson();
+                        Preview prexiew = gson.fromJson(response.body(), Preview.class);
+
+                        if (prexiew.getCode() == 0) {
+                            Toast.makeText(room_select_people.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
+
+                        } else if (prexiew.getCode() == 40000) {
+                            Toast.makeText(room_select_people.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                });
+
+    }
+
+    //删除房间黑名单
+    private void okgod() {
+        MyApp application = ((MyApp) this.getApplicationContext());
+        SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
+        String userid = sp.getString("userid", "");
+        String roomid = sp.getString("roomid", "");
+        String token = sp.getString("token", "");
+        if(id==0){
+            url = application.getUrl() + "/app/room/removeBlack?token=" + token;
+        }else if(id==1){
+            url = application.getUrl() + "/app/room/removeAdmin?token=" + token;
+        }
+        OkGo.<String>post(url)
+                .params("userId", userid)
+                .params("roomId", roomid)
+                .params("who", userid)
+                .execute(new StringCallback() {
+
+                    @Override
+                    public void onSuccess(Response<String> response) {
+
+                        Gson gson = new Gson();
+                        Preview prexiew = gson.fromJson(response.body(), Preview.class);
+
+                        if (prexiew.getCode() == 0) {
+                            Toast.makeText(room_select_people.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
+
+                        } else if (prexiew.getCode() == 40000) {
+                            Toast.makeText(room_select_people.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                });
+
+    }
     public  void initrecycler() {
         //适配器
         mAdapter = new SelectPeopleAdapter(this, mArrayList);

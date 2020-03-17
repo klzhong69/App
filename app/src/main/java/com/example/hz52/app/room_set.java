@@ -94,6 +94,7 @@ public class room_set extends AppCompatActivity {
         but4.setBackgroundColor(Color.parseColor("#ABABAB"));
     }
 
+    //获取房间信息
     private void okgo() {
         MyApp application = ((MyApp) this.getApplicationContext());
         SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
@@ -127,7 +128,7 @@ public class room_set extends AppCompatActivity {
 
     }
 
-
+//设置房间信息
     private void okgos() {
         MyApp application = ((MyApp) this.getApplicationContext());
         SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);

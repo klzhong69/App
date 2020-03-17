@@ -82,7 +82,7 @@ public class room_theme extends AppCompatActivity {
         }
 
     }
-
+//获取房间所有背景
     private void okgo() {
         MyApp application = ((MyApp) this.getApplicationContext());
         SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
@@ -121,7 +121,7 @@ public class room_theme extends AppCompatActivity {
                 });
 
     }
-
+//设置房间主题背景
     private void okgos() {
         MyApp application = ((MyApp) this.getApplicationContext());
         SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
