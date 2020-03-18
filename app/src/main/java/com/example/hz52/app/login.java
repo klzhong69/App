@@ -21,6 +21,7 @@ import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
+import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
 import butterknife.BindView;
@@ -73,6 +74,7 @@ public class login extends AppCompatActivity {
     TextView subtitle;
     private int type;
     private int state;
+    private QMUITipDialog tipDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,8 +84,8 @@ public class login extends AppCompatActivity {
         Initialization.setupDatabaseUser(this);
         title.setText("登陆");
         subtitle.setText("");
-        editText.setText("");
-        editText4.setText("");
+        editText.setText("15362141841");
+        editText4.setText("131721..");
 
         Intent intent = getIntent();
         state = intent.getIntExtra("type", 0);
@@ -99,6 +101,11 @@ public class login extends AppCompatActivity {
                 overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
                 break;
             case R.id.but:
+                tipDialog = new QMUITipDialog.Builder(this)
+                        .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
+                        .setTipWord("正在加载")
+                        .create();
+                tipDialog.show();
                 okgo();
                 break;
             case R.id.textView156:
@@ -177,7 +184,7 @@ public class login extends AppCompatActivity {
                             startActivity(intent1);
                             overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
 
-
+                            tipDialog.dismiss();
                         }else if(prexiew.getCode()==40000){
                             Toast.makeText(login.this, prexiew.getMsg()+"", Toast.LENGTH_SHORT).show();
                         }

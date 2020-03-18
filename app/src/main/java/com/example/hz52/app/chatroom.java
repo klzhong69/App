@@ -5,11 +5,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextPaint;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
@@ -32,7 +35,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.hz52.app.Adapter.HoldpeopleAdapter;
-import com.example.hz52.app.Adapter.RoomheadAdapter;
 import com.example.hz52.app.Entity.Chats;
 import com.example.hz52.app.Entity.Holdpeople;
 import com.example.hz52.app.Entity.Roomhead;
@@ -138,8 +140,23 @@ public class chatroom extends AppCompatActivity {
     ImageView imageView105;
     @BindView(R.id.relativeLayout3)
     RelativeLayout relativeLayout3;
+    @BindView(R.id.recyclerbutc11)
+    RelativeLayout recyclerbutc11;
+    @BindView(R.id.imageViewc11)
+    QMUIRadiusImageView imageViewc11;
+    @BindView(R.id.imageViewc11s)
+    ImageView imageViewc11s;
+    @BindView(R.id.textViewc11)
+    TextView textViewc11;
+    @BindView(R.id.butc11)
+    QMUIRoundButton butc11;
     @BindView(R.id.textView148)
     TextView textView148;
+    @BindView(R.id.recyclerc11)
+    RelativeLayout recyclerc11;
+    @BindView(R.id.recyclerbutc11s)
+    RelativeLayout recyclerbutc11s;
+
     @BindView(R.id.recyclerbutc1)
     RelativeLayout recyclerbutc1;
     @BindView(R.id.imageViewc1)
@@ -356,20 +373,8 @@ public class chatroom extends AppCompatActivity {
     SVGAImageView gift2;
     @BindView(R.id.gift)
     ConstraintLayout gift;
-    @BindView(R.id.recyclerbutc11)
-    RelativeLayout recyclerbutc11;
-    @BindView(R.id.imageViewc11)
-    QMUIRadiusImageView imageViewc11;
-    @BindView(R.id.imageViewc11s)
-    ImageView imageViewc11s;
-    @BindView(R.id.textViewc11)
-    TextView textViewc11;
-    @BindView(R.id.butc11)
-    QMUIRoundButton butc11;
-    @BindView(R.id.recyclerc11)
-    RelativeLayout recyclerc11;
-    @BindView(R.id.recyclerbutc11s)
-    RelativeLayout recyclerbutc11s;
+    @BindView(R.id.view2)
+    View view2;
     @BindView(R.id.component11)
     RelativeLayout component11;
     private chatroom context;
@@ -497,11 +502,11 @@ public class chatroom extends AppCompatActivity {
                                     if (view != null) {
                                         rippleBackground = view.findViewById(R.id.rippleback);
                                         if (audioVolumeInfo.volume > 0) {
-                                            if(!rippleBackground.isRippleAnimationRunning()){
+                                            if (!rippleBackground.isRippleAnimationRunning()) {
                                                 rippleBackground.startRippleAnimation();
                                             }
-                                        }else{
-                                            if(rippleBackground.isRippleAnimationRunning()){
+                                        } else {
+                                            if (rippleBackground.isRippleAnimationRunning()) {
                                                 rippleBackground.stopRippleAnimation();
                                             }
                                         }
@@ -510,17 +515,17 @@ public class chatroom extends AppCompatActivity {
                             } else {
                                 int index = getUserIndex(mLocalUid);
                                 if (index >= 0) {
-                                    System.out.println("音量"+audioVolumeInfo.volume);
+                                    System.out.println("音量" + audioVolumeInfo.volume);
                                     View view = ChatRoomModel.mLayoutManager.findViewByPosition(position);
                                     RippleBackground rippleBackground;
                                     if (view != null) {
                                         rippleBackground = view.findViewById(R.id.rippleback);
                                         if (audioVolumeInfo.volume > 0) {
-                                            if(!rippleBackground.isRippleAnimationRunning()){
+                                            if (!rippleBackground.isRippleAnimationRunning()) {
                                                 rippleBackground.startRippleAnimation();
                                             }
-                                        }else{
-                                            if(rippleBackground.isRippleAnimationRunning()){
+                                        } else {
+                                            if (rippleBackground.isRippleAnimationRunning()) {
                                                 rippleBackground.stopRippleAnimation();
                                             }
                                         }
@@ -556,24 +561,31 @@ public class chatroom extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+       /* //隐藏标题栏
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //隐藏状态栏
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);*/
         setContentView(R.layout.activity_chatroom);
         ButterKnife.bind(this);
         context = this;
         window = this.getWindow();
-        //21表示5.0
-        //取消设置透明状态栏,使 ContentView 内容不再覆盖状态栏
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        //需要设置这个 flag 才能调用 setStatusBarColor 来设置状态栏颜色
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        //设置状态栏颜色
-        window.setStatusBarColor(ContextCompat.getColor(this, R.color.black));
 
-        View decor = window.getDecorView();
-        int ui = decor.getSystemUiVisibility();
-        // ui |=View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR; //设置状态栏中字体的颜色为黑色
-        ui &= ~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR; //设置状态栏中字体颜色为白色
-        decor.setSystemUiVisibility(ui);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.setStatusBarColor(Color.TRANSPARENT);
+            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+        }
 
+        Resources resources = context.getResources();
+        int resourceId = resources.getIdentifier("status_bar_height", "dimen", "android");
+        int height = resources.getDimensionPixelSize(resourceId);
+
+        ViewGroup.LayoutParams para1;
+        para1 = view2.getLayoutParams();
+        para1.height = height;
+        view2.setLayoutParams(para1);
 
         if (checkSelfPermission(Manifest.permission.RECORD_AUDIO, PERMISSION_REQ_ID_RECORD_AUDIO)) {
 
@@ -682,7 +694,9 @@ public class chatroom extends AppCompatActivity {
         if (mChannelName.equals(sp.getString("userid", ""))) {
             administrator = true;
         }
-        mRtcEngine.joinChannel(null, mChannelName, "", Math.toIntExact(mLocalUid));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            mRtcEngine.joinChannel(null, mChannelName, "", Math.toIntExact(mLocalUid));
+        }
 
     }
 
@@ -842,14 +856,14 @@ public class chatroom extends AppCompatActivity {
                 break;
 
             case R.id.textViewc3s:
-                    for (int i = 0; i < HoldpeopleAdapter.states.size(); i++) {
-                        if (HoldpeopleAdapter.states.get(i) != null) {
-                            Roomhead roomhead = new Roomhead(HoldpeopleAdapter.mEntityList.get(i).getUserima(), HoldpeopleAdapter.mEntityList.get(i).getName(), "", "", mLocalUid, 0, false, false);
-                            ChatRoomModel.showBroadCast(mRtcEngine, mLocalUid, position, roomhead);
-                            PaimaiModel.Remove(i);
-                            component3.setVisibility(View.GONE);
-                            bIsBroadCaster = true;
-                        }
+                for (int i = 0; i < HoldpeopleAdapter.states.size(); i++) {
+                    if (HoldpeopleAdapter.states.get(i) != null) {
+                        Roomhead roomhead = new Roomhead(HoldpeopleAdapter.mEntityList.get(i).getUserima(), HoldpeopleAdapter.mEntityList.get(i).getName(), "", "", mLocalUid, 0, false, false);
+                        ChatRoomModel.showBroadCast(mRtcEngine, mLocalUid, position, roomhead);
+                        PaimaiModel.Remove(i);
+                        component3.setVisibility(View.GONE);
+                        bIsBroadCaster = true;
+                    }
                 }
                 break;
             case R.id.imageViewc1t:
@@ -867,7 +881,7 @@ public class chatroom extends AppCompatActivity {
                 editTextc1.setText("");
                 break;
             case R.id.butc11:
-                component11.setVisibility(View.GONE);
+                 component11.setVisibility(View.GONE);
                 break;
             case R.id.imageViewc5s:
                 component5.setVisibility(View.GONE);

@@ -135,14 +135,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
         }
         setDefaultFragment();
 
-        WindowManager mWindowManager = (WindowManager) this.getSystemService(Context.WINDOW_SERVICE);
-        DisplayMetrics metrics = new DisplayMetrics();
-        mWindowManager.getDefaultDisplay().getMetrics(metrics);
-         density = metrics.density;
-         widthPixels = metrics.widthPixels;
-         heightPixels = metrics.heightPixels;
-         numder = (float) 700 / 1920;
-         sumder = (float) (widthPixels / 0.5625);
+
     }
 
     private void init() {
@@ -175,11 +168,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
                */
 
         bottomNavigationBar
-                .addItem(new BottomNavigationItem(R.drawable.ic_shouye, "首页").setActiveColorResource(R.color.colorAccent))
-                .addItem(new BottomNavigationItem(R.drawable.ic_faxian, "发现").setActiveColorResource(R.color.colorAccent))
-                .addItem(new BottomNavigationItem(R.drawable.ic_paiming, "排名榜").setActiveColorResource(R.color.colorAccent))
-                .addItem(new BottomNavigationItem(R.drawable.ic_xiaoxi, "消息").setActiveColorResource(R.color.colorAccent).setBadgeItem(mBadgeItem))
-                .addItem(new BottomNavigationItem(R.drawable.ic_wode, "我的").setActiveColorResource(R.color.colorAccent))
+                .addItem(new BottomNavigationItem(R.drawable.tab_icon_sou_normal, "首页").setActiveColorResource(R.color.colorAccent))
+                .addItem(new BottomNavigationItem(R.drawable.tab_icon_faxian_normal, "发现").setActiveColorResource(R.color.colorAccent))
+                .addItem(new BottomNavigationItem(R.drawable.tab_icon_paiming_normal, "排名榜").setActiveColorResource(R.color.colorAccent))
+                .addItem(new BottomNavigationItem(R.drawable.tab_icon_xiaoxi_normal, "消息").setActiveColorResource(R.color.colorAccent).setBadgeItem(mBadgeItem))
+                .addItem(new BottomNavigationItem(R.drawable.tab_icon_me_normal, "我的").setActiveColorResource(R.color.colorAccent))
                 .setFirstSelectedPosition(0)
                 .initialise();
         bottomNavigationBar.setTabSelectedListener(this);

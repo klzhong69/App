@@ -2,8 +2,9 @@ package com.example.hz52.app;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +23,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hz52.app.Adapter.FindListAdapter;
 import com.example.hz52.app.Entity.Findlist;
-import com.example.hz52.app.Entity.Findmake;
 import com.example.hz52.app.Entity.MyApp;
 import com.example.hz52.app.cofig.Preview;
 import com.google.gson.Gson;
@@ -59,16 +59,19 @@ public class Find extends Fragment {
     RecyclerView recycler14;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
+    @BindView(R.id.view2)
+    View view2;
     private Unbinder unbinder;
     private ArrayList<Findlist> mArrayList;
     private QMUITipDialog tipDialog;
+    private Context context;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.find_hot, container, false);
         unbinder = ButterKnife.bind(this, view);
-
+        context = getContext();
         refreshLayout.setRefreshFooter(new ClassicsFooter(getContext()));
         refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
@@ -82,20 +85,27 @@ public class Find extends Fragment {
                 .create();
         tipDialog.show();
         Window window = Objects.requireNonNull(getActivity()).getWindow();
-        //21表示5.0
-        //取消设置透明状态栏,使 ContentView 内容不再覆盖状态栏
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        //需要设置这个 flag 才能调用 setStatusBarColor 来设置状态栏颜色
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        //设置状态栏颜色
-        window.setStatusBarColor(Color.WHITE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.setStatusBarColor(Color.TRANSPARENT);
+            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+        }
+
+        Resources resources = context.getResources();
+        int resourceId = resources.getIdentifier("status_bar_height", "dimen", "android");
+        int height = resources.getDimensionPixelSize(resourceId);
+
+        ViewGroup.LayoutParams para1;
+        para1 = view2.getLayoutParams();
+        para1.height = height;
+        view2.setLayoutParams(para1);
 
         View decor = window.getDecorView();
         int ui = decor.getSystemUiVisibility();
         ui |= View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR; //设置状态栏中字体的颜色为黑色
         //ui &= ~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR; //设置状态栏中字体颜色为白色
         decor.setSystemUiVisibility(ui);
-
 
 
         initData();
@@ -168,7 +178,7 @@ public class Find extends Fragment {
 
     private void okgos() {
         MyApp application = ((MyApp) getContext().getApplicationContext());
-        OkGo.<String>post(application.getUrl() + "/app/page/getHot" )
+        OkGo.<String>post(application.getUrl() + "/app/page/getHot")
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
@@ -199,7 +209,7 @@ public class Find extends Fragment {
                             }
                         }
 
-                }
+                    }
                 });
 
     }

@@ -7,13 +7,20 @@
     android:background="@drawable/roomback"
     tools:context=".chatroom">
 
+    <View
+        android:id="@+id/view2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <RelativeLayout
         android:id="@+id/relativeLayout2"
         android:layout_width="0dp"
         android:layout_height="@dimen/dp_80"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view">
+        app:layout_constraintTop_toBottomOf="@+id/view2">
 
 
         <ImageView
@@ -345,6 +352,7 @@
     </RelativeLayout>
 
     <include
+        android:id="@+id/include3"
         layout="@layout/room_announcement"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -307,7 +307,7 @@ public class homepage extends AppCompatActivity {
         SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
         String userid = sp.getString("userid", "");
         String token = sp.getString("token", "");
-        OkGo.<String>post(application.getUrl() + "/app/user/follows?token=" + token)
+        OkGo.<String>post(application.getUrl() + "/app/user/follow?token=" + token)
                 .params("userId", userid)
                 .params("followId", followId)
                 .execute(new StringCallback() {
@@ -320,6 +320,10 @@ public class homepage extends AppCompatActivity {
 
                         if (prexiew.getCode() == 0) {
                             Toast.makeText(homepage.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
+                            if(prexiew.getMsg().equals("关注成功")){
+                                Glide.with(homepage.this).load(R.drawable.s_guanzhu).into(imageView34);
+                                textView31.setText("已关注");
+                            }
 
                         } else if (prexiew.getCode() == 40000) {
                             Toast.makeText(homepage.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
