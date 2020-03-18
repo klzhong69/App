@@ -128,7 +128,7 @@ public class List extends Fragment {
 
     private Context context;
     private int rankListCategory = 1;
-    private int durationCategory = 1;
+    private int durationCategory = 2;
     public static Observer<JsonArray> observer;
     private Window window;
     private QMUITipDialog tipDialog;
@@ -143,20 +143,7 @@ public class List extends Fragment {
         SharedPreferences sp = Objects.requireNonNull(getContext()).getSharedPreferences("User", Context.MODE_PRIVATE);
         userid = sp.getString("userid", "");
         context = getContext();
-       /* //21表示5.0
-        //取消设置透明状态栏,使 ContentView 内容不再覆盖状态栏
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        //需要设置这个 flag 才能调用 setStatusBarColor 来设置状态栏颜色
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        //设置状态栏颜色
-        window.setStatusBarColor(ContextCompat.getColor(getActivity(), R.color.tabbarcolor));
 
-
-        View decor = window.getDecorView();
-        int ui = decor.getSystemUiVisibility();
-        // ui |=View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR; //设置状态栏中字体的颜色为黑色
-        ui &= ~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR; //设置状态栏中字体颜色为白色
-        decor.setSystemUiVisibility(ui);*/
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);

@@ -76,7 +76,7 @@ public class chat extends AppCompatActivity {
     public static Long sendid;
     private String sendname;
     public static Observer<Chat> observerchat;
-    private int a =0;
+    private int a = 0;
     private static Context context;
     private String userid;
     private String avatarUrl;
@@ -111,14 +111,14 @@ public class chat extends AppCompatActivity {
             public void onRefresh(@NonNull RefreshLayout refreshlayout) {
                 refreshlayout.autoRefresh();
                 a++;
-                ChatModel.Adddata(recycler,convers, Long.valueOf(userid),a*10,10);
+                ChatModel.Adddata(recycler, convers, Long.valueOf(userid), a * 10, 10);
                 refreshlayout.finishRefresh();
 
             }
         });
 
 
-        ChatModel.initData(convers, Long.valueOf(userid),0,10);
+        ChatModel.initData(convers, Long.valueOf(userid), 0, 10);
         ChatModel.initrecycler(this, recycler);
 
 
@@ -126,12 +126,12 @@ public class chat extends AppCompatActivity {
                 setKeyboardVisibilityListener(new KeyboardStateObserver.OnKeyboardVisibilityListener() {
                     @Override
                     public void onKeyboardShow() {
-                        ChatModel.recly(recycler,0);
+                        ChatModel.recly(recycler, 0);
                     }
 
                     @Override
                     public void onKeyboardHide() {
-                        ChatModel.recly(recycler,0);
+                        ChatModel.recly(recycler, 0);
                     }
                 });
 
@@ -140,7 +140,7 @@ public class chat extends AppCompatActivity {
 
 
     @Override
-    protected void onResume(){
+    protected void onResume() {
         super.onResume();
         isFront = true;
         //聊天
@@ -171,7 +171,7 @@ public class chat extends AppCompatActivity {
         };
     }
 
-    protected void onDestroy(){
+    protected void onDestroy() {
         super.onDestroy();
     }
 
@@ -186,7 +186,7 @@ public class chat extends AppCompatActivity {
                     Chats i1 = new Chats(avatarUrl, txt, time, 2);
                     ChatModel.Add(recycler, i1);
                     editText.setText("");
-                    send(userid,avatarUrl,nickname,sendid,txt,convers);
+                    send(userid, avatarUrl, nickname, sendid, txt, convers);
 
                 } else {
                     Toast.makeText(chat.this, "请输入发送内容", Toast.LENGTH_SHORT).show();
@@ -200,9 +200,9 @@ public class chat extends AppCompatActivity {
         }
     }
 
-    public static void send(String userid,String avatarUrl,String nickname,Long sendid,String txt,String conver){
+    public static void send(String userid, String avatarUrl, String nickname, Long sendid, String txt, String conver) {
 
-        Long data = System.currentTimeMillis()/1000;
+        Long data = System.currentTimeMillis() / 1000;
         Gson gson = new Gson();
 
 
@@ -217,7 +217,7 @@ public class chat extends AppCompatActivity {
         mChatDao.insert(chat);
 
         List<Conver> list = mConverDao.query(sendid, Long.valueOf(userid));
-        if(list.size()>0){
+        if (list.size() > 0) {
             Conver convers = list.get(0);
             convers.setData(data);
             convers.setTxt(txt);
@@ -225,11 +225,11 @@ public class chat extends AppCompatActivity {
         }
 
 
-        Map<String,String> map = new HashMap<String,String>();
+        Map<String, String> map = new HashMap<String, String>();
         map.put("sendId", userid);
-        map.put("senderName",nickname);
-        map.put("senderAvatarUrl",avatarUrl);
-        map.put("content",txt);
+        map.put("senderName", nickname);
+        map.put("senderAvatarUrl", avatarUrl);
+        map.put("content", txt);
 
         String xini = gson.toJson(map);
         JsonObject returnData = new JsonParser().parse(xini).getAsJsonObject();
@@ -240,22 +240,22 @@ public class chat extends AppCompatActivity {
         mess.setData(returnData);
 
         String meg = gson.toJson(mess);
-        MqttMessageService.publishMessage("user/"+sendid, meg);
+        MqttMessageService.publishMessage("user/" + sendid, meg);
     }
 
 
-    private void del(){
+    private void del() {
         MyApp application = ((MyApp) this.getApplicationContext());
-        for(int i=0;i<application.getUsermess().size();i++){
-            if(application.getUsermess().get(i).getSendId().equals(sendid)){
+        for (int i = 0; i < application.getUsermess().size(); i++) {
+            if (application.getUsermess().get(i).getSendId().equals(sendid)) {
                 application.getUsermess().remove(i);
             }
 
         }
 
-        List<Conver> list =  mConverDao.query(sendid, Long.valueOf(userid));
-        if(list.size()>0){
-            if(list.get(0).getSum() !=0){
+        List<Conver> list = mConverDao.query(sendid, Long.valueOf(userid));
+        if (list.size() > 0) {
+            if (list.get(0).getSum() != 0) {
                 list.get(0).setSum(0);
                 mConverDao.update(list.get(0));
             }
@@ -269,7 +269,6 @@ public class chat extends AppCompatActivity {
         });
         observables.subscribe(MainActivity.observers);
     }
-
 
 
     @Override

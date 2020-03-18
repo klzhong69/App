@@ -105,22 +105,14 @@ public class my_wallet extends AppCompatActivity {
                         Gson gson = new Gson();
                         Preview prexiew = gson.fromJson(response.body(), Preview.class);
 
-                        JsonArray jsonArray =  prexiew.getData().getAsJsonArray("wallet");
                         if(prexiew.getCode()==0){
-                            if (jsonArray != null) {
+                            String gold = prexiew.getData().get("gold").getAsString();
+                            String diamond = prexiew.getData().get("diamond").getAsString();
+                            String amount = prexiew.getData().get("amount").getAsString();
 
-                                    gold = jsonArray.get(0).getAsJsonObject().get("gold").getAsString();
-                                    diamond = jsonArray.get(0).getAsJsonObject().get("diamond").getAsString();
-                                    packageCount = jsonArray.get(0).getAsJsonObject().get("amount").getAsString();
-
-
-                                    textView53.setText(gold);
-                                    textView55.setText(diamond);
-                                    textView59.setText(packageCount);
-                            }
-
-
-
+                            textView53.setText(gold);
+                            textView55.setText(diamond);
+                            textView59.setText(amount);
 
                         }else if(prexiew.getCode()==40000){
                             Toast.makeText(my_wallet.this, prexiew.getMsg()+"", Toast.LENGTH_SHORT).show();

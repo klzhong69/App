@@ -109,7 +109,7 @@ public class family_home extends AppCompatActivity {
 
     }
 
-    @OnClick({R.id.fold,  R.id.subtitle})
+    @OnClick({R.id.fold, R.id.subtitle})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fold:

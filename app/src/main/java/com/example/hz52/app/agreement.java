@@ -40,9 +40,9 @@ public class agreement extends AppCompatActivity {
         setContentView(R.layout.activity_agreement);
         ButterKnife.bind(this);
         subtitle.setText("");
-        Intent intent =getIntent();
-        int about= intent.getIntExtra("about",0);
-        switch (about){
+        Intent intent = getIntent();
+        int about = intent.getIntExtra("about", 0);
+        switch (about) {
             case 0:
                 title.setText("用户协议");
                 break;
@@ -53,7 +53,7 @@ public class agreement extends AppCompatActivity {
                 title.setText("隐私政策");
                 break;
         }
-        url="https://www.baidu.com/";
+        url = "https://www.baidu.com/";
         initView(url);
     }
 
@@ -162,6 +162,7 @@ public class agreement extends AppCompatActivity {
                 break;
         }
     }
+
     @Override
     public void onBackPressed() {
         this.finish();

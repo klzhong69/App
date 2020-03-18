@@ -94,6 +94,7 @@ public class account extends AppCompatActivity {
         mArrayList.add(account);
 
     }
+
     @OnClick({R.id.fold, R.id.subtitle})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -108,6 +109,7 @@ public class account extends AppCompatActivity {
                 break;
         }
     }
+
     @Override
     public void onBackPressed() {
         this.finish();

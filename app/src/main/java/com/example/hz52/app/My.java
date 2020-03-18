@@ -15,11 +15,20 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+import com.example.hz52.app.Entity.Findlist;
+import com.example.hz52.app.Entity.MyApp;
+import com.example.hz52.app.cofig.Preview;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.wildma.pictureselector.Constant;
 
@@ -148,6 +157,8 @@ public class My extends Fragment {
         textView92.setText(sp.getString("nickname", ""));
         Glide.with(My.this).load(sp.getString("avatarUrl", "")).into(imageView28);
         textView93.setText("ID " + sp.getString("userid", ""));
+        okgos();
+
         context = getContext();
         Window window = Objects.requireNonNull(getActivity()).getWindow();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -202,15 +213,6 @@ public class My extends Fragment {
         return view;
     }
 
-    public int getStatusBarHeight() {
-        int result = 0;
-        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
-        if (resourceId > 0) {
-            result = getResources().getDimensionPixelSize(resourceId);
-        }
-        return result;
-    }
-
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -235,6 +237,47 @@ public class My extends Fragment {
         super.onStart();
     }
 
+    private void okgos() {
+        MyApp application = ((MyApp) getContext().getApplicationContext());
+        SharedPreferences sp = getContext().getSharedPreferences("User", Context.MODE_PRIVATE);
+        String userid = sp.getString("userid", "");
+        String token = sp.getString("token", "");
+        OkGo.<String>post(application.getUrl() + "/app/user/getUserPersonal?token=" + token)
+                .params("userId", userid)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+
+                        Gson gson = new Gson();
+                        Preview prexiew = gson.fromJson(response.body(), Preview.class);
+
+                        if (prexiew.getCode() == 0) {
+                            String nickname = prexiew.getData().get("nickname").getAsString();
+                            String avatarUrl = prexiew.getData().get("avatarUrl").getAsString();
+                            String signtureText = prexiew.getData().get("signtureText").getAsString();
+                            String signtureVoiceUrl = prexiew.getData().get("signtureVoiceUrl").getAsString();
+                            String followCount = prexiew.getData().get("followCount").getAsString();
+                            String fansCount = prexiew.getData().get("fansCount").getAsString();
+                            String musicCount = prexiew.getData().get("musicCount").getAsString();
+                            String favoriteRoomCount = prexiew.getData().get("favoriteRoomCount").getAsString();
+                            String roomHistoryCount = prexiew.getData().get("roomHistoryCount").getAsString();
+                            String packageCount = prexiew.getData().get("packageCount").getAsString();
+
+                            textView94.setText("关注 "+followCount);
+                            textView95.setText("粉丝 "+fansCount);
+                            textView76.setText(musicCount);
+                            textView78.setText(packageCount);
+                            textView80.setText(favoriteRoomCount);
+                            textView82.setText(roomHistoryCount);
+
+                        } else if (prexiew.getCode() == 40000) {
+                            Toast.makeText(getContext(), prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+
+                });
+    }
 
     @OnClick({R.id.recycler18, R.id.imageView28, R.id.textView92, R.id.textView93, R.id.textView94, R.id.textView95, R.id.imageView68, R.id.imageView36, R.id.textView11, R.id.imageView37, R.id.textView76, R.id.textView77, R.id.textView78, R.id.textView79, R.id.textView80, R.id.textView81, R.id.textView82, R.id.textView83, R.id.imageView73, R.id.textView84, R.id.imageView74, R.id.textView85, R.id.imageView41, R.id.imageView76, R.id.textView87, R.id.imageView77, R.id.imageView43, R.id.imageView80, R.id.textView89, R.id.imageView81, R.id.imageView44, R.id.imageView82, R.id.textView90, R.id.imageView83, R.id.imageView45, R.id.imageView84, R.id.textView91, R.id.imageView85})
     public void onViewClicked(View view) {

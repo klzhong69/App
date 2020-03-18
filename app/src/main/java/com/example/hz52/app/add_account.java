@@ -126,7 +126,7 @@ public class add_account extends AppCompatActivity {
                             textView89.setVisibility(View.VISIBLE);
                             editText2.setVisibility(View.VISIBLE);
 
-                        }else{
+                        } else {
                             textView174.setVisibility(View.VISIBLE);
                             imageView42.setVisibility(View.GONE);
                             imageView77.setVisibility(View.GONE);
@@ -149,6 +149,7 @@ public class add_account extends AppCompatActivity {
 
         builder.build().show();
     }
+
     @Override
     public void onBackPressed() {
         this.finish();

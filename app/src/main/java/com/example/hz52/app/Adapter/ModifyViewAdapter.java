@@ -20,7 +20,7 @@ import java.util.List;
 
 public class ModifyViewAdapter extends RecyclerView.Adapter {
     private Context mContext;
-    private List<Modify> mEntityList;
+    private static List<Modify> mEntityList;
     private ModifyViewAdapter.OnItemClickListener mOnItemClickListener;
     public ModifyViewAdapter(Context context, List<Modify> entityList){
         this.mContext = context;
@@ -54,11 +54,6 @@ public class ModifyViewAdapter extends RecyclerView.Adapter {
             Glide.with(mContext).load(R.drawable.add3).into(((ModifyViewAdapter.DemoViewHolder)holder).mIma);
         }else if(entity.getType().equals("1")){
             Glide.with(mContext).load(entity.getImagesrc()).into(((ModifyViewAdapter.DemoViewHolder)holder).mIma);
-        }else{
-            RequestOptions requestOptions = new RequestOptions()
-                    .diskCacheStrategy(DiskCacheStrategy.NONE)
-                    .skipMemoryCache(true);
-            Glide.with(mContext).load(entity.getImagesrc()).apply(requestOptions).into(((ModifyViewAdapter.DemoViewHolder)holder).mIma);
         }
 
 

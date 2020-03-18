@@ -27,6 +27,10 @@ import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
+import com.ywl5320.libenum.MuteEnum;
+import com.ywl5320.libmusic.WlMusic;
+import com.ywl5320.listener.OnCompleteListener;
+import com.ywl5320.listener.OnPreparedListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -69,12 +73,6 @@ public class homepage extends AppCompatActivity {
     TextView textView10;
     @BindView(R.id.relativeLayou)
     RelativeLayout relativeLayou;
-    @BindView(R.id.imageView6)
-    ImageView imageView6;
-    @BindView(R.id.recycler2)
-    RecyclerView recycler2;
-    @BindView(R.id.relativeLayout)
-    RelativeLayout relativeLayout;
     @BindView(R.id.imageView11)
     ImageView imageView11;
     @BindView(R.id.textView11)
@@ -145,23 +143,28 @@ public class homepage extends AppCompatActivity {
     RelativeLayout relativeLayout5;
     @BindView(R.id.largeLabel)
     RelativeLayout largeLabel;
+    @BindView(R.id.imageView6)
+    ImageView imageView6;
     private homepage context;
     private Long followId;
     public String userid;
-    public String userids;
     private String nickname;
     private String avatarUrl;
     private QMUITipDialog tipDialog;
+    private Boolean bool = false;
+    private WlMusic wlMusic;
+    private String signtureVoiceUrl;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage);
         ButterKnife.bind(this);
         title.setText("个人主页");
-        subtitle.setText("修改信息");
+        subtitle.setText("");
 
         Intent intent = getIntent();
-        followId = intent.getLongExtra("id",0L);
+        followId = intent.getLongExtra("id", 0L);
         System.out.println(followId);
         context = this;
         tipDialog = new QMUITipDialog.Builder(this)
@@ -170,36 +173,31 @@ public class homepage extends AppCompatActivity {
                 .create();
         tipDialog.show();
         SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
-
+        userid = sp.getString("userid", "");
         initData();
         Initialization.setupDatabaseChat(this);
         Initialization.setupDatabaseConver(this);
 
-        userid = sp.getString("userid", "");
 
-        if(!userid.equals(String.valueOf(followId))){
-            subtitle.setVisibility(View.GONE);
-        }else{
+
+        if (userid.equals(String.valueOf(followId))) {
             relativeLayout5.setVisibility(View.GONE);
         }
     }
 
 
-    @OnClick({R.id.fold, R.id.subtitle, R.id.imageView34, R.id.textView31, R.id.imageView36, R.id.textView32})
+    @OnClick({R.id.fold, R.id.imageView34, R.id.textView31, R.id.imageView36, R.id.textView32, R.id.imageView6})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fold:
                 this.finish();
                 overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
                 break;
-            case R.id.subtitle:
-                Intent intent = new Intent(homepage.this, modify_information.class);
-                startActivity(intent);
-                overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
-                break;
             case R.id.imageView34:
             case R.id.textView31:
-                okgo();
+                if (bool) {
+                    okgo();
+                }
                 break;
             case R.id.imageView36:
             case R.id.textView32:
@@ -230,6 +228,13 @@ public class homepage extends AppCompatActivity {
                 intent2.putExtra("sendname", nickname);
                 context.startActivity(intent2);
                 break;
+            case R.id.imageView6:
+                if (!signtureVoiceUrl.equals("")) {
+                    music(signtureVoiceUrl);
+                }else{
+                    Toast.makeText(homepage.this,  "音频为空，请进行录制", Toast.LENGTH_SHORT).show();
+                }
+                break;
 
         }
     }
@@ -257,38 +262,39 @@ public class homepage extends AppCompatActivity {
                             JsonArray friend = prexiew.getData().getAsJsonArray("friends");
                             JsonArray photo = prexiew.getData().getAsJsonArray("photos");
                             JsonArray giftWall = prexiew.getData().getAsJsonArray("giftWall");
-                            JsonArray honor = prexiew.getData().getAsJsonArray("honor");
 
-                            if(prexiew.getData().get("signtureText").getAsString().equals("")){
+                            if (prexiew.getData().get("signtureText").getAsString().equals("")) {
                                 textView11.setText("签名");
-                            }else{
+                            } else {
                                 textView11.setText(prexiew.getData().get("signtureText").getAsString());
                             }
-                            String userId = prexiew.getData().get("userId").getAsString();
+
                             avatarUrl = prexiew.getData().get("avatarUrl").getAsString();
                             nickname = prexiew.getData().get("nickname").getAsString();
+
                             String gold = prexiew.getData().get("gold").getAsString();
                             String diamond = prexiew.getData().get("diamond").getAsString();
 
-                            String followCount = prexiew.getData().get("followCount").getAsString();
-                            String fansCount = prexiew.getData().get("fansCount").getAsString();
-                            String signtureVoiceUrl = prexiew.getData().get("signtureVoiceUrl").getAsString();
+                            signtureVoiceUrl = prexiew.getData().get("signtureVoiceUrl").getAsString();
+
                             String isFollow = prexiew.getData().get("isFollow").getAsString();
+                            if (isFollow.equals("1")) {
+                                Glide.with(homepage.this).load(R.drawable.s_guanzhu).into(imageView34);
+                                textView31.setText("已关注");
+                                bool = true;
+                            }
 
                             textView2.setText(prexiew.getData().get("nickname").getAsString());
+                            textView3.setText("ID " + prexiew.getData().get("userId").getAsString());
                             Glide.with(homepage.this).load(prexiew.getData().get("avatarUrl").getAsString()).into(imageView2);
                             textView5.setText(prexiew.getData().get("followCount").getAsString());
                             textView9.setText(prexiew.getData().get("fansCount").getAsString());
 
-                                if (photo != null || giftWall!= null) {
-                                    if (honor != null) {
-                                        HomePageModel.initData(honor, photo, giftWall);
-                                        HomePageModel.initrecycler(context, recycler);
-                                        HomePageModel.initrecyclers(context, recycler2);
-                                        HomePageModel.initrecyclert(context, recycler3);
-                                    }
-
-                                }
+                            if (photo != null || giftWall != null) {
+                                HomePageModel.initData(photo, giftWall);
+                                HomePageModel.initrecycler(context, recycler);
+                                HomePageModel.initrecyclert(context, recycler3);
+                            }
 
 
                             tipDialog.dismiss();
@@ -299,6 +305,35 @@ public class homepage extends AppCompatActivity {
                     }
                 });
 
+
+    }
+
+    private void music(String url) {
+        wlMusic = WlMusic.getInstance();
+        wlMusic.setSource(url); //设置音频源
+        wlMusic.setCallBackPcmData(false);//是否返回音频PCM数据
+        wlMusic.setShowPCMDB(false);//是否返回音频分贝大小
+        wlMusic.setPlayCircle(false); //设置不间断循环播放音频
+        wlMusic.setVolume(65); //设置音量 65%
+        wlMusic.setPlaySpeed(1.0f); //设置播放速度 (1.0正常) 范围：0.25---4.0f
+        wlMusic.setPlayPitch(1.0f); //设置播放速度 (1.0正常) 范围：0.25---4.0f
+        wlMusic.setMute(MuteEnum.MUTE_CENTER); //设置立体声（左声道、右声道和立体声）
+        wlMusic.setConvertSampleRate(null);//设定恒定采样率（null为取消）
+        wlMusic.prePared();
+
+        wlMusic.setOnPreparedListener(new OnPreparedListener() {
+            @Override
+            public void onPrepared() {
+                wlMusic.start();
+            }
+        });
+
+        wlMusic.setOnCompleteListener(new OnCompleteListener() {
+            @Override
+            public void onComplete() {
+                System.out.println("完成");
+            }
+        });
 
     }
 
@@ -320,9 +355,10 @@ public class homepage extends AppCompatActivity {
 
                         if (prexiew.getCode() == 0) {
                             Toast.makeText(homepage.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
-                            if(prexiew.getMsg().equals("关注成功")){
+                            if (prexiew.getMsg().equals("关注成功")) {
                                 Glide.with(homepage.this).load(R.drawable.s_guanzhu).into(imageView34);
                                 textView31.setText("已关注");
+                                bool = true;
                             }
 
                         } else if (prexiew.getCode() == 40000) {

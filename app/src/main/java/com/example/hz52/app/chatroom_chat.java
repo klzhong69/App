@@ -40,7 +40,4 @@ public class chatroom_chat extends AppCompatActivity {
     }
 
 
-
-
-
 }

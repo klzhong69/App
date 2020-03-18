@@ -166,34 +166,34 @@ public class my_music extends AppCompatActivity {
                         JsonArray music = prexiew.getData().getAsJsonArray("music");
 
                         if (prexiew.getCode() == 0) {
+                            if(music!=null) {
+                                for (int i = 0; i < music.size(); i++) {
 
-                            for (int i = 0; i < music.size(); i++) {
+                                    Mymusic i1 = new Mymusic(music.get(i).getAsJsonObject().get("id").getAsLong(), music.get(i).getAsJsonObject().get("musicName").getAsString(), music.get(i).getAsJsonObject().get("duration").getAsString(), "1", "100%", music.get(i).getAsJsonObject().get("md5").getAsString());
+                                    mArray.add(i1);
+                                }
 
-                                Mymusic i1 = new Mymusic(music.get(i).getAsJsonObject().get("id").getAsLong(), music.get(i).getAsJsonObject().get("musicName").getAsString(), music.get(i).getAsJsonObject().get("duration").getAsString(), "1", "100%", music.get(i).getAsJsonObject().get("md5").getAsString());
-                                mArray.add(i1);
-                            }
+                                List<Music> musics = mMusicDao.queryAll();
+                                mArrayLists = new ArrayList<Long>();
+                                for (int i = 0; i < mArray.size(); i++) {
 
-                            List<Music> musics = mMusicDao.queryAll();
-                            mArrayLists = new ArrayList<Long>();
-                            for (int i = 0; i < mArray.size(); i++) {
+                                    int a = 0;
+                                    for (int j = 0; j < musics.size(); j++) {
 
-                                int a = 0;
-                                for (int j = 0; j < musics.size(); j++) {
+                                        if (musics.get(j).getId().equals(mArray.get(i).getId())) {
+                                            a++;
+                                        }
+                                    }
+                                    if (a == 0) {
+                                        mArrayLists.add(mArray.get(i).getId());
 
-                                    if (musics.get(j).getId().equals(mArray.get(i).getId())) {
-                                        a++;
                                     }
                                 }
-                                if (a == 0) {
-                                    mArrayLists.add(mArray.get(i).getId());
 
+                                if (mArrayLists.size() > 0) {
+                                    showMessagePositiveDialog();
                                 }
                             }
-
-                            if(mArrayLists.size()>0){
-                                showMessagePositiveDialog();
-                            }
-
                         } else if (prexiew.getCode() == 40000) {
                             Toast.makeText(my_music.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
                         }

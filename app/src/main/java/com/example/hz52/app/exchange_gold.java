@@ -82,11 +82,11 @@ public class exchange_gold extends AppCompatActivity {
     private void okgo() {
         MyApp application = ((MyApp) this.getApplicationContext());
         SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
-        String userid = sp.getString("userid","");
-        String token = sp.getString("token","");
-        OkGo.<String>post(application.getUrl()+"/app/user/exchangeGold?token="+token)
-                .params("userId",userid)
-                .params("diamond",editText.getText().toString())
+        String userid = sp.getString("userid", "");
+        String token = sp.getString("token", "");
+        OkGo.<String>post(application.getUrl() + "/app/user/exchangeGold?token=" + token)
+                .params("userId", userid)
+                .params("diamond", editText.getText().toString())
                 .execute(new StringCallback() {
 
                     @Override
@@ -95,15 +95,15 @@ public class exchange_gold extends AppCompatActivity {
                         Gson gson = new Gson();
                         Preview prexiew = gson.fromJson(response.body(), Preview.class);
 
-                        if(prexiew.getCode()==0){
+                        if (prexiew.getCode() == 0) {
 
-                            Toast.makeText(exchange_gold.this, prexiew.getMsg()+"", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(exchange_gold.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
                             Intent intent2 = new Intent(exchange_gold.this, my_wallet.class);
                             startActivity(intent2);
                             onBackPressed();
 
-                        }else if(prexiew.getCode()==40000){
-                            Toast.makeText(exchange_gold.this, prexiew.getMsg()+"", Toast.LENGTH_SHORT).show();
+                        } else if (prexiew.getCode() == 40000) {
+                            Toast.makeText(exchange_gold.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
                         }
 
                     }
