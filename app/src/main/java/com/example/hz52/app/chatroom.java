@@ -56,6 +56,8 @@ import com.opensource.svgaplayer.SVGAVideoEntity;
 import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 import com.qmuiteam.qmui.widget.popup.QMUIPopup;
 import com.qmuiteam.qmui.widget.popup.QMUIPopups;
 import com.qmuiteam.qmui.widget.popup.QMUIQuickAction;
@@ -156,7 +158,6 @@ public class chatroom extends AppCompatActivity {
     RelativeLayout recyclerc11;
     @BindView(R.id.recyclerbutc11s)
     RelativeLayout recyclerbutc11s;
-
     @BindView(R.id.recyclerbutc1)
     RelativeLayout recyclerbutc1;
     @BindView(R.id.imageViewc1)
@@ -375,8 +376,15 @@ public class chatroom extends AppCompatActivity {
     ConstraintLayout gift;
     @BindView(R.id.view2)
     View view2;
-    @BindView(R.id.component11)
-    RelativeLayout component11;
+    @BindView(R.id.recyclerbutc12)
+    RelativeLayout recyclerbutc12;
+    @BindView(R.id.editTextc12)
+    EditText editTextc12;
+    @BindView(R.id.butc12)
+    QMUIRoundButton butc12;
+    @BindView(R.id.relativeLayout12)
+    RelativeLayout relativeLayout12;
+
     private chatroom context;
     public static Observer<Integer> observer;
     public static Observer<Integer> observerchat;
@@ -397,7 +405,7 @@ public class chatroom extends AppCompatActivity {
     private Long mLocalUid;
     public static final String TAG = "chatroom";
     private int position;
-
+    private int mCurrentDialogStyle = com.qmuiteam.qmui.R.style.QMUI_Dialog;
     private Boolean bIsBroadCaster = false;//上麦权限
     private Boolean administrator = false;//房主权限
     private Boolean Anchor = false;//管理员权限
@@ -688,6 +696,16 @@ public class chatroom extends AppCompatActivity {
         mRtcEngine.setChannelProfile(Constants.CHANNEL_PROFILE_LIVE_BROADCASTING);
         // 启动音量监听
         mRtcEngine.enableAudioVolumeIndication(500, 5, true);
+        //混响
+        //AUDIO_REVERB_OFF(0)：原声，即关闭本地语音混响
+        //AUDIO_REVERB_POPULAR(1)：流行
+        //AUDIO_REVERB_RNB(2)：R&B
+        //AUDIO_REVERB_ROCK(3)：摇滚
+        //AUDIO_REVERB_HIPHOP(4)：嘻哈
+        //AUDIO_REVERB_VOCAL_CONCERT(5)：演唱会
+        //AUDIO_REVERB_KTV(6)：KTV
+        //AUDIO_REVERB_STUDIO(7)：录音棚
+        mRtcEngine.setLocalVoiceReverbPreset(7);
         // 当 joinChannel api 中填入 0 时，agora 服务器会生成一个唯一的随机数，并在 onJoinChannelSuccess 回调中返回
         SharedPreferences sp = Objects.requireNonNull(getSharedPreferences("User", Context.MODE_PRIVATE));
         mLocalUid = Long.valueOf(sp.getString("userid", ""));
@@ -727,7 +745,7 @@ public class chatroom extends AppCompatActivity {
     }
 
 
-    @OnClick({R.id.fold, R.id.imageView98, R.id.imageView101, R.id.imageView102, R.id.imageView103, R.id.imageView99, R.id.textView124, R.id.imageView104, R.id.imageView105, R.id.textViewc3s, R.id.textViewc7t, R.id.butc1, R.id.butc11, R.id.imageView4, R.id.imageViewc1t, R.id.imageViewc2t, R.id.imageViewc5s, R.id.recyclerbutc1, R.id.recyclerbutc2, R.id.recyclerbutc3, R.id.recyclerbutc4, R.id.recyclerbutc5, R.id.recyclerbutc7, R.id.recyclerbutc8, R.id.recyclerbutc8s, R.id.recyclerbutc9, R.id.recyclerbutc11, R.id.recyclerbutc11s, R.id.imageViewc1, R.id.imageViewc2, R.id.imageViewc3, R.id.imageViewc4, R.id.imageViewc5, R.id.imageViewc7, R.id.recyclerc8, R.id.imageViewc9, R.id.recyclerc11, R.id.relativec1, R.id.relativec2, R.id.relativec3, R.id.relativec4, R.id.relativec5, R.id.relativec7, R.id.relativec9})
+    @OnClick({R.id.fold, R.id.imageView98, R.id.imageView101, R.id.imageView102, R.id.imageView103, R.id.imageView99, R.id.textView124, R.id.imageView104, R.id.imageView105, R.id.textViewc3s, R.id.textViewc7t, R.id.butc1, R.id.butc11, R.id.butc12, R.id.imageView4, R.id.imageViewc1t, R.id.imageViewc2t, R.id.imageViewc5s, R.id.recyclerbutc1, R.id.recyclerbutc2, R.id.recyclerbutc3, R.id.recyclerbutc4, R.id.recyclerbutc5, R.id.recyclerbutc7, R.id.recyclerbutc8, R.id.recyclerbutc8s, R.id.recyclerbutc9, R.id.recyclerbutc11, R.id.recyclerbutc11s, R.id.recyclerbutc12, R.id.imageViewc1, R.id.imageViewc2, R.id.imageViewc3, R.id.imageViewc4, R.id.imageViewc5, R.id.imageViewc7, R.id.recyclerc8, R.id.imageViewc9, R.id.recyclerc11, R.id.relativec1, R.id.relativec2, R.id.relativec3, R.id.relativec4, R.id.relativec5, R.id.relativec7, R.id.relativec9})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.imageView101:
@@ -776,39 +794,11 @@ public class chatroom extends AppCompatActivity {
                     PaimaiModel.initrecycler(context, recyclerc7);
                     textViewc7s.setText(PaimaiModel.mArrayList.size() + "人");
                 } else {
-                    Toast.makeText(chatroom.this, "您已上麦 ", Toast.LENGTH_SHORT).show();
+                    // mRtcEngine.startAudioMixing("/assets/baidu.mp3",false,false,1);
                 }
                 break;
             case R.id.imageView104:
-                Observable.just(1, 2)
-                        .subscribe(new Observer<Integer>() {
-                            @Override
-                            public void onSubscribe(Disposable d) {
-
-                            }
-
-                            @Override
-                            public void onNext(Integer integer) {
-                                if (integer == 1) {
-                                    Roomtxt entity = new Roomtxt("进入房间打赏", "周润发", "https://momeak.oss-cn-shenzhen.aliyuncs.com/l3.png", "");
-                                    ChatRoomModel.Add(recyclerview, entity);
-                                } else if (integer == 2) {
-                                    Roomtxt entity = new Roomtxt("【房间公告】", "", "", "---为了更好的体验请大家文明用语---");
-                                    ChatRoomModel.Add(recyclerview, entity);
-                                }
-
-                            }
-
-                            @Override
-                            public void onError(Throwable e) {
-
-                            }
-
-                            @Override
-                            public void onComplete() {
-
-                            }
-                        });
+                //component12.setVisibility(View.VISIBLE);
                 break;
             case R.id.imageView105:
                 component4.setVisibility(View.VISIBLE);
@@ -881,7 +871,40 @@ public class chatroom extends AppCompatActivity {
                 editTextc1.setText("");
                 break;
             case R.id.butc11:
-                 component11.setVisibility(View.GONE);
+                //component11.setVisibility(View.GONE);
+                break;
+            case R.id.butc12:
+                Roomtxt entity = new Roomtxt(editTextc12.getText().toString(), "周润发", "https://momeak.oss-cn-shenzhen.aliyuncs.com/l3.png", "");
+                ChatRoomModel.Add(recyclerview, entity);
+               /* Observable.just(1, 2)
+                        .subscribe(new Observer<Integer>() {
+                            @Override
+                            public void onSubscribe(Disposable d) {
+
+                            }
+
+                            @Override
+                            public void onNext(Integer integer) {
+                                if (integer == 1) {
+                                    Roomtxt entity = new Roomtxt("进入房间打赏", "周润发", "https://momeak.oss-cn-shenzhen.aliyuncs.com/l3.png", "");
+                                    ChatRoomModel.Add(recyclerview, entity);
+                                } else if (integer == 2) {
+                                    Roomtxt entity = new Roomtxt("【房间公告】", "", "", "---为了更好的体验请大家文明用语---");
+                                    ChatRoomModel.Add(recyclerview, entity);
+                                }
+
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+
+                            }
+
+                            @Override
+                            public void onComplete() {
+
+                            }
+                        });*/
                 break;
             case R.id.imageViewc5s:
                 component5.setVisibility(View.GONE);
@@ -926,7 +949,9 @@ public class chatroom extends AppCompatActivity {
             case R.id.recyclerbutc11:
             case R.id.recyclerbutc11s:
                 break;
-
+            case R.id.recyclerbutc12:
+                //component12.setVisibility(View.GONE);
+                break;
             case R.id.imageViewc1:
             case R.id.imageViewc2:
             case R.id.imageViewc3:
@@ -945,6 +970,26 @@ public class chatroom extends AppCompatActivity {
             case R.id.relativec9:
                 break;
         }
+    }
+
+    private void showMessagePositiveDialog(int dex) {
+        new QMUIDialog.MessageDialogBuilder(this)
+                .setTitle("标题")
+                .setMessage("您已上麦，是否下麦？")
+                .addAction("取消", new QMUIDialogAction.ActionListener() {
+                    @Override
+                    public void onClick(QMUIDialog dialog, int index) {
+                        dialog.dismiss();
+                    }
+                })
+                .addAction(0, "确定", QMUIDialogAction.ACTION_PROP_POSITIVE, new QMUIDialogAction.ActionListener() {
+                    @Override
+                    public void onClick(QMUIDialog dialog, int index) {
+                        dialog.dismiss();
+                        ChatRoomModel.showAudience(mRtcEngine, dex);
+                    }
+                })
+                .create(mCurrentDialogStyle).show();
     }
 
     /**
@@ -1175,7 +1220,7 @@ public class chatroom extends AppCompatActivity {
                 "禁言",
                 "加锁",
                 "一键全锁",
-                "礼物",
+                "下麦",
         };
         List<String> data = new ArrayList<>();
 
@@ -1201,9 +1246,7 @@ public class chatroom extends AppCompatActivity {
                     case 3:
                         break;
                     case 4:
-                        component9.setVisibility(View.VISIBLE);
-                        GiftModel.initData();
-                        GiftModel.initrecycler(context, recyclerc9);
+                        showMessagePositiveDialog(position);
                         break;
                 }
                 if (mNormalPopup != null) {

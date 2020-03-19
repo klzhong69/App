@@ -479,12 +479,9 @@ public class modify_information extends AppCompatActivity {
                         Preview prexiew = gson.fromJson(response.body(), Preview.class);
 
                         if (prexiew.getCode() == 0) {
-
                             mData.remove(position);
                             mAdapters.notifyItemRemoved(position);
                             Toast.makeText(modify_information.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
-
-
                         } else if (prexiew.getCode() == 40000) {
                             Toast.makeText(modify_information.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
                         }

@@ -173,7 +173,8 @@ public class ChatRoomModel {
      */
     public static void self(RtcEngine mRtcEngine,int id) {
         //mRtcEngine.muteLocalAudioStream(true);
-        System.out.println("禁用"+mRtcEngine.muteRemoteAudioStream(Math.toIntExact(mUserList.get(id).getUid()),true));;
+        mRtcEngine.muteAllRemoteAudioStreams (false);
+        mRtcEngine.muteRemoteAudioStream(id,true);
     }
 
 
@@ -186,16 +187,30 @@ public class ChatRoomModel {
     /**
      * 下麦界面
      */
-    public static void showAudience(RtcEngine mRtcEngine,int index) {
+    public static void showAudience(RtcEngine mRtcEngine,int position) {
         //设为观众
         mRtcEngine.setClientRole(Constants.CLIENT_ROLE_AUDIENCE);
         mRtcEngine.muteAllRemoteAudioStreams(true);
         mRtcEngine.muteLocalAudioStream(true);
         mRtcEngine.enableLocalAudio(false);
-        mUserList.remove(index);
-        mAdapters.notifyItemChanged(index);
+        // role 为观众后需要将自己从用户列表移除
+        int uids = getUserIndex(mUserList.get(position).getUid());
+        // 当用户离开时，从用户列表中清除
+        Roomhead i1 = new Roomhead("", "", "", "", 0L, 0, false, false);
+        mUserList.set(uids, i1);
+        mAdapters.notifyDataSetChanged();
 
 
+    }
+
+    private static int getUserIndex(Long uid) {
+
+        for (int i = 0; i < mUserList.size(); i++) {
+            if (mUserList.get(i).getUid().equals(uid)) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     public static void Add(RecyclerView mRecyclerView,Roomtxt entity){

@@ -352,12 +352,24 @@
     </RelativeLayout>
 
     <include
-        android:id="@+id/include3"
+        android:id="@+id/room_announcement"
         layout="@layout/room_announcement"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <include
+        android:id="@+id/room_barrage"
+        layout="@layout/room_barrage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
