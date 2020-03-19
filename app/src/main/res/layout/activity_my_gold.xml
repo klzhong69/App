@@ -53,7 +53,7 @@
         android:id="@+id/textView59"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="254200"
+        android:text="0"
         android:textColor="#ffffff"
         android:textSize="@dimen/sp_48"
         app:layout_constraintBottom_toBottomOf="@+id/imageView19"

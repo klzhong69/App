@@ -47,7 +47,6 @@ public class mess_friends extends AppCompatActivity {
     RelativeLayout relativeLayout10;
     @BindView(R.id.recycler12)
     RecyclerView recycler12;
-    private List<Friends> mArrayList;
     private Context context;
 
     @Override
@@ -56,13 +55,15 @@ public class mess_friends extends AppCompatActivity {
         setContentView(R.layout.activity_mess_friends);
         ButterKnife.bind(this);
         context = this;
-        MessFriendsModel.initData(context, 1);
-        MessFriendsModel.initrecycler(context, recycler12);
+        MessFriendsModel.initData(context, 1,recycler12);
         textView6.setVisibility(View.GONE);
         textView7.setVisibility(View.VISIBLE);
         textView.setVisibility(View.VISIBLE);
         textView9.setVisibility(View.GONE);
+
+
     }
+
 
 
     @OnClick({R.id.fold,  R.id.textView6, R.id.textView, R.id.textView7, R.id.textView9})
@@ -73,28 +74,24 @@ public class mess_friends extends AppCompatActivity {
                 overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
                 break;
             case R.id.textView6:
-                MessFriendsModel.initData(context, 1);
-                MessFriendsModel.initrecycler(context, recycler12);
+                MessFriendsModel.initData(context, 1,recycler12);
                 textView6.setVisibility(View.GONE);
                 textView7.setVisibility(View.VISIBLE);
                 textView.setVisibility(View.VISIBLE);
                 textView9.setVisibility(View.GONE);
                 break;
             case R.id.textView:
-                MessFriendsModel.initData(context, 2);
-                MessFriendsModel.initrecycler(context, recycler12);
+                MessFriendsModel.initData(context, 2,recycler12);
                 textView6.setVisibility(View.VISIBLE);
                 textView7.setVisibility(View.GONE);
                 textView.setVisibility(View.GONE);
                 textView9.setVisibility(View.VISIBLE);
                 break;
             case R.id.textView7:
-                MessFriendsModel.initData(context, 1);
-                MessFriendsModel.initrecycler(context, recycler12);
+                MessFriendsModel.initData(context, 1,recycler12);
                 break;
             case R.id.textView9:
-                MessFriendsModel.initData(context, 2);
-                MessFriendsModel.initrecycler(context, recycler12);
+                MessFriendsModel.initData(context, 2,recycler12);
                 break;
         }
     }

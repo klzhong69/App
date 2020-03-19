@@ -2,10 +2,19 @@ package com.example.hz52.app.Entity;
 
 public class Friends {
 
+    private Long id;
     private String name;
     private String txt;
     private String imagesrc;
     private String icon;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -23,8 +32,6 @@ public class Friends {
         this.txt = txt;
     }
 
-
-
     public String getImagesrc() {
         return imagesrc;
     }
@@ -41,14 +48,11 @@ public class Friends {
         this.icon = icon;
     }
 
-
-
-
-    public Friends(String name, String txt, String imagesrc, String icon) {
+    public Friends(Long id, String name, String txt, String imagesrc, String icon) {
+        this.id = id;
         this.name = name;
         this.txt = txt;
         this.imagesrc = imagesrc;
         this.icon = icon;
     }
-
 }

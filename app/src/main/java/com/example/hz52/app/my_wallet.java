@@ -106,8 +106,8 @@ public class my_wallet extends AppCompatActivity {
                         Preview prexiew = gson.fromJson(response.body(), Preview.class);
 
                         if(prexiew.getCode()==0){
-                            String gold = prexiew.getData().get("gold").getAsString();
-                            String diamond = prexiew.getData().get("diamond").getAsString();
+                             gold = prexiew.getData().get("gold").getAsString();
+                             diamond = prexiew.getData().get("diamond").getAsString();
                             String amount = prexiew.getData().get("amount").getAsString();
 
                             textView53.setText(gold);
@@ -160,7 +160,6 @@ public class my_wallet extends AppCompatActivity {
                 break;
             case R.id.imageView19:
                 Intent intent5 = new Intent(my_wallet.this, my_package.class);
-                intent5.putExtra("packageCount",packageCount);
                 startActivity(intent5);
                 overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
 

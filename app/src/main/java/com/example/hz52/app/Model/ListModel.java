@@ -75,7 +75,9 @@ public class ListModel {
                                 });
                                 observable.subscribe(List.observer);
 
+                                List.tipDialog.dismiss();
                         } else if (prexiew.getCode() == 40000) {
+                            List.tipDialog.dismiss();
                             Toast.makeText(context, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
                         }
 

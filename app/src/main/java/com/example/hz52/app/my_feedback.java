@@ -24,6 +24,7 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
+import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 import com.wildma.pictureselector.PictureSelector;
 
@@ -35,6 +36,8 @@ import butterknife.OnClick;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
+
+import static com.example.hz52.app.List.tipDialog;
 
 public class my_feedback extends AppCompatActivity {
 
@@ -71,8 +74,8 @@ public class my_feedback extends AppCompatActivity {
     @BindView(R.id.imageView15)
     ImageView imageView15;
     private String picturePath;
-    private int in =0;
-    private HashMap<Integer, String> map;
+    private int in = 0;
+    private HashMap<Integer, String> map = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +90,7 @@ public class my_feedback extends AppCompatActivity {
         imageView9.setVisibility(View.GONE);
         imageView14.setVisibility(View.GONE);
         imageView15.setVisibility(View.GONE);
+
     }
 
     @OnClick({R.id.fold, R.id.imageView113, R.id.but, R.id.imageView8, R.id.imageView9, R.id.imageView14, R.id.imageView15})
@@ -97,16 +101,20 @@ public class my_feedback extends AppCompatActivity {
                 overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
                 break;
             case R.id.imageView113:
-                in=0;
+                in = 0;
                 PictureSelector
                         .create(my_feedback.this, PictureSelector.SELECT_REQUEST_CODE)
                         .selectPicture(true, 400, 400, 1, 1);
                 break;
             case R.id.but:
-                if (editText.getText().equals("")) {
-                    if (editText3.getText().equals("")) {
+                if (!editText.getText().toString().equals("")) {
+                    if (!editText3.getText().toString().equals("")) {
+                        tipDialog = new QMUITipDialog.Builder(this)
+                                .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
+                                .setTipWord("正在加载")
+                                .create();
+                        tipDialog.show();
                         okgo();
-                        Toast.makeText(my_feedback.this, "提交成功", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(my_feedback.this, "请输入意见", Toast.LENGTH_SHORT).show();
                     }
@@ -115,25 +123,25 @@ public class my_feedback extends AppCompatActivity {
                 }
                 break;
             case R.id.imageView8:
-                in=1;
+                in = 1;
                 PictureSelector
                         .create(my_feedback.this, PictureSelector.SELECT_REQUEST_CODE)
                         .selectPicture(true, 400, 400, 1, 1);
                 break;
             case R.id.imageView9:
-                in=2;
+                in = 2;
                 PictureSelector
                         .create(my_feedback.this, PictureSelector.SELECT_REQUEST_CODE)
                         .selectPicture(true, 400, 400, 1, 1);
                 break;
             case R.id.imageView14:
-                in=3;
+                in = 3;
                 PictureSelector
                         .create(my_feedback.this, PictureSelector.SELECT_REQUEST_CODE)
                         .selectPicture(true, 400, 400, 1, 1);
                 break;
             case R.id.imageView15:
-                in=4;
+                in = 4;
                 PictureSelector
                         .create(my_feedback.this, PictureSelector.SELECT_REQUEST_CODE)
                         .selectPicture(true, 400, 400, 1, 1);
@@ -150,38 +158,41 @@ public class my_feedback extends AppCompatActivity {
     private void okgo() {
         MyApp application = ((MyApp) this.getApplicationContext());
         SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
-        String userid = sp.getString("userid","");
-        String token = sp.getString("token","");
+        String userid = sp.getString("userid", "");
+        String token = sp.getString("token", "");
 
         String[] pic = {};
-        for(int i=0;i<map.size();i++){
-            pic[i]=map.get(i);
-        }
-        OkGo.<String>post(application.getUrl()+"/app/user/feedback?token="+token)
-                .params("userId",userid)
-                .params("phone",editText.getText().toString())
-                .params("question",editText3.getText().toString())
-                .params("pictures",map.toString())
-                .execute(new StringCallback() {
+        if (map != null) {
+            for (int i = 0; i < map.size(); i++) {
+                pic[i] = map.get(i);
+            }
 
-                    @Override
-                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+            OkGo.<String>post(application.getUrl() + "/app/user/feedback?token=" + token)
+                    .params("userId", userid)
+                    .params("phone", editText.getText().toString())
+                    .params("question", editText3.getText().toString())
+                    .params("pictures", map.toString())
+                    .execute(new StringCallback() {
 
-                        Gson gson = new Gson();
-                        Preview prexiew = gson.fromJson(response.body(), Preview.class);
+                        @Override
+                        public void onSuccess(com.lzy.okgo.model.Response<String> response) {
 
+                            Gson gson = new Gson();
+                            Preview prexiew = gson.fromJson(response.body(), Preview.class);
 
-                        if(prexiew.getCode()==0){
+                            if (prexiew.getCode() == 0) {
 
-                            Toast.makeText(my_feedback.this, prexiew.getMsg()+"", Toast.LENGTH_SHORT).show();
+                                tipDialog.dismiss();
+                                Toast.makeText(my_feedback.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
 
-                        }else if(prexiew.getCode()==40000){
-                            Toast.makeText(my_feedback.this, prexiew.getMsg()+"", Toast.LENGTH_SHORT).show();
+                            } else if (prexiew.getCode() == 40000) {
+                                tipDialog.dismiss();
+                                Toast.makeText(my_feedback.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
+                            }
+
                         }
-
-                    }
-                });
-
+                    });
+        }
     }
 
     @Override
@@ -206,7 +217,7 @@ public class my_feedback extends AppCompatActivity {
                                         .circleCropTransform()
                                         .diskCacheStrategy(DiskCacheStrategy.NONE)
                                         .skipMemoryCache(true);
-                                switch (integer){
+                                switch (integer) {
                                     case 0:
                                         Glide.with(my_feedback.this).load(picturePath).apply(requestOptions).into(imageView113);
                                         imageView8.setVisibility(View.VISIBLE);
@@ -251,9 +262,9 @@ public class my_feedback extends AppCompatActivity {
     private void okgoima() {
         MyApp application = ((MyApp) this.getApplicationContext());
         SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
-        String userid = sp.getString("userid","");
-        String token = sp.getString("token","");
-        String phone = sp.getString("phone","");
+        String userid = sp.getString("userid", "");
+        String token = sp.getString("token", "");
+        String phone = sp.getString("phone", "");
         OkGo.<String>post(application.getUrl() + "/app/alioss/getUserUploadToken")
                 .params("phone", phone)
                 .execute(new StringCallback() {
@@ -272,9 +283,9 @@ public class my_feedback extends AppCompatActivity {
 
                             if (!AccessKeyId.equals("")) {
                                 OSSSet.OSSClient(my_feedback.this, AccessKeyId, AccessKeySecret, SecurityToken, region, bucket);
-                                String name = "feedback"+ DateUtil.getCurrentMillis()+".jpg";
-                                OSSSet.Callback(bucket, phone + "/"+ name, picturePath, userid);
-                                map.put(in,phone + "/"+ name);
+                                String name = "feedback" + DateUtil.getCurrentMillis() + ".jpg";
+                                OSSSet.Callback(bucket, phone + "/" + name, picturePath, userid);
+                                map.put(in, phone + "/" + name);
                             }
 
                         } else if (prexiew.getCode() == 40000) {

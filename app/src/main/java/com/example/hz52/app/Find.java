@@ -107,7 +107,6 @@ public class Find extends Fragment {
         //ui &= ~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR; //设置状态栏中字体颜色为白色
         decor.setSystemUiVisibility(ui);
 
-
         initData();
         init();
         return view;
@@ -203,6 +202,7 @@ public class Find extends Fragment {
                                     Findlist i1 = new Findlist(roomName, welcomeText, hot, coverUrl, "", tag.get(0).getAsString(), tag.get(1).getAsString(), tag.get(2).getAsString());
                                     mArrayList.add(i1);
                                 }
+                                tipDialog.dismiss();
 
                             } else if (prexiew.getCode() == 40000) {
                                 Toast.makeText(getContext(), prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();

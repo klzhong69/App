@@ -695,7 +695,7 @@ public class chatroom extends AppCompatActivity {
         // 设置直播模式
         mRtcEngine.setChannelProfile(Constants.CHANNEL_PROFILE_LIVE_BROADCASTING);
         // 启动音量监听
-        mRtcEngine.enableAudioVolumeIndication(500, 5, true);
+        mRtcEngine.enableAudioVolumeIndication(300, 3, true);
         //混响
         //AUDIO_REVERB_OFF(0)：原声，即关闭本地语音混响
         //AUDIO_REVERB_POPULAR(1)：流行
@@ -745,7 +745,7 @@ public class chatroom extends AppCompatActivity {
     }
 
 
-    @OnClick({R.id.fold, R.id.imageView98, R.id.imageView101, R.id.imageView102, R.id.imageView103, R.id.imageView99, R.id.textView124, R.id.imageView104, R.id.imageView105, R.id.textViewc3s, R.id.textViewc7t, R.id.butc1, R.id.butc11, R.id.butc12, R.id.imageView4, R.id.imageViewc1t, R.id.imageViewc2t, R.id.imageViewc5s, R.id.recyclerbutc1, R.id.recyclerbutc2, R.id.recyclerbutc3, R.id.recyclerbutc4, R.id.recyclerbutc5, R.id.recyclerbutc7, R.id.recyclerbutc8, R.id.recyclerbutc8s, R.id.recyclerbutc9, R.id.recyclerbutc11, R.id.recyclerbutc11s, R.id.recyclerbutc12, R.id.imageViewc1, R.id.imageViewc2, R.id.imageViewc3, R.id.imageViewc4, R.id.imageViewc5, R.id.imageViewc7, R.id.recyclerc8, R.id.imageViewc9, R.id.recyclerc11, R.id.relativec1, R.id.relativec2, R.id.relativec3, R.id.relativec4, R.id.relativec5, R.id.relativec7, R.id.relativec9})
+    @OnClick({R.id.fold, R.id.imageView98, R.id.imageView101, R.id.imageView102, R.id.imageView103, R.id.imageView99, R.id.textView124, R.id.imageView104, R.id.imageView105, R.id.textViewc2s, R.id.textViewc2t, R.id.textViewc2d, R.id.textViewc2f, R.id.textViewc3s, R.id.textViewc7t, R.id.butc1, R.id.butc11, R.id.butc12, R.id.imageView4, R.id.imageViewc1t, R.id.imageViewc2t, R.id.imageViewc5s, R.id.recyclerbutc1, R.id.recyclerbutc2, R.id.recyclerbutc3, R.id.recyclerbutc4, R.id.recyclerbutc5, R.id.recyclerbutc7, R.id.recyclerbutc8, R.id.recyclerbutc8s, R.id.recyclerbutc9, R.id.recyclerbutc11, R.id.recyclerbutc11s, R.id.recyclerbutc12, R.id.imageViewc1, R.id.imageViewc2, R.id.imageViewc3, R.id.imageViewc4, R.id.imageViewc5, R.id.imageViewc7, R.id.recyclerc8, R.id.imageViewc9, R.id.recyclerc11, R.id.relativec1, R.id.relativec2, R.id.relativec3, R.id.relativec4, R.id.relativec5, R.id.relativec7, R.id.relativec9})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.imageView101:
@@ -909,8 +909,31 @@ public class chatroom extends AppCompatActivity {
             case R.id.imageViewc5s:
                 component5.setVisibility(View.GONE);
                 component2.setVisibility(View.VISIBLE);
-                MessFriendsModel.initData(context, 1);
-                MessFriendsModel.initrecycler(context, recyclerc2);
+                textViewc2s.setVisibility(View.GONE);
+                textViewc2d.setVisibility(View.VISIBLE);
+                textViewc2t.setVisibility(View.VISIBLE);
+                textViewc2f.setVisibility(View.GONE);
+                MessFriendsModel.initData(context, 1,recyclerc2);
+                break;
+            case R.id.textViewc2s:
+                textViewc2s.setVisibility(View.GONE);
+                textViewc2d.setVisibility(View.VISIBLE);
+                textViewc2t.setVisibility(View.VISIBLE);
+                textViewc2f.setVisibility(View.GONE);
+                MessFriendsModel.initData(context, 1,recyclerc2);
+                break;
+            case R.id.textViewc2d:
+                MessFriendsModel.initData(context, 2,recyclerc2);
+                break;
+            case R.id.textViewc2t:
+                textViewc2s.setVisibility(View.VISIBLE);
+                textViewc2d.setVisibility(View.GONE);
+                textViewc2t.setVisibility(View.GONE);
+                textViewc2f.setVisibility(View.VISIBLE);
+                MessFriendsModel.initData(context, 1,recyclerc2);
+                break;
+            case R.id.textViewc2f:
+                MessFriendsModel.initData(context, 2,recyclerc2);
                 break;
             case R.id.imageView4:
                 showSimpleBottomSheetGrid();
@@ -1058,7 +1081,7 @@ public class chatroom extends AppCompatActivity {
                     case 7:
                         break;
                     case 8:
-                        component8.setVisibility(View.VISIBLE);
+                            component8.setVisibility(View.VISIBLE);
                         break;
                     case 9:
                         break;
@@ -1100,7 +1123,8 @@ public class chatroom extends AppCompatActivity {
             public void onNext(Integer view) {
                 System.out.println("坑位" + view);
                 position = view;
-                if (administrator || Anchor || host) {
+                //administrator || Anchor || host ||
+                if (administrator || Anchor || host || mLocalUid.equals(ChatRoomModel.mUserList.get(position).getUid())) {
                     onClickBtn2(gridview.getChildAt(view));
                 }
 

@@ -186,6 +186,7 @@ public class login extends AppCompatActivity {
 
                             tipDialog.dismiss();
                         }else if(prexiew.getCode()==40000){
+                            tipDialog.dismiss();
                             Toast.makeText(login.this, prexiew.getMsg()+"", Toast.LENGTH_SHORT).show();
                         }
 

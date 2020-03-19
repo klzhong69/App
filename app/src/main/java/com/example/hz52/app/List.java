@@ -131,7 +131,7 @@ public class List extends Fragment {
     private int durationCategory = 2;
     public static Observer<JsonArray> observer;
     private Window window;
-    private QMUITipDialog tipDialog;
+    public static QMUITipDialog tipDialog;
     private String userid;
 
     @Nullable
@@ -306,7 +306,6 @@ public class List extends Fragment {
                 }
 
             }
-            tipDialog.dismiss();
         } catch (Exception e) {
 
         }

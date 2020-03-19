@@ -107,11 +107,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
     private Map<String, String> map = new HashMap<String, String>();
     private int sum = 0;
     private String userid;
-    public static float density;
-    public static float numder;
-    public static float sumder;
-    public int widthPixels;
-    public static int heightPixels;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

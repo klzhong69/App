@@ -124,6 +124,7 @@ public class ChatRoomModel {
             @Override
             public void onItemLongClick(View view, int position) {
 
+
                 Observable<Integer> observable = Observable.defer(new Callable<ObservableSource<? extends Integer>>() {
                     @Override
                     public ObservableSource<? extends Integer> call() throws Exception {

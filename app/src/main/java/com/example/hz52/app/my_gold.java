@@ -68,10 +68,9 @@ public class my_gold extends AppCompatActivity {
         title.setText("我的金币");
         subtitle.setText("");
 
-
-
         Intent intent = getIntent();
         String gold = intent.getStringExtra("gold");
+        System.out.println("金币"+gold);
         textView59.setText(gold);
         init();
 

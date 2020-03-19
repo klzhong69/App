@@ -15,12 +15,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hz52.app.Adapter.MusicViewAdapter;
 import com.example.hz52.app.Entity.Mymusic;
+import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.example.hz52.app.List.tipDialog;
 
 public class my_music_search extends AppCompatActivity {
 
@@ -37,6 +40,12 @@ public class my_music_search extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_music_search);
         ButterKnife.bind(this);
+
+        tipDialog = new QMUITipDialog.Builder(this)
+                .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
+                .setTipWord("正在加载")
+                .create();
+        tipDialog.show();
 
         init();
 

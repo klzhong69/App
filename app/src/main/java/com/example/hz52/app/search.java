@@ -106,7 +106,6 @@ public class search extends AppCompatActivity {
                 textView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
                         Intent intent3 = new Intent(search.this, family_search.class);
                         intent3.putExtra("searchtxt",mArrayList.get(position).getTxt());
                         startActivity(intent3);

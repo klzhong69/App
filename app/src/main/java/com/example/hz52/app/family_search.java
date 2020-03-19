@@ -20,6 +20,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
+import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +55,7 @@ public class family_search extends AppCompatActivity {
     private JsonArray users = new JsonArray();
     private JsonArray rooms = new JsonArray();
     private int a=0;
+    private QMUITipDialog tipDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,8 +70,12 @@ public class family_search extends AppCompatActivity {
         textView3.setVisibility(View.VISIBLE);
         textView6.setVisibility(View.VISIBLE);
         textView7.setVisibility(View.GONE);
-
         okgo();
+        tipDialog = new QMUITipDialog.Builder(this)
+                .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
+                .setTipWord("正在加载")
+                .create();
+        tipDialog.show();
     }
 
     private void init() {
@@ -99,7 +105,6 @@ public class family_search extends AppCompatActivity {
                 }else{
                     Toast.makeText(family_search.this, position + " user", Toast.LENGTH_SHORT).show();
                 }
-
             }
 
             @Override
@@ -118,6 +123,28 @@ public class family_search extends AppCompatActivity {
         recycler3.setItemAnimator(defaultItemAnimator);
     }
 
+    private void initData(int type){
+        mArrayList = new ArrayList<Familysea>();
+        if(type == 0){
+            if (rooms.size() > 0) {
+                for (int i = 0; i < rooms.size(); i++) {
+                    Familysea i2 = new Familysea(rooms.get(i).getAsJsonObject().get("roomName").getAsString(), "ID" + rooms.get(i).getAsJsonObject().get("uniqueId").getAsString(), a+"", rooms.get(i).getAsJsonObject().get("coverUrl").getAsString(), rooms.get(i).getAsJsonObject().get("collectCount").getAsString());
+                    mArrayList.add(i2);
+
+                }
+            }
+
+        }else{
+            if (users.size() > 0) {
+                for (int i = 0; i < users.size(); i++) {
+                    Familysea i1 = new Familysea(users.get(i).getAsJsonObject().get("nickname").getAsString(), "ID" + users.get(i).getAsJsonObject().get("uniqueId").getAsString(), a+"",  users.get(i).getAsJsonObject().get("avatarUrl").getAsString(), users.get(i).getAsJsonObject().get("fansCount").getAsString());
+                    mArrayList.add(i1);
+
+                }
+            }
+        }
+        init();
+    }
 
     private void okgo() {
         MyApp application = ((MyApp) this.getApplicationContext());
@@ -136,27 +163,10 @@ public class family_search extends AppCompatActivity {
 
                             users = prexiew.getData().getAsJsonArray("users");
                             rooms = prexiew.getData().getAsJsonArray("rooms");
-
-                            if(a==1){
-                                if (users.size() > 0) {
-                                    for (int i = 0; i < users.size(); i++) {
-                                        Familysea i1 = new Familysea(users.get(i).getAsJsonObject().get("userName").getAsString(), "ID" + users.get(i).getAsJsonObject().get("userId").getAsString(), a+"",  users.get(i).getAsJsonObject().get("avatarUrl").getAsString(), users.get(i).getAsJsonObject().get("fansCount").getAsString());
-                                        mArrayList.add(i1);
-
-                                    }
-                                }
-                            }else if(a==0){
-                                if (rooms.size() > 0) {
-                                    for (int i = 0; i < rooms.size(); i++) {
-                                        Familysea i2 = new Familysea(rooms.get(i).getAsJsonObject().get("roomName").getAsString(), "ID" + rooms.get(i).getAsJsonObject().get("uniqueId").getAsString(), a+"", rooms.get(i).getAsJsonObject().get("coverUrl").getAsString(), rooms.get(i).getAsJsonObject().get("collectCount").getAsString());
-                                        mArrayList.add(i2);
-
-                                    }
-                                }
-                            }
-                            System.out.println(mArrayList.size());
-                            init();
+                            initData(0);
+                            tipDialog.dismiss();
                         } else if (prexiew.getCode() == 40000) {
+                            tipDialog.dismiss();
                             Toast.makeText(family_search.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
                         }
 
@@ -179,9 +189,7 @@ public class family_search extends AppCompatActivity {
                 textView3.setVisibility(View.VISIBLE);
                 textView6.setVisibility(View.VISIBLE);
                 textView7.setVisibility(View.GONE);
-                okgo();
-                init();
-
+                initData(a);
                 break;
             case R.id.textView6:
                 a=1;
@@ -189,19 +197,15 @@ public class family_search extends AppCompatActivity {
                 textView3.setVisibility(View.GONE);
                 textView6.setVisibility(View.GONE);
                 textView7.setVisibility(View.VISIBLE);
-                okgo();
-                init();
-
+                initData(a);
                 break;
             case R.id.textView3:
                 a=0;
-                okgo();
-                init();
+                initData(a);
                 break;
             case R.id.textView7:
                 a=1;
-                okgo();
-                init();
+                initData(a);
                 break;
         }
     }

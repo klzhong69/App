@@ -195,7 +195,7 @@ public class homepage extends AppCompatActivity {
                 break;
             case R.id.imageView34:
             case R.id.textView31:
-                if (bool) {
+                if (!bool) {
                     okgo();
                 }
                 break;
@@ -205,7 +205,6 @@ public class homepage extends AppCompatActivity {
                 String userid = sp.getString("userid", "");
                 String usersrc = sp.getString("avatarUrl", "");
                 String username = sp.getString("nickname", "");
-                System.out.println("dhauhdu" + mConverDao.query(followId, Long.valueOf(userid)).size());
                 if (mConverDao.query(followId, Long.valueOf(userid)).size() == 0) {
 
                     long data = System.currentTimeMillis() / 1000;
@@ -282,6 +281,8 @@ public class homepage extends AppCompatActivity {
                                 Glide.with(homepage.this).load(R.drawable.s_guanzhu).into(imageView34);
                                 textView31.setText("已关注");
                                 bool = true;
+                            }else{
+                                bool = false;
                             }
 
                             textView2.setText(prexiew.getData().get("nickname").getAsString());
@@ -296,9 +297,9 @@ public class homepage extends AppCompatActivity {
                                 HomePageModel.initrecyclert(context, recycler3);
                             }
 
-
                             tipDialog.dismiss();
                         } else if (prexiew.getCode() == 40000) {
+                            tipDialog.dismiss();
                             Toast.makeText(homepage.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
                         }
 
@@ -343,8 +344,8 @@ public class homepage extends AppCompatActivity {
         String userid = sp.getString("userid", "");
         String token = sp.getString("token", "");
         OkGo.<String>post(application.getUrl() + "/app/user/follow?token=" + token)
-                .params("userId", userid)
-                .params("followId", followId)
+                .params("userId", followId)
+                .params("followId", userid)
                 .execute(new StringCallback() {
 
                     @Override
