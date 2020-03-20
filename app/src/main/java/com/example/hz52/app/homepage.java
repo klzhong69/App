@@ -178,8 +178,6 @@ public class homepage extends AppCompatActivity {
         Initialization.setupDatabaseChat(this);
         Initialization.setupDatabaseConver(this);
 
-
-
         if (userid.equals(String.valueOf(followId))) {
             relativeLayout5.setVisibility(View.GONE);
         }

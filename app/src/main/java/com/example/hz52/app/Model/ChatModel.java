@@ -20,6 +20,7 @@ public class ChatModel {
 
     private static ChatAdapter mAdapter;
     private static List<Chats> mArrayList;
+    private static int a =0;
 
     public static void initData(String conver, Long userid, int set, int lim) {
         mArrayList = new ArrayList<Chats>();
@@ -58,6 +59,8 @@ public class ChatModel {
         recycler13.setLayoutManager(mLinearLayoutManager);
 
         recycler13.setItemAnimator(new DefaultItemAnimator());
+
+
 
         mAdapter.setOnItemClickListener(new ChatAdapter.OnItemClickListener() {
             @Override

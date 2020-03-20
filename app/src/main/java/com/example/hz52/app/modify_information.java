@@ -321,7 +321,7 @@ public class modify_information extends AppCompatActivity {
                 .params("userId", userid)
                 .params("nickname", textView35.getText().toString())
                 .params("signtureText", textView37.getText().toString())
-                .params("avatarUrl", phone + "avatar" + ".jpg")
+                .params("avatarUrl", "https://momeak.oss-cn-shenzhen.aliyuncs.com/h3.jpg")
                 .execute(new StringCallback() {
 
                     @Override
@@ -335,7 +335,10 @@ public class modify_information extends AppCompatActivity {
                             Toast.makeText(modify_information.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
                             sp.edit().putString("nickname", textView35.getText().toString()).apply();
                             sp.edit().putString("signtureText", textView37.getText().toString()).apply();
-                            sp.edit().putString("avatarUrl", phone + "avatar" + ".jpg").apply();
+                            //sp.edit().putString("avatarUrl", phone + "/avatar" + ".jpg").apply();
+                            sp.edit().putString("avatarUrl", "https://momeak.oss-cn-shenzhen.aliyuncs.com/h3.jpg").apply();
+                            finish();
+                            overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
 
                         } else if (prexiew.getCode() == 40000) {
                             Toast.makeText(modify_information.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();

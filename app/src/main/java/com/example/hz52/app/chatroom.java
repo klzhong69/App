@@ -37,6 +37,7 @@ import com.bumptech.glide.Glide;
 import com.example.hz52.app.Adapter.HoldpeopleAdapter;
 import com.example.hz52.app.Entity.Chats;
 import com.example.hz52.app.Entity.Holdpeople;
+import com.example.hz52.app.Entity.MyApp;
 import com.example.hz52.app.Entity.Roomhead;
 import com.example.hz52.app.Entity.Roomtxt;
 import com.example.hz52.app.Model.ChatModel;
@@ -46,8 +47,10 @@ import com.example.hz52.app.Model.GiftheadModel;
 import com.example.hz52.app.Model.MessFriendsModel;
 import com.example.hz52.app.Model.MessModel;
 import com.example.hz52.app.Model.PaimaiModel;
+import com.example.hz52.app.Sqlentity.Conver;
 import com.example.hz52.app.cofig.DateUtil;
 import com.example.hz52.app.cofig.KeyboardStateObserver;
+import com.example.hz52.app.dao.mConverDao;
 import com.opensource.svgaplayer.SVGADrawable;
 import com.opensource.svgaplayer.SVGADynamicEntity;
 import com.opensource.svgaplayer.SVGAImageView;
@@ -142,22 +145,10 @@ public class chatroom extends AppCompatActivity {
     ImageView imageView105;
     @BindView(R.id.relativeLayout3)
     RelativeLayout relativeLayout3;
-    @BindView(R.id.recyclerbutc11)
-    RelativeLayout recyclerbutc11;
-    @BindView(R.id.imageViewc11)
-    QMUIRadiusImageView imageViewc11;
-    @BindView(R.id.imageViewc11s)
-    ImageView imageViewc11s;
-    @BindView(R.id.textViewc11)
-    TextView textViewc11;
-    @BindView(R.id.butc11)
-    QMUIRoundButton butc11;
     @BindView(R.id.textView148)
     TextView textView148;
-    @BindView(R.id.recyclerc11)
-    RelativeLayout recyclerc11;
-    @BindView(R.id.recyclerbutc11s)
-    RelativeLayout recyclerbutc11s;
+    @BindView(R.id.recyclerc10)
+    RelativeLayout recyclerc10;
     @BindView(R.id.recyclerbutc1)
     RelativeLayout recyclerbutc1;
     @BindView(R.id.imageViewc1)
@@ -172,8 +163,6 @@ public class chatroom extends AppCompatActivity {
     EditText editTextc1;
     @BindView(R.id.butc1)
     QMUIRoundButton butc1;
-    @BindView(R.id.relativeLayout11)
-    RelativeLayout relativeLayout11;
     @BindView(R.id.relativec1)
     RelativeLayout relativec1;
     @BindView(R.id.component1)
@@ -376,24 +365,40 @@ public class chatroom extends AppCompatActivity {
     ConstraintLayout gift;
     @BindView(R.id.view2)
     View view2;
-    @BindView(R.id.recyclerbutc12)
-    RelativeLayout recyclerbutc12;
-    @BindView(R.id.editTextc12)
-    EditText editTextc12;
-    @BindView(R.id.butc12)
-    QMUIRoundButton butc12;
-    @BindView(R.id.relativeLayout12)
-    RelativeLayout relativeLayout12;
+    @BindView(R.id.recyclerbutc10)
+    RelativeLayout recyclerbutc10;
+    @BindView(R.id.imageViewc10)
+    QMUIRadiusImageView imageViewc10;
+    @BindView(R.id.imageViewc10s)
+    ImageView imageViewc10s;
+    @BindView(R.id.textViewc10)
+    TextView textViewc10;
+    @BindView(R.id.butc10)
+    QMUIRoundButton butc10;
+    @BindView(R.id.recyclerbutc10s)
+    RelativeLayout recyclerbutc10s;
+    @BindView(R.id.component10)
+    RelativeLayout component10;
+    @BindView(R.id.recyclerbutc6)
+    RelativeLayout recyclerbutc6;
+    @BindView(R.id.editTextc6)
+    EditText editTextc6;
+    @BindView(R.id.butc6)
+    QMUIRoundButton butc6;
+    @BindView(R.id.relativeLayout6)
+    RelativeLayout relativeLayout6;
+    @BindView(R.id.component6)
+    RelativeLayout component6;
+
 
     private chatroom context;
     public static Observer<Integer> observer;
-    public static Observer<Integer> observerchat;
+    public static Observer<Integer> observermess;
     public static Observer<Integer> observers;
     private QMUIPopup mNormalPopup;
     private String conver;
     private Long sendid;
     private String sendname;
-    private String sendsrc;
     private boolean bool = false;
     public static Observer<Integer> observersvga;
     private SVGAParser parser;
@@ -465,35 +470,6 @@ public class chatroom extends AppCompatActivity {
             });
         }
 
-       /* @Override
-        public void onJoinChannelSuccess(final String channel, final int uid, int elapsed) {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    // onJoinChannelSuccess 回调中，uid 不会为0
-                    // 当 joinChannel api 中填入 0 时，agora 服务器会生成一个唯一的随机数，并在 onJoinChannelSuccess 回调中返回
-
-                    SharedPreferences sp = Objects.requireNonNull(getSharedPreferences("Room", Context.MODE_PRIVATE));
-                    String id = sp.getString("roomid", "");
-
-                    if (bIsBroadCaster) {
-                        Log.e(TAG, "主播加入" + uid);
-                        if (mChannelName.equals(id)) {
-                            Observable<Integer> observable = Observable.defer(new Callable<ObservableSource<? extends Integer>>() {
-                                @Override
-                                public ObservableSource<? extends Integer> call() throws Exception {
-                                    return Observable.just(11);
-                                }
-                            });
-                            observable.subscribe(observer);
-                        }
-                    }
-
-
-                }
-            });
-        }*/
-
         @Override
         public void onAudioVolumeIndication(final AudioVolumeInfo[] speakers, int totalVolume) {
             runOnUiThread(new Runnable() {
@@ -548,12 +524,7 @@ public class chatroom extends AppCompatActivity {
                 }
             });
         }
-
-
     };
-    private Window window;
-    private QMUIBottomSheet.BottomListSheetBuilder builder;
-
 
     private int getUserIndex(Long uid) {
 
@@ -565,19 +536,22 @@ public class chatroom extends AppCompatActivity {
         return -1;
     }
 
+    private Window window;
+    private QMUIBottomSheet.BottomListSheetBuilder builder;
+    private String userid;
+    private String avatarUrl;
+    private String nickname;
+    private String gender;
+    private int a = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       /* //隐藏标题栏
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        //隐藏状态栏
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);*/
         setContentView(R.layout.activity_chatroom);
         ButterKnife.bind(this);
         context = this;
         window = this.getWindow();
-
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -599,6 +573,12 @@ public class chatroom extends AppCompatActivity {
 
             initAgoraEngineAndJoinChannel();
         }
+
+        SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
+        userid = sp.getString("userid", "");
+        avatarUrl = sp.getString("avatarUrl", "");
+        nickname = sp.getString("nickname", "");
+        gender = sp.getString("gender", "");
 
         ChatRoomModel.initrecycler(context, recyclerview);
         ChatRoomModel.initData();
@@ -745,7 +725,7 @@ public class chatroom extends AppCompatActivity {
     }
 
 
-    @OnClick({R.id.fold, R.id.imageView98, R.id.imageView101, R.id.imageView102, R.id.imageView103, R.id.imageView99, R.id.textView124, R.id.imageView104, R.id.imageView105, R.id.textViewc2s, R.id.textViewc2t, R.id.textViewc2d, R.id.textViewc2f, R.id.textViewc3s, R.id.textViewc7t, R.id.butc1, R.id.butc11, R.id.butc12, R.id.imageView4, R.id.imageViewc1t, R.id.imageViewc2t, R.id.imageViewc5s, R.id.recyclerbutc1, R.id.recyclerbutc2, R.id.recyclerbutc3, R.id.recyclerbutc4, R.id.recyclerbutc5, R.id.recyclerbutc7, R.id.recyclerbutc8, R.id.recyclerbutc8s, R.id.recyclerbutc9, R.id.recyclerbutc11, R.id.recyclerbutc11s, R.id.recyclerbutc12, R.id.imageViewc1, R.id.imageViewc2, R.id.imageViewc3, R.id.imageViewc4, R.id.imageViewc5, R.id.imageViewc7, R.id.recyclerc8, R.id.imageViewc9, R.id.recyclerc11, R.id.relativec1, R.id.relativec2, R.id.relativec3, R.id.relativec4, R.id.relativec5, R.id.relativec7, R.id.relativec9})
+    @OnClick({R.id.fold, R.id.imageView98, R.id.imageView101, R.id.imageView102, R.id.imageView103, R.id.imageView99, R.id.textView124, R.id.imageView104, R.id.imageView105, R.id.textViewc2s, R.id.textViewc2t, R.id.textViewc2d, R.id.textViewc2f, R.id.textViewc3s, R.id.textViewc7t, R.id.butc1, R.id.butc10, R.id.butc6, R.id.imageView4, R.id.imageViewc1t, R.id.imageViewc2t, R.id.imageViewc5s, R.id.recyclerbutc1, R.id.recyclerbutc2, R.id.recyclerbutc3, R.id.recyclerbutc4, R.id.recyclerbutc5, R.id.recyclerbutc7, R.id.recyclerbutc8, R.id.recyclerbutc8s, R.id.recyclerbutc9, R.id.recyclerbutc10, R.id.recyclerbutc10s, R.id.recyclerbutc6, R.id.imageViewc1, R.id.imageViewc2, R.id.imageViewc3, R.id.imageViewc4, R.id.imageViewc5, R.id.imageViewc7, R.id.recyclerc8, R.id.imageViewc9, R.id.recyclerc10, R.id.relativec1, R.id.relativec2, R.id.relativec3, R.id.relativec4, R.id.relativec5, R.id.relativec7, R.id.relativec9})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.imageView101:
@@ -791,14 +771,15 @@ public class chatroom extends AppCompatActivity {
             case R.id.imageView103:
                 if (!bIsBroadCaster) {
                     component7.setVisibility(View.VISIBLE);
-                    PaimaiModel.initrecycler(context, recyclerc7);
+                    ChatRoomModel.okgoall(context,recyclerc7,mLocalUid,0);
+
                     textViewc7s.setText(PaimaiModel.mArrayList.size() + "人");
                 } else {
                     // mRtcEngine.startAudioMixing("/assets/baidu.mp3",false,false,1);
                 }
                 break;
             case R.id.imageView104:
-                //component12.setVisibility(View.VISIBLE);
+                component6.setVisibility(View.VISIBLE);
                 break;
             case R.id.imageView105:
                 component4.setVisibility(View.VISIBLE);
@@ -825,18 +806,16 @@ public class chatroom extends AppCompatActivity {
                 break;
 
             case R.id.textViewc7t:
-                SharedPreferences sp = Objects.requireNonNull(getSharedPreferences("User", Context.MODE_PRIVATE));
-                String userid = sp.getString("userid", "");
-                String nickname = sp.getString("nickname", "");
-                String avatarUrl = sp.getString("avatarUrl", "");
-                String gender = sp.getString("gender", "");
+
                 if (bool) {
+                    ChatRoomModel.okgodel(context,mLocalUid);
                     int i = PaimaiModel.get(userid);
                     PaimaiModel.Remove(i);
                     textViewc7t.setText("申请排麦");
                     bool = false;
 
                 } else {
+                    ChatRoomModel.okgo(context,mLocalUid);
                     Holdpeople i1 = new Holdpeople(userid, avatarUrl, nickname, gender, "0");
                     PaimaiModel.Add(recyclerc7, i1);
                     textViewc7t.setText("取消排麦");
@@ -847,7 +826,7 @@ public class chatroom extends AppCompatActivity {
 
             case R.id.textViewc3s:
                 for (int i = 0; i < HoldpeopleAdapter.states.size(); i++) {
-                    if (HoldpeopleAdapter.states.get(i) != null) {
+                    if (HoldpeopleAdapter.states.get(i)) {
                         Roomhead roomhead = new Roomhead(HoldpeopleAdapter.mEntityList.get(i).getUserima(), HoldpeopleAdapter.mEntityList.get(i).getName(), "", "", mLocalUid, 0, false, false);
                         ChatRoomModel.showBroadCast(mRtcEngine, mLocalUid, position, roomhead);
                         PaimaiModel.Remove(i);
@@ -859,22 +838,31 @@ public class chatroom extends AppCompatActivity {
             case R.id.imageViewc1t:
                 component1.setVisibility(View.GONE);
                 component5.setVisibility(View.VISIBLE);
+                MessModel.initData(context);
+                MessModel.initrecycler(context, context, recyclerc5, 1);
                 break;
             case R.id.imageViewc2t:
                 component2.setVisibility(View.GONE);
                 component5.setVisibility(View.VISIBLE);
                 break;
             case R.id.butc1:
-                String time = DateUtil.getCurrentTimeYMDHMS();
-                Chats i1 = new Chats("https://momeak.oss-cn-shenzhen.aliyuncs.com/h4.jpg", editTextc1.getText().toString(), time, 2);
-                ChatModel.Add(recyclerc1, i1);
-                editTextc1.setText("");
+                if (!editTextc1.getText().toString().equals("")) {
+                    String time = DateUtil.getCurrentTimeYMDHMS();
+                    String txt = editTextc1.getText().toString();
+                    Chats i1 = new Chats(avatarUrl, txt, time, 2);
+                    ChatModel.Add(recyclerc1, i1);
+                    editTextc1.setText("");
+                    chat.send(userid, avatarUrl, nickname, sendid, txt, conver);
+
+                } else {
+                    Toast.makeText(chatroom.this, "请输入发送内容", Toast.LENGTH_SHORT).show();
+                }
                 break;
-            case R.id.butc11:
-                //component11.setVisibility(View.GONE);
+            case R.id.butc10:
+                component10.setVisibility(View.GONE);
                 break;
-            case R.id.butc12:
-                Roomtxt entity = new Roomtxt(editTextc12.getText().toString(), "周润发", "https://momeak.oss-cn-shenzhen.aliyuncs.com/l3.png", "");
+            case R.id.butc6:
+                Roomtxt entity = new Roomtxt(editTextc6.getText().toString(), "周润发", "https://momeak.oss-cn-shenzhen.aliyuncs.com/l3.png", "");
                 ChatRoomModel.Add(recyclerview, entity);
                /* Observable.just(1, 2)
                         .subscribe(new Observer<Integer>() {
@@ -913,27 +901,27 @@ public class chatroom extends AppCompatActivity {
                 textViewc2d.setVisibility(View.VISIBLE);
                 textViewc2t.setVisibility(View.VISIBLE);
                 textViewc2f.setVisibility(View.GONE);
-                MessFriendsModel.initData(context, 1,recyclerc2);
+                MessFriendsModel.initData(context, 1, recyclerc2);
                 break;
             case R.id.textViewc2s:
                 textViewc2s.setVisibility(View.GONE);
                 textViewc2d.setVisibility(View.VISIBLE);
                 textViewc2t.setVisibility(View.VISIBLE);
                 textViewc2f.setVisibility(View.GONE);
-                MessFriendsModel.initData(context, 1,recyclerc2);
+                MessFriendsModel.initData(context, 1, recyclerc2);
                 break;
             case R.id.textViewc2d:
-                MessFriendsModel.initData(context, 2,recyclerc2);
+                MessFriendsModel.initData(context, 2, recyclerc2);
                 break;
             case R.id.textViewc2t:
                 textViewc2s.setVisibility(View.VISIBLE);
                 textViewc2d.setVisibility(View.GONE);
                 textViewc2t.setVisibility(View.GONE);
                 textViewc2f.setVisibility(View.VISIBLE);
-                MessFriendsModel.initData(context, 1,recyclerc2);
+                MessFriendsModel.initData(context, 1, recyclerc2);
                 break;
             case R.id.textViewc2f:
-                MessFriendsModel.initData(context, 2,recyclerc2);
+                MessFriendsModel.initData(context, 2, recyclerc2);
                 break;
             case R.id.imageView4:
                 showSimpleBottomSheetGrid();
@@ -969,11 +957,12 @@ public class chatroom extends AppCompatActivity {
             case R.id.recyclerbutc9:
                 component9.setVisibility(View.GONE);
                 break;
-            case R.id.recyclerbutc11:
-            case R.id.recyclerbutc11s:
+            case R.id.recyclerbutc10:
+            case R.id.recyclerbutc10s:
+                component10.setVisibility(View.GONE);
                 break;
-            case R.id.recyclerbutc12:
-                //component12.setVisibility(View.GONE);
+            case R.id.recyclerbutc6:
+                component6.setVisibility(View.GONE);
                 break;
             case R.id.imageViewc1:
             case R.id.imageViewc2:
@@ -983,7 +972,7 @@ public class chatroom extends AppCompatActivity {
             case R.id.imageViewc7:
             case R.id.recyclerc8:
             case R.id.imageViewc9:
-            case R.id.recyclerc11:
+            case R.id.recyclerc10:
             case R.id.relativec1:
             case R.id.relativec2:
             case R.id.relativec3:
@@ -1054,34 +1043,14 @@ public class chatroom extends AppCompatActivity {
                     case 4:
                         break;
                     case 5:
-                        component5.setVisibility(View.GONE);
-                        component1.setVisibility(View.VISIBLE);
-                        conver = "";
-                        sendid = 0L;
-                        sendname = "苗苗";
-                        sendsrc = "https://momeak.oss-cn-shenzhen.aliyuncs.com/h2.jpg";
-                        textViewc1.setText(sendname);
-                        ChatModel.initData(conver, 0L, 0, 10);
-                        ChatModel.initrecycler(chatroom.this, recyclerc1);
-                        KeyboardStateObserver.getKeyboardStateObserver(chatroom.this).
-                                setKeyboardVisibilityListener(new KeyboardStateObserver.OnKeyboardVisibilityListener() {
-                                    @Override
-                                    public void onKeyboardShow() {
-                                        ChatModel.recly(recyclerc1, 0);
-                                    }
 
-                                    @Override
-                                    public void onKeyboardHide() {
-                                        ChatModel.recly(recyclerc1, 0);
-                                    }
-                                });
                         break;
                     case 6:
                         break;
                     case 7:
                         break;
                     case 8:
-                            component8.setVisibility(View.VISIBLE);
+                        component8.setVisibility(View.VISIBLE);
                         break;
                     case 9:
                         break;
@@ -1123,7 +1092,6 @@ public class chatroom extends AppCompatActivity {
             public void onNext(Integer view) {
                 System.out.println("坑位" + view);
                 position = view;
-                //administrator || Anchor || host ||
                 if (administrator || Anchor || host || mLocalUid.equals(ChatRoomModel.mUserList.get(position).getUid())) {
                     onClickBtn2(gridview.getChildAt(view));
                 }
@@ -1142,9 +1110,9 @@ public class chatroom extends AppCompatActivity {
         };
 
         /**
-         * 私聊
+         * 聊天
          */
-        observerchat = new Observer<Integer>() {
+        observermess = new Observer<Integer>() {
             @Override
             public void onSubscribe(Disposable d) {
 
@@ -1152,26 +1120,73 @@ public class chatroom extends AppCompatActivity {
 
             @Override
             public void onNext(Integer integer) {
+                component5.setVisibility(View.GONE);
+                component1.setVisibility(View.VISIBLE);
+                conver = "user/" + MessModel.mArrayList.get(integer).getUserid().toString();
+                sendid = MessModel.mArrayList.get(integer).getUserid();
+                sendname = MessModel.mArrayList.get(integer).getName();
+                textViewc1.setText(sendname);
 
+                ChatModel.initData(conver, Long.valueOf(userid), 0, 5);
+                ChatModel.initrecycler(chatroom.this, recyclerc1);
+                KeyboardStateObserver.getKeyboardStateObserver(chatroom.this).
+                        setKeyboardVisibilityListener(new KeyboardStateObserver.OnKeyboardVisibilityListener() {
+                            @Override
+                            public void onKeyboardShow() {
+                                ChatModel.recly(recyclerc1, 0);
+                            }
 
-                String time = DateUtil.getCurrentTimeYMDHMS();
-                String txt = editTextc1.getText().toString();
-                if (txt.equals("")) {
-                    Chats i1 = new Chats("https://momeak.oss-cn-shenzhen.aliyuncs.com/h4.jpg", txt, time, 2);
-                    ChatModel.Add(recyclerc1, i1);
-                    editTextc1.setText("");
+                            @Override
+                            public void onKeyboardHide() {
+                                ChatModel.recly(recyclerc1, 0);
+                            }
+                        });
+
+                recyclerc1.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                    @Override
+                    public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                        //newState分 0,1,2三个状态,2是滚动状态,0是停止
+                        super.onScrollStateChanged(recyclerView, newState);
+                        //-1代表顶部,返回true表示没到顶,还可以滑
+                        //1代表底部,返回true表示没到底部,还可以滑
+                        boolean b = recyclerView.canScrollVertically(-1);
+                        if (!b) {
+                            System.out.println("判断" + b);
+                            a++;
+                            ChatModel.Adddata(recyclerc1, conver, Long.valueOf(userid), a * 10, 10);
+                        }
+                    }
+
+                    @Override
+                    public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                        super.onScrolled(recyclerView, dx, dy);
+
+                    }
+                });
+
+                MyApp application = ((MyApp) getApplicationContext());
+                for (int i = 0; i < application.getUsermess().size(); i++) {
+                    if (application.getUsermess().get(i).getSendId().equals(sendid)) {
+                        application.getUsermess().remove(i);
+                    }
+
                 }
 
-                /*Chat chat = new Chat();
-                chat.setConversation(conver);
-                chat.setData(System.currentTimeMillis());
-                chat.setReceiveId(sendid);
-                chat.setSendId(123456L);
-                chat.setReceivesrc(sendsrc);
-                chat.setSendsrc("https://momeak.oss-cn-shenzhen.aliyuncs.com/h4.jpg");
-                chat.setTxt(txt);
-                chat.setState(1);
-                mChatDao.insert(chat);*/
+                List<Conver> list = mConverDao.query(sendid, Long.valueOf(userid));
+                if (list.size() > 0) {
+                    if (list.get(0).getSum() != 0) {
+                        list.get(0).setSum(0);
+                        mConverDao.update(list.get(0));
+                    }
+
+                }
+                Observable<Integer> observables = Observable.defer(new Callable<ObservableSource<? extends Integer>>() {
+                    @Override
+                    public ObservableSource<? extends Integer> call() throws Exception {
+                        return Observable.just(2);
+                    }
+                });
+                observables.subscribe(MainActivity.observers);
 
             }
 
@@ -1185,6 +1200,7 @@ public class chatroom extends AppCompatActivity {
 
             }
         };
+
 
         /**
          * 显示svga动画
@@ -1257,7 +1273,8 @@ public class chatroom extends AppCompatActivity {
                 switch (i) {
                     case 0:
                         component3.setVisibility(View.VISIBLE);
-                        PaimaiModel.initrecyclers(context, recyclerc3);
+                        ChatRoomModel.okgoall(context,recyclerc3,mLocalUid,1);
+
                         break;
                     case 1:
                         ChatRoomModel.self(mRtcEngine, position);
@@ -1270,6 +1287,7 @@ public class chatroom extends AppCompatActivity {
                     case 3:
                         break;
                     case 4:
+                        bIsBroadCaster=false;
                         showMessagePositiveDialog(position);
                         break;
                 }

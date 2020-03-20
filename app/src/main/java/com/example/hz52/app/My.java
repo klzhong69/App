@@ -145,6 +145,8 @@ public class My extends Fragment {
 
     private String userid;
     private Context context;
+    private String username;
+    private String roomid;
 
 
     @Nullable
@@ -154,6 +156,7 @@ public class My extends Fragment {
         unbinder = ButterKnife.bind(this, view);
         textView88.setText("未认证");
         SharedPreferences sp = Objects.requireNonNull(getContext()).getSharedPreferences("User", Context.MODE_PRIVATE);
+        username = sp.getString("nickname", "");
         textView92.setText(sp.getString("nickname", ""));
         Glide.with(My.this).load(sp.getString("avatarUrl", "")).into(imageView28);
         textView93.setText("ID " + sp.getString("userid", ""));
@@ -262,6 +265,7 @@ public class My extends Fragment {
                             String favoriteRoomCount = prexiew.getData().get("favoriteRoomCount").getAsString();
                             String roomHistoryCount = prexiew.getData().get("roomHistoryCount").getAsString();
                             String packageCount = prexiew.getData().get("packageCount").getAsString();
+                            roomid = prexiew.getData().get("roomId").getAsString();
 
                             textView94.setText("关注 "+followCount);
                             textView95.setText("粉丝 "+fansCount);
@@ -335,14 +339,17 @@ public class My extends Fragment {
                 break;
             case R.id.imageView73:
             case R.id.textView84:
-                SharedPreferences sp = getActivity().getSharedPreferences("Room", Context.MODE_PRIVATE);
-                sp.edit().putString("roomid", "123456").apply();
-                Intent intent7 = new Intent(getContext(), chatroom.class);
-                intent7.putExtra(Constant.ACTION_KEY_CROLE, Constants.CLIENT_ROLE_AUDIENCE);
-                intent7.putExtra(Constant.ACTION_KEY_ROOM_MODE, Constant.ChatRoomGamingHighQuality);
-                intent7.putExtra(Constant.ACTION_KEY_ROOM_NAME, "127167100");
-                intent7.putExtra(Constant.ACTION_KEY_TITLE_NAME, "测试房间");
-                startActivity(intent7);
+                if(roomid.equals("")){
+                    Intent intent2 = new Intent(getContext(), room_set.class);
+                    startActivity(intent2);
+                }else{
+                    Intent intent7 = new Intent(getContext(), chatroom.class);
+                    intent7.putExtra(Constant.ACTION_KEY_CROLE, Constants.CLIENT_ROLE_AUDIENCE);
+                    intent7.putExtra(Constant.ACTION_KEY_ROOM_MODE, Constant.ChatRoomGamingHighQuality);
+                    intent7.putExtra(Constant.ACTION_KEY_ROOM_NAME, userid);
+                    intent7.putExtra(Constant.ACTION_KEY_TITLE_NAME, username+"的房间");
+                    startActivity(intent7);
+                }
                 break;
             case R.id.imageView74:
             case R.id.textView85:

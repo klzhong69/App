@@ -248,6 +248,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
                         ima.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
+                                EasyFloat.dismissAppFloat("testFloat");
                                 Intent intent = new Intent(MainActivity.this, chatroom.class);
                                 startActivity(intent);
                             }

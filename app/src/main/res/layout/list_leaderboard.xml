@@ -149,7 +149,7 @@
                     android:ellipsize="end"
                     android:gravity="center"
                     android:maxLines="1"
-                    android:text="听南"
+                    android:text="无"
                     android:textSize="@dimen/sp_20" />
 
                 <TextView
@@ -172,7 +172,7 @@
                     android:layout_marginStart="@dimen/dp_10"
                     android:layout_toEndOf="@+id/textView92"
                     android:gravity="center"
-                    android:text="50325"
+                    android:text="0"
                     android:textColor="#777777"
                     android:textSize="@dimen/sp_16" />
 
@@ -188,7 +188,7 @@
                     android:ellipsize="end"
                     android:gravity="center"
                     android:maxLines="1"
-                    android:text="听南"
+                    android:text="无"
                     android:textSize="@dimen/sp_20" />
 
                 <TextView
@@ -213,7 +213,7 @@
                     android:layout_marginTop="@dimen/dp_5"
                     android:layout_toEndOf="@+id/textView93"
                     android:gravity="center"
-                    android:text="60395"
+                    android:text="0"
                     android:textColor="#777777"
                     android:textSize="@dimen/sp_16" />
 
@@ -229,7 +229,7 @@
                     android:ellipsize="end"
                     android:gravity="center"
                     android:maxLines="1"
-                    android:text="听南"
+                    android:text="无"
                     android:textSize="@dimen/sp_20" />
 
                 <TextView
@@ -252,7 +252,7 @@
                     android:layout_marginTop="@dimen/dp_5"
                     android:layout_toEndOf="@+id/textView94"
                     android:gravity="center"
-                    android:text="23580"
+                    android:text="0"
                     android:textColor="#777777"
                     android:textSize="@dimen/sp_16" />
 
@@ -478,7 +478,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_marginStart="@dimen/dp_20"
                 android:gravity="center_vertical"
-                android:text="2019"
+                android:text="0"
                 android:textColor="#ffffff"
                 android:textSize="@dimen/sp_20" />
 
@@ -504,7 +504,7 @@
                 android:layout_marginStart="@dimen/dp_10"
                 android:layout_marginBottom="@dimen/dp_5"
                 android:layout_toEndOf="@+id/imageView21"
-                android:text="晴空万里"
+                android:text="无"
                 android:textColor="#ffffff"
                 android:textSize="@dimen/sp_20" />
 
@@ -517,7 +517,7 @@
                 android:layout_marginBottom="2dp"
                 android:layout_toEndOf="@+id/imageView21"
                 android:gravity="center_vertical"
-                android:text="8630"
+                android:text="0"
                 android:textColor="#ffffff"
                 android:textSize="@dimen/sp_16" />
 
@@ -530,7 +530,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="@dimen/dp_20"
                 android:gravity="center_vertical"
-                android:text="1254"
+                android:text="0"
                 android:textColor="#ffffff" />
 
             <TextView

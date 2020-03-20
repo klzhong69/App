@@ -1,18 +1,31 @@
 package com.example.hz52.app.Model;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.hz52.app.Adapter.RoomheadAdapter;
 import com.example.hz52.app.Adapter.RoomtxtAdapter;
+import com.example.hz52.app.Entity.Holdpeople;
+import com.example.hz52.app.Entity.MyApp;
 import com.example.hz52.app.Entity.Roomhead;
 import com.example.hz52.app.Entity.Roomtxt;
+import com.example.hz52.app.R;
 import com.example.hz52.app.chatroom;
+import com.example.hz52.app.cofig.Preview;
+import com.example.hz52.app.homepage;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
 
 import java.util.ArrayList;
 import java.util.concurrent.Callable;
@@ -217,5 +230,104 @@ public class ChatRoomModel {
     public static void Add(RecyclerView mRecyclerView,Roomtxt entity){
         mAdapter.addData(mEntityList.size(), entity);
         mRecyclerView.smoothScrollToPosition(mEntityList.size());
+    }
+
+    public static void okgo(Context context,Long roomid) {
+        MyApp application = ((MyApp) context.getApplicationContext());
+        SharedPreferences sp = context.getSharedPreferences("User", Context.MODE_PRIVATE);
+        String userid = sp.getString("userid", "");
+        String token = sp.getString("token", "");
+        String nickname = sp.getString("nickname", "");
+        String avatarUrl = sp.getString("avatarUrl", "");
+        String gender = sp.getString("gender", "");
+        OkGo.<String>post(application.getUrl() + "/app/room/applyUpperWheat?token=" + token)
+                .params("userId", userid)
+                .params("roomId", roomid)
+                .params("nickname", nickname)
+                .params("avatarUrl", avatarUrl)
+                .execute(new StringCallback() {
+
+                    @Override
+                    public void onSuccess(Response<String> response) {
+
+                        Gson gson = new Gson();
+                        Preview prexiew = gson.fromJson(response.body(), Preview.class);
+
+                        if (prexiew.getCode() == 0) {
+
+                            Toast.makeText(context, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
+
+                        } else if (prexiew.getCode() == 40000) {
+                            Toast.makeText(context, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                });
+
+    }
+
+    public static void okgoall(Context context,RecyclerView mRecyclerView,Long roomid,int type) {
+        MyApp application = ((MyApp) context.getApplicationContext());
+        SharedPreferences sp = context.getSharedPreferences("User", Context.MODE_PRIVATE);
+        String userid = sp.getString("userid", "");
+        String token = sp.getString("token", "");
+        OkGo.<String>post(application.getUrl() + "/app/room/getUpperWheatApplication?token=" + token)
+                .params("userId", userid)
+                .params("roomId", roomid)
+                .execute(new StringCallback() {
+
+                    @Override
+                    public void onSuccess(Response<String> response) {
+
+                        Gson gson = new Gson();
+                        Preview prexiew = gson.fromJson(response.body(), Preview.class);
+                        JsonArray application = prexiew.getData().getAsJsonArray("users");
+                        if(prexiew.getCode()==0){
+                            PaimaiModel.initData(application);
+                            if(type == 0){
+                                PaimaiModel.initrecycler(context, mRecyclerView);
+                            }else{
+                                PaimaiModel.initrecyclers(context, mRecyclerView);
+                            }
+
+                            Toast.makeText(context, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
+
+                        } else if (prexiew.getCode() == 40000) {
+                            Toast.makeText(context, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                });
+
+    }
+
+    public static void okgodel(Context context,Long roomid) {
+        MyApp application = ((MyApp) context.getApplicationContext());
+        SharedPreferences sp = context.getSharedPreferences("User", Context.MODE_PRIVATE);
+        String userid = sp.getString("userid", "");
+        String token = sp.getString("token", "");
+        OkGo.<String>post(application.getUrl() + "/app/room/cancelUpperWheat?token=" + token)
+                .params("userId", userid)
+                .params("roomId", roomid)
+                .execute(new StringCallback() {
+
+                    @Override
+                    public void onSuccess(Response<String> response) {
+
+                        Gson gson = new Gson();
+                        Preview prexiew = gson.fromJson(response.body(), Preview.class);
+                        JsonArray application = prexiew.getData().getAsJsonArray("users");
+                        if(prexiew.getCode()==0){
+                            PaimaiModel.initData(application);
+
+                            Toast.makeText(context, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
+
+                        } else if (prexiew.getCode() == 40000) {
+                            Toast.makeText(context, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                });
+
     }
 }

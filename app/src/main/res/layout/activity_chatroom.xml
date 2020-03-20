@@ -352,7 +352,6 @@
     </RelativeLayout>
 
     <include
-        android:id="@+id/room_announcement"
         layout="@layout/room_announcement"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -365,7 +364,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <include
-        android:id="@+id/room_barrage"
         layout="@layout/room_barrage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

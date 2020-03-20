@@ -143,7 +143,7 @@
         android:textSize="@dimen/sp_20"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView136"
-        app:qmui_backgroundColor="@color/tabbarcolor"
+        app:qmui_backgroundColor="#DFEF6598"
         app:qmui_borderWidth="0px"
         app:qmui_radius="@dimen/dp_30" />
 
@@ -161,7 +161,7 @@
         android:textSize="@dimen/sp_20"
         app:layout_constraintStart_toEndOf="@+id/but"
         app:layout_constraintTop_toTopOf="@+id/but"
-        app:qmui_backgroundColor="@color/colorPrimaryDark"
+        app:qmui_backgroundColor="#ABABAB"
         app:qmui_borderWidth="0px"
         app:qmui_radius="@dimen/dp_30" />
 
@@ -179,7 +179,7 @@
         android:textSize="@dimen/sp_20"
         app:layout_constraintStart_toEndOf="@+id/but2"
         app:layout_constraintTop_toTopOf="@+id/but2"
-        app:qmui_backgroundColor="@color/colorPrimaryDark"
+        app:qmui_backgroundColor="#ABABAB"
         app:qmui_borderWidth="0px"
         app:qmui_radius="@dimen/dp_30" />
 
@@ -197,7 +197,7 @@
         android:textSize="@dimen/sp_20"
         app:layout_constraintStart_toEndOf="@+id/but3"
         app:layout_constraintTop_toTopOf="@+id/but3"
-        app:qmui_backgroundColor="@color/colorPrimaryDark"
+        app:qmui_backgroundColor="#ABABAB"
         app:qmui_borderWidth="0px"
         app:qmui_radius="@dimen/dp_30" />
 

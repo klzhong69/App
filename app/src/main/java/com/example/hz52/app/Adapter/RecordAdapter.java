@@ -54,11 +54,18 @@ public class RecordAdapter extends RecyclerView.Adapter {
         ((RecordAdapter.DemoViewHolder) holder).amount.setText(entity.getAmount());
         ((RecordAdapter.DemoViewHolder) holder).date.setText(entity.getDate());
         if(entity.getType()==0){
+            Glide.with(mContext).load(R.drawable.jinbi2).into(((RecordAdapter.DemoViewHolder)holder).icon);
+            Glide.with(mContext).load(R.drawable.adds).into(((RecordAdapter.DemoViewHolder)holder).ima);
+            ((RecordAdapter.DemoViewHolder) holder).txt.setText("充值");
+
+        }else if(entity.getType()==1){
+            Glide.with(mContext).load(R.drawable.zuanshi2).into(((RecordAdapter.DemoViewHolder)holder).icon);
             Glide.with(mContext).load(R.drawable.less).into(((RecordAdapter.DemoViewHolder)holder).ima);
             ((RecordAdapter.DemoViewHolder) holder).txt.setText("提现");
         }else{
+            Glide.with(mContext).load(R.drawable.jinbi2).into(((RecordAdapter.DemoViewHolder)holder).icon);
             Glide.with(mContext).load(R.drawable.adds).into(((RecordAdapter.DemoViewHolder)holder).ima);
-            ((RecordAdapter.DemoViewHolder) holder).txt.setText("充值");
+            ((RecordAdapter.DemoViewHolder) holder).txt.setText("兑换");
         }
         if (mOnItemClickListener != null) {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -87,7 +94,7 @@ public class RecordAdapter extends RecyclerView.Adapter {
 
     private class DemoViewHolder extends RecyclerView.ViewHolder {
 
-
+        private ImageView icon;
         private ImageView ima;
         private TextView amount;
         private TextView txt;
@@ -95,6 +102,7 @@ public class RecordAdapter extends RecyclerView.Adapter {
 
         public DemoViewHolder(View itemView) {
             super(itemView);
+            icon = (ImageView) itemView.findViewById(R.id.imageView16);
             ima = (ImageView) itemView.findViewById(R.id.imageView173);
             amount = (TextView) itemView.findViewById(R.id.textView174);
             txt = (TextView) itemView.findViewById(R.id.textView175);

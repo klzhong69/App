@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hz52.app.Entity.Chats;
+import com.example.hz52.app.Entity.Mess;
 import com.example.hz52.app.Entity.MyApp;
 import com.example.hz52.app.MQ.MqttMessageService;
 import com.example.hz52.app.Model.ChatModel;
@@ -25,7 +26,6 @@ import com.example.hz52.app.Sqlentity.Conver;
 import com.example.hz52.app.cofig.DateUtil;
 import com.example.hz52.app.cofig.Initialization;
 import com.example.hz52.app.cofig.KeyboardStateObserver;
-import com.example.hz52.app.Entity.Mess;
 import com.example.hz52.app.dao.mChatDao;
 import com.example.hz52.app.dao.mConverDao;
 import com.example.hz52.app.gen.DaoSession;
@@ -68,8 +68,6 @@ public class chat extends AppCompatActivity {
     QMUIRoundButton but;
     @BindView(R.id.relativeLayout11)
     RelativeLayout relativeLayout11;
-    @BindView(R.id.refreshLayout)
-    SmartRefreshLayout refreshLayout;
     private LayoutInflater inflater;
     private static DaoSession daoSession;
     private String convers;
@@ -105,23 +103,44 @@ public class chat extends AppCompatActivity {
         avatarUrl = sp.getString("avatarUrl", "");
         nickname = sp.getString("nickname", "");
 
-        refreshLayout.setRefreshHeader(new MaterialHeader(this).setScrollableWhenRefreshing(true));
+        /*refreshLayout.setRefreshHeader(new MaterialHeader(this).setScrollableWhenRefreshing(true));
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshlayout) {
                 refreshlayout.autoRefresh();
-                a++;
-                ChatModel.Adddata(recycler, convers, Long.valueOf(userid), a * 10, 10);
+
                 refreshlayout.finishRefresh();
 
             }
-        });
+        });*/
 
 
         ChatModel.initData(convers, Long.valueOf(userid), 0, 10);
         ChatModel.initrecycler(this, recycler);
 
+        recycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                //newState分 0,1,2三个状态,2是滚动状态,0是停止
+                super.onScrollStateChanged(recyclerView, newState);
+                //-1代表顶部,返回true表示没到顶,还可以滑
+                //1代表底部,返回true表示没到底部,还可以滑
+                boolean b = recyclerView.canScrollVertically(-1);
+                if(!b){
+                    System.out.println("判断"+b);
+                    a++;
+                    ChatModel.Adddata(recycler, convers, Long.valueOf(userid), a * 10, 10);
+                }
+            }
 
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+            }
+        });
+
+        //软键盘监听
         KeyboardStateObserver.getKeyboardStateObserver(this).
                 setKeyboardVisibilityListener(new KeyboardStateObserver.OnKeyboardVisibilityListener() {
                     @Override
@@ -200,6 +219,7 @@ public class chat extends AppCompatActivity {
         }
     }
 
+
     public static void send(String userid, String avatarUrl, String nickname, Long sendid, String txt, String conver) {
 
         Long data = System.currentTimeMillis() / 1000;
@@ -244,7 +264,7 @@ public class chat extends AppCompatActivity {
     }
 
 
-    private void del() {
+    public void del() {
         MyApp application = ((MyApp) this.getApplicationContext());
         for (int i = 0; i < application.getUsermess().size(); i++) {
             if (application.getUsermess().get(i).getSendId().equals(sendid)) {

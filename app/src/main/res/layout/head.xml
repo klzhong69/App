@@ -23,10 +23,11 @@
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_toStartOf="@+id/subtitle"
-        android:layout_toEndOf="@+id/fold"
+
         android:gravity="center"
         android:text="主页"
         android:textSize="@dimen/sp_24" />

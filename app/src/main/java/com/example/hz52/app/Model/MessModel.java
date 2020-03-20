@@ -29,7 +29,7 @@ import io.reactivex.ObservableSource;
 
 public class MessModel {
 
-    private static ArrayList<Message> mArrayList;
+    public static ArrayList<Message> mArrayList;
     private static MessageAdapter mAdapter;
 
     public static void initData(Context context) {
@@ -81,10 +81,10 @@ public class MessModel {
                     Observable<Integer> observable = Observable.defer(new Callable<ObservableSource<? extends Integer>>() {
                         @Override
                         public ObservableSource<? extends Integer> call() throws Exception {
-                            return Observable.just(5);
+                            return Observable.just(position);
                         }
                     });
-                    observable.subscribe(chatroom.observer);
+                    observable.subscribe(chatroom.observermess);
                 }
 
             }

@@ -22,7 +22,7 @@ public class ThemeAdapter extends RecyclerView.Adapter {
     private Context mContext;
     private List<Theme> mEntityList;
     private ThemeAdapter.OnItemClickListener mOnItemClickListener;
-    public HashMap<Integer, Boolean> states = new HashMap<Integer, Boolean>();  //在这里要做判断保证只有一个RadioButton被选中
+    public static HashMap<Integer, Boolean> states = new HashMap<Integer, Boolean>();  //在这里要做判断保证只有一个RadioButton被选中
     private Boolean bool=true;
 
     public ThemeAdapter(Context context, List<Theme> entityList) {

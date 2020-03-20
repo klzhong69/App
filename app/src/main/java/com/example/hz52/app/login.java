@@ -84,8 +84,8 @@ public class login extends AppCompatActivity {
         Initialization.setupDatabaseUser(this);
         title.setText("登陆");
         subtitle.setText("");
-        editText.setText("15362141841");
-        editText4.setText("131721..");
+        editText.setText("");
+        editText4.setText("");
 
         Intent intent = getIntent();
         state = intent.getIntExtra("type", 0);

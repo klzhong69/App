@@ -292,6 +292,11 @@ public class List extends Fragment {
                 }
 
                 if (jsonArray.get(i).getAsJsonObject().get("uniqueId").getAsLong() == Long.parseLong(userid)) {
+                    if(i>9){
+                        textView114.setText("距离上榜");
+                    }else{
+                        textView114.setText("距离上一名");
+                    }
                     textView67.setText(i + 1 + "");
                     Glide.with(this).load(jsonArray.get(i).getAsJsonObject().get("avatarUrl").getAsString()).into(imageView21);
                     textView66.setText(jsonArray.get(i).getAsJsonObject().get("nickname").getAsString());

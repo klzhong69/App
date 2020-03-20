@@ -1,6 +1,7 @@
 package com.example.hz52.app;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -42,6 +43,7 @@ public class room_theme extends AppCompatActivity {
     TextView subtitle;
     @BindView(R.id.recyclerc12)
     RecyclerView recyclerc12;
+    private int backgroundId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +52,8 @@ public class room_theme extends AppCompatActivity {
         ButterKnife.bind(this);
         title.setText("主题背景");
         subtitle.setText("保存");
+        Intent intent = getIntent();
+        backgroundId = intent.getIntExtra("backgroundId", 0);
         initData();
         initrecycler();
     }
@@ -62,8 +66,7 @@ public class room_theme extends AppCompatActivity {
                 overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
                 break;
             case R.id.subtitle:
-                this.finish();
-                overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
+                okgos();
                 break;
         }
     }
@@ -72,9 +75,9 @@ public class room_theme extends AppCompatActivity {
         mArrayList = new ArrayList<Theme>();
         for (int i = 0; i < 4; i++) {
             int type;
-            if(i==0){
+            if (i == 0) {
                 type = 0;
-            }else{
+            } else {
                 type = 1;
             }
             Theme i1 = new Theme("https://momeak.oss-cn-shenzhen.aliyuncs.com/h5.jpg", "默认主题", "免费", type);
@@ -82,7 +85,8 @@ public class room_theme extends AppCompatActivity {
         }
 
     }
-//获取房间所有背景
+
+    //获取房间所有背景
     private void okgo() {
         MyApp application = ((MyApp) this.getApplicationContext());
         SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
@@ -121,9 +125,15 @@ public class room_theme extends AppCompatActivity {
                 });
 
     }
-//设置房间主题背景
+
+    //设置房间主题背景
     private void okgos() {
-        MyApp application = ((MyApp) this.getApplicationContext());
+        for(int i=0;i<ThemeAdapter.states.size();i++){
+            if(ThemeAdapter.states.get(i)){
+                System.out.println("定位"+i);
+            }
+        }
+        /*MyApp application = ((MyApp) this.getApplicationContext());
         SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
         String userid = sp.getString("userid", "");
         String roomid = sp.getString("roomid", "");
@@ -148,11 +158,11 @@ public class room_theme extends AppCompatActivity {
                         }
 
                     }
-                });
+                });*/
 
     }
 
-    public  void initrecycler() {
+    public void initrecycler() {
 
         //创建适配器，将数据传递给适配器
         mAdapter = new ThemeAdapter(this, mArrayList);
@@ -186,7 +196,6 @@ public class room_theme extends AppCompatActivity {
         defaultItemAnimator.setRemoveDuration(200);
         recyclerc12.setItemAnimator(defaultItemAnimator);
     }
-
 
 
     @Override

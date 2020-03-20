@@ -1,5 +1,7 @@
 package com.example.hz52.app;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -12,7 +14,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hz52.app.Adapter.RecordAdapter;
+import com.example.hz52.app.Entity.MyApp;
 import com.example.hz52.app.Entity.Record;
+import com.example.hz52.app.cofig.Preview;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
 
 import java.util.ArrayList;
 
@@ -94,7 +102,38 @@ public class operation_record extends AppCompatActivity {
     }
 
 
+    private void okgo() {
+        MyApp application = ((MyApp) this.getApplicationContext());
+        SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
+        String userid = sp.getString("userid","");
+        String token = sp.getString("token","");
+        OkGo.<String>post(application.getUrl()+"/app/user/getMixedRecord?token="+token)
+                .params("userId",userid)
+                .execute(new StringCallback() {
 
+                    @Override
+                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+
+                        Gson gson = new Gson();
+                        Preview prexiew = gson.fromJson(response.body(), Preview.class);
+                        JsonArray records = prexiew.getData().getAsJsonArray("records");
+                        if(prexiew.getCode()==0){
+                            for(int i=0;i<records.size();i++){
+                                String createdTime = records.get(i).getAsJsonObject().get("createdTime").getAsString();
+                                String total = records.get(i).getAsJsonObject().get("total").getAsString();
+                                String type = records.get(i).getAsJsonObject().get("type").getAsString();
+                            }
+
+
+
+                        }else if(prexiew.getCode()==40000){
+                            Toast.makeText(operation_record.this, prexiew.getMsg()+"", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                });
+
+    }
 
     @Override
     public void onBackPressed() {

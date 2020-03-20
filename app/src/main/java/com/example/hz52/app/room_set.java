@@ -19,6 +19,8 @@ import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
 import butterknife.BindView;
@@ -80,27 +82,42 @@ public class room_set extends AppCompatActivity {
     @BindView(R.id.imageView126)
     ImageView imageView126;
 
-    private String mode;
+    private int mode = 1;
+    private String backgroundId;
+    private int mCurrentDialogStyle = com.qmuiteam.qmui.R.style.QMUI_Dialog;
+    private boolean bool = false;
+    private String roomName;
+    private String announce;
+    private String password;
+    private String userid;
+    private String roomid;
+    private String token;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_room_set);
         ButterKnife.bind(this);
         title.setText("房间设置");
-        subtitle.setText("");
+        subtitle.setText("保存");
         but.setBackgroundColor(Color.parseColor("#DFEF6598"));
         but2.setBackgroundColor(Color.parseColor("#ABABAB"));
         but3.setBackgroundColor(Color.parseColor("#ABABAB"));
         but4.setBackgroundColor(Color.parseColor("#ABABAB"));
+        SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
+         userid = sp.getString("userid", "");
+         token = sp.getString("token", "");
+        SharedPreferences sp1 = getSharedPreferences("Room", Context.MODE_PRIVATE);
+        roomid = sp1.getString("roomid", "");
+        if(!roomid.equals("")){
+            okgo();
+        }
     }
 
     //获取房间信息
     private void okgo() {
         MyApp application = ((MyApp) this.getApplicationContext());
-        SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
-        String userid = sp.getString("userid", "");
-        String roomid = sp.getString("roomid", "");
-        String token = sp.getString("token", "");
+
         OkGo.<String>post(application.getUrl() + "/app/room/getInfo?token=" + token)
                 .params("userId", userid)
                 .params("roomId", roomid)
@@ -113,12 +130,41 @@ public class room_set extends AppCompatActivity {
                         Preview prexiew = gson.fromJson(response.body(), Preview.class);
 
                         if (prexiew.getCode() == 0) {
-                            String roomName = prexiew.getData().get("roomName").getAsString();
-                            String announce = prexiew.getData().get("announce").getAsString();
-                            String mode = prexiew.getData().get("mode").getAsString();
-                            String backgroundId = prexiew.getData().get("backgroundId").getAsString();
-                            String password = prexiew.getData().get("password").getAsString();
+                            roomName = prexiew.getData().get("roomName").getAsString();
+                            announce = prexiew.getData().get("announce").getAsString();
+                            mode = prexiew.getData().get("mode").getAsInt();
+                            backgroundId = prexiew.getData().get("backgroundId").getAsString();
+                            password = prexiew.getData().get("password").getAsString();
 
+                            switch (mode) {
+                                case 1:
+                                    but.setBackgroundColor(Color.parseColor("#DFEF6598"));
+                                    but2.setBackgroundColor(Color.parseColor("#ABABAB"));
+                                    but3.setBackgroundColor(Color.parseColor("#ABABAB"));
+                                    but4.setBackgroundColor(Color.parseColor("#ABABAB"));
+                                    break;
+                                case 2:
+                                    but2.setBackgroundColor(Color.parseColor("#DFEF6598"));
+                                    but.setBackgroundColor(Color.parseColor("#ABABAB"));
+                                    but3.setBackgroundColor(Color.parseColor("#ABABAB"));
+                                    but4.setBackgroundColor(Color.parseColor("#ABABAB"));
+                                    break;
+                                case 3:
+                                    but3.setBackgroundColor(Color.parseColor("#DFEF6598"));
+                                    but2.setBackgroundColor(Color.parseColor("#ABABAB"));
+                                    but.setBackgroundColor(Color.parseColor("#ABABAB"));
+                                    but4.setBackgroundColor(Color.parseColor("#ABABAB"));
+                                    break;
+                                case 4:
+                                    but4.setBackgroundColor(Color.parseColor("#DFEF6598"));
+                                    but2.setBackgroundColor(Color.parseColor("#ABABAB"));
+                                    but3.setBackgroundColor(Color.parseColor("#ABABAB"));
+                                    but.setBackgroundColor(Color.parseColor("#ABABAB"));
+                                    break;
+                            }
+                            editText.setText(roomName);
+                            editText3.setText(announce);
+                            editText2.setText(password);
                         } else if (prexiew.getCode() == 40000) {
                             Toast.makeText(room_set.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
                         }
@@ -128,16 +174,33 @@ public class room_set extends AppCompatActivity {
 
     }
 
-//设置房间信息
+    private void showMessagePositiveDialog() {
+        new QMUIDialog.MessageDialogBuilder(this)
+                .setTitle("标题")
+                .setMessage("修改未保存，确定要退出吗？")
+                .addAction("取消", new QMUIDialogAction.ActionListener() {
+                    @Override
+                    public void onClick(QMUIDialog dialog, int index) {
+                        dialog.dismiss();
+                    }
+                })
+                .addAction(0, "确定", QMUIDialogAction.ACTION_PROP_POSITIVE, new QMUIDialogAction.ActionListener() {
+                    @Override
+                    public void onClick(QMUIDialog dialog, int index) {
+                        dialog.dismiss();
+                        finish();
+                        overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
+                    }
+                })
+                .create(mCurrentDialogStyle).show();
+    }
+
+    //设置房间信息
     private void okgos() {
         MyApp application = ((MyApp) this.getApplicationContext());
-        SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
-        String userid = sp.getString("userid", "");
-        String roomid = sp.getString("roomid", "");
-        String token = sp.getString("token", "");
-        OkGo.<String>post(application.getUrl() + "/app/room/getInfo?token=" + token)
+        OkGo.<String>post(application.getUrl() + "/app/room/updateInfo?token=" + token)
                 .params("userId", userid)
-                .params("roomId", roomid)
+                .params("roomId", userid)
                 .params("roomName", editText.getText().toString())
                 .params("announce", editText3.getText().toString())
                 .params("password", editText2.getText().toString())
@@ -152,7 +215,10 @@ public class room_set extends AppCompatActivity {
 
                         if (prexiew.getCode() == 0) {
                             Toast.makeText(room_set.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
-
+                            SharedPreferences sp = getSharedPreferences("Room", Context.MODE_PRIVATE);
+                            sp.edit().putString("roomid", userid).apply();
+                            finish();
+                            overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
                         } else if (prexiew.getCode() == 40000) {
                             Toast.makeText(room_set.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
                         }
@@ -161,32 +227,49 @@ public class room_set extends AppCompatActivity {
                 });
 
     }
-    @OnClick({R.id.fold, R.id.but, R.id.but2, R.id.but3, R.id.but4, R.id.imageView119, R.id.textView137, R.id.imageView120, R.id.imageView121, R.id.textView138, R.id.imageView124, R.id.imageView122, R.id.textView139, R.id.imageView125, R.id.imageView123, R.id.textView140, R.id.imageView126})
+
+    @OnClick({R.id.fold, R.id.subtitle, R.id.but, R.id.but2, R.id.but3, R.id.but4, R.id.imageView119, R.id.textView137, R.id.imageView120, R.id.imageView121, R.id.textView138, R.id.imageView124, R.id.imageView122, R.id.textView139, R.id.imageView125, R.id.imageView123, R.id.textView140, R.id.imageView126})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fold:
-                this.finish();
-                overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
+                if (editText.getText().toString().equals(roomName) || editText3.getText().toString().equals(announce) || editText2.getText().toString().equals(password)) {
+                    showMessagePositiveDialog();
+                } else {
+                    this.finish();
+                    overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
+                }
+                break;
+            case R.id.subtitle:
+                if (!editText.getText().toString().equals("") && !editText3.getText().toString().equals("") && !editText2.getText().toString().equals("")) {
+                    okgos();
+                }else{
+                    Toast.makeText(room_set.this,  "请完善信息", Toast.LENGTH_SHORT).show();
+                }
+
                 break;
             case R.id.but:
+                mode = 1;
                 but.setBackgroundColor(Color.parseColor("#DFEF6598"));
                 but2.setBackgroundColor(Color.parseColor("#ABABAB"));
                 but3.setBackgroundColor(Color.parseColor("#ABABAB"));
                 but4.setBackgroundColor(Color.parseColor("#ABABAB"));
                 break;
             case R.id.but2:
+                mode = 2;
                 but2.setBackgroundColor(Color.parseColor("#DFEF6598"));
                 but.setBackgroundColor(Color.parseColor("#ABABAB"));
                 but3.setBackgroundColor(Color.parseColor("#ABABAB"));
                 but4.setBackgroundColor(Color.parseColor("#ABABAB"));
                 break;
             case R.id.but3:
+                mode = 3;
                 but3.setBackgroundColor(Color.parseColor("#DFEF6598"));
                 but2.setBackgroundColor(Color.parseColor("#ABABAB"));
                 but.setBackgroundColor(Color.parseColor("#ABABAB"));
                 but4.setBackgroundColor(Color.parseColor("#ABABAB"));
                 break;
             case R.id.but4:
+                mode = 4;
                 but4.setBackgroundColor(Color.parseColor("#DFEF6598"));
                 but2.setBackgroundColor(Color.parseColor("#ABABAB"));
                 but3.setBackgroundColor(Color.parseColor("#ABABAB"));
@@ -196,20 +279,21 @@ public class room_set extends AppCompatActivity {
             case R.id.textView137:
             case R.id.imageView120:
                 Intent intent1 = new Intent(room_set.this, room_theme.class);
+                intent1.putExtra("backgroundId", backgroundId);
                 startActivity(intent1);
                 break;
             case R.id.imageView121:
             case R.id.textView138:
             case R.id.imageView124:
                 Intent intent2 = new Intent(room_set.this, room_select_people.class);
-                intent2.putExtra("type",0);
+                intent2.putExtra("type", 0);
                 startActivity(intent2);
                 break;
             case R.id.imageView122:
             case R.id.textView139:
             case R.id.imageView125:
                 Intent intent3 = new Intent(room_set.this, room_select_people.class);
-                intent3.putExtra("type",1);
+                intent3.putExtra("type", 1);
                 startActivity(intent3);
                 break;
             case R.id.imageView123:
@@ -221,10 +305,13 @@ public class room_set extends AppCompatActivity {
     }
 
 
-
     @Override
     public void onBackPressed() {
-        this.finish();
-        overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
+        if (editText.getText().toString().equals(roomName) || editText3.getText().toString().equals(announce) || editText2.getText().toString().equals(password)) {
+            showMessagePositiveDialog();
+        } else {
+            this.finish();
+            overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
+        }
     }
 }

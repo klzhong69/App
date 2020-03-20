@@ -73,10 +73,10 @@ public class HoldpeopleAdapter extends RecyclerView.Adapter {
             });
             if (states.get(position) != null) {
                 if(states.get(position)){
-                    System.out.println("这里");
+
                     ((HoldpeopleAdapter.DemoViewHolder)holder).sum.setChecked(true);
                 }else{
-                    System.out.println("这里2");
+
                     ((HoldpeopleAdapter.DemoViewHolder)holder).sum.setChecked(false);
                 }
 
