@@ -90,8 +90,6 @@ public class my_gold extends AppCompatActivity {
             @Override
             public void onItemClick(View view, int position) {
 
-
-
             }
 
             @Override

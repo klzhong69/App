@@ -277,7 +277,7 @@ public class homepage extends AppCompatActivity {
                             String isFollow = prexiew.getData().get("isFollow").getAsString();
                             if (isFollow.equals("1")) {
                                 Glide.with(homepage.this).load(R.drawable.s_guanzhu).into(imageView34);
-                                textView31.setText("已关注");
+                                textView31.setText("取消关注");
                                 bool = true;
                             }else{
                                 bool = false;
@@ -356,7 +356,7 @@ public class homepage extends AppCompatActivity {
                             Toast.makeText(homepage.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
                             if (prexiew.getMsg().equals("关注成功")) {
                                 Glide.with(homepage.this).load(R.drawable.s_guanzhu).into(imageView34);
-                                textView31.setText("已关注");
+                                textView31.setText("取消关注");
                                 bool = true;
                             }
 

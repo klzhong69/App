@@ -269,18 +269,20 @@ public class My extends Fragment {
                             String packageCount = prexiew.getData().get("packageCount").getAsString();
                             roomid = prexiew.getData().get("roomId").getAsString();
 
-                            SharedPreferences sp = getActivity().getSharedPreferences("User", Context.MODE_PRIVATE);
                             sp.edit().putString("followCount", followCount).apply();
                             sp.edit().putString("fansCount", fansCount).apply();
 
-                            textView92.setText(nickname);
-                            Glide.with(My.this).load(avatarUrl).into(imageView28);
-                            textView94.setText("关注 "+followCount);
-                            textView95.setText("粉丝 "+fansCount);
-                            textView76.setText(musicCount);
-                            textView78.setText(packageCount);
-                            textView80.setText(favoriteRoomCount);
-                            textView82.setText(roomHistoryCount);
+                            try {
+                                textView92.setText(nickname);
+                                Glide.with(My.this).load(avatarUrl).into(imageView28);
+                                textView94.setText("关注 "+followCount);
+                                textView95.setText("粉丝 "+fansCount);
+                                textView76.setText(musicCount);
+                                textView78.setText(packageCount);
+                                textView80.setText(favoriteRoomCount);
+                                textView82.setText(roomHistoryCount);
+                            }catch (Exception e){}
+
 
                         } else if (prexiew.getCode() == 40000) {
                             Toast.makeText(getContext(), prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
@@ -297,7 +299,7 @@ public class My extends Fragment {
             case R.id.imageView68:
                 Intent intent = new Intent(getContext(), my_set.class);
                 startActivity(intent);
-                getActivity().overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
+                Objects.requireNonNull(getActivity()).overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
                 break;
             case R.id.imageView36:
             case R.id.textView11:
@@ -305,7 +307,7 @@ public class My extends Fragment {
                 Intent intent1 = new Intent(getContext(), login.class);
                 intent1.putExtra("type", 0);
                 startActivity(intent1);
-                getActivity().overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
+                Objects.requireNonNull(getActivity()).overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
                 break;
             case R.id.recycler18:
             case R.id.imageView28:

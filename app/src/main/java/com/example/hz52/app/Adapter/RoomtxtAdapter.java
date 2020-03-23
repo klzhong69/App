@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -46,25 +47,27 @@ public class RoomtxtAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         Roomtxt entity = mEntityList.get(position);
-        if(entity.getName().equals("")){
-            ((DemoViewHolder)holder).mName.setVisibility(View.GONE);
-        }else{
+
+        if(entity.getType().equals("0")){
+            ((DemoViewHolder)holder).relativeLayout1.setVisibility(View.GONE);
+            ((DemoViewHolder)holder).relativeLayout2.setVisibility(View.VISIBLE);
+            if(entity.getTxt().equals("")){
+                ((DemoViewHolder)holder).mTxt.setVisibility(View.GONE);
+            }else{
+                ((DemoViewHolder)holder).mTxt.setText(entity.getTxt());
+            }
+        }else if(entity.getType().equals("1")){
+            ((DemoViewHolder)holder).relativeLayout2.setVisibility(View.GONE);
+            ((DemoViewHolder)holder).relativeLayout1.setVisibility(View.VISIBLE);
+            if(entity.getGrade().equals("")){
+                ((DemoViewHolder)holder).mGrade.setVisibility(View.GONE);
+            }else{
+                Glide.with(mContext).load(R.drawable.l3).into(((DemoViewHolder)holder).mGrade);
+            }
             ((DemoViewHolder)holder).mName.setText(entity.getName());
+            ((DemoViewHolder)holder).mText.setText(entity.getText());
         }
 
-        if(entity.getGrade().equals("")){
-            ((DemoViewHolder)holder).mGrade.setVisibility(View.GONE);
-        }else{
-            Glide.with(mContext).load(R.drawable.l3).into(((DemoViewHolder)holder).mGrade);
-        }
-
-        ((DemoViewHolder)holder).mText.setText(entity.getText());
-
-        if(entity.getTxt().equals("")){
-            ((DemoViewHolder)holder).mTxt.setVisibility(View.GONE);
-        }else{
-            ((DemoViewHolder)holder).mTxt.setText(entity.getTxt());
-        }
         if (mOnItemClickListener != null)
         {
             holder.itemView.setOnClickListener(new View.OnClickListener()
@@ -97,6 +100,9 @@ public class RoomtxtAdapter extends RecyclerView.Adapter {
 
     private class DemoViewHolder extends RecyclerView.ViewHolder{
 
+        private RelativeLayout relativeLayout1;
+        private RelativeLayout relativeLayout2;
+
         private TextView mText;
         private TextView mName;
         private TextView mTxt;
@@ -104,10 +110,13 @@ public class RoomtxtAdapter extends RecyclerView.Adapter {
 
         public DemoViewHolder(View itemView) {
             super(itemView);
+            relativeLayout1 = (RelativeLayout) itemView.findViewById(R.id.relacy1);
+            relativeLayout2 = (RelativeLayout) itemView.findViewById(R.id.relacy2);
+
             mText = (TextView) itemView.findViewById(R.id.textView35);
             mName = (TextView) itemView.findViewById(R.id.textView34);
             mGrade = (ImageView) itemView.findViewById(R.id.imageView42);
-            mTxt = (TextView) itemView.findViewById(R.id.textView36);
+            mTxt = (TextView) itemView.findViewById(R.id.textView37);
         }
     }
 

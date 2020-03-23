@@ -6,6 +6,7 @@ public class Roomtxt {
     private String name;
     private String grade;
     private String txt;
+    private String type;
 
     public String getText() {
         return text;
@@ -39,10 +40,19 @@ public class Roomtxt {
         this.txt = txt;
     }
 
-    public Roomtxt(String text, String name, String grade, String txt) {
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public Roomtxt(String text, String name, String grade, String txt, String type) {
         this.text = text;
         this.name = name;
         this.grade = grade;
         this.txt = txt;
+        this.type = type;
     }
 }

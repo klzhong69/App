@@ -864,35 +864,31 @@ public class chatroom extends AppCompatActivity {
                 component10.setVisibility(View.GONE);
                 break;
             case R.id.butc6:
-                Roomtxt entity = new Roomtxt(editTextc6.getText().toString(), "周润发", "https://momeak.oss-cn-shenzhen.aliyuncs.com/l3.png", "");
+                Roomtxt entity = new Roomtxt(editTextc6.getText().toString(), "周润发", "https://momeak.oss-cn-shenzhen.aliyuncs.com/l3.png", "","1");
                 ChatRoomModel.Add(recyclerview, entity);
+                Roomtxt entity1 = new Roomtxt("", "", "", "---为了更好的体验请大家文明用语---","0");
+                ChatRoomModel.Add(recyclerview, entity1);
+                editTextc6.setText("");
                /* Observable.just(1, 2)
                         .subscribe(new Observer<Integer>() {
                             @Override
                             public void onSubscribe(Disposable d) {
-
                             }
-
                             @Override
                             public void onNext(Integer integer) {
                                 if (integer == 1) {
-                                    Roomtxt entity = new Roomtxt("进入房间打赏", "周润发", "https://momeak.oss-cn-shenzhen.aliyuncs.com/l3.png", "");
+                                    Roomtxt entity = new Roomtxt("进入房间打赏", "周润发", "https://momeak.oss-cn-shenzhen.aliyuncs.com/l3.png", "","1");
                                     ChatRoomModel.Add(recyclerview, entity);
                                 } else if (integer == 2) {
-                                    Roomtxt entity = new Roomtxt("【房间公告】", "", "", "---为了更好的体验请大家文明用语---");
+                                    Roomtxt entity = new Roomtxt("【房间公告】", "", "", "---为了更好的体验请大家文明用语---","0");
                                     ChatRoomModel.Add(recyclerview, entity);
                                 }
-
                             }
-
                             @Override
                             public void onError(Throwable e) {
-
                             }
-
                             @Override
                             public void onComplete() {
-
                             }
                         });*/
                 break;

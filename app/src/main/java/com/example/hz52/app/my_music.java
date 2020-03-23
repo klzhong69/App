@@ -84,8 +84,6 @@ public class my_music extends AppCompatActivity {
 
         Initialization.setupDatabaseMusic(this);
         FileDownloader.setup(this);
-
-
         initData();
         init();
 
@@ -103,7 +101,6 @@ public class my_music extends AppCompatActivity {
                 music.setId(mArrayList.get(integer).getId());
                 mMusicDao.insert(music);
                 download(mArrayList.get(integer).getUrl(), "music" + mArrayList.get(integer).getId(), integer);
-
             }
 
             @Override
@@ -131,8 +128,6 @@ public class my_music extends AppCompatActivity {
                 mArrayList.get(integer).setType("2");
                 mAdapter.notifyDataSetChanged();
                 music(integer);
-
-
             }
 
             @Override
