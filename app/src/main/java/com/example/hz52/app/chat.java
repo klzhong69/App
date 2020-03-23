@@ -103,17 +103,6 @@ public class chat extends AppCompatActivity {
         avatarUrl = sp.getString("avatarUrl", "");
         nickname = sp.getString("nickname", "");
 
-        /*refreshLayout.setRefreshHeader(new MaterialHeader(this).setScrollableWhenRefreshing(true));
-        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh(@NonNull RefreshLayout refreshlayout) {
-                refreshlayout.autoRefresh();
-
-                refreshlayout.finishRefresh();
-
-            }
-        });*/
-
 
         ChatModel.initData(convers, Long.valueOf(userid), 0, 10);
         ChatModel.initrecycler(this, recycler);

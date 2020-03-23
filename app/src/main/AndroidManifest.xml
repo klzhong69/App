@@ -66,8 +66,10 @@
         <activity android:name=".chatroom_chat" />
         <activity android:name=".find_make" />
         <activity android:name=".chatroom"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:launchMode="singleInstance"
-            android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"/>
+            />
         <activity android:name=".chat"
             android:windowSoftInputMode="adjustResize|adjustUnspecified|stateHidden"/>
         <activity android:name=".mess_friends" />

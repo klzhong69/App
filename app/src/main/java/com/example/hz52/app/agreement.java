@@ -169,3 +169,8 @@ public class agreement extends AppCompatActivity {
         overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
     }
 }
+
+/**
+ * webview
+ * 修改URL即可
+ */

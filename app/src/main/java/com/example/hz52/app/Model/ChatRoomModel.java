@@ -168,6 +168,9 @@ public class ChatRoomModel {
 
         // 设置为主播
         mRtcEngine.setClientRole(Constants.CLIENT_ROLE_BROADCASTER);
+        mRtcEngine.muteAllRemoteAudioStreams(false);
+        mRtcEngine.muteLocalAudioStream(false);
+        mRtcEngine.enableLocalAudio(true);
         // role 改变后需要将自己添加到用户列表
         if (mLocalUid != 0) {
             locsuser(position,roomhead);
@@ -201,14 +204,19 @@ public class ChatRoomModel {
     /**
      * 下麦界面
      */
-    public static void showAudience(RtcEngine mRtcEngine,int position) {
+    public static void showAudience(RtcEngine mRtcEngine,int position,Long userid) {
         //设为观众
         mRtcEngine.setClientRole(Constants.CLIENT_ROLE_AUDIENCE);
         mRtcEngine.muteAllRemoteAudioStreams(true);
         mRtcEngine.muteLocalAudioStream(true);
         mRtcEngine.enableLocalAudio(false);
-        // role 为观众后需要将自己从用户列表移除
-        int uids = getUserIndex(mUserList.get(position).getUid());
+        int uids = 0;
+        if(position == 0){
+            uids = getUserIndex(mUserList.get(position).getUid());
+        }else{
+            uids = getUserIndex(userid);
+        }
+
         // 当用户离开时，从用户列表中清除
         Roomhead i1 = new Roomhead("", "", "", "", 0L, 0, false, false);
         mUserList.set(uids, i1);
@@ -255,8 +263,6 @@ public class ChatRoomModel {
 
                         if (prexiew.getCode() == 0) {
 
-                            Toast.makeText(context, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
-
                         } else if (prexiew.getCode() == 40000) {
                             Toast.makeText(context, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
                         }
@@ -290,8 +296,6 @@ public class ChatRoomModel {
                                 PaimaiModel.initrecyclers(context, mRecyclerView);
                             }
 
-                            Toast.makeText(context, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
-
                         } else if (prexiew.getCode() == 40000) {
                             Toast.makeText(context, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
                         }
@@ -301,10 +305,9 @@ public class ChatRoomModel {
 
     }
 
-    public static void okgodel(Context context,Long roomid) {
+    public static void okgodel(Context context,Long roomid,Long userid) {
         MyApp application = ((MyApp) context.getApplicationContext());
         SharedPreferences sp = context.getSharedPreferences("User", Context.MODE_PRIVATE);
-        String userid = sp.getString("userid", "");
         String token = sp.getString("token", "");
         OkGo.<String>post(application.getUrl() + "/app/room/cancelUpperWheat?token=" + token)
                 .params("userId", userid)
@@ -319,8 +322,6 @@ public class ChatRoomModel {
                         JsonArray application = prexiew.getData().getAsJsonArray("users");
                         if(prexiew.getCode()==0){
                             PaimaiModel.initData(application);
-
-                            Toast.makeText(context, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
 
                         } else if (prexiew.getCode() == 40000) {
                             Toast.makeText(context, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();

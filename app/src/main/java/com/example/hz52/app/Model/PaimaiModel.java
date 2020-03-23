@@ -14,12 +14,17 @@ import com.example.hz52.app.Adapter.PaimaiAdapter;
 import com.example.hz52.app.Entity.Holdpeople;
 import com.example.hz52.app.Entity.Message;
 import com.example.hz52.app.Sqlentity.Conver;
+import com.example.hz52.app.chatroom;
 import com.example.hz52.app.cofig.DateUtil;
 import com.example.hz52.app.dao.mConverDao;
 import com.google.gson.JsonArray;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
+
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
 
 public class PaimaiModel {
 
@@ -37,6 +42,13 @@ public class PaimaiModel {
                 Holdpeople i1 = new Holdpeople(userId, avatarUrl, nickname, "", "0");
                 mArrayList.add(i1);
             }
+            Observable<Integer> observable = Observable.defer(new Callable<ObservableSource<? extends Integer>>() {
+                @Override
+                public ObservableSource<? extends Integer> call() throws Exception {
+                    return Observable.just(7);
+                }
+            });
+            observable.subscribe(chatroom.observer);
         } catch (Exception ignored) {}
 
 
@@ -128,8 +140,11 @@ public class PaimaiModel {
 
 
     public static void Add(RecyclerView mRecyclerView,Holdpeople entity){
-        mAdapter.addData(mArrayList.size(), entity);
-        mRecyclerView.smoothScrollToPosition(mArrayList.size());
+        if(entity != null){
+            mAdapter.addData(mArrayList.size(), entity);
+            mRecyclerView.smoothScrollToPosition(mArrayList.size());
+        }
+
     }
 
     public static void Remove(int position){

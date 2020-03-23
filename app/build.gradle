@@ -84,9 +84,6 @@ dependencies {
     implementation 'com.scwang.smart:refresh-footer-ball:2.0.0-alpha-1'       //球脉冲加载
 
 
-    implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:5.5.8'//微信支付
-
-
     implementation 'cn.yc:WebViewLib:1.2.0'//webview库
 
     implementation 'com.github.limxing:LFRecyclerView-Android:1.0.5'//RecyclerView刷新
