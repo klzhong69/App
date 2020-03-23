@@ -160,6 +160,8 @@ public class My extends Fragment {
         textView92.setText(sp.getString("nickname", ""));
         Glide.with(My.this).load(sp.getString("avatarUrl", "")).into(imageView28);
         textView93.setText("ID " + sp.getString("userid", ""));
+        textView94.setText("关注 "+ sp.getString("followCount", ""));
+        textView95.setText("粉丝 "+ sp.getString("fansCount", ""));
         okgos();
 
         context = getContext();
@@ -267,6 +269,12 @@ public class My extends Fragment {
                             String packageCount = prexiew.getData().get("packageCount").getAsString();
                             roomid = prexiew.getData().get("roomId").getAsString();
 
+                            SharedPreferences sp = getActivity().getSharedPreferences("User", Context.MODE_PRIVATE);
+                            sp.edit().putString("followCount", followCount).apply();
+                            sp.edit().putString("fansCount", fansCount).apply();
+
+                            textView92.setText(nickname);
+                            Glide.with(My.this).load(avatarUrl).into(imageView28);
                             textView94.setText("关注 "+followCount);
                             textView95.setText("粉丝 "+fansCount);
                             textView76.setText(musicCount);
@@ -309,33 +317,37 @@ public class My extends Fragment {
                 if (!userid.equals("")) {
                     Intent intent2 = new Intent(getContext(), modify_information.class);
                     startActivity(intent2);
-                    getActivity().overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
+                    Objects.requireNonNull(getActivity()).overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
                 }
                 //认证
                 break;
             case R.id.textView76:
             case R.id.textView77:
+            case R.id.imageView43:
+            case R.id.imageView80:
+            case R.id.textView89:
+            case R.id.imageView81:
                 Intent intent3 = new Intent(getContext(), my_music.class);
                 startActivity(intent3);
-                getActivity().overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
+                Objects.requireNonNull(getActivity()).overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
                 break;
             case R.id.textView78:
             case R.id.textView79:
                 Intent intent4 = new Intent(getContext(), my_package.class);
                 startActivity(intent4);
-                getActivity().overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
+                Objects.requireNonNull(getActivity()).overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
                 break;
             case R.id.textView80:
             case R.id.textView81:
                 Intent intent5 = new Intent(getContext(), my_favorite.class);
                 startActivity(intent5);
-                getActivity().overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
+                Objects.requireNonNull(getActivity()).overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
                 break;
             case R.id.textView82:
             case R.id.textView83:
                 Intent intent6 = new Intent(getContext(), my_footprint.class);
                 startActivity(intent6);
-                getActivity().overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
+                Objects.requireNonNull(getActivity()).overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
                 break;
             case R.id.imageView73:
             case R.id.textView84:
@@ -346,7 +358,7 @@ public class My extends Fragment {
                     Intent intent7 = new Intent(getContext(), chatroom.class);
                     intent7.putExtra(Constant.ACTION_KEY_CROLE, Constants.CLIENT_ROLE_AUDIENCE);
                     intent7.putExtra(Constant.ACTION_KEY_ROOM_MODE, Constant.ChatRoomGamingHighQuality);
-                    intent7.putExtra(Constant.ACTION_KEY_ROOM_NAME, userid);
+                    intent7.putExtra(Constant.ACTION_KEY_ROOM_ID, userid);
                     intent7.putExtra(Constant.ACTION_KEY_TITLE_NAME, username+"的房间");
                     startActivity(intent7);
                 }
@@ -356,7 +368,7 @@ public class My extends Fragment {
                 Intent intent8 = new Intent(getContext(), homepage.class);
                 intent8.putExtra("id", Long.parseLong(userid));
                 startActivity(intent8);
-                getActivity().overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
+                Objects.requireNonNull(getActivity()).overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
                 break;
             case R.id.imageView41:
             case R.id.imageView76:
@@ -364,15 +376,7 @@ public class My extends Fragment {
             case R.id.imageView77:
                 Intent intent9 = new Intent(getContext(), my_wallet.class);
                 startActivity(intent9);
-                getActivity().overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
-                break;
-            case R.id.imageView43:
-            case R.id.imageView80:
-            case R.id.textView89:
-            case R.id.imageView81:
-                Intent intent11 = new Intent(getContext(), my_music.class);
-                startActivity(intent11);
-                getActivity().overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
+                Objects.requireNonNull(getActivity()).overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
                 break;
             case R.id.imageView44:
             case R.id.imageView82:
@@ -380,7 +384,7 @@ public class My extends Fragment {
             case R.id.imageView83:
                 Intent intent12 = new Intent(getContext(), my_grade.class);
                 startActivity(intent12);
-                getActivity().overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
+                Objects.requireNonNull(getActivity()).overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
                 break;
             case R.id.imageView45:
             case R.id.imageView84:
@@ -388,7 +392,7 @@ public class My extends Fragment {
             case R.id.imageView85:
                 Intent intent13 = new Intent(getContext(), my_realname.class);
                 startActivity(intent13);
-                getActivity().overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
+                Objects.requireNonNull(getActivity()).overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
                 break;
         }
     }

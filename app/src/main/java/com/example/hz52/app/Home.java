@@ -326,7 +326,7 @@ public class Home extends Fragment {
                 //Constants.CLIENT_ROLE_BROADCASTER 主播
                 intent.putExtra(Constant.ACTION_KEY_CROLE, Constants.CLIENT_ROLE_AUDIENCE);
                 intent.putExtra(Constant.ACTION_KEY_ROOM_MODE, Constant.ChatRoomGamingStandard);
-                intent.putExtra(Constant.ACTION_KEY_ROOM_NAME, "579184939");
+                intent.putExtra(Constant.ACTION_KEY_ROOM_ID, "579184939");
                 intent.putExtra(Constant.ACTION_KEY_TITLE_NAME, "测试房间");
                 startActivity(intent);
                 break;

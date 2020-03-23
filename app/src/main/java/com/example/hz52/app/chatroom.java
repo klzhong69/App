@@ -405,7 +405,7 @@ public class chatroom extends AppCompatActivity {
     private static final int PERMISSION_REQ_ID_RECORD_AUDIO = 22;
     private RtcEngine mRtcEngine;
     private int mRoomMode;
-    private String mChannelName;
+    private String mChannelId;
     private String mTitleName;
     private String userid;
     public static final String TAG = "chatroom";
@@ -632,6 +632,26 @@ public class chatroom extends AppCompatActivity {
         });
     }
 
+    /**
+     * 获取从上一个界面传过来的频道信息，角色信息
+     */
+    private void setupData() {
+        Intent intent = getIntent();
+        if (intent != null) {
+            mRoomMode = intent.getIntExtra(Constant.ACTION_KEY_ROOM_MODE, Constant.ChatRoomGamingStandard);
+            bIsBroadCaster = intent.getIntExtra(Constant.ACTION_KEY_CROLE, Constants.CLIENT_ROLE_AUDIENCE) == Constants.CLIENT_ROLE_BROADCASTER;
+            mChannelId = intent.getStringExtra(Constant.ACTION_KEY_ROOM_ID);
+            mTitleName = intent.getStringExtra(Constant.ACTION_KEY_TITLE_NAME);
+            textView123.setText(mTitleName);
+            textView121.setText("ID " + mChannelId);
+        }
+        SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
+        userid = sp.getString("userid", "");
+        avatarUrl = sp.getString("avatarUrl", "");
+        nickname = sp.getString("nickname", "");
+        gender = sp.getString("gender", "");
+    }
+
 
     public void initAgoraEngineAndJoinChannel() {
         String appID = "cb1df47400774887bdc905241b4e7ea4";
@@ -681,35 +701,17 @@ public class chatroom extends AppCompatActivity {
         //AUDIO_REVERB_KTV(6)：KTV
         //AUDIO_REVERB_STUDIO(7)：录音棚
         mRtcEngine.setLocalVoiceReverbPreset(7);
-        SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
-        userid = sp.getString("userid", "");
-        avatarUrl = sp.getString("avatarUrl", "");
-        nickname = sp.getString("nickname", "");
-        gender = sp.getString("gender", "");
+
         // 当 joinChannel api 中填入 0 时，agora 服务器会生成一个唯一的随机数，并在 onJoinChannelSuccess 回调中返回
-        if (mChannelName.equals(userid)) {
+        if (mChannelId.equals(userid)) {
             administrator = true;
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            mRtcEngine.joinChannel(null, mChannelName, "", Integer.parseInt(userid));
+            mRtcEngine.joinChannel(null, mChannelId, "", Integer.parseInt(userid));
         }
 
     }
 
-    /**
-     * 获取从上一个界面传过来的频道信息，角色信息
-     */
-    private void setupData() {
-        Intent intent = getIntent();
-        if (intent != null) {
-            mRoomMode = intent.getIntExtra(Constant.ACTION_KEY_ROOM_MODE, Constant.ChatRoomGamingStandard);
-            bIsBroadCaster = intent.getIntExtra(Constant.ACTION_KEY_CROLE, Constants.CLIENT_ROLE_AUDIENCE) == Constants.CLIENT_ROLE_BROADCASTER;
-            mChannelName = intent.getStringExtra(Constant.ACTION_KEY_ROOM_NAME);
-            mTitleName = intent.getStringExtra(Constant.ACTION_KEY_TITLE_NAME);
-            textView123.setText(mTitleName);
-            textView121.setText("ID " + mChannelName);
-        }
-    }
 
 
     @Override
@@ -768,7 +770,7 @@ public class chatroom extends AppCompatActivity {
                 break;
             case R.id.imageView103:
                 component7.setVisibility(View.VISIBLE);
-                ChatRoomModel.okgoall(context,recyclerc7, Long.valueOf(mChannelName),0);
+                ChatRoomModel.okgoall(context,recyclerc7, Long.valueOf(mChannelId),0);
                 if (bIsBroadCaster) {
                     textViewc7t.setVisibility(View.GONE);
                     // mRtcEngine.startAudioMixing("/assets/baidu.mp3",false,false,1);
@@ -808,14 +810,14 @@ public class chatroom extends AppCompatActivity {
                 if (bool) {
                     int i = PaimaiModel.get(userid);
                     PaimaiModel.Remove(i);
-                    ChatRoomModel.okgodel(context,Long.valueOf(mChannelName),Long.valueOf(userid));
+                    ChatRoomModel.okgodel(context,Long.valueOf(mChannelId),Long.valueOf(userid));
                     textViewc7t.setText("申请排麦");
                     bool = false;
 
                 } else {
                     Holdpeople i1 = new Holdpeople(userid, avatarUrl, nickname, gender, "0");
                     PaimaiModel.Add(recyclerc7, i1);
-                    ChatRoomModel.okgo(context,Long.valueOf(mChannelName));
+                    ChatRoomModel.okgo(context,Long.valueOf(mChannelId));
                     textViewc7t.setText("取消排麦");
                     bool = true;
 
@@ -829,7 +831,7 @@ public class chatroom extends AppCompatActivity {
                         Roomhead roomhead = new Roomhead(HoldpeopleAdapter.mEntityList.get(i).getUserima(), HoldpeopleAdapter.mEntityList.get(i).getName(), "", "", Long.valueOf(HoldpeopleAdapter.mEntityList.get(i).getId()), 0, false, false);
                         ChatRoomModel.showBroadCast(mRtcEngine, Long.valueOf(HoldpeopleAdapter.mEntityList.get(i).getId()), position, roomhead);
                         PaimaiModel.Remove(i);
-                        ChatRoomModel.okgodel(context,Long.valueOf(mChannelName),Long.valueOf(HoldpeopleAdapter.mEntityList.get(i).getId()));
+                        ChatRoomModel.okgodel(context,Long.valueOf(mChannelId),Long.valueOf(HoldpeopleAdapter.mEntityList.get(i).getId()));
                         component3.setVisibility(View.GONE);
                         bIsBroadCaster = true;
                     }
@@ -1275,7 +1277,7 @@ public class chatroom extends AppCompatActivity {
                 switch (i) {
                     case 0:
                         component3.setVisibility(View.VISIBLE);
-                        ChatRoomModel.okgoall(context,recyclerc3, Long.valueOf(mChannelName),1);
+                        ChatRoomModel.okgoall(context,recyclerc3, Long.valueOf(mChannelId),1);
                         break;
                     case 1:
                         ChatRoomModel.self(mRtcEngine, position);

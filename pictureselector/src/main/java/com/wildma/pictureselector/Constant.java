@@ -38,7 +38,7 @@ public class Constant {
 
     public static final String ACTION_KEY_CROLE = "C_Role";
     public static final String ACTION_KEY_ROOM_MODE = "ecHANELMODE";
-    public static final String ACTION_KEY_ROOM_NAME = "ecHANEL";
+    public static final String ACTION_KEY_ROOM_ID = "ecHANEL";
     public static final String ACTION_KEY_TITLE_NAME = "eTITLE";
 
     public static String[] SOUNDARRAY = new String[] {
