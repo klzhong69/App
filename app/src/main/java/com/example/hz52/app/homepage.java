@@ -193,7 +193,9 @@ public class homepage extends AppCompatActivity {
                 break;
             case R.id.imageView34:
             case R.id.textView31:
-                if (!bool) {
+                if (bool) {
+                    okgos();
+                }else{
                     okgo();
                 }
                 break;
@@ -244,8 +246,8 @@ public class homepage extends AppCompatActivity {
         String token = sp.getString("token", "");
         System.out.println(token);
         OkGo.<String>post(application.getUrl() + "/app/user/getInfo?token=" + token)
-                .params("userId", followId)
-                .params("followId", userid)
+                .params("userId", userid)
+                .params("followId", followId)
                 .execute(new StringCallback() {
 
                     @Override
@@ -256,45 +258,48 @@ public class homepage extends AppCompatActivity {
 
                         if (prexiew.getCode() == 0) {
 
-                            JsonArray friend = prexiew.getData().getAsJsonArray("friends");
-                            JsonArray photo = prexiew.getData().getAsJsonArray("photos");
-                            JsonArray giftWall = prexiew.getData().getAsJsonArray("giftWall");
+                            try {
+                                JsonArray friend = prexiew.getData().getAsJsonArray("friends");
+                                JsonArray photo = prexiew.getData().getAsJsonArray("photos");
+                                JsonArray giftWall = prexiew.getData().getAsJsonArray("giftWall");
 
-                            if (prexiew.getData().get("signtureText").getAsString().equals("")) {
-                                textView11.setText("签名");
-                            } else {
-                                textView11.setText(prexiew.getData().get("signtureText").getAsString());
-                            }
+                                if (prexiew.getData().get("signtureText").getAsString().equals("")) {
+                                    textView11.setText("签名");
+                                } else {
+                                    textView11.setText(prexiew.getData().get("signtureText").getAsString());
+                                }
 
-                            avatarUrl = prexiew.getData().get("avatarUrl").getAsString();
-                            nickname = prexiew.getData().get("nickname").getAsString();
+                                avatarUrl = prexiew.getData().get("avatarUrl").getAsString();
+                                nickname = prexiew.getData().get("nickname").getAsString();
 
-                            String gold = prexiew.getData().get("gold").getAsString();
-                            String diamond = prexiew.getData().get("diamond").getAsString();
+                                String gold = prexiew.getData().get("gold").getAsString();
+                                String diamond = prexiew.getData().get("diamond").getAsString();
 
-                            signtureVoiceUrl = prexiew.getData().get("signtureVoiceUrl").getAsString();
+                                signtureVoiceUrl = prexiew.getData().get("signtureVoiceUrl").getAsString();
 
-                            String isFollow = prexiew.getData().get("isFollow").getAsString();
-                            if (isFollow.equals("1")) {
-                                Glide.with(homepage.this).load(R.drawable.s_guanzhu).into(imageView34);
-                                textView31.setText("取消关注");
-                                bool = true;
-                            }else{
-                                bool = false;
-                            }
+                                String isFollow = prexiew.getData().get("isFollow").getAsString();
+                                if (isFollow.equals("1")) {
+                                    Glide.with(homepage.this).load(R.drawable.s_guanzhu).into(imageView34);
+                                    textView31.setText("取消关注");
+                                    bool = true;
+                                }else{
+                                    bool = false;
+                                }
 
-                            textView2.setText(prexiew.getData().get("nickname").getAsString());
-                            textView3.setText("ID " + prexiew.getData().get("userId").getAsString());
-                            Glide.with(homepage.this).load(prexiew.getData().get("avatarUrl").getAsString()).into(imageView2);
-                            textView5.setText(prexiew.getData().get("followCount").getAsString());
-                            textView9.setText(prexiew.getData().get("fansCount").getAsString());
+                                textView2.setText(prexiew.getData().get("nickname").getAsString());
+                                textView3.setText("ID " + prexiew.getData().get("userId").getAsString());
+                                Glide.with(homepage.this).load(prexiew.getData().get("avatarUrl").getAsString()).into(imageView2);
+                                textView5.setText(prexiew.getData().get("followCount").getAsString());
+                                textView9.setText(prexiew.getData().get("fansCount").getAsString());
 
-                            if (photo != null || giftWall != null) {
-                                HomePageModel.initData(photo, giftWall);
-                                HomePageModel.initrecycler(context, recycler);
-                                HomePageModel.initrecyclert(context, recycler3);
-                            }
+                                if (photo != null || giftWall != null) {
+                                    HomePageModel.initData(photo, giftWall);
+                                    HomePageModel.initrecycler(context, recycler);
+                                    HomePageModel.initrecyclert(context, recycler3);
+                                }
 
+
+                            }catch (Exception ignored){}
                             tipDialog.dismiss();
                         } else if (prexiew.getCode() == 40000) {
                             tipDialog.dismiss();
@@ -342,8 +347,8 @@ public class homepage extends AppCompatActivity {
         String userid = sp.getString("userid", "");
         String token = sp.getString("token", "");
         OkGo.<String>post(application.getUrl() + "/app/user/follow?token=" + token)
-                .params("userId", followId)
-                .params("followId", userid)
+                .params("userId", userid)
+                .params("followId", followId)
                 .execute(new StringCallback() {
 
                     @Override
@@ -369,10 +374,44 @@ public class homepage extends AppCompatActivity {
 
     }
 
+    private void okgos() {
+        MyApp application = ((MyApp) this.getApplicationContext());
+        SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
+        String userid = sp.getString("userid", "");
+        String token = sp.getString("token", "");
+        OkGo.<String>post(application.getUrl() + "/app/user/unFollow?token=" + token)
+                .params("userId", userid)
+                .params("followId", followId)
+                .execute(new StringCallback() {
+
+                    @Override
+                    public void onSuccess(Response<String> response) {
+
+                        Gson gson = new Gson();
+                        Preview prexiew = gson.fromJson(response.body(), Preview.class);
+
+                        if (prexiew.getCode() == 0) {
+                            Toast.makeText(homepage.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
+                            if (prexiew.getMsg().equals("取关成功")) {
+                                Glide.with(homepage.this).load(R.drawable.s_guanzhus).into(imageView34);
+                                textView31.setText("关注");
+                                bool = false;
+                            }
+
+                        } else if (prexiew.getCode() == 40000) {
+                            Toast.makeText(homepage.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                });
+
+    }
+
 
     @Override
     public void onBackPressed() {
         this.finish();
         overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
     }
+
 }

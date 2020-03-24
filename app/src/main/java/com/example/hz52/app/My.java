@@ -257,22 +257,24 @@ public class My extends Fragment {
                         Preview prexiew = gson.fromJson(response.body(), Preview.class);
 
                         if (prexiew.getCode() == 0) {
-                            String nickname = prexiew.getData().get("nickname").getAsString();
-                            String avatarUrl = prexiew.getData().get("avatarUrl").getAsString();
-                            String signtureText = prexiew.getData().get("signtureText").getAsString();
-                            String signtureVoiceUrl = prexiew.getData().get("signtureVoiceUrl").getAsString();
-                            String followCount = prexiew.getData().get("followCount").getAsString();
-                            String fansCount = prexiew.getData().get("fansCount").getAsString();
-                            String musicCount = prexiew.getData().get("musicCount").getAsString();
-                            String favoriteRoomCount = prexiew.getData().get("favoriteRoomCount").getAsString();
-                            String roomHistoryCount = prexiew.getData().get("roomHistoryCount").getAsString();
-                            String packageCount = prexiew.getData().get("packageCount").getAsString();
-                            roomid = prexiew.getData().get("roomId").getAsString();
-
-                            sp.edit().putString("followCount", followCount).apply();
-                            sp.edit().putString("fansCount", fansCount).apply();
 
                             try {
+
+                                String nickname = prexiew.getData().get("nickname").getAsString();
+                                String avatarUrl = prexiew.getData().get("avatarUrl").getAsString();
+                                String signtureText = prexiew.getData().get("signtureText").getAsString();
+                                String signtureVoiceUrl = prexiew.getData().get("signtureVoiceUrl").getAsString();
+                                String followCount = prexiew.getData().get("followCount").getAsString();
+                                String fansCount = prexiew.getData().get("fansCount").getAsString();
+                                String musicCount = prexiew.getData().get("musicCount").getAsString();
+                                String favoriteRoomCount = prexiew.getData().get("favoriteRoomCount").getAsString();
+                                String roomHistoryCount = prexiew.getData().get("roomHistoryCount").getAsString();
+                                String packageCount = prexiew.getData().get("packageCount").getAsString();
+                                roomid = prexiew.getData().get("roomId").getAsString();
+
+                                sp.edit().putString("followCount", followCount).apply();
+                                sp.edit().putString("fansCount", fansCount).apply();
+
                                 textView92.setText(nickname);
                                 Glide.with(My.this).load(avatarUrl).into(imageView28);
                                 textView94.setText("关注 "+followCount);
@@ -281,8 +283,7 @@ public class My extends Fragment {
                                 textView78.setText(packageCount);
                                 textView80.setText(favoriteRoomCount);
                                 textView82.setText(roomHistoryCount);
-                            }catch (Exception e){}
-
+                            }catch (Exception ignored){}
 
                         } else if (prexiew.getCode() == 40000) {
                             Toast.makeText(getContext(), prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();

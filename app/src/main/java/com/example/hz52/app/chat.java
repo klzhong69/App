@@ -116,7 +116,6 @@ public class chat extends AppCompatActivity {
                 //1代表底部,返回true表示没到底部,还可以滑
                 boolean b = recyclerView.canScrollVertically(-1);
                 if(!b){
-                    System.out.println("判断"+b);
                     a++;
                     ChatModel.Adddata(recycler, convers, Long.valueOf(userid), a * 10, 10);
                 }

@@ -346,7 +346,7 @@ public class List extends Fragment {
             case R.id.imageView90:
             case R.id.imageView87:
                 Intent intent8 = new Intent(getContext(), homepage.class);
-                intent8.putExtra("id", 127167100L);
+                intent8.putExtra("id", 695294941L);
                 startActivity(intent8);
                 getActivity().overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
                 break;

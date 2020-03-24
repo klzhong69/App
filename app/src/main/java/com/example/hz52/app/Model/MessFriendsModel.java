@@ -62,18 +62,21 @@ public class MessFriendsModel {
 
                         if (prexiew.getCode() == 0) {
 
-                            if (a == 1) {
-                                jsonArray = prexiew.getData().getAsJsonArray("follows");
-                            } else if (a == 2) {
-                                jsonArray = prexiew.getData().getAsJsonArray("fans");
-                            }
-                            if (jsonArray != null) {
-                                for (int i = 0; i < jsonArray.size(); i++) {
-                                    Friends i1 = new Friends(jsonArray.get(i).getAsJsonObject().get("uniqueId").getAsLong(),jsonArray.get(i).getAsJsonObject().get("nickname").getAsString(), jsonArray.get(i).getAsJsonObject().get("signtureText").getAsString(), jsonArray.get(i).getAsJsonObject().get("avatarUrl").getAsString(), jsonArray.get(i).getAsJsonObject().get("gender").getAsString());
-                                    mArrayList.add(i1);
+                            try{
+                                if (a == 1) {
+                                    jsonArray = prexiew.getData().getAsJsonArray("follows");
+                                } else if (a == 2) {
+                                    jsonArray = prexiew.getData().getAsJsonArray("fans");
                                 }
-                                initrecycler(context, recycler12);
-                            }
+                                if (jsonArray != null) {
+                                    for (int i = 0; i < jsonArray.size(); i++) {
+                                        Friends i1 = new Friends(jsonArray.get(i).getAsJsonObject().get("uniqueId").getAsLong(),jsonArray.get(i).getAsJsonObject().get("nickname").getAsString(), jsonArray.get(i).getAsJsonObject().get("signtureText").getAsString(), jsonArray.get(i).getAsJsonObject().get("avatarUrl").getAsString(), jsonArray.get(i).getAsJsonObject().get("gender").getAsString());
+                                        mArrayList.add(i1);
+                                    }
+                                    initrecycler(context, recycler12);
+                                }
+                            }catch (Exception ignored){}
+
 
                         } else if (prexiew.getCode() == 40000) {
                             Toast.makeText(context, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();

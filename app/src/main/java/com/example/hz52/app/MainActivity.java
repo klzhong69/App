@@ -9,7 +9,9 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.provider.Settings;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -22,6 +24,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -304,6 +307,34 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
     }
 
     /**
+     * 判断应用是否在后台白名单
+     */
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    private boolean isIgnoringBatteryOptimizations() {
+        boolean isIgnoring = false;
+        PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
+        if (powerManager != null) {
+            isIgnoring = powerManager.isIgnoringBatteryOptimizations(getPackageName());
+        }
+        return isIgnoring;
+    }
+
+    /**
+     * 申请加入后台白名单
+     */
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public void requestIgnoreBatteryOptimizations() {
+        try {
+            Intent intent = new Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
+            intent.setData(Uri.parse("package:" + getPackageName()));
+            startActivity(intent);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    /**
      * 主动申请浮窗权限
      */
     private void requestPermission() {
@@ -408,6 +439,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
     public void onResume() {
         super.onResume();
 
+        if(!isIgnoringBatteryOptimizations()){
+            requestIgnoreBatteryOptimizations();
+        }
         if (isNeedCheck) {
             checkPermissions(needPermissions);
         }
