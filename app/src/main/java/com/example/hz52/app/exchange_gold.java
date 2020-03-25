@@ -102,7 +102,7 @@ public class exchange_gold extends AppCompatActivity {
                             startActivity(intent2);
                             onBackPressed();
 
-                        } else if (prexiew.getCode() == 40000) {
+                        } else  {
                             Toast.makeText(exchange_gold.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
                         }
 

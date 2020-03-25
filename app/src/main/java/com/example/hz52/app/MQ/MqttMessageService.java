@@ -14,6 +14,7 @@ import com.example.hz52.app.MainActivity;
 import com.example.hz52.app.Sqlentity.Chat;
 import com.example.hz52.app.chat;
 import com.example.hz52.app.Entity.Mess;
+import com.example.hz52.app.chatroom;
 import com.example.hz52.app.dao.mChatDao;
 import com.example.hz52.app.find_make;
 import com.google.gson.Gson;
@@ -45,10 +46,11 @@ public class MqttMessageService extends Service {
     public static final String TAG = "MqttMessageService";
     private static boolean bool = false;
     private static int sum;
+    private static MyApp application;
 
 
     public static void create(Context context) {
-
+        application = ((MyApp) context.getApplicationContext());
         //初始化mqtt配置
         initMqtt(context);
         //连接mqtt
@@ -95,68 +97,23 @@ public class MqttMessageService extends Service {
                     String userid = sp.getString("userid","");
                     System.out.println("消息"+message.toString());
                     if (!message.toString().equals("")) {
-                        MyApp application = ((MyApp) context.getApplicationContext());
                         Gson gson = new Gson();
                         Mess mess = gson.fromJson(message.toString(), Mess.class);
                         switch (mess.getType()){
                             case 1:
-                                Chat chat1 = new Chat();
-                                chat1.setConversation("office");
-                                chat1.setUserId(Long.valueOf(userid));
-                                chat1.setState(0);
-                                chat1.setSendsrc(mess.getData().get("senderAvatarUrl").getAsString());
-                                chat1.setTxt(mess.getData().get("content").getAsString());
-                                chat1.setData(mess.getSendTime());
-                                chat1.setSendname(mess.getData().get("senderName").getAsString());
-                                chat1.setSendId(mess.getData().get("sendId").getAsLong());
-                                mChatDao.insert(chat1);
-                                List<Chat> offic = application.getOfficmess();
-                                offic.add(chat1);
-                                application.setOfficmess(offic);
+                                type1(userid,mess);
                                 break;
                             case 2:
+                                type2(userid,mess);
                                 break;
                             case 3:
-                                Chat chat3 = new Chat();
-                                chat3.setConversation("user/"+mess.getData().get("sendId").getAsLong());
-                                chat3.setData(mess.getSendTime());
-                                chat3.setUserId(Long.valueOf(userid));
-                                chat3.setSendId(mess.getData().get("sendId").getAsLong());
-                                chat3.setSendsrc(mess.getData().get("senderAvatarUrl").getAsString());
-                                chat3.setTxt(mess.getData().get("content").getAsString());
-                                chat3.setSendname(mess.getData().get("senderName").getAsString());
-                                chat3.setState(0);
-                                mChatDao.insert(chat3);
-                                List<Chat> user = application.getUsermess();
-                                user.add(chat3);
-                                application.setUsermess(user);
-                                Observable<Integer> observables = Observable.defer(new Callable<ObservableSource<? extends Integer>>() {
-                                    @Override
-                                    public ObservableSource<? extends Integer> call() throws Exception {
-                                        return Observable.just(1);
-                                    }
-                                });
-                                observables.subscribe(MainActivity.observers);
-                                if(chat.isFront){
-                                    if(chat.sendid == mess.getData().get("sendId").getAsLong()){
-                                        Observable<Chat> observable = Observable.defer(new Callable<ObservableSource<? extends Chat>>() {
-                                            @Override
-                                            public ObservableSource<? extends Chat> call() throws Exception {
-                                                return Observable.just(chat3);
-                                            }
-                                        });
-                                        observable.subscribe(chat.observerchat);
-                                    }
-                                }
+                                type3(userid,mess);
                                 break;
                             case 4:
-                                Observable<JsonObject> observable4 = Observable.defer(new Callable<ObservableSource<? extends JsonObject>>() {
-                                    @Override
-                                    public ObservableSource<? extends JsonObject> call() throws Exception {
-                                        return Observable.just(mess.getData());
-                                    }
-                                });
-                                observable4.subscribe(find_make.observer);
+                                type4(mess);
+                                break;
+                            case 5:
+                                type5(mess);
                                 break;
                         }
                     }
@@ -195,6 +152,94 @@ public class MqttMessageService extends Service {
         }
     }
 
+    /**
+     * 类型1 官方消息
+     */
+    private static void type1(String userid, Mess mess){
+        Chat chat1 = new Chat();
+        chat1.setConversation("office");
+        chat1.setUserId(Long.valueOf(userid));
+        chat1.setState(0);
+        chat1.setSendsrc(mess.getData().get("senderAvatarUrl").getAsString());
+        chat1.setTxt(mess.getData().get("content").getAsString());
+        chat1.setData(mess.getSendTime());
+        chat1.setSendname(mess.getData().get("senderName").getAsString());
+        chat1.setSendId(mess.getData().get("sendId").getAsLong());
+        mChatDao.insert(chat1);
+        List<Chat> offic = application.getOfficmess();
+        offic.add(chat1);
+        application.setOfficmess(offic);
+    }
+
+    /**
+     * 类型2
+     */
+    private static void type2(String userid,Mess mess){
+
+    }
+
+    /**
+     * 类型3 私聊
+     */
+    private static void type3(String userid,Mess mess){
+        Chat chat3 = new Chat();
+        chat3.setConversation("user/"+mess.getData().get("sendId").getAsLong());
+        chat3.setData(mess.getSendTime());
+        chat3.setUserId(Long.valueOf(userid));
+        chat3.setSendId(mess.getData().get("sendId").getAsLong());
+        chat3.setSendsrc(mess.getData().get("senderAvatarUrl").getAsString());
+        chat3.setTxt(mess.getData().get("content").getAsString());
+        chat3.setSendname(mess.getData().get("senderName").getAsString());
+        chat3.setState(0);
+        mChatDao.insert(chat3);
+        List<Chat> user = application.getUsermess();
+        user.add(chat3);
+        application.setUsermess(user);
+        Observable<Integer> observables = Observable.defer(new Callable<ObservableSource<? extends Integer>>() {
+            @Override
+            public ObservableSource<? extends Integer> call() throws Exception {
+                return Observable.just(1);
+            }
+        });
+        observables.subscribe(MainActivity.observers);
+        if(chat.isFront){
+            if(chat.sendid == mess.getData().get("sendId").getAsLong()){
+                Observable<Chat> observable = Observable.defer(new Callable<ObservableSource<? extends Chat>>() {
+                    @Override
+                    public ObservableSource<? extends Chat> call() throws Exception {
+                        return Observable.just(chat3);
+                    }
+                });
+                observable.subscribe(chat.observerchat);
+            }
+        }
+    }
+
+    /**
+     * 类型4 广播
+     */
+    private static void type4(Mess mess){
+        Observable<JsonObject> observable4 = Observable.defer(new Callable<ObservableSource<? extends JsonObject>>() {
+            @Override
+            public ObservableSource<? extends JsonObject> call() throws Exception {
+                return Observable.just(mess.getData());
+            }
+        });
+        observable4.subscribe(find_make.observer);
+    }
+
+    /**
+     * 类型5 排麦
+     */
+    private static void type5(Mess mess){
+        Observable<JsonObject> observable4 = Observable.defer(new Callable<ObservableSource<? extends JsonObject>>() {
+            @Override
+            public ObservableSource<? extends JsonObject> call() throws Exception {
+                return Observable.just(mess.getData());
+            }
+        });
+        observable4.subscribe(chatroom.obserpaimai);
+    }
 
 
     /**

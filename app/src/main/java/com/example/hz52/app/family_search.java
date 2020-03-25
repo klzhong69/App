@@ -165,7 +165,7 @@ public class family_search extends AppCompatActivity {
                             rooms = prexiew.getData().getAsJsonArray("rooms");
                             initData(0);
                             tipDialog.dismiss();
-                        } else if (prexiew.getCode() == 40000) {
+                        } else  {
                             tipDialog.dismiss();
                             Toast.makeText(family_search.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
                         }

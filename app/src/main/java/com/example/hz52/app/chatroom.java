@@ -35,11 +35,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.hz52.app.Adapter.HoldpeopleAdapter;
+import com.example.hz52.app.Adapter.PaimaiAdapter;
 import com.example.hz52.app.Entity.Chats;
 import com.example.hz52.app.Entity.Holdpeople;
+import com.example.hz52.app.Entity.Mess;
 import com.example.hz52.app.Entity.MyApp;
 import com.example.hz52.app.Entity.Roomhead;
 import com.example.hz52.app.Entity.Roomtxt;
+import com.example.hz52.app.MQ.MqttMessageService;
 import com.example.hz52.app.Model.ChatModel;
 import com.example.hz52.app.Model.ChatRoomModel;
 import com.example.hz52.app.Model.GiftModel;
@@ -51,6 +54,9 @@ import com.example.hz52.app.Sqlentity.Conver;
 import com.example.hz52.app.cofig.DateUtil;
 import com.example.hz52.app.cofig.KeyboardStateObserver;
 import com.example.hz52.app.dao.mConverDao;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.opensource.svgaplayer.SVGADrawable;
 import com.opensource.svgaplayer.SVGADynamicEntity;
 import com.opensource.svgaplayer.SVGAImageView;
@@ -74,7 +80,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.Callable;
 
@@ -399,8 +407,9 @@ public class chatroom extends AppCompatActivity {
     private String conver;
     private Long sendid;
     private String sendname;
-    private boolean bool = false;
+    public static boolean bool = false;
     public static Observer<Integer> observersvga;
+    public static Observer<JsonObject> obserpaimai;
     private SVGAParser parser;
     private static final int PERMISSION_REQ_ID_RECORD_AUDIO = 22;
     private RtcEngine mRtcEngine;
@@ -526,6 +535,7 @@ public class chatroom extends AppCompatActivity {
         }
     };
 
+
     private int getUserIndex(Long uid) {
 
         for (int i = 0; i < ChatRoomModel.mUserList.size(); i++) {
@@ -573,12 +583,11 @@ public class chatroom extends AppCompatActivity {
             initAgoraEngineAndJoinChannel();
         }
 
-
-
         ChatRoomModel.initrecycler(context, recyclerview);
         ChatRoomModel.initData();
         ChatRoomModel.initrecyclers(context, gridview);
-
+        ChatRoomModel.okgoall(context,recyclerc7, Long.valueOf(mChannelId),0);
+        ChatRoomModel.okgoall(context,recyclerc3, Long.valueOf(mChannelId),1);
         relativeLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
@@ -645,6 +654,7 @@ public class chatroom extends AppCompatActivity {
             textView123.setText(mTitleName);
             textView121.setText("ID " + mChannelId);
         }
+        MqttMessageService.subscribeToTopic("room/"+mChannelId);
         SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
         userid = sp.getString("userid", "");
         avatarUrl = sp.getString("avatarUrl", "");
@@ -770,7 +780,7 @@ public class chatroom extends AppCompatActivity {
                 break;
             case R.id.imageView103:
                 component7.setVisibility(View.VISIBLE);
-                ChatRoomModel.okgoall(context,recyclerc7, Long.valueOf(mChannelId),0);
+
                 if (bIsBroadCaster) {
                     textViewc7t.setVisibility(View.GONE);
                     // mRtcEngine.startAudioMixing("/assets/baidu.mp3",false,false,1);
@@ -808,29 +818,27 @@ public class chatroom extends AppCompatActivity {
             case R.id.textViewc7t:
 
                 if (bool) {
-                    int i = PaimaiModel.get(userid);
-                    PaimaiModel.Remove(i);
+                    MqttMessageService.publishMessage("room/" + mChannelId, paimaitype( userid, avatarUrl, nickname, gender,"1"));
                     ChatRoomModel.okgodel(context,Long.valueOf(mChannelId),Long.valueOf(userid));
-                    textViewc7t.setText("申请排麦");
-                    bool = false;
 
                 } else {
-                    Holdpeople i1 = new Holdpeople(userid, avatarUrl, nickname, gender, "0");
-                    PaimaiModel.Add(recyclerc7, i1);
+                    MqttMessageService.publishMessage("room/" + mChannelId, paimaitype(userid, avatarUrl, nickname, gender,"0"));
                     ChatRoomModel.okgo(context,Long.valueOf(mChannelId));
-                    textViewc7t.setText("取消排麦");
-                    bool = true;
-
                 }
-                textViewc7s.setText(PaimaiModel.mArrayList.size() + "人");
+
                 break;
 
             case R.id.textViewc3s:
                 for (int i = 0; i < HoldpeopleAdapter.states.size(); i++) {
                     if (HoldpeopleAdapter.states.get(i)) {
-                        Roomhead roomhead = new Roomhead(HoldpeopleAdapter.mEntityList.get(i).getUserima(), HoldpeopleAdapter.mEntityList.get(i).getName(), "", "", Long.valueOf(HoldpeopleAdapter.mEntityList.get(i).getId()), 0, false, false);
+                        boolean isuserself = false;
+                        if(HoldpeopleAdapter.mEntityList.get(i).getId().equals(userid)){
+                            isuserself = true;
+                        }
+                        Roomhead roomhead = new Roomhead(HoldpeopleAdapter.mEntityList.get(i).getUserima(), HoldpeopleAdapter.mEntityList.get(i).getName(), "", "", Long.valueOf(HoldpeopleAdapter.mEntityList.get(i).getId()), 0, false, isuserself);
                         ChatRoomModel.showBroadCast(mRtcEngine, Long.valueOf(HoldpeopleAdapter.mEntityList.get(i).getId()), position, roomhead);
-                        PaimaiModel.Remove(i);
+
+                        MqttMessageService.publishMessage("room/" + mChannelId, paimaitype(HoldpeopleAdapter.mEntityList.get(i).getId(), HoldpeopleAdapter.mEntityList.get(i).getUserima(), HoldpeopleAdapter.mEntityList.get(i).getName(), HoldpeopleAdapter.mEntityList.get(i).getGrade(),"1"));
                         ChatRoomModel.okgodel(context,Long.valueOf(mChannelId),Long.valueOf(HoldpeopleAdapter.mEntityList.get(i).getId()));
                         component3.setVisibility(View.GONE);
                         bIsBroadCaster = true;
@@ -982,6 +990,27 @@ public class chatroom extends AppCompatActivity {
         }
     }
 
+    private String paimaitype(String userid,String avatarUrl,String nickname,String gender,String type){
+        Long data = System.currentTimeMillis() / 1000;
+        Gson gson = new Gson();
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("userid", userid);
+        map.put("avatarUrl", avatarUrl);
+        map.put("nickname", nickname);
+        map.put("gender", gender);
+        map.put("type", type);
+
+        String xini = gson.toJson(map);
+        JsonObject returnData = new JsonParser().parse(xini).getAsJsonObject();
+
+        Mess mess = new Mess();
+        mess.setType(5);
+        mess.setSendTime(data);
+        mess.setData(returnData);
+
+        return gson.toJson(mess);
+    }
+
     private void showMessagePositiveDialog(int dex) {
         new QMUIDialog.MessageDialogBuilder(this)
                 .setTitle("标题")
@@ -1047,7 +1076,8 @@ public class chatroom extends AppCompatActivity {
                     case 6:
                         break;
                     case 7:
-                        textViewc7s.setText(PaimaiModel.mArrayList.size() + "人");
+                        textViewc7t.setText("取消排麦");
+                        bool = true;
                         break;
                     case 8:
                         component8.setVisibility(View.VISIBLE);
@@ -1061,6 +1091,9 @@ public class chatroom extends AppCompatActivity {
                         Glide.with(context).load("https://momeak.oss-cn-shenzhen.aliyuncs.com/h4.jpg").into(imageView2);
                         textView39.setText("苗苗主播");
                         textView19.setText("萌妹带你飞123");
+                        break;
+                    case 12:
+                        textViewc7s.setText(ChatRoomModel.users.size() + "人");
                         break;
                 }
 
@@ -1080,6 +1113,48 @@ public class chatroom extends AppCompatActivity {
         };
 
         /**
+         * 排麦
+         */
+        obserpaimai = new Observer<JsonObject>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(JsonObject view) {
+                if (view.get("type").getAsString().equals("1")) {
+                    int i = PaimaiModel.get(view.get("userid").getAsString());
+                    PaimaiModel.Remove(i);
+                    if(view.get("userid").getAsString().equals(userid)){
+                        textViewc7t.setText("申请排麦");
+                        bool = false;
+                    }
+                    textViewc7s.setText(PaimaiModel.mArrayList.size() + "人");
+                } else if (view.get("type").getAsString().equals("0")){
+                    Holdpeople i1 = new Holdpeople(view.get("userid").getAsString(), view.get("avatarUrl").getAsString(), view.get("nickname").getAsString(), view.get("gender").getAsString(), "0");
+                    PaimaiModel.Add(i1);
+                    if(view.get("userid").getAsString().equals(userid)){
+                        textViewc7t.setText("取消排麦");
+                        bool = true;
+                    }
+                    textViewc7s.setText(PaimaiModel.mArrayList.size() + "人");
+                }
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        };
+
+        /**
          * 坑位
          */
         observers = new Observer<Integer>() {
@@ -1090,9 +1165,10 @@ public class chatroom extends AppCompatActivity {
 
             @Override
             public void onNext(Integer view) {
-                System.out.println("坑位" + view);
+                System.out.println("数量" + PaimaiModel.mArrayList.size());
                 position = view;
-                if (administrator || Anchor || host || userid.equals(ChatRoomModel.mUserList.get(position).getUid())) {
+
+                if (administrator || Anchor || host || ChatRoomModel.mUserList.get(position).getUid().toString().equals(userid)) {
                     onClickBtn2(gridview.getChildAt(view));
                 }
 
@@ -1273,7 +1349,6 @@ public class chatroom extends AppCompatActivity {
                 switch (i) {
                     case 0:
                         component3.setVisibility(View.VISIBLE);
-                        ChatRoomModel.okgoall(context,recyclerc3, Long.valueOf(mChannelId),1);
                         break;
                     case 1:
                         ChatRoomModel.self(mRtcEngine, position);
@@ -1335,9 +1410,6 @@ public class chatroom extends AppCompatActivity {
                     @Override
                     public void onClick(QMUIBottomSheet dialog, View itemView, int position, String tag) {
                         dialog.dismiss();
-                        bIsBroadCaster=false;
-                        textViewc7t.setText("申请排麦");
-                        bool = false;
                         ChatRoomModel.showAudience(mRtcEngine, 0, Long.valueOf(userid));
                         if (position == 0) {
                             Observable<Integer> observable = Observable.defer(new Callable<ObservableSource<? extends Integer>>() {

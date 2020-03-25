@@ -185,7 +185,7 @@ public class my_feedback extends AppCompatActivity {
                                 tipDialog.dismiss();
                                 Toast.makeText(my_feedback.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
 
-                            } else if (prexiew.getCode() == 40000) {
+                            } else {
                                 tipDialog.dismiss();
                                 Toast.makeText(my_feedback.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
                             }
@@ -288,7 +288,7 @@ public class my_feedback extends AppCompatActivity {
                                 map.put(in, phone + "/" + name);
                             }
 
-                        } else if (prexiew.getCode() == 40000) {
+                        } else {
                             Toast.makeText(my_feedback.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
                         }
 

@@ -125,7 +125,7 @@ public class my_footprint extends AppCompatActivity {
                                 }
                             }
                             tipDialog.dismiss();
-                        }else if(prexiew.getCode()==40000){
+                        }else {
                             tipDialog.dismiss();
                             Toast.makeText(my_footprint.this, prexiew.getMsg()+"", Toast.LENGTH_SHORT).show();
                         }

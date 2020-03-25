@@ -118,7 +118,7 @@ public class room_theme extends AppCompatActivity {
 
                             }
 
-                        } else if (prexiew.getCode() == 40000) {
+                        } else  {
                             Toast.makeText(room_theme.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
                         }
                     }

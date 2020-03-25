@@ -5,9 +5,17 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.hz52.app.Entity.MyApp;
+import com.example.hz52.app.cofig.Preview;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
@@ -76,6 +84,29 @@ public class forget_password extends AppCompatActivity {
         }
     }
 
+    private void okgo() {
+        MyApp application = ((MyApp) this.getApplicationContext());
+        OkGo.<String>post(application.getUrl() + "/app/page/getHome")
+                .params("count", 2)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+
+                        Gson gson = new Gson();
+                        Preview prexiew = gson.fromJson(response.body(), Preview.class);
+
+                        if (prexiew.getCode() == 0) {
+
+                            Toast.makeText(forget_password.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
+
+                        } else {
+                            Toast.makeText(forget_password.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                });
+
+    }
 
 
     @Override

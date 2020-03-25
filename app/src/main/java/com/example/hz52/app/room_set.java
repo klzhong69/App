@@ -165,7 +165,7 @@ public class room_set extends AppCompatActivity {
                             editText.setText(roomName);
                             editText3.setText(announce);
                             editText2.setText(password);
-                        } else if (prexiew.getCode() == 40000) {
+                        } else {
                             Toast.makeText(room_set.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
                         }
 
@@ -219,7 +219,7 @@ public class room_set extends AppCompatActivity {
                             sp.edit().putString("roomid", userid).apply();
                             finish();
                             overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
-                        } else if (prexiew.getCode() == 40000) {
+                        } else  {
                             Toast.makeText(room_set.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
                         }
 

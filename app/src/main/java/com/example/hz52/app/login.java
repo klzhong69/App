@@ -185,7 +185,7 @@ public class login extends AppCompatActivity {
                             overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
 
                             tipDialog.dismiss();
-                        }else if(prexiew.getCode()==40000){
+                        }else{
                             tipDialog.dismiss();
                             Toast.makeText(login.this, prexiew.getMsg()+"", Toast.LENGTH_SHORT).show();
                         }

@@ -141,7 +141,7 @@ public class my_grade extends AppCompatActivity {
                             circleProgressBar.setProgress(goldsum);
                             circleProgressBar2.setProgress(diamondsum);
 
-                        }else if(prexiew.getCode()==40000){
+                        }else {
                             Toast.makeText(my_grade.this, prexiew.getMsg()+"", Toast.LENGTH_SHORT).show();
                         }
 

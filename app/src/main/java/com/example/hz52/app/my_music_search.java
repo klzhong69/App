@@ -175,7 +175,7 @@ public class my_music_search extends AppCompatActivity {
                                 String id = music.get(i).getAsJsonObject().get("id").getAsString();
                             }
                             tipDialog.dismiss();
-                        } else if (prexiew.getCode() == 40000) {
+                        } else {
                             tipDialog.dismiss();
                             Toast.makeText(my_music_search.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
                         }

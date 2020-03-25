@@ -29,26 +29,19 @@ import io.reactivex.ObservableSource;
 public class PaimaiModel {
 
     public static ArrayList<Holdpeople> mArrayList= new ArrayList<Holdpeople>();
-    private static PaimaiAdapter mAdapter;
-    private static HoldpeopleAdapter mAdapters;
+    public static PaimaiAdapter mAdapter;
+    public static HoldpeopleAdapter mAdapters;
 
-    public static void initData(JsonArray application) {
+    public static void initData(JsonArray users) {
         mArrayList= new ArrayList<Holdpeople>();
         try {
-            for(int i=0;i<application.size();i++){
-                String userId = application.get(i).getAsJsonObject().get("userId").getAsString();
-                String nickname = application.get(i).getAsJsonObject().get("nickname").getAsString();
-                String avatarUrl = application.get(i).getAsJsonObject().get("avatarUrl").getAsString();
+            for(int i=0;i<users.size();i++){
+                String userId = users.get(i).getAsJsonObject().get("userId").getAsString();
+                String nickname = users.get(i).getAsJsonObject().get("nickname").getAsString();
+                String avatarUrl = users.get(i).getAsJsonObject().get("avatarUrl").getAsString();
                 Holdpeople i1 = new Holdpeople(userId, avatarUrl, nickname, "", "0");
                 mArrayList.add(i1);
             }
-            Observable<Integer> observable = Observable.defer(new Callable<ObservableSource<? extends Integer>>() {
-                @Override
-                public ObservableSource<? extends Integer> call() throws Exception {
-                    return Observable.just(7);
-                }
-            });
-            observable.subscribe(chatroom.observer);
         } catch (Exception ignored) {}
 
 
@@ -139,16 +132,16 @@ public class PaimaiModel {
     }
 
 
-    public static void Add(RecyclerView mRecyclerView,Holdpeople entity){
-        if(entity != null){
-            mAdapter.addData(mArrayList.size(), entity);
-            mRecyclerView.smoothScrollToPosition(mArrayList.size());
-        }
-
+    public static void Add(Holdpeople entity){
+        mAdapter.addData(mArrayList.size(), entity);
+        mAdapters.addData(mArrayList.size(), entity);
+        mAdapter.notifyItemChanged(mArrayList.size());
     }
 
     public static void Remove(int position){
         mAdapter.removeData(position);
+        mAdapters.removeData(position);
+        mAdapter.notifyItemChanged(position);
     }
 
     public static int get(String id){

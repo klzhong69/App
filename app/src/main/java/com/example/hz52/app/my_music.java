@@ -189,7 +189,7 @@ public class my_music extends AppCompatActivity {
                                     showMessagePositiveDialog();
                                 }
                             }
-                        } else if (prexiew.getCode() == 40000) {
+                        } else  {
                             Toast.makeText(my_music.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
                         }
 

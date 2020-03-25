@@ -123,10 +123,7 @@ public class operation_record extends AppCompatActivity {
                                 String total = records.get(i).getAsJsonObject().get("total").getAsString();
                                 String type = records.get(i).getAsJsonObject().get("type").getAsString();
                             }
-
-
-
-                        }else if(prexiew.getCode()==40000){
+                        }else {
                             Toast.makeText(operation_record.this, prexiew.getMsg()+"", Toast.LENGTH_SHORT).show();
                         }
 

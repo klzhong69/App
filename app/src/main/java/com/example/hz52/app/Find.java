@@ -204,7 +204,7 @@ public class Find extends Fragment {
                                 }
                                 tipDialog.dismiss();
 
-                            } else if (prexiew.getCode() == 40000) {
+                            } else  {
                                 Toast.makeText(getContext(), prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
                             }
                         }

@@ -123,7 +123,7 @@ public class my_favorite extends AppCompatActivity {
                                     }
                                 }
                                 tipDialog.dismiss();
-                            }else if(prexiew.getCode()==40000){
+                            }else {
                                 tipDialog.dismiss();
                                 Toast.makeText(my_favorite.this, prexiew.getMsg()+"", Toast.LENGTH_SHORT).show();
                             }

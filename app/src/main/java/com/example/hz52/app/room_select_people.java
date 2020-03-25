@@ -114,7 +114,7 @@ public class room_select_people extends AppCompatActivity {
                         if (prexiew.getCode() == 0) {
                             JsonArray blacks = prexiew.getData().getAsJsonArray("blacks");
 
-                        } else if (prexiew.getCode() == 40000) {
+                        } else {
                             Toast.makeText(room_select_people.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
                         }
 
@@ -150,7 +150,7 @@ public class room_select_people extends AppCompatActivity {
                         if (prexiew.getCode() == 0) {
                             Toast.makeText(room_select_people.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
 
-                        } else if (prexiew.getCode() == 40000) {
+                        } else {
                             Toast.makeText(room_select_people.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
                         }
 
@@ -186,7 +186,7 @@ public class room_select_people extends AppCompatActivity {
                         if (prexiew.getCode() == 0) {
                             Toast.makeText(room_select_people.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
 
-                        } else if (prexiew.getCode() == 40000) {
+                        } else {
                             Toast.makeText(room_select_people.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
                         }
 

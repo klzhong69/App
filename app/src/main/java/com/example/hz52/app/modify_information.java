@@ -182,7 +182,7 @@ public class modify_information extends AppCompatActivity {
                             defaultItemAnimator.setAddDuration(200);
                             defaultItemAnimator.setRemoveDuration(200);
                             recycler2.setItemAnimator(defaultItemAnimator);
-                        } else if (prexiew.getCode() == 40000) {
+                        } else {
                             Toast.makeText(modify_information.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
                         }
 
@@ -340,7 +340,7 @@ public class modify_information extends AppCompatActivity {
                             finish();
                             overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
 
-                        } else if (prexiew.getCode() == 40000) {
+                        } else {
                             Toast.makeText(modify_information.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
                         }
 
@@ -430,7 +430,7 @@ public class modify_information extends AppCompatActivity {
 
                             }
 
-                        } else if (prexiew.getCode() == 40000) {
+                        } else {
                             Toast.makeText(modify_information.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
                         }
 
@@ -459,7 +459,7 @@ public class modify_information extends AppCompatActivity {
                             Toast.makeText(modify_information.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
                             init();
 
-                        } else if (prexiew.getCode() == 40000) {
+                        } else {
                             Toast.makeText(modify_information.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
                         }
 
@@ -485,7 +485,7 @@ public class modify_information extends AppCompatActivity {
                             mData.remove(position);
                             mAdapters.notifyItemRemoved(position);
                             Toast.makeText(modify_information.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
-                        } else if (prexiew.getCode() == 40000) {
+                        } else {
                             Toast.makeText(modify_information.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
                         }
 

@@ -244,7 +244,7 @@ public class information extends AppCompatActivity {
                                 Toast.makeText(information.this, upload + "", Toast.LENGTH_SHORT).show();
                             }
 
-                        } else if (prexiew.getCode() == 40000) {
+                        } else {
                             Toast.makeText(information.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
                         }
 

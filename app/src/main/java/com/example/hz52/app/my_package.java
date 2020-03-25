@@ -269,7 +269,7 @@ public class my_package extends AppCompatActivity {
                             }
                             tipDialog.dismiss();
 
-                        } else if (prexiew.getCode() == 40000) {
+                        } else  {
                             Toast.makeText(my_package.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
                         }
 

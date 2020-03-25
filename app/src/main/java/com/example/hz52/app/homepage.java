@@ -301,7 +301,7 @@ public class homepage extends AppCompatActivity {
 
                             }catch (Exception ignored){}
                             tipDialog.dismiss();
-                        } else if (prexiew.getCode() == 40000) {
+                        } else {
                             tipDialog.dismiss();
                             Toast.makeText(homepage.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
                         }
@@ -365,7 +365,7 @@ public class homepage extends AppCompatActivity {
                                 bool = true;
                             }
 
-                        } else if (prexiew.getCode() == 40000) {
+                        } else {
                             Toast.makeText(homepage.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
                         }
 
@@ -398,7 +398,7 @@ public class homepage extends AppCompatActivity {
                                 bool = false;
                             }
 
-                        } else if (prexiew.getCode() == 40000) {
+                        } else {
                             Toast.makeText(homepage.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
                         }
 

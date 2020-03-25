@@ -24,6 +24,7 @@ import com.google.gson.JsonObject;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
+import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 
@@ -67,6 +68,7 @@ public class find_make extends AppCompatActivity implements OnItemClickListener,
     public static Observer<JsonObject> observer;
     private int lastVisibleItem;
     private int firstVisibleItem;
+    private QMUITipDialog tipDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +81,11 @@ public class find_make extends AppCompatActivity implements OnItemClickListener,
         title.setText("广播");
         subtitle.setText("");
 
+        tipDialog = new QMUITipDialog.Builder(this)
+                .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
+                .setTipWord("正在加载")
+                .create();
+        tipDialog.show();
 
         SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
         userid = sp.getString("userid", "");
@@ -149,7 +156,7 @@ public class find_make extends AppCompatActivity implements OnItemClickListener,
 
         OkGo.<String>post(application.getUrl() + "/app/user/getBroadcast?token=" + token)
                 .params("page", page)
-                .params("pageSize", 10)
+                .params("pageSize", 20)
                 .execute(new StringCallback() {
 
                     @Override
@@ -182,8 +189,9 @@ public class find_make extends AppCompatActivity implements OnItemClickListener,
                             }else{
                                 recycler15.setFootText("没有数据");
                             }
-
-                        } else if (prexiew.getCode() == 40000) {
+                            tipDialog.dismiss();
+                        } else  {
+                            tipDialog.dismiss();
                             Toast.makeText(find_make.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -225,7 +233,7 @@ public class find_make extends AppCompatActivity implements OnItemClickListener,
                             Toast.makeText(find_make.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
 
 
-                        } else if (prexiew.getCode() == 40000) {
+                        } else  {
                             Toast.makeText(find_make.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
                         }
                     }

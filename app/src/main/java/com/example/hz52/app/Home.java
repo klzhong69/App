@@ -326,7 +326,7 @@ public class Home extends Fragment {
                 //Constants.CLIENT_ROLE_BROADCASTER 主播
                 intent.putExtra(Constant.ACTION_KEY_CROLE, Constants.CLIENT_ROLE_AUDIENCE);
                 intent.putExtra(Constant.ACTION_KEY_ROOM_MODE, Constant.ChatRoomGamingStandard);
-                intent.putExtra(Constant.ACTION_KEY_ROOM_ID, "211509701");
+                intent.putExtra(Constant.ACTION_KEY_ROOM_ID, "226374470");
                 intent.putExtra(Constant.ACTION_KEY_TITLE_NAME, "测试房间");
                 startActivity(intent);
                 break;
@@ -394,10 +394,10 @@ public class Home extends Fragment {
                                     JsonArray tag = broadcasts.get(i).getAsJsonObject().get("tag").getAsJsonArray();
                                     String ownerName = broadcasts.get(i).getAsJsonObject().get("ownerName").getAsString();
                                 }
-
-                            } else if (prexiew.getCode() == 40000) {
-                                Toast.makeText(getContext(), prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
                             }
+
+                        } else {
+                            Toast.makeText(getContext(), prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
                         }
 
                     }

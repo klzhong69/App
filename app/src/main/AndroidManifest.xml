@@ -35,7 +35,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".mqtttest" />
         <service android:name="org.eclipse.paho.android.service.MqttService" />
         <activity android:name=".room_theme" />
         <activity android:name=".room_online" />

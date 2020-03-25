@@ -42,6 +42,7 @@ public class ChatRoomModel {
     private static RoomtxtAdapter mAdapter;
     public static RoomheadAdapter mAdapters;
     public static GridLayoutManager mLayoutManager;
+    public static JsonArray users;
 
     public static void initData(){
         mUserList = new ArrayList<Roomhead>();
@@ -263,7 +264,7 @@ public class ChatRoomModel {
 
                         if (prexiew.getCode() == 0) {
 
-                        } else if (prexiew.getCode() == 40000) {
+                        } else {
                             Toast.makeText(context, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
                         }
 
@@ -287,16 +288,34 @@ public class ChatRoomModel {
 
                         Gson gson = new Gson();
                         Preview prexiew = gson.fromJson(response.body(), Preview.class);
-                        JsonArray application = prexiew.getData().getAsJsonArray("users");
+                         users = prexiew.getData().getAsJsonArray("users");
                         if(prexiew.getCode()==0){
-                            PaimaiModel.initData(application);
-                            if(type == 0){
+                            Observable<Integer> observable = Observable.defer(new Callable<ObservableSource<? extends Integer>>() {
+                                @Override
+                                public ObservableSource<? extends Integer> call() throws Exception {
+                                    return Observable.just(12);
+                                }
+                            });
+                            observable.subscribe(chatroom.observer);
+                            for(int i=0;i<users.size();i++){
+                                if(users.get(i).getAsJsonObject().get("userId").getAsString().equals(userid)){
+                                    System.out.println(users.get(i).getAsJsonObject().get("userId").getAsString()+"/"+userid);
+                                    Observable<Integer> observables = Observable.defer(new Callable<ObservableSource<? extends Integer>>() {
+                                        @Override
+                                        public ObservableSource<? extends Integer> call() throws Exception {
+                                            return Observable.just(7);
+                                        }
+                                    });
+                                    observables.subscribe(chatroom.observer);
+                                }
+                            }
+                            PaimaiModel.initData(users);
+                            if(type==0){
                                 PaimaiModel.initrecycler(context, mRecyclerView);
                             }else{
                                 PaimaiModel.initrecyclers(context, mRecyclerView);
                             }
-
-                        } else if (prexiew.getCode() == 40000) {
+                        } else {
                             Toast.makeText(context, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
                         }
 
@@ -319,11 +338,10 @@ public class ChatRoomModel {
 
                         Gson gson = new Gson();
                         Preview prexiew = gson.fromJson(response.body(), Preview.class);
-                        JsonArray application = prexiew.getData().getAsJsonArray("users");
+                        JsonArray users = prexiew.getData().getAsJsonArray("users");
                         if(prexiew.getCode()==0){
-                            PaimaiModel.initData(application);
 
-                        } else if (prexiew.getCode() == 40000) {
+                        }else{
                             Toast.makeText(context, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
                         }
 

@@ -114,7 +114,7 @@ public class my_wallet extends AppCompatActivity {
                             textView55.setText(diamond);
                             textView59.setText(amount);
 
-                        }else if(prexiew.getCode()==40000){
+                        }else {
                             Toast.makeText(my_wallet.this, prexiew.getMsg()+"", Toast.LENGTH_SHORT).show();
                         }
 
