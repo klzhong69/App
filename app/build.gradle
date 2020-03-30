@@ -9,7 +9,7 @@ android {
         applicationId "com.example.hz52.app"
         minSdkVersion 23
         targetSdkVersion 29
-        versionCode 1
+        versionCode 2
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -20,8 +20,8 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled true
-            shrinkResources true
+            minifyEnabled false
+            shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -47,7 +47,6 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.10.0'//glide图片加载
     annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0'
 
-
     implementation 'com.jakewharton:butterknife:10.2.0'//butterknife注解框架
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.0'
 
@@ -68,15 +67,6 @@ dependencies {
 
     implementation 'com.github.yyued:SVGAPlayer-Android:2.5.2'//SVGA
 
-
-    implementation 'com.squareup.retrofit2:retrofit:2.6.2'
-    implementation 'com.squareup.okhttp3:okhttp:3.12.1'
-    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
-    implementation 'com.squareup.retrofit2:adapter-rxjava:2.0.2'//retrofit2网络请求
-
-    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'//Rxjava
-    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
-
     implementation 'com.scwang.smart:refresh-layout-kernel:2.0.0-alpha-1'      //核心必须依赖
     implementation 'com.scwang.smart:refresh-header-classics:2.0.0-alpha-1'    //经典刷新头
     implementation 'com.scwang.smart:refresh-header-falsify:2.0.0-alpha-1'     //虚拟刷新头
@@ -84,11 +74,9 @@ dependencies {
     implementation 'com.scwang.smart:refresh-footer-classics:2.0.0-alpha-1'    //经典加载
     implementation 'com.scwang.smart:refresh-footer-ball:2.0.0-alpha-1'       //球脉冲加载
 
-
     implementation 'cn.yc:WebViewLib:1.2.0'//webview库
 
     implementation 'com.github.limxing:LFRecyclerView-Android:1.0.5'//RecyclerView刷新
-
 
     //必须使用
     implementation 'com.lzy.net:okgo:3.0.4' //okgo网络请求
@@ -103,15 +91,11 @@ dependencies {
 
     implementation 'cn.bingoogolapple:bga-qrcode-zbar:1.3.7'//二维码
 
-    implementation 'com.liulishuo.filedownloader:library:1.7.7'//任务下载
-
     implementation 'ywl.ywl5320:libmusic:1.2.6'//音乐播放
-
 
     implementation 'com.aliyun.dpa:oss-android-sdk:2.9.2'//oss
 
-    implementation project(path: ':pictureselector')
-
+    implementation project(path: ':pictureselector')//选择系统相册
 
     implementation 'org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.1.0'//MQTT
     implementation 'org.eclipse.paho:org.eclipse.paho.android.service:1.1.1'
@@ -121,7 +105,7 @@ dependencies {
 }
 
 greendao {
-    schemaVersion 7
+    schemaVersion 8
     daoPackage 'com.example.hz52.app.gen'
     targetGenDir 'src/main/java'
 }

@@ -38,7 +38,7 @@ public class Agora extends Activity {
     /**
      * 播放伴奏音乐
      */
-    private void AudioMixing(RtcEngine mRtcEngine,Boolean isChecked) {
+    private void AudioMixing(RtcEngine mRtcEngine,Boolean isChecked,String filePath) {
 
         if (isChecked) {
             mRtcEngine.startAudioMixing("/assets/mixing.mp3", false, false, 1);

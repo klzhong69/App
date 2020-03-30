@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.hz52.app.MQ.MqttMessageService;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 
 import butterknife.BindView;
@@ -43,11 +44,6 @@ public class startup_page extends AppCompatActivity {
                 finish();
             }
         }.start();
-
-    }
-
-    @OnClick(R.id.imageViewi3)
-    public void onViewClicked() {
 
     }
 

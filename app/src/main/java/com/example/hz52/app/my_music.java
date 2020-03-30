@@ -1,15 +1,23 @@
 package com.example.hz52.app;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,18 +25,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.hz52.app.Adapter.MusicViewAdapter;
 import com.example.hz52.app.Entity.MyApp;
 import com.example.hz52.app.Entity.Mymusic;
+import com.example.hz52.app.Model.MusicModel;
 import com.example.hz52.app.Sqlentity.Music;
 import com.example.hz52.app.cofig.Initialization;
+import com.example.hz52.app.cofig.LogDownloadListener;
 import com.example.hz52.app.cofig.Preview;
 import com.example.hz52.app.dao.mMusicDao;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
-import com.liulishuo.filedownloader.BaseDownloadTask;
-import com.liulishuo.filedownloader.FileDownloadListener;
-import com.liulishuo.filedownloader.FileDownloader;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
+import com.lzy.okgo.request.GetRequest;
+import com.lzy.okserver.OkDownload;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
@@ -37,6 +46,7 @@ import com.ywl5320.libmusic.WlMusic;
 import com.ywl5320.listener.OnCompleteListener;
 import com.ywl5320.listener.OnPreparedListener;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -48,7 +58,10 @@ import butterknife.OnClick;
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.Observer;
+import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
+
+import static android.os.Environment.DIRECTORY_MUSIC;
 
 public class my_music extends AppCompatActivity {
 
@@ -63,16 +76,11 @@ public class my_music extends AppCompatActivity {
     TextView subtitle;
     @BindView(R.id.imageView141)
     ImageView imageView141;
-    private List<Mymusic> mArrayList;
-    private List<Long> mArrayLists;
     private WlMusic wlMusic;
-    private MusicViewAdapter mAdapter;
-    private Observer<Integer> observer;
-    private Observable<Integer> observable;
-    private int mCurrentDialogStyle = com.qmuiteam.qmui.R.style.QMUI_Dialog;
-    private Observer<Integer> observers;
-    private LinearLayoutManager layoutManager;
-    private ArrayList<Mymusic> mArray;
+    public static Observer<Integer> observer;
+    private Observer<String> observers;
+    private static final int REQUEST_PERMISSION_STORAGE = 0x01;
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,38 +89,21 @@ public class my_music extends AppCompatActivity {
         ButterKnife.bind(this);
         title.setText("我的音乐");
         subtitle.setText("添加");
-
+        context = this;
         Initialization.setupDatabaseMusic(this);
-        FileDownloader.setup(this);
-        initData();
-        init();
 
-        observers = new Observer<Integer>() {
-            @Override
-            public void onSubscribe(Disposable d) {
+        MusicModel.initData(context);
+        MusicModel.init(context,recycler5);
 
-            }
+        if(isGrantExternalRW(this)){
+            MusicModel.showMessagePositiveDialog(context);
+        }
 
-            @Override
-            public void onNext(Integer integer) {
-                Music music = new Music();
-                music.setTime(mArrayList.get(integer).getTime());
-                music.setName(mArrayList.get(integer).getName());
-                music.setId(mArrayList.get(integer).getId());
-                mMusicDao.insert(music);
-                download(mArrayList.get(integer).getUrl(), "music" + mArrayList.get(integer).getId(), integer);
-            }
+    }
 
-            @Override
-            public void onError(Throwable e) {
-
-            }
-
-            @Override
-            public void onComplete() {
-            }
-
-        };
+    @Override
+    public void onResume() {
+        super.onResume();
 
         observer = new Observer<Integer>() {
             @Override
@@ -122,11 +113,11 @@ public class my_music extends AppCompatActivity {
 
             @Override
             public void onNext(Integer integer) {
-                for (int j = 0; j < mArrayList.size(); j++) {
-                    mArrayList.get(j).setType("1");
+                for (int j = 0; j < MusicModel.mArrayList.size(); j++) {
+                    MusicModel.mArrayList.get(j).setType("1");
                 }
-                mArrayList.get(integer).setType("2");
-                mAdapter.notifyDataSetChanged();
+                MusicModel.mArrayList.get(integer).setType("2");
+                MusicModel.mAdapter.notifyItemChanged(integer);
                 music(integer);
             }
 
@@ -140,136 +131,8 @@ public class my_music extends AppCompatActivity {
             }
 
         };
-
     }
 
-    private void initData() {
-        mArray = new ArrayList<Mymusic>();
-        MyApp application = ((MyApp) this.getApplicationContext());
-        SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
-        String userid = sp.getString("userid","");
-        String token = sp.getString("token","");
-        OkGo.<String>post(application.getUrl() + "/app/user/getMusicList?token=" + token)
-                .params("userId", userid)
-                .execute(new StringCallback() {
-
-                    @Override
-                    public void onSuccess(Response<String> response) {
-
-                        Gson gson = new Gson();
-                        Preview prexiew = gson.fromJson(response.body(), Preview.class);
-                        JsonArray music = prexiew.getData().getAsJsonArray("music");
-
-                        if (prexiew.getCode() == 0) {
-                            if(music!=null) {
-                                for (int i = 0; i < music.size(); i++) {
-
-                                    Mymusic i1 = new Mymusic(music.get(i).getAsJsonObject().get("id").getAsLong(), music.get(i).getAsJsonObject().get("musicName").getAsString(), music.get(i).getAsJsonObject().get("duration").getAsString(), "1", "100%", music.get(i).getAsJsonObject().get("md5").getAsString());
-                                    mArray.add(i1);
-                                }
-
-                                List<Music> musics = mMusicDao.queryAll();
-                                mArrayLists = new ArrayList<Long>();
-                                for (int i = 0; i < mArray.size(); i++) {
-
-                                    int a = 0;
-                                    for (int j = 0; j < musics.size(); j++) {
-
-                                        if (musics.get(j).getId().equals(mArray.get(i).getId())) {
-                                            a++;
-                                        }
-                                    }
-                                    if (a == 0) {
-                                        mArrayLists.add(mArray.get(i).getId());
-
-                                    }
-                                }
-
-                                if (mArrayLists.size() > 0) {
-                                    showMessagePositiveDialog();
-                                }
-                            }
-                        } else  {
-                            Toast.makeText(my_music.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
-                        }
-
-                    }
-                });
-
-
-    }
-
-    private void init() {
-
-        mArrayList = new ArrayList<Mymusic>();
-        for (int i = 0; i < mArray.size(); i++) {
-            String publicPath = Objects.requireNonNull(this.getExternalCacheDir()).getPath();
-            String filePath = publicPath + "/music/"+mArray.get(i).getName();
-            Mymusic i1 = new Mymusic(mArray.get(i).getId(), mArray.get(i).getName(), mArray.get(i).getTime(), mArray.get(i).getType(), mArray.get(i).getTxt(), filePath);
-            mArrayList.add(i1);
-        }
-
-
-
-
-        //适配器
-        mAdapter = new MusicViewAdapter(this, mArrayList);
-        //设置适配器adapter
-        recycler5.setAdapter(mAdapter);
-
-        /*LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-        mListView.setLayoutManager(mLinearLayoutManager);*/
-
-         layoutManager = new LinearLayoutManager(this) {
-            @Override
-            public boolean canScrollVertically() {
-                return false;
-            }
-        };
-        recycler5.setLayoutManager(layoutManager);
-        recycler5.setItemAnimator(new DefaultItemAnimator());
-
-        mAdapter.setOnItemClickListener(new MusicViewAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                if (mArrayList.get(position).getType().equals("0")) {
-                    showMessagePositiveDialog();
-
-                } else if (mArrayList.get(position).getType().equals("1")) {
-                    Observable<Integer> observable = Observable.defer(new Callable<ObservableSource<? extends Integer>>() {
-                        @Override
-                        public ObservableSource<? extends Integer> call() throws Exception {
-                            return Observable.just(position);
-                        }
-                    });
-                    observable.subscribe(observer);
-
-                } else if (mArrayList.get(position).getType().equals("2")) {
-                    mArrayList.get(position).setType("1");
-                    mAdapter.notifyItemChanged(position);
-                    wlMusic.pause();
-                }
-
-            }
-
-            @Override
-            public void onItemLongClick(View view, int position) {
-
-                showSimpleBottomSheetList(
-                        true, true, false, "操作提示",
-                        3, true, false);
-            }
-        });
-
-        /**
-         * 既然是动画，就会有时间，我们把动画执行时间变大一点来看一看效果
-         */
-        DefaultItemAnimator defaultItemAnimator = new DefaultItemAnimator();
-        defaultItemAnimator.setAddDuration(200);
-        defaultItemAnimator.setRemoveDuration(200);
-        recycler5.setItemAnimator(defaultItemAnimator);
-
-    }
 
     @OnClick({R.id.fold, R.id.subtitle, R.id.imageView141})
     public void onViewClicked(View view) {
@@ -289,81 +152,39 @@ public class my_music extends AppCompatActivity {
         }
     }
 
-    private void showSimpleBottomSheetList(boolean gravityCenter,
-                                           boolean addCancelBtn,
-                                           boolean withIcon,
-                                           CharSequence title,
-                                           int itemCount,
-                                           boolean allowDragDismiss,
-                                           boolean withMark) {
-        QMUIBottomSheet.BottomListSheetBuilder builder = new QMUIBottomSheet.BottomListSheetBuilder(this);
-        builder.setGravityCenter(gravityCenter)
-                .setTitle(title)
-                .setAddCancelBtn(addCancelBtn)
-                .setAllowDrag(allowDragDismiss)
-                .setNeedRightMark(withMark)
-                .setOnSheetItemClickListener(new QMUIBottomSheet.BottomListSheetBuilder.OnSheetItemClickListener() {
-                    @Override
-                    public void onClick(QMUIBottomSheet dialog, View itemView, int position, String tag) {
-                        dialog.dismiss();
-                        if(position==0){
-                            int firstItem = layoutManager.findFirstVisibleItemPosition();
-                            int lastItem = layoutManager.findLastVisibleItemPosition();
-                            if (0 <= firstItem) {
-                                recycler5.scrollToPosition(0);
-                            } else if (0 <= lastItem) {
-                                int top = recycler5.getChildAt(0 - firstItem).getTop();
-                                recycler5.scrollBy(0, top);
-                            } else {
-                                recycler5.scrollToPosition(0);
-                            }
 
-                        }else if(position==1){
-
-                        }
-                    }
-                });
-        if (withMark) {
-            builder.setCheckedIndex(40);
+    /**
+     * 检查SD卡权限
+     */
+    public static boolean isGrantExternalRW(Activity activity) {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && activity.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+            activity.requestPermissions(new String[]{
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+            },1);
+            return false;
         }
+        return true;
 
-        builder.addItem("置顶");
-        builder.addItem("删除");
-        builder.build().show();
     }
 
-    private void showMessagePositiveDialog() {
-        new QMUIDialog.MessageDialogBuilder(this)
-                .setTitle("提示")
-                .setMessage("是否开始同步？")
-                .addAction("取消", new QMUIDialogAction.ActionListener() {
-                    @Override
-                    public void onClick(QMUIDialog dialog, int index) {
-                        dialog.dismiss();
-                    }
-                })
-                .addAction(0, "确定", QMUIDialogAction.ACTION_PROP_POSITIVE, new QMUIDialogAction.ActionListener() {
-                    @Override
-                    public void onClick(QMUIDialog dialog, int index) {
-                        dialog.dismiss();
-                        for (int i = 0; i < mArrayLists.size(); i++) {
-                            int finalI = i;
-                            Observable<Integer> observables = Observable.defer(new Callable<ObservableSource<? extends Integer>>() {
-                                @Override
-                                public ObservableSource<? extends Integer> call() throws Exception {
-                                    return Observable.just(finalI);
-                                }
-                            });
-                            observables.subscribe(observers);
-                        }
-                    }
-                })
-                .create(mCurrentDialogStyle).show();
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_PERMISSION_STORAGE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                //获取权限
+                Toast.makeText(my_music.this, "获取权限", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(my_music.this, "权限被禁止，无法下载文件！", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
+
 
     private void music(int postion) {
         wlMusic = WlMusic.getInstance();
-        wlMusic.setSource(mArrayList.get(postion).getUrl()); //设置音频源
+        wlMusic.setSource(MusicModel.mArrayList.get(postion).getUrl()); //设置音频源
         wlMusic.setCallBackPcmData(false);//是否返回音频PCM数据
         wlMusic.setShowPCMDB(false);//是否返回音频分贝大小
         wlMusic.setPlayCircle(false); //设置不间断循环播放音频
@@ -397,67 +218,9 @@ public class my_music extends AppCompatActivity {
 
         System.out.println("状态：" + wlMusic.isPlaying());
         if (wlMusic.isPlaying()) {
-            wlMusic.playNext(mArrayList.get(postion).getUrl());
+            wlMusic.playNext(MusicModel.mArrayList.get(postion).getUrl());
         }
         System.out.println("时长" + wlMusic.getDuration());
-
-    }
-
-
-    private void download(String url, String name, int posetion) {
-        String publicPath = Objects.requireNonNull(this.getExternalCacheDir()).getPath();
-        String filePath = publicPath + "/music/" + name + ".mp3";
-        FileDownloader.getImpl().create(url)
-                .setPath(filePath)
-                .setListener(new FileDownloadListener() {
-                    @Override
-                    protected void pending(BaseDownloadTask task, int soFarBytes, int totalBytes) {
-                    }
-
-                    @Override
-                    protected void connected(BaseDownloadTask task, String etag, boolean isContinue, int soFarBytes, int totalBytes) {
-                    }
-
-                    @Override
-                    protected void progress(BaseDownloadTask task, int soFarBytes, int totalBytes) {
-                        int percent = (int) ((double) soFarBytes / (double) totalBytes * 100);
-                        mArrayList.get(posetion).setTxt(percent + "%");
-                        mAdapter.notifyItemChanged(posetion);
-
-                    }
-
-                    @Override
-                    protected void blockComplete(BaseDownloadTask task) {
-                    }
-
-                    @Override
-                    protected void retry(final BaseDownloadTask task, final Throwable ex, final int retryingTimes, final int soFarBytes) {
-                    }
-
-                    @Override
-                    protected void completed(BaseDownloadTask task) {
-
-                        mAdapter.refresh(posetion);
-
-                    }
-
-                    @Override
-                    protected void paused(BaseDownloadTask task, int soFarBytes, int totalBytes) {
-                    }
-
-                    @Override
-                    protected void error(BaseDownloadTask task, Throwable e) {
-                    }
-
-                    @Override
-                    protected void warn(BaseDownloadTask task) {
-                        while (task.getSmallFileSoFarBytes() != task.getSmallFileTotalBytes()) {
-                            int percent = (int) ((double) task.getSmallFileSoFarBytes() / (double) task.getSmallFileTotalBytes() * 100);
-                            mArrayList.get(posetion).setTxt(percent + "%");
-                            mAdapter.notifyItemChanged(posetion);
-                        }
-                    }
-                }).start();
 
     }
 

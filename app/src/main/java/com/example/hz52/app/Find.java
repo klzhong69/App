@@ -6,6 +6,7 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,12 +17,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hz52.app.Adapter.FindListAdapter;
+import com.example.hz52.app.Adapter.FindmakeAdapter;
 import com.example.hz52.app.Entity.Findlist;
 import com.example.hz52.app.Entity.MyApp;
 import com.example.hz52.app.cofig.Preview;
@@ -32,7 +34,6 @@ import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.scwang.smart.refresh.footer.ClassicsFooter;
-import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
 import com.wildma.pictureselector.Constant;
@@ -45,26 +46,29 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import io.agora.rtc.Constants;
+import me.leefeng.lfrecyclerview.LFRecyclerView;
+import me.leefeng.lfrecyclerview.OnItemClickListener;
 
-public class Find extends Fragment {
+public class Find extends Fragment implements OnItemClickListener, LFRecyclerView.LFRecyclerViewListener, LFRecyclerView.LFRecyclerViewScrollChange{
 
 
+    @BindView(R.id.view2)
+    View view2;
     @BindView(R.id.textView115)
     TextView textView115;
     @BindView(R.id.textView116)
     TextView textView116;
     @BindView(R.id.relative9)
     RelativeLayout relative9;
-    @BindView(R.id.recycler14)
-    RecyclerView recycler14;
+    @BindView(R.id.recycler15)
+    LFRecyclerView recycler15;
     @BindView(R.id.refreshLayout)
-    SmartRefreshLayout refreshLayout;
-    @BindView(R.id.view2)
-    View view2;
+    ConstraintLayout refreshLayout;
     private Unbinder unbinder;
     private ArrayList<Findlist> mArrayList;
     private QMUITipDialog tipDialog;
     private Context context;
+    private int a = 0;
 
     @Nullable
     @Override
@@ -72,18 +76,13 @@ public class Find extends Fragment {
         View view = inflater.inflate(R.layout.find_hot, container, false);
         unbinder = ButterKnife.bind(this, view);
         context = getContext();
-        refreshLayout.setRefreshFooter(new ClassicsFooter(getContext()));
-        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
-            @Override
-            public void onLoadMore(RefreshLayout refreshlayout) {
-                refreshlayout.finishLoadMore(2000);//传入false表示加载失败
-            }
-        });
+
         tipDialog = new QMUITipDialog.Builder(getContext())
                 .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
                 .setTipWord("正在加载")
                 .create();
         tipDialog.show();
+
         Window window = Objects.requireNonNull(getActivity()).getWindow();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -114,41 +113,16 @@ public class Find extends Fragment {
     }
 
     private void init() {
-        //适配器
+        recycler15.setLoadMore(true);//设置为可上拉加载,默认false,调用这个方法false可以去掉底部的“加载更多”
+        recycler15.setRefresh(true);// 设置为可下拉刷新,默认true
+        recycler15.setAutoLoadMore(true);//设置滑动到底部自动加载,默认false
+        recycler15.setOnItemClickListener(this);// 条目点击,点击和长按监听
+        recycler15.setLFRecyclerViewListener(this);//下拉刷新上拉加载监听
+        recycler15.setScrollChangeListener(this);//滑动监听
+        recycler15.setItemAnimator(new DefaultItemAnimator());
         FindListAdapter mAdapter = new FindListAdapter(getContext(), mArrayList);
         //设置适配器adapter
-        recycler14.setAdapter(mAdapter);
-
-        /*LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-        mListView.setLayoutManager(mLinearLayoutManager);*/
-
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext()) {
-            @Override
-            public boolean canScrollVertically() {
-                return false;
-            }
-        };
-        recycler14.setLayoutManager(layoutManager);
-        recycler14.setItemAnimator(new DefaultItemAnimator());
-
-        mAdapter.setOnItemClickListener(new FindListAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                Intent intent = new Intent(getContext(), chatroom.class);
-                //Constants.CLIENT_ROLE_AUDIENCE  听众
-                //Constants.CLIENT_ROLE_BROADCASTER 主播
-                intent.putExtra(Constant.ACTION_KEY_CROLE, Constants.CLIENT_ROLE_AUDIENCE);
-                intent.putExtra(Constant.ACTION_KEY_ROOM_MODE, Constant.ChatRoomGamingHighQuality);
-                intent.putExtra(Constant.ACTION_KEY_ROOM_ID, "127167100");
-                intent.putExtra(Constant.ACTION_KEY_TITLE_NAME, "测试房间");
-                startActivity(intent);
-
-            }
-
-            @Override
-            public void onItemLongClick(View view, int position) {
-            }
-        });
+        recycler15.setAdapter(mAdapter);
 
         /**
          * 既然是动画，就会有时间，我们把动画执行时间变大一点来看一看效果
@@ -156,7 +130,7 @@ public class Find extends Fragment {
         DefaultItemAnimator defaultItemAnimator = new DefaultItemAnimator();
         defaultItemAnimator.setAddDuration(200);
         defaultItemAnimator.setRemoveDuration(200);
-        recycler14.setItemAnimator(defaultItemAnimator);
+        recycler15.setItemAnimator(defaultItemAnimator);
     }
 
     private void initData() {
@@ -175,9 +149,11 @@ public class Find extends Fragment {
 
     }
 
-    private void okgos() {
+    private void okgos(int page) {
         MyApp application = ((MyApp) getContext().getApplicationContext());
         OkGo.<String>post(application.getUrl() + "/app/page/getHot")
+                .params("page", page)
+                .params("pageSize", 10)
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
@@ -204,7 +180,7 @@ public class Find extends Fragment {
                                 }
                                 tipDialog.dismiss();
 
-                            } else  {
+                            } else {
                                 Toast.makeText(getContext(), prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
                             }
                         }
@@ -237,6 +213,46 @@ public class Find extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
+
+    }
+
+    @Override
+    public void onRefresh() {
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                recycler15.stopRefresh(true);
+                okgos(0);
+            }
+        }, 2000);
+    }
+
+    @Override
+    public void onLoadMore() {
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                recycler15.stopLoadMore();
+                a++;
+                //okgos(a);
+            }
+        }, 2000);
+    }
+
+    @Override
+    public void onRecyclerViewScrollChange(View view, int i, int i1) {
+
+    }
+
+    @Override
+    public void onClick(int i) {
+
+    }
+
+    @Override
+    public void onLongClick(int i) {
 
     }
 

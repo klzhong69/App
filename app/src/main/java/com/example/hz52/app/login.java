@@ -89,6 +89,9 @@ public class login extends AppCompatActivity {
 
         Intent intent = getIntent();
         state = intent.getIntExtra("type", 0);
+        if(state == 1){
+            fold.setVisibility(View.GONE);
+        }
 
 
     }

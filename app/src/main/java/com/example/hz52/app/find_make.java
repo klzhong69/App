@@ -66,32 +66,22 @@ public class find_make extends AppCompatActivity implements OnItemClickListener,
     private String avatarUrl;
     private int a = 1;
     public static Observer<JsonObject> observer;
-    private int lastVisibleItem;
-    private int firstVisibleItem;
-    private QMUITipDialog tipDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_make);
         ButterKnife.bind(this);
-        okgo(1, 0);
-
-
         title.setText("广播");
         subtitle.setText("");
-
-        tipDialog = new QMUITipDialog.Builder(this)
-                .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
-                .setTipWord("正在加载")
-                .create();
-        tipDialog.show();
 
         SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
         userid = sp.getString("userid", "");
         token = sp.getString("token", "");
         nickname = sp.getString("nickname", "");
         avatarUrl = sp.getString("avatarUrl", "");
+
+       okgo(0,0);
     }
 
     @Override
@@ -128,8 +118,8 @@ public class find_make extends AppCompatActivity implements OnItemClickListener,
 
     private void init() {
         recycler15.setLoadMore(true);//设置为可上拉加载,默认false,调用这个方法false可以去掉底部的“加载更多”
-        recycler15.setRefresh(false);// 设置为可下拉刷新,默认true
-        recycler15.setAutoLoadMore(false);//设置滑动到底部自动加载,默认false
+        recycler15.setRefresh(true);// 设置为可下拉刷新,默认true
+        recycler15.setAutoLoadMore(true);//设置滑动到底部自动加载,默认false
         recycler15.setOnItemClickListener(this);// 条目点击,点击和长按监听
         recycler15.setLFRecyclerViewListener(this);//下拉刷新上拉加载监听
         recycler15.setScrollChangeListener(this);//滑动监听
@@ -156,7 +146,7 @@ public class find_make extends AppCompatActivity implements OnItemClickListener,
 
         OkGo.<String>post(application.getUrl() + "/app/user/getBroadcast?token=" + token)
                 .params("page", page)
-                .params("pageSize", 20)
+                .params("pageSize", 10)
                 .execute(new StringCallback() {
 
                     @Override
@@ -189,9 +179,9 @@ public class find_make extends AppCompatActivity implements OnItemClickListener,
                             }else{
                                 recycler15.setFootText("没有数据");
                             }
-                            tipDialog.dismiss();
+
                         } else  {
-                            tipDialog.dismiss();
+
                             Toast.makeText(find_make.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -248,7 +238,13 @@ public class find_make extends AppCompatActivity implements OnItemClickListener,
 
     @Override
     public void onRefresh() {
-
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                recycler15.stopRefresh(true);
+                okgo(0, 1);
+            }
+        }, 2000);
     }
 
     @Override

@@ -125,7 +125,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
         userid = sp.getString("userid", "");
         if (!userid.equals("")) {
             MqttMessageService.create(this);
-
         } else {
             Intent intent1 = new Intent(MainActivity.this, login.class);
             intent1.putExtra("type", 1);

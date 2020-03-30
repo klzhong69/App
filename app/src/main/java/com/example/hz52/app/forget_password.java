@@ -1,5 +1,8 @@
 package com.example.hz52.app;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -78,16 +81,52 @@ public class forget_password extends AppCompatActivity {
                 overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
                 break;
             case R.id.textView150:
+                okgos();
                 break;
             case R.id.but:
+                okgo();
                 break;
         }
     }
 
     private void okgo() {
         MyApp application = ((MyApp) this.getApplicationContext());
-        OkGo.<String>post(application.getUrl() + "/app/page/getHome")
-                .params("count", 2)
+        SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
+        String phone = sp.getString("phone", "");
+        String token = sp.getString("token", "");
+        OkGo.<String>post(application.getUrl() + "/app/user/forgetPassword?token=" + token)
+                .params("phone", phone)
+                .params("code", editText5.getText().toString())
+                .params("newPassword", editText.getText().toString())
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+
+                        Gson gson = new Gson();
+                        Preview prexiew = gson.fromJson(response.body(), Preview.class);
+
+                        if (prexiew.getCode() == 0) {
+
+                            Toast.makeText(forget_password.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
+                            Intent intent2 = new Intent(forget_password.this, login.class);
+                            startActivity(intent2);
+                        } else {
+                            Toast.makeText(forget_password.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                });
+
+    }
+
+
+    private void okgos() {
+        MyApp application = ((MyApp) this.getApplicationContext());
+        SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
+        String phone = sp.getString("phone", "");
+        String token = sp.getString("token", "");
+        OkGo.<String>post(application.getUrl() + "/app/user/getMessageCode?token=" + token)
+                .params("phone", phone)
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {

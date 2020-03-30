@@ -2,6 +2,7 @@ package com.example.hz52.app.Entity;
 
 import android.app.Application;
 
+import com.example.hz52.app.MQ.MqttMessageService;
 import com.example.hz52.app.Sqlentity.Chat;
 import com.lzf.easyfloat.EasyFloat;
 import com.lzy.okgo.OkGo;
@@ -9,6 +10,8 @@ import com.lzy.okgo.cache.CacheEntity;
 import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okgo.cookie.CookieJarImpl;
 import com.lzy.okgo.cookie.store.DBCookieStore;
+import com.lzy.okgo.cookie.store.SPCookieStore;
+import com.lzy.okgo.https.HttpsUtils;
 import com.lzy.okgo.interceptor.HttpLoggingInterceptor;
 
 import java.util.ArrayList;
@@ -45,8 +48,6 @@ public class MyApp extends Application {
         this.officmess = officmess;
     }
 
-
-
     public String getUrl() {
         return url;
     }
@@ -55,35 +56,6 @@ public class MyApp extends Application {
         this.url = url;
     }
 
-    private Map<Integer,Integer> scores = new HashMap<>();
-
-    public Map<Integer,Integer> getScores() {
-        return scores;
-    }
-
-    public void setScores(Map<Integer,Integer> scores) {
-        this.scores = scores;
-    }
-
-    private int score = 0;
-
-    public int getScore() {
-        return score;
-    }
-
-    public void setScore(int score) {
-        this.score = score;
-    }
-
-    private int set = 0;
-
-    public int getScoret() {
-        return set;
-    }
-
-    public void setScoret(int set) {
-        this.set = set;
-    }
 
     @Override
     public void onCreate() {
@@ -95,9 +67,6 @@ public class MyApp extends Application {
         //setUrl("http://192.168.120.91:8360");
         //setUrl("http://mqtt2.weiyunhezi.com:8360");
         setUrl("https://52hertz.weiyunhezi.com");
-        setScore(0); //初始化全局变量
-        setScoret(0);
-
     }
 
     private void initOkGo() {
@@ -117,20 +86,20 @@ public class MyApp extends Application {
         builder.connectTimeout(OkGo.DEFAULT_MILLISECONDS, TimeUnit.MILLISECONDS);   //全局的连接超时时间
 
         //自动管理cookie（或者叫session的保持），以下几种任选其一就行
-        //builder.cookieJar(new CookieJarImpl(new SPCookieStore(this)));            //使用sp保持cookie，如果cookie不过期，则一直有效
-        builder.cookieJar(new CookieJarImpl(new DBCookieStore(this)));              //使用数据库保持cookie，如果cookie不过期，则一直有效
+        builder.cookieJar(new CookieJarImpl(new SPCookieStore(this)));            //使用sp保持cookie，如果cookie不过期，则一直有效
+        //builder.cookieJar(new CookieJarImpl(new DBCookieStore(this)));              //使用数据库保持cookie，如果cookie不过期，则一直有效
         //builder.cookieJar(new CookieJarImpl(new MemoryCookieStore()));            //使用内存保持cookie，app退出后，cookie消失
 
         //https相关设置，以下几种方案根据需要自己设置
         //方法一：信任所有证书,不安全有风险
-       // HttpsUtils.SSLParams sslParams1 = HttpsUtils.getSslSocketFactory();
+        HttpsUtils.SSLParams sslParams1 = HttpsUtils.getSslSocketFactory();
         //方法二：自定义信任规则，校验服务端证书
         //HttpsUtils.SSLParams sslParams2 = HttpsUtils.getSslSocketFactory(new SafeTrustManager());
         //方法三：使用预埋证书，校验服务端证书（自签名证书）
         //HttpsUtils.SSLParams sslParams3 = HttpsUtils.getSslSocketFactory(getAssets().open("srca.cer"));
         //方法四：使用bks证书和密码管理客户端证书（双向认证），使用预埋证书，校验服务端证书（自签名证书）
         //HttpsUtils.SSLParams sslParams4 = HttpsUtils.getSslSocketFactory(getAssets().open("xxx.bks"), "123456", getAssets().open("yyy.cer"));
-       // builder.sslSocketFactory(sslParams1.sSLSocketFactory, sslParams1.trustManager);
+        builder.sslSocketFactory(sslParams1.sSLSocketFactory, sslParams1.trustManager);
         //配置https的域名匹配规则，详细看demo的初始化介绍，不需要就不要加入，使用不当会导致https握手失败
        // builder.hostnameVerifier(new SafeHostnameVerifier());
 
