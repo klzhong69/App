@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.widget.NestedScrollView;
 
 import com.bumptech.glide.Glide;
@@ -61,14 +62,12 @@ public class system_information extends AppCompatActivity {
 
     @OnClick(R.id.fold)
     public void onViewClicked() {
-        this.finish();
-        overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
+        this.finish();overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);;
     }
 
     @Override
     public void onBackPressed() {
-        this.finish();
-        overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
+        this.finish();overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
     }
 
 

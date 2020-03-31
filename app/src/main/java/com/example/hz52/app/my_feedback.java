@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -37,7 +38,6 @@ import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
-import static com.example.hz52.app.List.tipDialog;
 
 public class my_feedback extends AppCompatActivity {
 
@@ -76,6 +76,7 @@ public class my_feedback extends AppCompatActivity {
     private String picturePath;
     private int in = 0;
     private HashMap<Integer, String> map = null;
+    private QMUITipDialog tipDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,8 +98,7 @@ public class my_feedback extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fold:
-                this.finish();
-                overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
+                this.finish();overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                 break;
             case R.id.imageView113:
                 in = 0;
@@ -151,8 +151,7 @@ public class my_feedback extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        this.finish();
-        overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
+        this.finish();overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
     }
 
     private void okgo() {
@@ -240,8 +239,6 @@ public class my_feedback extends AppCompatActivity {
                                 }
 
                                 okgoima();
-
-
                             }
 
                             @Override
@@ -284,8 +281,11 @@ public class my_feedback extends AppCompatActivity {
                             if (!AccessKeyId.equals("")) {
                                 OSSSet.OSSClient(my_feedback.this, AccessKeyId, AccessKeySecret, SecurityToken, region, bucket);
                                 String name = "feedback" + DateUtil.getCurrentMillis() + ".jpg";
-                                OSSSet.Callback(bucket, phone + "/" + name, picturePath, userid);
-                                map.put(in, phone + "/" + name);
+                                String upload = OSSSet.Upload(bucket, phone + "/" + name, picturePath);
+                                if(upload.equals("UploadSuccess")){
+                                    System.out.println(upload);
+                                }
+                                //map.put(in, phone + "/" + name);
                             }
 
                         } else {

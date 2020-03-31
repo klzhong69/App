@@ -11,6 +11,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.ActivityOptionsCompat;
 
 import com.example.hz52.app.Entity.MyApp;
 import com.example.hz52.app.cofig.Preview;
@@ -19,6 +21,8 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
+
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -70,8 +74,7 @@ public class exchange_gold extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fold:
-                this.finish();
-                overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
+                this.finish();overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                 break;
             case R.id.but:
                 okgo();
@@ -100,6 +103,7 @@ public class exchange_gold extends AppCompatActivity {
                             Toast.makeText(exchange_gold.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
                             Intent intent2 = new Intent(exchange_gold.this, my_wallet.class);
                             startActivity(intent2);
+                            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                             onBackPressed();
 
                         } else  {
@@ -113,7 +117,6 @@ public class exchange_gold extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        this.finish();
-        overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
+        this.finish();overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
     }
 }

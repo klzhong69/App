@@ -41,9 +41,7 @@ public class OSSSet {
         conf.setMaxConcurrentRequest(5); // 最大并发请求数，默认5个
         conf.setMaxErrorRetry(2); // 失败后最大重试次数，默认2次
         OSSLog.enableLog(); //这个开启会支持写入手机sd卡中的一份日志文件位置在SDCard_path\OSSLog\logs.csv
-
-
-         oss = new OSSClient(context.getApplicationContext(), endpoint, credentialProvider, conf);
+        oss = new OSSClient(context.getApplicationContext(), endpoint, credentialProvider, conf);
 
 
     }
@@ -130,14 +128,13 @@ public class OSSSet {
 
 
 
-    public static void Callback(String testBucket,String testObject,String uploadFilePath,String userId){
+    public static void Callback(String testBucket,String testObject,String uploadFilePath,String userId,String token){
 
         PutObjectRequest put = new PutObjectRequest(testBucket, testObject, uploadFilePath);
 
-        System.out.println("userId"+userId);
         put.setCallbackParam(new HashMap<String, String>() {
             {
-                put("callbackUrl", "http://pan.weiyunhezi.com:8360/app/user/editAvatar");
+                put("callbackUrl", "http://pan.weiyunhezi.com:8360/app/user/editAvatar?token="+token);
                 put("callbackBodyType", "application/json");
                 put("callbackBody", "{\"userId\":${x:userId},\"avatarUrl\":${x:avatarUrl}}");
             }

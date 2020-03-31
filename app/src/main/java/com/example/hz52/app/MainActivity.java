@@ -2,6 +2,7 @@ package com.example.hz52.app;
 
 import android.Manifest;
 import android.animation.ObjectAnimator;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -28,6 +29,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
@@ -110,6 +112,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
     private Map<String, String> map = new HashMap<String, String>();
     private int sum = 0;
     private String userid;
+    private String slogin;
+    private int id = 0;
 
 
     @Override
@@ -121,15 +125,21 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
         Initialization.setupDatabaseChat(this);
         Initialization.setupDatabaseConver(this);
 
+        Intent intent = getIntent();
+        id = intent.getIntExtra("id", 0);
+        onTabSelected(id);
+        onTabUnselected(id);
+
         SharedPreferences sp = this.getSharedPreferences("User", Context.MODE_PRIVATE);
         userid = sp.getString("userid", "");
-        if (!userid.equals("")) {
+        slogin = sp.getString("login", "");
+        if (slogin.equals("true")) {
             MqttMessageService.create(this);
         } else {
             Intent intent1 = new Intent(MainActivity.this, login.class);
             intent1.putExtra("type", 1);
             startActivity(intent1);
-            overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
+            overridePendingTransition(R.animator.anim_bottom_in, R.animator.anim_bottom_out);
         }
         setDefaultFragment();
 
@@ -253,6 +263,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
                                 EasyFloat.dismissAppFloat("testFloat");
                                 Intent intent = new Intent(MainActivity.this, chatroom.class);
                                 startActivity(intent);
+                                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                             }
                         });
 
@@ -294,56 +305,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
 
     }
 
-    /**
-     * 检测浮窗权限是否开启，若没有给与申请提示框（非必须，申请依旧是EasyFloat内部内保进行）
-     */
-    private void checkPermission() {
-        if (PermissionUtils.checkPermission(this)) {
-            showAppFloat();
-        } else {
-            requestPermission();
-        }
-    }
 
-    /**
-     * 判断应用是否在后台白名单
-     */
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    private boolean isIgnoringBatteryOptimizations() {
-        boolean isIgnoring = false;
-        PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
-        if (powerManager != null) {
-            isIgnoring = powerManager.isIgnoringBatteryOptimizations(getPackageName());
-        }
-        return isIgnoring;
-    }
-
-    /**
-     * 申请加入后台白名单
-     */
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    public void requestIgnoreBatteryOptimizations() {
-        try {
-            Intent intent = new Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
-            intent.setData(Uri.parse("package:" + getPackageName()));
-            startActivity(intent);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    /**
-     * 主动申请浮窗权限
-     */
-    private void requestPermission() {
-        PermissionUtils.requestPermission(this, new OnPermissionResult() {
-            @Override
-            public void permissionResult(boolean b) {
-                System.out.println("状态：" + EasyFloat.appFloatIsShow("testFloat"));
-            }
-        });
-    }
 
     @Override
     public void onTabSelected(int position) {
@@ -437,6 +399,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
     @Override
     public void onResume() {
         super.onResume();
+
+
 
         if(!isIgnoringBatteryOptimizations()){
             requestIgnoreBatteryOptimizations();
@@ -574,6 +538,56 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
 
     }
 
+    /**
+     * 检测浮窗权限是否开启，若没有给与申请提示框（非必须，申请依旧是EasyFloat内部内保进行）
+     */
+    private void checkPermission() {
+        if (PermissionUtils.checkPermission(this)) {
+            showAppFloat();
+        } else {
+            requestPermission();
+        }
+    }
+
+    /**
+     * 判断应用是否在后台白名单
+     */
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    private boolean isIgnoringBatteryOptimizations() {
+        boolean isIgnoring = false;
+        PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
+        if (powerManager != null) {
+            isIgnoring = powerManager.isIgnoringBatteryOptimizations(getPackageName());
+        }
+        return isIgnoring;
+    }
+
+    /**
+     * 申请加入后台白名单
+     */
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public void requestIgnoreBatteryOptimizations() {
+        try {
+            Intent intent = new Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
+            intent.setData(Uri.parse("package:" + getPackageName()));
+            startActivity(intent);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    /**
+     * 主动申请浮窗权限
+     */
+    private void requestPermission() {
+        PermissionUtils.requestPermission(this, new OnPermissionResult() {
+            @Override
+            public void permissionResult(boolean b) {
+                System.out.println("状态：" + EasyFloat.appFloatIsShow("testFloat"));
+            }
+        });
+    }
 
     /**
      * 检查权限

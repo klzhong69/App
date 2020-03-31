@@ -8,6 +8,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.ActivityOptionsCompat;
 
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
@@ -60,8 +62,7 @@ public class my_realname_pic extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fold:
-                this.finish();
-                overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
+                this.finish();overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                 break;
             case R.id.imageView55:
                 a=true;
@@ -73,6 +74,7 @@ public class my_realname_pic extends AppCompatActivity {
                 if(a && b){
                     Intent intent2 = new Intent(my_realname_pic.this, my_realnames.class);
                     startActivity(intent2);
+                    overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                 }else{
                     Toast.makeText(my_realname_pic.this, "请上传相应照片", Toast.LENGTH_SHORT).show();
                 }
@@ -84,7 +86,6 @@ public class my_realname_pic extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        this.finish();
-        overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
+        this.finish();overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
     }
 }

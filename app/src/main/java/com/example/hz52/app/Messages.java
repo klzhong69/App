@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -173,12 +174,12 @@ public class Messages extends Fragment {
             case R.id.imageView78:
                 Intent intent2 = new Intent(getContext(), mess_friends.class);
                 startActivity(intent2);
-                getActivity().overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
+                Objects.requireNonNull(getActivity()).overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                 break;
             case R.id.rect_views:
                 Intent intent3 = new Intent(getContext(), system_information.class);
                 startActivity(intent3);
-                getActivity().overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
+                Objects.requireNonNull(getActivity()).overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                 break;
         }
     }

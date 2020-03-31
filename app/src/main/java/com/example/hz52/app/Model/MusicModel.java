@@ -48,9 +48,9 @@ public class MusicModel {
     public static MusicViewAdapter mAdapter;
     private static LinearLayoutManager layoutManager;
     private static int mCurrentDialogStyle = com.qmuiteam.qmui.R.style.QMUI_Dialog;
+ private static int post = -1;
 
-
-    public static void initData(Context context) {
+    public static void initData(Context context, RecyclerView recycler) {
 
         mArrayList = new ArrayList<Mymusic>();
         mArray = new ArrayList<Mymusic>();
@@ -88,21 +88,22 @@ public class MusicModel {
                                 for (int i = 0; i < mArrayList.size(); i++) {
                                     int a = 0;
                                     for (int j = 0; j < musics.size(); j++) {
+
                                         if (musics.get(j).getId().toString().equals(mArrayList.get(i).getId().toString())) {
                                             a++;
+                                            mArrayList.get(i).setUrl(musics.get(j).getFile());
                                         }
                                     }
                                     if (a == 0) {
                                         mArrayList.get(i).setType("0");
                                         mArray.add(mArrayList.get(i));
-                                    }else{
-                                        mArrayList.get(i).setUrl("0");
                                     }
                                 }
-
+                                System.out.println("测试"+musics.size()+"/"+mArrayList.size());
                                 if (mArray.size() > 0) {
                                     showMessagePositiveDialog(context);
                                 }
+                                init(context,recycler);
                             }
                         } else {
                             Toast.makeText(context, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
@@ -115,20 +116,11 @@ public class MusicModel {
     }
 
     public static void init(Context context, RecyclerView recycler) {
-      /*  for (int i = 0; i < mArray.size(); i++) {
-            String publicPath = Objects.requireNonNull(this.getExternalCacheDir()).getPath();
-            String filePath = publicPath + "/music/" + mArray.get(i).getName();
-            Mymusic i1 = new Mymusic(mArray.get(i).getId(), mArray.get(i).getName(), mArray.get(i).getTime(), mArray.get(i).getType(), mArray.get(i).getTxt(), filePath);
-            mArrayList.add(i1);
-        }*/
 
         //适配器
         mAdapter = new MusicViewAdapter(context, mArrayList);
         //设置适配器adapter
         recycler.setAdapter(mAdapter);
-
-        /*LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-        mListView.setLayoutManager(mLinearLayoutManager);*/
 
         layoutManager = new LinearLayoutManager(context) {
             @Override
@@ -142,22 +134,37 @@ public class MusicModel {
         mAdapter.setOnItemClickListener(new MusicViewAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                if (mArrayList.get(position).getType().equals("0")) {
-                    showMessagePositiveDialog(context);
-
-                } else if (mArrayList.get(position).getType().equals("1")) {
-                    Observable<Integer> observable = Observable.defer(new Callable<ObservableSource<? extends Integer>>() {
-                        @Override
-                        public ObservableSource<? extends Integer> call() throws Exception {
-                            return Observable.just(position);
+                switch (mArrayList.get(position).getType()) {
+                    case "0":
+                        showMessagePositiveDialog(context);
+                        break;
+                    case "1":
+                        if(post == -1){
+                            mArrayList.get(position).setType("2");
+                            my_music.music(position);
+                            post = position;
+                        }else{
+                            if(post == position){
+                                my_music.wlMusic.resume();
+                                mArrayList.get(position).setType("2");
+                                mAdapter.notifyItemChanged(position);
+                            }else{
+                                mArrayList.get(post).setType("1");
+                                mArrayList.get(position).setType("2");
+                                my_music.wlMusic.playNext(mArrayList.get(position).getUrl());
+                                post = position;
+                            }
                         }
-                    });
-                    observable.subscribe(my_music.observer);
-
-                } else if (mArrayList.get(position).getType().equals("2")) {
-                    mArrayList.get(position).setType("1");
-                    mAdapter.notifyItemChanged(position);
+                        mAdapter.notifyDataSetChanged();
+                        break;
+                    case "2":
+                        my_music.wlMusic.pause();
+                        mArrayList.get(position).setType("1");
+                        mAdapter.notifyItemChanged(position);
+                        post = position;
+                        break;
                 }
+
 
             }
 

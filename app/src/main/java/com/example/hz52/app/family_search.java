@@ -8,6 +8,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -180,8 +181,7 @@ public class family_search extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fold:
-                this.finish();
-                overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
+                this.finish();overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                 break;
             case R.id.textView2:
                 a=0;
@@ -212,7 +212,6 @@ public class family_search extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        this.finish();
-        overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
+        this.finish();overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
     }
 }

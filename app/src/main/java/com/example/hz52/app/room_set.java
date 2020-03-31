@@ -12,6 +12,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.ActivityOptionsCompat;
 
 import com.example.hz52.app.Entity.MyApp;
 import com.example.hz52.app.cofig.Preview;
@@ -235,8 +237,7 @@ public class room_set extends AppCompatActivity {
                 if (editText.getText().toString().equals(roomName) || editText3.getText().toString().equals(announce) || editText2.getText().toString().equals(password)) {
                     showMessagePositiveDialog();
                 } else {
-                    this.finish();
-                    overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
+                    this.finish();overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                 }
                 break;
             case R.id.subtitle:
@@ -281,6 +282,7 @@ public class room_set extends AppCompatActivity {
                 Intent intent1 = new Intent(room_set.this, room_theme.class);
                 intent1.putExtra("backgroundId", backgroundId);
                 startActivity(intent1);
+                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                 break;
             case R.id.imageView121:
             case R.id.textView138:
@@ -288,6 +290,7 @@ public class room_set extends AppCompatActivity {
                 Intent intent2 = new Intent(room_set.this, room_select_people.class);
                 intent2.putExtra("type", 0);
                 startActivity(intent2);
+                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                 break;
             case R.id.imageView122:
             case R.id.textView139:
@@ -295,6 +298,7 @@ public class room_set extends AppCompatActivity {
                 Intent intent3 = new Intent(room_set.this, room_select_people.class);
                 intent3.putExtra("type", 1);
                 startActivity(intent3);
+                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                 break;
             case R.id.imageView123:
             case R.id.textView140:
@@ -310,8 +314,7 @@ public class room_set extends AppCompatActivity {
         if (editText.getText().toString().equals(roomName) || editText3.getText().toString().equals(announce) || editText2.getText().toString().equals(password)) {
             showMessagePositiveDialog();
         } else {
-            this.finish();
-            overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
+            this.finish();overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         }
     }
 }

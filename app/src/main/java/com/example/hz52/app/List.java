@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
@@ -131,7 +132,6 @@ public class List extends Fragment {
     private int durationCategory = 2;
     public static Observer<JsonArray> observer;
     private Window window;
-    public static QMUITipDialog tipDialog;
     private String userid;
 
     @Nullable
@@ -167,11 +167,6 @@ public class List extends Fragment {
         ui &= ~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR; //设置状态栏中字体颜色为白色
         decor.setSystemUiVisibility(ui);
 
-        tipDialog = new QMUITipDialog.Builder(getContext())
-                .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
-                .setTipWord("正在加载")
-                .create();
-        tipDialog.show();
         ListModel.okgo(context, rankListCategory, durationCategory);
         ListModel.initrecycler(context, recycler13);
 
@@ -199,7 +194,7 @@ public class List extends Fragment {
             }
         });
 
-
+        refreshLayout.autoRefresh();
         observer = new Observer<JsonArray>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -223,41 +218,6 @@ public class List extends Fragment {
 
             }
         };
-
-       /* switch (position) {
-            case 1:
-                tipDialog = new QMUITipDialog.Builder(getContext())
-                        .setIconType(QMUITipDialog.Builder.ICON_TYPE_SUCCESS)
-                        .setTipWord("发送成功")
-                        .create();
-                break;
-            case 2:
-                tipDialog = new QMUITipDialog.Builder(getContext())
-                        .setIconType(QMUITipDialog.Builder.ICON_TYPE_FAIL)
-                        .setTipWord("发送失败")
-                        .create();
-                break;
-            case 3:
-                tipDialog = new QMUITipDialog.Builder(getContext())
-                        .setIconType(QMUITipDialog.Builder.ICON_TYPE_INFO)
-                        .setTipWord("请勿重复操作")
-                        .create();
-                break;
-            case 4:
-                tipDialog = new QMUITipDialog.Builder(getContext())
-                        .setIconType(QMUITipDialog.Builder.ICON_TYPE_SUCCESS)
-                        .create();
-                break;
-            case 5:
-                tipDialog = new QMUITipDialog.Builder(getContext())
-                        .setTipWord("请勿重复操作")
-                        .create();
-                break;
-            case 6:
-                tipDialog = new QMUITipDialog.CustomBuilder(getContext())
-                        .setContent(R.layout.tipdialog_custom)
-                        .create();
-                break;*/
 
         return view;
     }
@@ -348,11 +308,11 @@ public class List extends Fragment {
                 Intent intent8 = new Intent(getContext(), homepage.class);
                 intent8.putExtra("id", 695294941L);
                 startActivity(intent8);
-                getActivity().overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
+                Objects.requireNonNull(getActivity()).overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                 break;
             case R.id.textView108:
                 rankListCategory = 1;
-                tipDialog.show();
+
                 ListModel.okgo(context, rankListCategory, durationCategory);
                 ListModel.initrecycler(context, recycler13);
                 textView108.setVisibility(View.GONE);
@@ -363,7 +323,7 @@ public class List extends Fragment {
                 break;
             case R.id.textView109:
                 rankListCategory = 2;
-                tipDialog.show();
+
                 ListModel.okgo(context, rankListCategory, durationCategory);
                 ListModel.initrecycler(context, recycler13);
                 textView108.setVisibility(View.VISIBLE);
@@ -374,19 +334,19 @@ public class List extends Fragment {
                 break;
             case R.id.textView118:
                 rankListCategory = 1;
-                tipDialog.show();
+
                 ListModel.okgo(context, rankListCategory, durationCategory);
                 ListModel.initrecycler(context, recycler13);
                 break;
             case R.id.textView119:
                 rankListCategory = 2;
-                tipDialog.show();
+
                 ListModel.okgo(context, rankListCategory, durationCategory);
                 ListModel.initrecycler(context, recycler13);
                 break;
             case R.id.textView110:
                 durationCategory = 1;
-                tipDialog.show();
+
                 ListModel.okgo(context, rankListCategory, durationCategory);
                 ListModel.initrecycler(context, recycler13);
                 textView110.setVisibility(View.GONE);
@@ -398,7 +358,7 @@ public class List extends Fragment {
                 break;
             case R.id.textView111:
                 durationCategory = 2;
-                tipDialog.show();
+
                 ListModel.okgo(context, rankListCategory, durationCategory);
                 ListModel.initrecycler(context, recycler13);
                 textView110.setVisibility(View.VISIBLE);
@@ -410,7 +370,7 @@ public class List extends Fragment {
                 break;
             case R.id.textView112:
                 durationCategory = 3;
-                tipDialog.show();
+
                 ListModel.okgo(context, rankListCategory, durationCategory);
                 ListModel.initrecycler(context, recycler13);
                 textView110.setVisibility(View.VISIBLE);
@@ -422,19 +382,19 @@ public class List extends Fragment {
                 break;
             case R.id.textView120:
                 durationCategory = 1;
-                tipDialog.show();
+
                 ListModel.okgo(context, rankListCategory, durationCategory);
                 ListModel.initrecycler(context, recycler13);
                 break;
             case R.id.textView121:
                 durationCategory = 2;
-                tipDialog.show();
+
                 ListModel.okgo(context, rankListCategory, durationCategory);
                 ListModel.initrecycler(context, recycler13);
                 break;
             case R.id.textView122:
                 durationCategory = 3;
-                tipDialog.show();
+
                 ListModel.okgo(context, rankListCategory, durationCategory);
                 ListModel.initrecycler(context, recycler13);
                 break;

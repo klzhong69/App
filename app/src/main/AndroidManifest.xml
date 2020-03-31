@@ -90,6 +90,7 @@
         <activity android:name=".modify_information" />
         <activity android:name=".homepage" />
         <activity android:name=".MainActivity" />
+
     </application>
 
 </manifest>

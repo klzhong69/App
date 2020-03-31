@@ -29,6 +29,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.RecyclerView;
@@ -752,6 +753,7 @@ public class chatroom extends AppCompatActivity {
                                             quickAction.dismiss();
                                             Intent intent2 = new Intent(chatroom.this, room_set.class);
                                             startActivity(intent2);
+                                            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                                         } else {
                                             Toast.makeText(chatroom.this, "您没有此权限", Toast.LENGTH_SHORT).show();
                                         }
@@ -766,6 +768,7 @@ public class chatroom extends AppCompatActivity {
                                         quickAction.dismiss();
                                         Intent intent2 = new Intent(chatroom.this, my_music.class);
                                         startActivity(intent2);
+                                        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                                     }
                                 }
                         ))
@@ -802,7 +805,7 @@ public class chatroom extends AppCompatActivity {
             case R.id.textView124:
                 Intent intent2 = new Intent(chatroom.this, room_online.class);
                 startActivity(intent2);
-                overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
+                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                 break;
 
             case R.id.imageView98:
@@ -1059,7 +1062,8 @@ public class chatroom extends AppCompatActivity {
                             mRtcEngine.leaveChannel();
                         }
                         RtcEngine.destroy();
-                        chatroom.this.finish();
+                        finish();
+                        overridePendingTransition(R.anim.scale_in_center, R.anim.scale_out_center);
                         break;
                     case 1:
                         break;

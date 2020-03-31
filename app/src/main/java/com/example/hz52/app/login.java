@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.example.hz52.app.Entity.MyApp;
 import com.example.hz52.app.Sqlentity.User;
@@ -101,7 +102,7 @@ public class login extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.fold:
                 this.finish();
-                overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
+                overridePendingTransition(R.animator.anim_bottom_in, R.animator.anim_bottom_out);
                 break;
             case R.id.but:
                 tipDialog = new QMUITipDialog.Builder(this)
@@ -165,7 +166,7 @@ public class login extends AppCompatActivity {
                             String birthday = prexiew.getData().get("birthday").getAsString();
                             String gender = prexiew.getData().get("gender").getAsString();
 
-                            if(state==1){
+                            if(state>0){
                                 User user = new User();
                                 user.setName(name);
                                 user.setUsersrc(userima);
@@ -182,10 +183,9 @@ public class login extends AppCompatActivity {
                             sp.edit().putString("gender", gender).apply();
                             sp.edit().putString("birthday", birthday).apply();
                             sp.edit().putString("avatarUrl", userima).apply();
-                            Intent intent1 = new Intent(login.this, MainActivity.class);
-                            intent1.putExtra("id", 4);
-                            startActivity(intent1);
-                            overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
+                            sp.edit().putString("login", "true").apply();
+
+                            ActivityCompat.finishAfterTransition(login.this);
 
                             tipDialog.dismiss();
                         }else{
@@ -201,7 +201,12 @@ public class login extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        this.finish();
-        overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
+        if(state == 1){
+            System.exit(0);
+        }else{
+            this.finish();
+            overridePendingTransition(R.animator.anim_bottom_in, R.animator.anim_bottom_out);
+        }
+
     }
 }

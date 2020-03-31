@@ -75,9 +75,8 @@ public class ListModel {
                                 });
                                 observable.subscribe(List.observer);
 
-                                List.tipDialog.dismiss();
                         } else {
-                            List.tipDialog.dismiss();
+
                             Toast.makeText(context, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
                         }
 

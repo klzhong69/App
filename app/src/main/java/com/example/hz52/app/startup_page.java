@@ -7,9 +7,13 @@ import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.ActivityOptionsCompat;
 
 import com.example.hz52.app.MQ.MqttMessageService;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
+
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -38,10 +42,13 @@ public class startup_page extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-                Intent intent = new Intent(startup_page.this, MainActivity.class);
+
+                Intent intent  =  new Intent(startup_page.this,MainActivity.class);
                 intent.putExtra("id", 0);
                 startActivity(intent);
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 finish();
+
             }
         }.start();
 

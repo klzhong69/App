@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,6 +26,7 @@ import com.example.hz52.app.Entity.Modify;
 import com.example.hz52.app.Entity.MyApp;
 import com.example.hz52.app.Entity.Mymusic;
 import com.example.hz52.app.Sqlentity.Music;
+import com.example.hz52.app.cofig.DateUtil;
 import com.example.hz52.app.cofig.OSSSet;
 import com.example.hz52.app.cofig.Preview;
 import com.example.hz52.app.dao.mMusicDao;
@@ -218,8 +220,7 @@ public class modify_information extends AppCompatActivity {
                 if (bool) {
                     showMessagePositiveDialog();
                 } else {
-                    this.finish();
-                    overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
+                    this.finish();overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                 }
                 break;
             case R.id.subtitle:
@@ -321,7 +322,7 @@ public class modify_information extends AppCompatActivity {
                 .params("userId", userid)
                 .params("nickname", textView35.getText().toString())
                 .params("signtureText", textView37.getText().toString())
-                .params("avatarUrl", "https://momeak.oss-cn-shenzhen.aliyuncs.com/h3.jpg")
+                .params("avatarUrl", avatarUrl)
                 .execute(new StringCallback() {
 
                     @Override
@@ -335,8 +336,7 @@ public class modify_information extends AppCompatActivity {
                             Toast.makeText(modify_information.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
                             sp.edit().putString("nickname", textView35.getText().toString()).apply();
                             sp.edit().putString("signtureText", textView37.getText().toString()).apply();
-                            //sp.edit().putString("avatarUrl", phone + "/avatar" + ".jpg").apply();
-                            sp.edit().putString("avatarUrl", "https://momeak.oss-cn-shenzhen.aliyuncs.com/h3.jpg").apply();
+                            sp.edit().putString("avatarUrl", avatarUrl).apply();
                             finish();
                             overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
 
@@ -421,13 +421,18 @@ public class modify_information extends AppCompatActivity {
                                 OSSSet.OSSClient(modify_information.this, AccessKeyId, AccessKeySecret, SecurityToken, region, bucket);
                                 if (type == 0) {
                                     name = "avatar" + ".jpg";
-                                    OSSSet.Callback(bucket, phone + name, picturePath, userid);
+                                    String upload = OSSSet.Upload(bucket, phone + "/" + name, picturePath);
+                                    if(upload.equals("UploadSuccess")){
+                                        avatarUrl = " http://hertz52-user.oss-cn-shenzhen.aliyuncs.com/"+phone + "/" + name;
+                                    }
                                 } else {
                                     name = "photo" + mData.size() + ".jpg";
-                                    OSSSet.Callback(bucket, phone + name, picturePath, userid);
+                                    String upload = OSSSet.Upload(bucket, phone + "/" + name, picturePath);
+                                    if(upload.equals("UploadSuccess")){
+                                        System.out.println(upload);
+                                    }
                                     addPhoto(phone + name);
                                 }
-
                             }
 
                         } else {
@@ -496,11 +501,11 @@ public class modify_information extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        super.onBackPressed();
         if (bool) {
             showMessagePositiveDialog();
         } else {
-            this.finish();
-            overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
+            this.finish();overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         }
     }
 }

@@ -9,6 +9,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.ActivityOptionsCompat;
 
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
@@ -69,8 +71,7 @@ public class registered extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fold:
-                this.finish();
-                overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
+                this.finish();overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                 break;
             case R.id.textView150:
                 break;
@@ -83,6 +84,7 @@ public class registered extends AppCompatActivity {
                             intent2.putExtra("phone", editText4.getText().toString());
                             intent2.putExtra("pass", editText.getText().toString());
                             startActivity(intent2);
+                            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
 
                         } else {
                             Toast.makeText(registered.this, "请输入密码，密码长度大于8位，小于16位", Toast.LENGTH_SHORT).show();
@@ -100,6 +102,7 @@ public class registered extends AppCompatActivity {
                 Intent intent4 = new Intent(registered.this, agreement.class);
                 intent4.putExtra("about", 0);
                 startActivity(intent4);
+                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                 break;
         }
     }
@@ -107,8 +110,7 @@ public class registered extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        this.finish();
-        overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
+        this.finish();overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
     }
 
 }

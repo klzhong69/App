@@ -10,6 +10,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -152,10 +154,12 @@ public class my_switch extends AppCompatActivity {
                             sp.edit().putString("gender", gender).apply();
                             sp.edit().putString("birthday", birthday).apply();
                             sp.edit().putString("avatarUrl", userima).apply();
+                            sp.edit().putString("login", "true").apply();
+
                             Intent intent1 = new Intent(my_switch.this, MainActivity.class);
                             intent1.putExtra("id", 4);
                             startActivity(intent1);
-                            overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
+                            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
 
                         }else{
 
@@ -171,23 +175,21 @@ public class my_switch extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fold:
-                this.finish();
-                overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
+                this.finish();overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                 break;
             case R.id.imageView44:
             case R.id.textView37:
             case R.id.imageView114:
                 Intent intent1 = new Intent(this, login.class);
-                intent1.putExtra("type",1);
+                intent1.putExtra("type",2);
                 startActivity(intent1);
-                overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
+                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                 break;
         }
     }
 
     @Override
     public void onBackPressed() {
-        this.finish();
-        overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
+        this.finish();overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
     }
 }

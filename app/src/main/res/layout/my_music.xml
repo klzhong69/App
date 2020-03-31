@@ -65,10 +65,11 @@
             android:id="@+id/imageView67"
             android:layout_width="@dimen/dp_30"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/textView66"
+            android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="@dimen/dp_22"
-            app:srcCompat="@drawable/dower" />
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="@dimen/dp_20"
+            app:srcCompat="@drawable/play" />
     </RelativeLayout>
 
 

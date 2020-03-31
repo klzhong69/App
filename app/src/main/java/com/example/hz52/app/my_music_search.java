@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,7 +20,9 @@ import com.example.hz52.app.Adapter.MusicViewAdapter;
 import com.example.hz52.app.Entity.Familysea;
 import com.example.hz52.app.Entity.MyApp;
 import com.example.hz52.app.Entity.Mymusic;
+import com.example.hz52.app.Sqlentity.Music;
 import com.example.hz52.app.cofig.Preview;
+import com.example.hz52.app.dao.mMusicDao;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.lzy.okgo.OkGo;
@@ -32,7 +35,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.example.hz52.app.List.tipDialog;
 
 public class my_music_search extends AppCompatActivity {
 
@@ -44,6 +46,7 @@ public class my_music_search extends AppCompatActivity {
     RecyclerView recycler3;
     private ArrayList<Mymusic> mArrayList;
     private String queryTexts;
+    private QMUITipDialog tipDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,9 +60,15 @@ public class my_music_search extends AppCompatActivity {
                 .create();
         tipDialog.show();
 
+        initData();
         init();
 
-        initData();
+
+
+    }
+
+    private void init() {
+
         //适配器
         MusicViewAdapter mAdapter = new MusicViewAdapter(this, mArrayList);
         //设置适配器adapter
@@ -97,9 +106,10 @@ public class my_music_search extends AppCompatActivity {
         defaultItemAnimator.setAddDuration(200);
         defaultItemAnimator.setRemoveDuration(200);
         recycler3.setItemAnimator(defaultItemAnimator);
+
     }
 
-    private void init() {
+    private void initData() {
 
         searchView.setIconifiedByDefault(false);
         if (searchView == null) {
@@ -130,23 +140,14 @@ public class my_music_search extends AppCompatActivity {
             @Override
             public boolean onQueryTextSubmit(String queryText) {
                 //点击搜索
-                queryTexts = queryText;
+                okgo(queryText);
                 System.out.println("onQueryTextSubmit:" + queryText);
                 return true;
             }
         });
-
     }
 
-    private void initData() {
-        mArrayList = new ArrayList<Mymusic>();
-        for (int i = 0; i < 10; i++) {
-            Mymusic i1 = new Mymusic((long) i, "星坠-天空的幻想-林晓夜", "03.00", "2", "100%", "");
-            mArrayList.add(i1);
-        }
-    }
-
-    private void okgo() {
+    private void okgo(String queryTexts) {
         mArrayList = new ArrayList<Mymusic>();
         SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
         String userid = sp.getString("userid", "");
@@ -165,7 +166,7 @@ public class my_music_search extends AppCompatActivity {
                         Preview prexiew = gson.fromJson(response.body(), Preview.class);
                         JsonArray music = prexiew.getData().getAsJsonArray("music");
                         if(prexiew.getCode()==0){
-                            for(int i=0;i<music.size();i++){
+                            /*for(int i=0;i<music.size();i++){
                                 String size = music.get(i).getAsJsonObject().get("size").getAsString();
                                 String duration = music.get(i).getAsJsonObject().get("duration").getAsString();
                                 String md5 = music.get(i).getAsJsonObject().get("md5").getAsString();
@@ -173,6 +174,22 @@ public class my_music_search extends AppCompatActivity {
                                 String musicId = music.get(i).getAsJsonObject().get("musicId").getAsString();
                                 String toTopTime = music.get(i).getAsJsonObject().get("toTopTime").getAsString();
                                 String id = music.get(i).getAsJsonObject().get("id").getAsString();
+                            }*/
+
+                            for (int i = 0; i < 10; i++) {
+                                Mymusic i1 = new Mymusic((long) i, "星坠-天空的幻想-林晓夜", "03.00", "0", "0%", "");
+                                mArrayList.add(i1);
+                            }
+
+                            java.util.List<Music> musics = mMusicDao.queryAll();
+                            for (int i = 0; i < mArrayList.size(); i++) {
+                                for (int j = 0; j < musics.size(); j++) {
+
+                                    if (musics.get(j).getId().toString().equals(mArrayList.get(i).getId().toString())) {
+                                        mArrayList.get(i).setType("1");
+                                        mArrayList.get(i).setUrl(musics.get(j).getFile());
+                                    }
+                                }
                             }
                             tipDialog.dismiss();
                         } else {
@@ -187,14 +204,12 @@ public class my_music_search extends AppCompatActivity {
 
     @OnClick(R.id.imageView37)
     public void onViewClicked() {
-        this.finish();
-        overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
+        this.finish();overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
     }
 
 
     @Override
     public void onBackPressed() {
-        this.finish();
-        overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
+        this.finish();overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
     }
 }

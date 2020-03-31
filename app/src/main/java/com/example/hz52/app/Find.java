@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -260,6 +261,6 @@ public class Find extends Fragment implements OnItemClickListener, LFRecyclerVie
     public void onViewClicked() {
         Intent intent2 = new Intent(getContext(), find_make.class);
         startActivity(intent2);
-        getActivity().overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
+        Objects.requireNonNull(getActivity()).overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
     }
 }

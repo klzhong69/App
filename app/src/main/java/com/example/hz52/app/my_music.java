@@ -6,17 +6,20 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -45,6 +48,8 @@ import com.ywl5320.libenum.MuteEnum;
 import com.ywl5320.libmusic.WlMusic;
 import com.ywl5320.listener.OnCompleteListener;
 import com.ywl5320.listener.OnPreparedListener;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -76,11 +81,7 @@ public class my_music extends AppCompatActivity {
     TextView subtitle;
     @BindView(R.id.imageView141)
     ImageView imageView141;
-    private WlMusic wlMusic;
-    public static Observer<Integer> observer;
-    private Observer<String> observers;
-    private static final int REQUEST_PERMISSION_STORAGE = 0x01;
-    private Context context;
+    public static WlMusic wlMusic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,100 +90,35 @@ public class my_music extends AppCompatActivity {
         ButterKnife.bind(this);
         title.setText("我的音乐");
         subtitle.setText("添加");
-        context = this;
+        Context context = this;
         Initialization.setupDatabaseMusic(this);
 
-        MusicModel.initData(context);
-        MusicModel.init(context,recycler5);
+        MusicModel.initData(context,recycler5);
 
-        if(isGrantExternalRW(this)){
-            MusicModel.showMessagePositiveDialog(context);
-        }
 
     }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        observer = new Observer<Integer>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-
-            }
-
-            @Override
-            public void onNext(Integer integer) {
-                for (int j = 0; j < MusicModel.mArrayList.size(); j++) {
-                    MusicModel.mArrayList.get(j).setType("1");
-                }
-                MusicModel.mArrayList.get(integer).setType("2");
-                MusicModel.mAdapter.notifyItemChanged(integer);
-                music(integer);
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-
-            @Override
-            public void onComplete() {
-            }
-
-        };
-    }
-
 
     @OnClick({R.id.fold, R.id.subtitle, R.id.imageView141})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fold:
-                this.finish();
-                overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
+                this.finish();overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                 break;
             case R.id.subtitle:
                 Intent intent1 = new Intent(my_music.this, scan_code.class);
                 startActivity(intent1);
+                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                 break;
             case R.id.imageView141:
                 Intent intent2 = new Intent(my_music.this, my_music_search.class);
                 startActivity(intent2);
+                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                 break;
         }
     }
 
 
-    /**
-     * 检查SD卡权限
-     */
-    public static boolean isGrantExternalRW(Activity activity) {
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && activity.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
-            activity.requestPermissions(new String[]{
-                    Manifest.permission.READ_EXTERNAL_STORAGE,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE
-            },1);
-            return false;
-        }
-        return true;
-
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == REQUEST_PERMISSION_STORAGE) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                //获取权限
-                Toast.makeText(my_music.this, "获取权限", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(my_music.this, "权限被禁止，无法下载文件！", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-
-
-    private void music(int postion) {
+    public static void music(int postion) {
         wlMusic = WlMusic.getInstance();
         wlMusic.setSource(MusicModel.mArrayList.get(postion).getUrl()); //设置音频源
         wlMusic.setCallBackPcmData(false);//是否返回音频PCM数据
@@ -206,28 +142,47 @@ public class my_music extends AppCompatActivity {
             @Override
             public void onComplete() {
                 System.out.println("完成");
-                Observable<Integer> observable = Observable.defer(new Callable<ObservableSource<? extends Integer>>() {
-                    @Override
-                    public ObservableSource<? extends Integer> call() throws Exception {
-                        return Observable.just(postion + 1);
-                    }
-                });
-                observable.subscribe(observer);
             }
         });
 
         System.out.println("状态：" + wlMusic.isPlaying());
-        if (wlMusic.isPlaying()) {
-            wlMusic.playNext(MusicModel.mArrayList.get(postion).getUrl());
-        }
         System.out.println("时长" + wlMusic.getDuration());
+
+        //seek时间
+       /* seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                position = wlMusic.getDuration() * progress / 100;
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                wlMusic.seek(position, false, false);// 表示在seeking中，此时不回调时间
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                wlMusic.seek(position, true, true);//表示seek已经完成，然后才回调时间，避免自己控制时间逻辑和时间显示不稳定问题。
+            }
+        });*/
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        try {
+            if(wlMusic.isPlaying()){
+                wlMusic.stop();
+            }
+        }catch (Exception ignored){}
 
     }
 
     @Override
     public void onBackPressed() {
+        super.onBackPressed();
         this.finish();
-        overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
+        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
     }
 
 }

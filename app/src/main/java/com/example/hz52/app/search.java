@@ -11,6 +11,8 @@ import android.widget.SearchView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -109,6 +111,7 @@ public class search extends AppCompatActivity {
                         Intent intent3 = new Intent(search.this, family_search.class);
                         intent3.putExtra("searchtxt",mArrayList.get(position).getTxt());
                         startActivity(intent3);
+                        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
 
                     }
                 });
@@ -170,6 +173,7 @@ public class search extends AppCompatActivity {
                 Intent intent3 = new Intent(search.this, family_search.class);
                 intent3.putExtra("searchtxt",queryText);
                 startActivity(intent3);
+                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                 return true;
             }
         });
@@ -198,8 +202,7 @@ public class search extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.imageView37:
-                this.finish();
-                overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
+                this.finish();overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                 break;
             case R.id.textView178:
             case R.id.imageView147:
@@ -216,7 +219,6 @@ public class search extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        this.finish();
-        overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
+        this.finish();overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
     }
 }
