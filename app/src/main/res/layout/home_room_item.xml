@@ -1,22 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-
-    <com.lijiankun24.shadowlayout.ShadowLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_gravity="center_horizontal"
-        app:shadowColor="#44000000"
-        app:shadowDx="0dp"
-        app:shadowDy="3dp"
-        app:shadowRadius="10dp"
-        app:shadowSide="all">
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
         <com.qmuiteam.qmui.widget.QMUIRadiusImageView
             android:id="@+id/imageViewi1"
@@ -34,7 +24,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:qmui_border_width="0dp"
-            app:qmui_corner_radius="@dimen/dp_20" />
+            app:qmui_corner_radius="@dimen/dp_30" />
 
 
         <RelativeLayout
@@ -180,13 +170,12 @@
             <com.qmuiteam.qmui.widget.QMUIRadiusImageView
                 android:id="@+id/imageViewi3"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_400"
+                android:layout_height="@dimen/dp_600"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
-
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="0dp"
-                android:scaleType="centerCrop"
+                android:scaleType="centerInside"
                 android:src="@drawable/s1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -318,7 +307,5 @@
 
 
         </RelativeLayout>
-
-
-    </com.lijiankun24.shadowlayout.ShadowLayout>
-</RelativeLayout>
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

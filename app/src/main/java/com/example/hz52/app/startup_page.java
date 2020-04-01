@@ -1,6 +1,8 @@
 package com.example.hz52.app;
 
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
@@ -8,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.hz52.app.cofig.Initialization;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 
 import butterknife.BindView;
@@ -23,12 +26,15 @@ public class startup_page extends AppCompatActivity {
     @BindView(R.id.textView189)
     TextView textView189;
     private CountDownTimer countDownTimer;
+    public static int height;
+    public static int cardheight;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_startup_page);
         ButterKnife.bind(this);
+
         countDownTimer = new CountDownTimer(3000+500, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -47,6 +53,22 @@ public class startup_page extends AppCompatActivity {
             }
         }.start();
 
+        Resources resources = getResources();
+        int resourceId = resources.getIdentifier("status_bar_height", "dimen", "android");
+        height = resources.getDimensionPixelSize(resourceId);
+
+        Rect outSize = new Rect();
+        getWindowManager().getDefaultDisplay().getRectSize(outSize);
+        int left = outSize.left;
+        int top = outSize.top;
+        int right = outSize.right;
+        int bottom = outSize.bottom;
+        cardheight = bottom-height-200;
+
+
+
+        System.out.println("系统栏高度"+height);
+        System.out.println("left"+left+"/"+"top"+top+"/"+"right"+right+"/"+"bottom"+bottom);
     }
 
     @OnClick({R.id.imageViewi3, R.id.textView188, R.id.textView189})

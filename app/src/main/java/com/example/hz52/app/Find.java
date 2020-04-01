@@ -59,7 +59,6 @@ public class Find extends Fragment implements OnItemClickListener, LFRecyclerVie
     ConstraintLayout refreshLayout;
     private Unbinder unbinder;
     private ArrayList<Findlist> mArrayList;
-    private QMUITipDialog tipDialog;
     private Context context;
     private int a = 0;
 
@@ -70,12 +69,6 @@ public class Find extends Fragment implements OnItemClickListener, LFRecyclerVie
         unbinder = ButterKnife.bind(this, view);
         context = getContext();
 
-        tipDialog = new QMUITipDialog.Builder(getContext())
-                .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
-                .setTipWord("正在加载")
-                .create();
-        tipDialog.show();
-
         Window window = Objects.requireNonNull(getActivity()).getWindow();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -84,20 +77,16 @@ public class Find extends Fragment implements OnItemClickListener, LFRecyclerVie
             window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
         }
 
-        Resources resources = context.getResources();
-        int resourceId = resources.getIdentifier("status_bar_height", "dimen", "android");
-        int height = resources.getDimensionPixelSize(resourceId);
-
-        ViewGroup.LayoutParams para1;
-        para1 = view2.getLayoutParams();
-        para1.height = height;
-        view2.setLayoutParams(para1);
-
         View decor = window.getDecorView();
         int ui = decor.getSystemUiVisibility();
         ui |= View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR; //设置状态栏中字体的颜色为黑色
         //ui &= ~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR; //设置状态栏中字体颜色为白色
         decor.setSystemUiVisibility(ui);
+
+        ViewGroup.LayoutParams para1;
+        para1 = view2.getLayoutParams();
+        para1.height = startup_page.height;
+        view2.setLayoutParams(para1);
 
         initData();
         init();
@@ -138,7 +127,6 @@ public class Find extends Fragment implements OnItemClickListener, LFRecyclerVie
             Findlist i1 = new Findlist("PHakamile Sikali", "Muria Moura", "2345", "https://momeak.oss-cn-shenzhen.aliyuncs.com/h" + sum + ".jpg", "", "热门", "CV", "德国");
             mArrayList.add(i1);
         }
-        tipDialog.dismiss();
 
     }
 
@@ -171,7 +159,6 @@ public class Find extends Fragment implements OnItemClickListener, LFRecyclerVie
                                     Findlist i1 = new Findlist(roomName, welcomeText, hot, coverUrl, "", tag.get(0).getAsString(), tag.get(1).getAsString(), tag.get(2).getAsString());
                                     mArrayList.add(i1);
                                 }
-                                tipDialog.dismiss();
 
                             } else {
                                 Toast.makeText(getContext(), prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();

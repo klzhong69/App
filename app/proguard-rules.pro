@@ -23,6 +23,7 @@
 -keep class com.squareup.wire.** { *; }
 -keep class com.opensource.svgaplayer.proto.** { *; }
 -keep class com.lzf.easyfloat.** {*;}
+-keep class androidx.databinding.DataBindingComponent {*;}
 #okhttp
 -dontwarn okhttp3.**
 -keep class okhttp3.**{*;}
