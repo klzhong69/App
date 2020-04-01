@@ -18,13 +18,10 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.app.ActivityOptionsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.hz52.app.Adapter.FindListAdapter;
-import com.example.hz52.app.Adapter.FindmakeAdapter;
 import com.example.hz52.app.Entity.Findlist;
 import com.example.hz52.app.Entity.MyApp;
 import com.example.hz52.app.cofig.Preview;
@@ -34,10 +31,6 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
-import com.scwang.smart.refresh.footer.ClassicsFooter;
-import com.scwang.smart.refresh.layout.api.RefreshLayout;
-import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
-import com.wildma.pictureselector.Constant;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -46,7 +39,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-import io.agora.rtc.Constants;
 import me.leefeng.lfrecyclerview.LFRecyclerView;
 import me.leefeng.lfrecyclerview.OnItemClickListener;
 

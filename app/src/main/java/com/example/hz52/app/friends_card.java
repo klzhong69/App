@@ -6,7 +6,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 

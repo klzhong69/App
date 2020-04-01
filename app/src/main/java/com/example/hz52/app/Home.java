@@ -25,13 +25,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityOptionsCompat;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.example.hz52.app.Entity.Homes;
 import com.example.hz52.app.Entity.MyApp;
-import com.example.hz52.app.MQ.MqttMessageService;
 import com.example.hz52.app.cofig.Preview;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -179,12 +177,10 @@ public class Home extends Fragment {
         unbinder = ButterKnife.bind(this, view);
         context = getContext();
         Window window = Objects.requireNonNull(getActivity()).getWindow();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            window.setStatusBarColor(Color.TRANSPARENT);
-            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-        }
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.setStatusBarColor(Color.TRANSPARENT);
+        window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
 
         Resources resources = context.getResources();
         int resourceId = resources.getIdentifier("status_bar_height", "dimen", "android");
@@ -208,14 +204,13 @@ public class Home extends Fragment {
 
         ((MainActivity) getActivity()).registerFragmentTouchListener(fragmentTouchListener);
 
-        WindowManager mWindowManager = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
+        WindowManager mWindowManager = (WindowManager) Objects.requireNonNull(getContext()).getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics metrics = new DisplayMetrics();
+        assert mWindowManager != null;
         mWindowManager.getDefaultDisplay().getMetrics(metrics);
-        float density = metrics.density;
         int widthPixels = metrics.widthPixels;
         int heightPixels = metrics.heightPixels;
         float numder = (float) 700 / 1920;
-        float sumder = (float) (widthPixels / 0.5625);
 
         ViewGroup.LayoutParams para1;
         para1 = imageViewi3.getLayoutParams();
@@ -273,16 +268,8 @@ public class Home extends Fragment {
 
     }
 
-    public int getStatusBarHeight() {
-        int result = 0;
-        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
-        if (resourceId > 0) {
-            result = getResources().getDimensionPixelSize(resourceId);
-        }
-        return result;
-    }
 
-    MainActivity.FragmentTouchListener fragmentTouchListener = new MainActivity.FragmentTouchListener() {
+    private MainActivity.FragmentTouchListener fragmentTouchListener = new MainActivity.FragmentTouchListener() {
         @Override
         public boolean onTouchEvent(MotionEvent event) {
             return gd.onTouchEvent(event);
@@ -295,7 +282,7 @@ public class Home extends Fragment {
 
     }
 
-    public static Home newInstance() {
+    static Home newInstance() {
         Bundle args = new Bundle();
         Home fragment = new Home();
         fragment.setArguments(args);

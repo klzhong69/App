@@ -7,7 +7,6 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

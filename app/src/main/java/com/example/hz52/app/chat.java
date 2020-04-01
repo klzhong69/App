@@ -12,9 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hz52.app.Entity.Chats;
@@ -34,10 +32,6 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
-import com.scwang.smart.refresh.header.MaterialHeader;
-import com.scwang.smart.refresh.layout.SmartRefreshLayout;
-import com.scwang.smart.refresh.layout.api.RefreshLayout;
-import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
 
 import java.util.HashMap;
 import java.util.List;

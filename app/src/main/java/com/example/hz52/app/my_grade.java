@@ -9,7 +9,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
 import com.example.hz52.app.Entity.MyApp;
 import com.example.hz52.app.cofig.Gradesum;

@@ -10,13 +10,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.app.ActivityOptionsCompat;
 
 import com.example.hz52.app.Entity.MyApp;
 import com.example.hz52.app.cofig.Preview;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;

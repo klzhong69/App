@@ -1,72 +1,25 @@
 package com.example.hz52.app;
 
-import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.media.MediaPlayer;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.app.ActivityOptionsCompat;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.hz52.app.Adapter.MusicViewAdapter;
-import com.example.hz52.app.Entity.MyApp;
-import com.example.hz52.app.Entity.Mymusic;
 import com.example.hz52.app.Model.MusicModel;
-import com.example.hz52.app.Sqlentity.Music;
 import com.example.hz52.app.cofig.Initialization;
-import com.example.hz52.app.cofig.LogDownloadListener;
-import com.example.hz52.app.cofig.Preview;
-import com.example.hz52.app.dao.mMusicDao;
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.lzy.okgo.OkGo;
-import com.lzy.okgo.callback.StringCallback;
-import com.lzy.okgo.model.Response;
-import com.lzy.okgo.request.GetRequest;
-import com.lzy.okserver.OkDownload;
-import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
-import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
-import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 import com.ywl5320.libenum.MuteEnum;
 import com.ywl5320.libmusic.WlMusic;
 import com.ywl5320.listener.OnCompleteListener;
 import com.ywl5320.listener.OnPreparedListener;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.concurrent.Callable;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
-import io.reactivex.Observer;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.disposables.Disposable;
-
-import static android.os.Environment.DIRECTORY_MUSIC;
 
 public class my_music extends AppCompatActivity {
 

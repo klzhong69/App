@@ -29,14 +29,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
-import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.hz52.app.Adapter.HoldpeopleAdapter;
-import com.example.hz52.app.Adapter.PaimaiAdapter;
 import com.example.hz52.app.Entity.Chats;
 import com.example.hz52.app.Entity.Holdpeople;
 import com.example.hz52.app.Entity.Mess;
@@ -84,7 +82,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.Callable;
 
 import butterknife.BindView;

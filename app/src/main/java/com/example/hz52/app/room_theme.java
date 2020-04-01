@@ -10,13 +10,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hz52.app.Adapter.ThemeAdapter;
-import com.example.hz52.app.Entity.Findlist;
 import com.example.hz52.app.Entity.MyApp;
 import com.example.hz52.app.Entity.Theme;
 import com.example.hz52.app.cofig.Preview;

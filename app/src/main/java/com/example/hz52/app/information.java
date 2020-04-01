@@ -11,13 +11,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityOptionsCompat;
 
 import com.bruce.pickerview.popwindow.DatePickerPopWin;
 import com.example.hz52.app.Entity.MyApp;
 import com.example.hz52.app.cofig.DateUtil;
 import com.example.hz52.app.cofig.Initialization;
-import com.example.hz52.app.cofig.OSSSet;
 import com.example.hz52.app.cofig.Preview;
 import com.example.hz52.app.gen.DaoSession;
 import com.google.gson.Gson;
@@ -27,7 +25,6 @@ import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
 import java.text.ParseException;
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -180,80 +177,6 @@ public class information extends AppCompatActivity {
                     }
 
 
-                });
-
-    }
-
-    /*@Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PictureSelector.SELECT_REQUEST_CODE) {
-            if (data != null) {
-                picturePath = data.getStringExtra(PictureSelector.PICTURE_PATH);
-                // imageView2.setImageBitmap(BitmapFactory.decodeFile(picturePath));
-
-                Observable.just(0)
-                        .subscribe(new Observer<Integer>() {
-                            @Override
-                            public void onSubscribe(Disposable d) {
-
-                            }
-
-                            @Override
-                            public void onNext(Integer integer) {
-                                RequestOptions requestOptions = RequestOptions
-                                        .circleCropTransform()
-                                        .diskCacheStrategy(DiskCacheStrategy.NONE)
-                                        .skipMemoryCache(true);
-                                Glide.with(information.this).load(picturePath).apply(requestOptions).into(imageView2);
-                                //okgoima();
-                            }
-
-                            @Override
-                            public void onError(Throwable e) {
-
-                            }
-
-                            @Override
-                            public void onComplete() {
-
-                            }
-                        });
-            }
-        }
-
-    }*/
-
-    private void okgoima() {
-        MyApp application = ((MyApp) this.getApplicationContext());
-        OkGo.<String>post(application.getUrl() + "/app/alioss/getUserUploadToken")
-                .execute(new StringCallback() {
-                    @Override
-                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
-
-                        Gson gson = new Gson();
-                        Preview prexiew = gson.fromJson(response.body(), Preview.class);
-
-                        if (prexiew.getCode() == 0) {
-
-                           String AccessKeyId = prexiew.getData().get("AccessKeyId").getAsString();
-                            String AccessKeySecret = prexiew.getData().get("AccessKeySecret").getAsString();
-                            String SecurityToken = prexiew.getData().get("SecurityToken").getAsString();
-                            String region = prexiew.getData().get("region").getAsString();
-                            String bucket = prexiew.getData().get("bucket").getAsString();
-
-                            if (!AccessKeyId.equals("")) {
-                                OSSSet.OSSClient(information.this, AccessKeyId, AccessKeySecret, SecurityToken, region,bucket);
-                                String upload = OSSSet.Upload(bucket, "123.jpg", picturePath);
-                                Toast.makeText(information.this, upload + "", Toast.LENGTH_SHORT).show();
-                            }
-
-                        } else {
-                            Toast.makeText(information.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
-                        }
-
-
-                    }
                 });
 
     }

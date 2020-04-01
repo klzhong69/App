@@ -11,13 +11,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hz52.app.Adapter.MusicViewAdapter;
-import com.example.hz52.app.Entity.Familysea;
 import com.example.hz52.app.Entity.MyApp;
 import com.example.hz52.app.Entity.Mymusic;
 import com.example.hz52.app.Sqlentity.Music;
@@ -54,14 +52,10 @@ public class my_music_search extends AppCompatActivity {
         setContentView(R.layout.activity_my_music_search);
         ButterKnife.bind(this);
 
-        tipDialog = new QMUITipDialog.Builder(this)
-                .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
-                .setTipWord("正在加载")
-                .create();
-        tipDialog.show();
+
 
         initData();
-        init();
+
 
 
 
@@ -141,6 +135,11 @@ public class my_music_search extends AppCompatActivity {
             public boolean onQueryTextSubmit(String queryText) {
                 //点击搜索
                 okgo(queryText);
+                tipDialog = new QMUITipDialog.Builder(my_music_search.this)
+                        .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
+                        .setTipWord("正在加载")
+                        .create();
+                tipDialog.show();
                 System.out.println("onQueryTextSubmit:" + queryText);
                 return true;
             }
@@ -180,17 +179,17 @@ public class my_music_search extends AppCompatActivity {
                                 Mymusic i1 = new Mymusic((long) i, "星坠-天空的幻想-林晓夜", "03.00", "0", "0%", "");
                                 mArrayList.add(i1);
                             }
-
                             java.util.List<Music> musics = mMusicDao.queryAll();
                             for (int i = 0; i < mArrayList.size(); i++) {
                                 for (int j = 0; j < musics.size(); j++) {
 
                                     if (musics.get(j).getId().toString().equals(mArrayList.get(i).getId().toString())) {
-                                        mArrayList.get(i).setType("1");
+                                        mArrayList.get(i).setType("-1");
                                         mArrayList.get(i).setUrl(musics.get(j).getFile());
                                     }
                                 }
                             }
+                            init();
                             tipDialog.dismiss();
                         } else {
                             tipDialog.dismiss();

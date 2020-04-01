@@ -8,8 +8,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.app.ActivityOptionsCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,7 +18,6 @@ import com.example.hz52.app.cofig.Initialization;
 import com.example.hz52.app.dao.mAccountDao;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

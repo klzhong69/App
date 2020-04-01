@@ -7,13 +7,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.app.ActivityOptionsCompat;
 
-import com.example.hz52.app.MQ.MqttMessageService;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
-
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

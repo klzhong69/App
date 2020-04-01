@@ -3,7 +3,6 @@ package com.example.hz52.app;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
@@ -13,7 +12,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,12 +22,8 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.hz52.app.Adapter.ModifyViewAdapter;
 import com.example.hz52.app.Entity.Modify;
 import com.example.hz52.app.Entity.MyApp;
-import com.example.hz52.app.Entity.Mymusic;
-import com.example.hz52.app.Sqlentity.Music;
-import com.example.hz52.app.cofig.DateUtil;
 import com.example.hz52.app.cofig.OSSSet;
 import com.example.hz52.app.cofig.Preview;
-import com.example.hz52.app.dao.mMusicDao;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.lzy.okgo.OkGo;
@@ -38,10 +32,10 @@ import com.lzy.okgo.model.Response;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
+import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.wildma.pictureselector.PictureSelector;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -49,6 +43,8 @@ import butterknife.OnClick;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
+
+;
 
 public class modify_information extends AppCompatActivity {
 
@@ -98,6 +94,7 @@ public class modify_information extends AppCompatActivity {
     private String avatarUrl;
     private JsonArray album;
     private Context context;
+    private QMUITipDialog tipDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,7 +112,7 @@ public class modify_information extends AppCompatActivity {
         signtureText = sp.getString("signtureText", "签名");
         avatarUrl = sp.getString("avatarUrl", "");
 
-        init();
+        initData();
 
         textView35.setText(nickname);
         textView37.setText(signtureText);
@@ -123,7 +120,7 @@ public class modify_information extends AppCompatActivity {
 
     }
 
-    private void init() {
+    private void initData() {
         mData = new ArrayList<Modify>();
         MyApp application = ((MyApp) this.getApplicationContext());
         OkGo.<String>post(application.getUrl() + "/app/user/getUserAlbum?token=" + token)
@@ -143,53 +140,57 @@ public class modify_information extends AppCompatActivity {
                             }
                             Modify i2 = new Modify(0, "", "0");
                             mData.add(i2);
+                            init();
 
-                            //创建适配器，将数据传递给适配器
-                            mAdapters = new ModifyViewAdapter(context, mData);
-                            //设置适配器adapter
-                            recycler2.setAdapter(mAdapters);
-
-                            //多列布局
-                            mLayoutManager = new GridLayoutManager(context, 5);
-                            recycler2.setLayoutManager(mLayoutManager);
-
-
-                            recycler2.setItemAnimator(new DefaultItemAnimator());
-
-                            mAdapters.setOnItemClickListener(new ModifyViewAdapter.OnItemClickListener() {
-                                @Override
-                                public void onItemClick(View view, int position) {
-                                    int del = mData.size() - 1;
-                                    if (position == del) {
-                                        in = 1;
-                                        PictureSelector
-                                                .create(modify_information.this, PictureSelector.SELECT_REQUEST_CODE)
-                                                .selectPicture(true, 200, 200, 1, 1);
-                                    } else {
-                                        Toast.makeText(modify_information.this, "第" + mData.get(position).getId(), Toast.LENGTH_SHORT).show();
-                                    }
-
-                                }
-
-                                @Override
-                                public void onItemLongClick(View view, int position) {
-                                    showMessageNegativeDialog(position);
-                                }
-                            });
-
-                            /**
-                             * 既然是动画，就会有时间，我们把动画执行时间变大一点来看一看效果
-                             */
-                            DefaultItemAnimator defaultItemAnimator = new DefaultItemAnimator();
-                            defaultItemAnimator.setAddDuration(200);
-                            defaultItemAnimator.setRemoveDuration(200);
-                            recycler2.setItemAnimator(defaultItemAnimator);
                         } else {
                             Toast.makeText(modify_information.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
                         }
 
                     }
                 });
+    }
+
+    private void init() {
+        //创建适配器，将数据传递给适配器
+        mAdapters = new ModifyViewAdapter(context, mData);
+        //设置适配器adapter
+        recycler2.setAdapter(mAdapters);
+
+        //多列布局
+        mLayoutManager = new GridLayoutManager(context, 5);
+        recycler2.setLayoutManager(mLayoutManager);
+
+
+        recycler2.setItemAnimator(new DefaultItemAnimator());
+
+        mAdapters.setOnItemClickListener(new ModifyViewAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                int del = mData.size() - 1;
+                if (position == del) {
+                    in = 1;
+                    PictureSelector
+                            .create(modify_information.this, PictureSelector.SELECT_REQUEST_CODE)
+                            .selectPicture(true, 200, 200, 1, 1);
+                } else {
+                    Toast.makeText(modify_information.this, "第" + mData.get(position).getId(), Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+            @Override
+            public void onItemLongClick(View view, int position) {
+                showMessageNegativeDialog(position);
+            }
+        });
+
+        /**
+         * 既然是动画，就会有时间，我们把动画执行时间变大一点来看一看效果
+         */
+        DefaultItemAnimator defaultItemAnimator = new DefaultItemAnimator();
+        defaultItemAnimator.setAddDuration(200);
+        defaultItemAnimator.setRemoveDuration(200);
+        recycler2.setItemAnimator(defaultItemAnimator);
     }
 
     private void showMessageNegativeDialog(int position) {
@@ -206,7 +207,7 @@ public class modify_information extends AppCompatActivity {
                     @Override
                     public void onClick(QMUIDialog dialog, int index) {
                         Toast.makeText(modify_information.this, "删除成功", Toast.LENGTH_SHORT).show();
-                        removePhoto(mData.get(position).getId(),position);
+                        removePhoto(mData.get(position).getId(), position);
                         dialog.dismiss();
                     }
                 })
@@ -217,11 +218,8 @@ public class modify_information extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fold:
-                if (bool) {
-                    showMessagePositiveDialog();
-                } else {
-                    this.finish();overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
-                }
+                this.finish();
+                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                 break;
             case R.id.subtitle:
                 okgo();
@@ -255,6 +253,7 @@ public class modify_information extends AppCompatActivity {
                     @Override
                     public void onClick(QMUIDialog dialog, int index) {
                         dialog.dismiss();
+                        System.out.println("这里");
                         finish();
                         overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
                     }
@@ -378,6 +377,11 @@ public class modify_information extends AppCompatActivity {
                                         okgoima(0);
                                         break;
                                     case 1:
+                                        tipDialog = new QMUITipDialog.Builder(modify_information.this)
+                                                .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
+                                                .setTipWord("正在加载")
+                                                .create();
+                                        tipDialog.show();
                                         okgoima(1);
                                         break;
                                 }
@@ -422,16 +426,16 @@ public class modify_information extends AppCompatActivity {
                                 if (type == 0) {
                                     name = "avatar" + ".jpg";
                                     String upload = OSSSet.Upload(bucket, phone + "/" + name, picturePath);
-                                    if(upload.equals("UploadSuccess")){
-                                        avatarUrl = " http://hertz52-user.oss-cn-shenzhen.aliyuncs.com/"+phone + "/" + name;
+                                    if (upload.equals("UploadSuccess")) {
+                                        avatarUrl = "http://hertz52-user.oss-cn-shenzhen.aliyuncs.com/" + phone + "/" + name;
                                     }
                                 } else {
                                     name = "photo" + mData.size() + ".jpg";
                                     String upload = OSSSet.Upload(bucket, phone + "/" + name, picturePath);
-                                    if(upload.equals("UploadSuccess")){
+                                    if (upload.equals("UploadSuccess")) {
                                         System.out.println(upload);
                                     }
-                                    addPhoto(phone + name);
+                                    addPhoto("http://hertz52-user.oss-cn-shenzhen.aliyuncs.com/" + phone + "/" + name);
                                 }
                             }
 
@@ -460,11 +464,15 @@ public class modify_information extends AppCompatActivity {
                         Preview prexiew = gson.fromJson(response.body(), Preview.class);
 
                         if (prexiew.getCode() == 0) {
+                            int id = prexiew.getData().get("id").getAsInt();
+                            Modify modify = new Modify(id, url, "1");
+                            mData.add(mData.size() - 1, modify);
+                            mAdapters.notifyDataSetChanged();
 
+                            tipDialog.dismiss();
                             Toast.makeText(modify_information.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
-                            init();
-
                         } else {
+                            tipDialog.dismiss();
                             Toast.makeText(modify_information.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
                         }
 
@@ -473,7 +481,7 @@ public class modify_information extends AppCompatActivity {
 
     }
 
-    private void removePhoto(int id,int position) {
+    private void removePhoto(int id, int position) {
         MyApp application = ((MyApp) this.getApplicationContext());
         OkGo.<String>post(application.getUrl() + "/app/user/removePhoto?token=" + token)
                 .params("userId", userid)
@@ -502,10 +510,7 @@ public class modify_information extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if (bool) {
-            showMessagePositiveDialog();
-        } else {
-            this.finish();overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
-        }
+        finish();
+        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
     }
 }

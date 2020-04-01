@@ -268,19 +268,23 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/imageView11"
                     android:layout_alignParentStart="true"
+                    android:layout_alignParentBottom="true"
                     android:layout_marginStart="@dimen/dp_20"
                     android:layout_marginTop="@dimen/dp_20"
+                    android:layout_marginBottom="@dimen/dp_20"
                     android:gravity="center_vertical"
                     android:text="我是芭比王国的大巫师" />
 
                 <ImageView
                     android:id="@+id/imageView6"
-                    android:layout_width="@dimen/dp_50"
+                    android:layout_width="@dimen/dp_40"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
+                    android:layout_below="@+id/imageView11"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentBottom="true"
+                    android:layout_marginTop="@dimen/dp_20"
                     android:layout_marginEnd="@dimen/dp_20"
+                    android:layout_marginBottom="@dimen/dp_20"
                     app:srcCompat="@drawable/y4" />
 
             </RelativeLayout>

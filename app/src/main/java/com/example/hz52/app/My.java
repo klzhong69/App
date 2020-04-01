@@ -18,16 +18,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.app.ActivityOptionsCompat;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
-import com.example.hz52.app.Entity.Findlist;
 import com.example.hz52.app.Entity.MyApp;
 import com.example.hz52.app.cofig.Preview;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;

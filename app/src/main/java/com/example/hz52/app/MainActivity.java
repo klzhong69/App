@@ -2,7 +2,6 @@ package com.example.hz52.app;
 
 import android.Manifest;
 import android.animation.ObjectAnimator;
-import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,14 +13,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.provider.Settings;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -29,7 +26,6 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
@@ -399,8 +395,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
     @Override
     public void onResume() {
         super.onResume();
-
-
 
         if(!isIgnoringBatteryOptimizations()){
             requestIgnoreBatteryOptimizations();
