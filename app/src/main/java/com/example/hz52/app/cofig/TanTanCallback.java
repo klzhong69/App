@@ -7,11 +7,17 @@ import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.hz52.app.Home;
 import com.example.hz52.app.R;
+import com.example.hz52.app.chatroom;
 import com.mcxtzhang.commonadapter.rv.ViewHolder;
 import com.mcxtzhang.layoutmanager.swipecard.RenRenCallback;
 
 import java.util.List;
+import java.util.concurrent.Callable;
+
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
 
 import static com.mcxtzhang.layoutmanager.swipecard.CardConfig.MAX_SHOW_COUNT;
 import static com.mcxtzhang.layoutmanager.swipecard.CardConfig.SCALE_GAP;
@@ -19,7 +25,7 @@ import static com.mcxtzhang.layoutmanager.swipecard.CardConfig.TRANS_Y_GAP;
 
 public class TanTanCallback extends RenRenCallback {
     private static final int MAX_ROTATION = 15;
-
+    private int type =0;
     //2016 12 26 考虑 探探垂直上下方向滑动，不删除卡片，
     //判断 此次滑动方向是否是竖直的 ，水平方向上的误差(阈值，默认我给了50dp)
     int mHorizontalDeviation;
@@ -28,7 +34,7 @@ public class TanTanCallback extends RenRenCallback {
     public TanTanCallback(RecyclerView rv, RecyclerView.Adapter adapter, List datas) {
         //this(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT, rv, adapter, datas);
         super(rv, adapter, datas);
-        mHorizontalDeviation = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50, mRv.getContext().getResources().getDisplayMetrics());
+        mHorizontalDeviation = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, mRv.getContext().getResources().getDisplayMetrics());
     }
 
     public TanTanCallback(int dragDirs, int swipeDirs, RecyclerView rv, RecyclerView.Adapter adapter, List datas) {
@@ -93,9 +99,16 @@ public class TanTanCallback extends RenRenCallback {
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
         super.onSwiped(viewHolder, direction);
-        //如果不需要循环删除
-        //mDatas.remove(viewHolder.getLayoutPosition());
-        //mAdapter.notifyDataSetChanged();
+        int postion = viewHolder.getLayoutPosition();
+
+        Observable<Integer> observable = Observable.defer(new Callable<ObservableSource<? extends Integer>>() {
+            @Override
+            public ObservableSource<? extends Integer> call() throws Exception {
+                return Observable.just(postion);
+            }
+        });
+        observable.subscribe(Home.observer);
+
 
        /*if (isLeftSwipe){
             Toast.makeText(mRv.getContext(), "左滑删除", Toast.LENGTH_SHORT).show();
@@ -155,17 +168,16 @@ public class TanTanCallback extends RenRenCallback {
                 child.setRotation(xFraction * MAX_ROTATION);
 
                 //自己感受一下吧 Alpha
-                /*if (viewHolder instanceof ViewHolder) {
+               /* if (viewHolder instanceof ViewHolder) {
                     ViewHolder holder = (ViewHolder) viewHolder;
                     if (dX > 0) {
                         //露出左边，比心
-                        holder.setAlpha(R.id.iv_love, xFraction);
+                        Toast.makeText(mRv.getContext(), "左滑删除", Toast.LENGTH_SHORT).show();
                     } else if (dX<0){
                         //露出右边，滚犊子
-                        holder.setAlpha(R.id.iv_del, -xFraction);
+                        Toast.makeText(mRv.getContext(), "右滑删除", Toast.LENGTH_SHORT).show();
                     }else {
-                        holder.setAlpha(R.id.iv_love, 0);
-                        holder.setAlpha(R.id.iv_del, 0);
+                        Toast.makeText(mRv.getContext(), "默认", Toast.LENGTH_SHORT).show();
                     }
 
 

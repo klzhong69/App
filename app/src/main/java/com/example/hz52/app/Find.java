@@ -2,9 +2,8 @@ package com.example.hz52.app;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
+import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -22,15 +21,18 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 
 import com.example.hz52.app.Adapter.FindListAdapter;
+import com.example.hz52.app.Adapter.FindmakeAdapter;
 import com.example.hz52.app.Entity.Findlist;
+import com.example.hz52.app.Entity.Findmake;
 import com.example.hz52.app.Entity.MyApp;
 import com.example.hz52.app.cofig.Preview;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
-import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
+import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -39,10 +41,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 import me.leefeng.lfrecyclerview.LFRecyclerView;
 import me.leefeng.lfrecyclerview.OnItemClickListener;
 
-public class Find extends Fragment implements OnItemClickListener, LFRecyclerView.LFRecyclerViewListener, LFRecyclerView.LFRecyclerViewScrollChange{
+public class Find extends Fragment implements OnItemClickListener, LFRecyclerView.LFRecyclerViewListener, LFRecyclerView.LFRecyclerViewScrollChange {
 
 
     @BindView(R.id.view2)
@@ -57,10 +61,26 @@ public class Find extends Fragment implements OnItemClickListener, LFRecyclerVie
     LFRecyclerView recycler15;
     @BindView(R.id.refreshLayout)
     ConstraintLayout refreshLayout;
+    @BindView(R.id.textView117)
+    TextView textView117;
+    @BindView(R.id.textView118)
+    TextView textView118;
+    @BindView(R.id.imageView18)
+    QMUIRadiusImageView imageView18;
     private Unbinder unbinder;
     private ArrayList<Findlist> mArrayList;
+    private ArrayList<Findmake> mArrayLists = new ArrayList<Findmake>();
     private Context context;
-    private int a = 0;
+    private int are = 0;
+    private int bre = 0;
+    private int card = 0;
+    private String userid;
+    private String token;
+    private String nickname;
+    private String avatarUrl;
+    private FindListAdapter mAdapter;
+    private FindmakeAdapter mAdapters;
+    public static Observer<JsonObject> observer;
 
     @Nullable
     @Override
@@ -70,12 +90,10 @@ public class Find extends Fragment implements OnItemClickListener, LFRecyclerVie
         context = getContext();
 
         Window window = Objects.requireNonNull(getActivity()).getWindow();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            window.setStatusBarColor(Color.TRANSPARENT);
-            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-        }
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.setStatusBarColor(Color.TRANSPARENT);
+        window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
 
         View decor = window.getDecorView();
         int ui = decor.getSystemUiVisibility();
@@ -88,13 +106,37 @@ public class Find extends Fragment implements OnItemClickListener, LFRecyclerVie
         para1.height = startup_page.height;
         view2.setLayoutParams(para1);
 
+        SharedPreferences sp = getActivity().getSharedPreferences("User", Context.MODE_PRIVATE);
+        userid = sp.getString("userid", "");
+        token = sp.getString("token", "");
+        nickname = sp.getString("nickname", "");
+        avatarUrl = sp.getString("avatarUrl", "");
+
+        if (card == 0) {
+            textView115.setVisibility(View.VISIBLE);
+            textView116.setVisibility(View.VISIBLE);
+            textView117.setVisibility(View.GONE);
+            textView118.setVisibility(View.GONE);
+            imageView18.setVisibility(View.GONE);
+        } else {
+            textView115.setVisibility(View.GONE);
+            textView116.setVisibility(View.GONE);
+            textView117.setVisibility(View.VISIBLE);
+            textView118.setVisibility(View.VISIBLE);
+            imageView18.setVisibility(View.VISIBLE);
+        }
+
+        okgo(0, 0);
         initData();
+
         init();
+
         return view;
 
     }
 
     private void init() {
+
         recycler15.setLoadMore(true);//设置为可上拉加载,默认false,调用这个方法false可以去掉底部的“加载更多”
         recycler15.setRefresh(true);// 设置为可下拉刷新,默认true
         recycler15.setAutoLoadMore(true);//设置滑动到底部自动加载,默认false
@@ -102,17 +144,21 @@ public class Find extends Fragment implements OnItemClickListener, LFRecyclerVie
         recycler15.setLFRecyclerViewListener(this);//下拉刷新上拉加载监听
         recycler15.setScrollChangeListener(this);//滑动监听
         recycler15.setItemAnimator(new DefaultItemAnimator());
-        FindListAdapter mAdapter = new FindListAdapter(getContext(), mArrayList);
-        //设置适配器adapter
-        recycler15.setAdapter(mAdapter);
 
-        /**
-         * 既然是动画，就会有时间，我们把动画执行时间变大一点来看一看效果
-         */
+        if (card == 0) {
+            mAdapter = new FindListAdapter(getContext(), mArrayList);
+            //设置适配器adapter
+            recycler15.setAdapter(mAdapter);
+        } else {
+            mAdapters = new FindmakeAdapter(getContext(), mArrayLists);
+            //设置适配器adapter
+            recycler15.setAdapter(mAdapters);
+        }
         DefaultItemAnimator defaultItemAnimator = new DefaultItemAnimator();
         defaultItemAnimator.setAddDuration(200);
         defaultItemAnimator.setRemoveDuration(200);
         recycler15.setItemAnimator(defaultItemAnimator);
+
     }
 
     private void initData() {
@@ -161,12 +207,94 @@ public class Find extends Fragment implements OnItemClickListener, LFRecyclerVie
                                 }
 
                             } else {
-                                Toast.makeText(getContext(), prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
+                                recycler15.setFootText("没有数据");
                             }
+                        } else {
+                            Toast.makeText(getContext(), prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
                         }
-
                     }
                 });
+
+    }
+
+    private void okgo(int page, int inder) {
+        MyApp application = ((MyApp) Objects.requireNonNull(getActivity()).getApplicationContext());
+
+        OkGo.<String>post(application.getUrl() + "/app/user/getBroadcast?token=" + token)
+                .params("page", page)
+                .params("pageSize", 10)
+                .execute(new StringCallback() {
+
+                    @Override
+                    public void onSuccess(Response<String> response) {
+
+                        Gson gson = new Gson();
+                        Preview prexiew = gson.fromJson(response.body(), Preview.class);
+
+                        if (prexiew.getCode() == 0) {
+
+                            JsonArray broadcasts = prexiew.getData().getAsJsonArray("broadcasts");
+
+                            if (broadcasts.size() > 0) {
+                                for (int i = 0; i < broadcasts.size(); i++) {
+                                    String userId = broadcasts.get(i).getAsJsonObject().get("userId").getAsString();
+                                    String nickname = broadcasts.get(i).getAsJsonObject().get("nickname").getAsString();
+                                    String content = broadcasts.get(i).getAsJsonObject().get("content").getAsString();
+                                    String avatarUrl = broadcasts.get(i).getAsJsonObject().get("avatarUrl").getAsString();
+                                    String createdTime = broadcasts.get(i).getAsJsonObject().get("createdTime").getAsString();
+                                    Findmake i1 = new Findmake(userId, avatarUrl, "", "", nickname, content);
+
+                                    if (inder == 0) {
+                                        mArrayLists.add(i1);
+                                    } else {
+                                        mAdapters.addData(mArrayLists.size(), i1);
+                                    }
+
+
+                                }
+                            } else {
+                                recycler15.setFootText("没有数据");
+                            }
+
+                        } else {
+
+                            Toast.makeText(getContext(), prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        observer = new Observer<JsonObject>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(JsonObject JsonObject) {
+                System.out.println("广播" + JsonObject);
+                Findmake i1 = new Findmake(JsonObject.get("userId").getAsString(), JsonObject.get("avatarUrl").getAsString(), "", "", JsonObject.get("nickname").getAsString(), JsonObject.get("content").getAsString());
+                mAdapters.addData(0, i1);
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+
+
+        };
 
     }
 
@@ -198,12 +326,16 @@ public class Find extends Fragment implements OnItemClickListener, LFRecyclerVie
 
     @Override
     public void onRefresh() {
-
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 recycler15.stopRefresh(true);
-                okgos(0);
+                if (card == 0) {
+                    okgos(0);
+                } else {
+                    okgo(0, 1);
+                }
+
             }
         }, 2000);
     }
@@ -215,11 +347,18 @@ public class Find extends Fragment implements OnItemClickListener, LFRecyclerVie
             @Override
             public void run() {
                 recycler15.stopLoadMore();
-                a++;
-                //okgos(a);
+                if (card == 0) {
+                    are++;
+                    //okgos(a);
+                } else {
+                    bre++;
+                    okgo(bre, 1);
+                }
+
             }
         }, 2000);
     }
+
 
     @Override
     public void onRecyclerViewScrollChange(View view, int i, int i1) {
@@ -236,10 +375,34 @@ public class Find extends Fragment implements OnItemClickListener, LFRecyclerVie
 
     }
 
-    @OnClick(R.id.textView116)
-    public void onViewClicked() {
-        Intent intent2 = new Intent(getContext(), find_make.class);
-        startActivity(intent2);
-        Objects.requireNonNull(getActivity()).overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+    @OnClick({R.id.textView115, R.id.textView116, R.id.textView117, R.id.textView118, R.id.imageView18})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.textView115:
+            case R.id.textView117:
+                card = 0;
+                init();
+                textView115.setVisibility(View.VISIBLE);
+                textView116.setVisibility(View.VISIBLE);
+                textView117.setVisibility(View.GONE);
+                textView118.setVisibility(View.GONE);
+                imageView18.setVisibility(View.GONE);
+                break;
+            case R.id.textView116:
+            case R.id.textView118:
+                card = 1;
+                init();
+                textView117.setVisibility(View.VISIBLE);
+                textView118.setVisibility(View.VISIBLE);
+                textView115.setVisibility(View.GONE);
+                textView116.setVisibility(View.GONE);
+                imageView18.setVisibility(View.VISIBLE);
+                break;
+            case R.id.imageView18:
+                Intent intent2 = new Intent(getContext(), find_make.class);
+                startActivity(intent2);
+                Objects.requireNonNull(getActivity()).overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                break;
+        }
     }
 }

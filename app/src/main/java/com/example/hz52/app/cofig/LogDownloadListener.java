@@ -29,18 +29,12 @@ public class LogDownloadListener extends DownloadListener {
 
     @Override
     public void onProgress(Progress progress) {
-        for(int i=0;i<MusicModel.mArray.size();i++){
-            if(MusicModel.mArray.get(i).getId().toString().equals(progress.tag)){
-                music = MusicModel.mArray.get(i);
-                music.setTxt(progress.fraction*100+"%");
-            }
-        }
-        System.out.println("onProgress: " + progress);
+        //System.out.println("onProgress: " + progress);
     }
 
     @Override
     public void onError(Progress progress) {
-        System.out.println("onError: " + progress);
+        //System.out.println("onError: " + progress);
         progress.exception.printStackTrace();
     }
 
@@ -53,6 +47,11 @@ public class LogDownloadListener extends DownloadListener {
         mu.setFile(file.getPath());
         mMusicDao.insert(mu);
 
+        for(int i=0;i<MusicModel.mArrayList.size();i++){
+            if(MusicModel.mArrayList.get(i).getId().toString().equals(progress.tag)){
+                MusicModel.mArrayList.get(i).setType("1");
+            }
+        }
         System.out.println("onFinish: " + progress);
     }
 

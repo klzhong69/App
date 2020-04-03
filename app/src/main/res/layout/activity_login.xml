@@ -206,70 +206,70 @@
         app:layout_constraintStart_toEndOf="@+id/textView158"
         app:layout_constraintTop_toTopOf="@+id/textView158" />
 
-    <ImageView
-        android:id="@+id/imageView132"
-        android:layout_width="@dimen/dp_50"
-        android:layout_height="@dimen/dp_50"
-        android:layout_marginStart="@dimen/dp_100"
-        android:layout_marginBottom="52dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/weixin" />
+    <!--  <ImageView
+         android:id="@+id/imageView132"
+         android:layout_width="@dimen/dp_50"
+         android:layout_height="@dimen/dp_50"
+         android:layout_marginStart="@dimen/dp_100"
+         android:layout_marginBottom="52dp"
+         app:layout_constraintBottom_toBottomOf="parent"
+         app:layout_constraintStart_toStartOf="parent"
+         app:srcCompat="@drawable/weixin" />
 
-    <ImageView
-        android:id="@+id/imageView133"
-        android:layout_width="@dimen/dp_50"
-        android:layout_height="@dimen/dp_50"
-        android:layout_marginStart="@dimen/dp_100"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView132"
-        app:layout_constraintStart_toEndOf="@+id/imageView132"
-        app:layout_constraintTop_toTopOf="@+id/imageView132"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/zhifubao" />
+     <ImageView
+         android:id="@+id/imageView133"
+         android:layout_width="@dimen/dp_50"
+         android:layout_height="@dimen/dp_50"
+         android:layout_marginStart="@dimen/dp_100"
+         app:layout_constraintBottom_toBottomOf="@+id/imageView132"
+         app:layout_constraintStart_toEndOf="@+id/imageView132"
+         app:layout_constraintTop_toTopOf="@+id/imageView132"
+         app:layout_constraintVertical_bias="0.0"
+         app:srcCompat="@drawable/zhifubao" />
 
-    <ImageView
-        android:id="@+id/imageView134"
-        android:layout_width="@dimen/dp_50"
-        android:layout_height="@dimen/dp_50"
-        android:layout_marginStart="@dimen/dp_100"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView133"
-        app:layout_constraintStart_toEndOf="@+id/imageView133"
-        app:layout_constraintTop_toTopOf="@+id/imageView133"
-        app:srcCompat="@drawable/weibo" />
+     <ImageView
+         android:id="@+id/imageView134"
+         android:layout_width="@dimen/dp_50"
+         android:layout_height="@dimen/dp_50"
+         android:layout_marginStart="@dimen/dp_100"
+         app:layout_constraintBottom_toBottomOf="@+id/imageView133"
+         app:layout_constraintStart_toEndOf="@+id/imageView133"
+         app:layout_constraintTop_toTopOf="@+id/imageView133"
+         app:srcCompat="@drawable/weibo" />
 
-    <TextView
-        android:id="@+id/textView160"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:text="其他快捷登陆"
-        app:layout_constraintBottom_toTopOf="@+id/imageView133"
-        app:layout_constraintEnd_toEndOf="@+id/imageView133"
-        app:layout_constraintStart_toStartOf="@+id/imageView133" />
+     <TextView
+         android:id="@+id/textView160"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_marginBottom="16dp"
+         android:text="其他快捷登陆"
+         app:layout_constraintBottom_toTopOf="@+id/imageView133"
+         app:layout_constraintEnd_toEndOf="@+id/imageView133"
+         app:layout_constraintStart_toStartOf="@+id/imageView133" />
 
-    <ImageView
-        android:id="@+id/imageView135"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_marginStart="@dimen/dp_20"
-        android:layout_marginEnd="@dimen/dp_10"
-        android:scaleType="centerCrop"
-        app:layout_constraintBottom_toBottomOf="@+id/textView160"
-        app:layout_constraintEnd_toStartOf="@+id/textView160"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView160"
-        app:srcCompat="@drawable/back" />
+     <ImageView
+         android:id="@+id/imageView135"
+         android:layout_width="0dp"
+         android:layout_height="1dp"
+         android:layout_marginStart="@dimen/dp_20"
+         android:layout_marginEnd="@dimen/dp_10"
+         android:scaleType="centerCrop"
+         app:layout_constraintBottom_toBottomOf="@+id/textView160"
+         app:layout_constraintEnd_toStartOf="@+id/textView160"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toTopOf="@+id/textView160"
+         app:srcCompat="@drawable/back" />
 
-    <ImageView
-        android:id="@+id/imageView136"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_marginStart="@dimen/dp_10"
-        android:layout_marginEnd="@dimen/dp_20"
-        android:scaleType="centerCrop"
-        app:layout_constraintBottom_toBottomOf="@+id/textView160"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView160"
-        app:layout_constraintTop_toTopOf="@+id/textView160"
-        app:srcCompat="@drawable/back" />
+     <ImageView
+         android:id="@+id/imageView136"
+         android:layout_width="0dp"
+         android:layout_height="1dp"
+         android:layout_marginStart="@dimen/dp_10"
+         android:layout_marginEnd="@dimen/dp_20"
+         android:scaleType="centerCrop"
+         app:layout_constraintBottom_toBottomOf="@+id/textView160"
+         app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintStart_toEndOf="@+id/textView160"
+         app:layout_constraintTop_toTopOf="@+id/textView160"
+         app:srcCompat="@drawable/back" />-->
 </androidx.constraintlayout.widget.ConstraintLayout>

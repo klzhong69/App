@@ -11,6 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.TextPaint;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -56,6 +57,14 @@ import com.example.hz52.app.dao.mConverDao;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.lzf.easyfloat.EasyFloat;
+import com.lzf.easyfloat.anim.AppFloatDefaultAnimator;
+import com.lzf.easyfloat.anim.DefaultAnimator;
+import com.lzf.easyfloat.enums.ShowPattern;
+import com.lzf.easyfloat.enums.SidePattern;
+import com.lzf.easyfloat.interfaces.OnInvokeView;
+import com.lzf.easyfloat.interfaces.OnPermissionResult;
+import com.lzf.easyfloat.permission.PermissionUtils;
 import com.opensource.svgaplayer.SVGADrawable;
 import com.opensource.svgaplayer.SVGADynamicEntity;
 import com.opensource.svgaplayer.SVGAImageView;
@@ -1031,12 +1040,14 @@ public class chatroom extends AppCompatActivity {
                 .create(mCurrentDialogStyle).show();
     }
 
-    /**
-     * Activity创建或者从后台重新回到前台时被调用
-     */
-    @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onDestroy() {
+        super.onDestroy();
+        MqttMessageService.unsubscribeToTopic("room/"+mChannelId);
+        if (mRtcEngine != null) {
+            mRtcEngine.leaveChannel();
+        }
+        RtcEngine.destroy();
+
     }
 
     @Override
@@ -1055,10 +1066,6 @@ public class chatroom extends AppCompatActivity {
             public void onNext(Integer integer) {
                 switch (integer) {
                     case 0:
-                        if (mRtcEngine != null) {
-                            mRtcEngine.leaveChannel();
-                        }
-                        RtcEngine.destroy();
                         finish();
                         overridePendingTransition(R.anim.scale_in_center, R.anim.scale_out_center);
                         break;
@@ -1441,6 +1448,9 @@ public class chatroom extends AppCompatActivity {
         builder.addItem("悬浮窗模式");
         builder.build().show();
     }
+
+
+
 
 
     /**

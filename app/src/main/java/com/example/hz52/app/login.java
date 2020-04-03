@@ -3,6 +3,8 @@ package com.example.hz52.app;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -55,18 +57,6 @@ public class login extends AppCompatActivity {
     TextView textView158;
     @BindView(R.id.textView159)
     TextView textView159;
-    @BindView(R.id.imageView132)
-    ImageView imageView132;
-    @BindView(R.id.imageView133)
-    ImageView imageView133;
-    @BindView(R.id.imageView134)
-    ImageView imageView134;
-    @BindView(R.id.textView160)
-    TextView textView160;
-    @BindView(R.id.imageView135)
-    ImageView imageView135;
-    @BindView(R.id.imageView136)
-    ImageView imageView136;
     @BindView(R.id.fold)
     ImageView fold;
     @BindView(R.id.title)
@@ -90,14 +80,24 @@ public class login extends AppCompatActivity {
 
         Intent intent = getIntent();
         state = intent.getIntExtra("type", 0);
-        if(state == 1){
-            fold.setVisibility(View.GONE);
-        }
 
 
     }
 
-    @OnClick({R.id.fold,R.id.but, R.id.textView156, R.id.textView157, R.id.textView159, R.id.imageView132, R.id.imageView133, R.id.imageView134})
+    /** 判断网络是否连接 */
+    public boolean isConnectIsNormal() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) this.getApplicationContext()
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo info = connectivityManager.getActiveNetworkInfo();
+        if (info != null && info.isAvailable()) {
+            String name = info.getTypeName();
+            return true;
+        } else {
+            Toast.makeText(login.this,  " 无网络连接", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+    }
+    @OnClick({R.id.fold,R.id.but, R.id.textView156, R.id.textView157, R.id.textView159})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fold:
@@ -105,12 +105,14 @@ public class login extends AppCompatActivity {
                 overridePendingTransition(R.animator.anim_bottom_in, R.animator.anim_bottom_out);
                 break;
             case R.id.but:
-                tipDialog = new QMUITipDialog.Builder(this)
-                        .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
-                        .setTipWord("正在加载")
-                        .create();
-                tipDialog.show();
-                okgo();
+                if(isConnectIsNormal()) {
+                    tipDialog = new QMUITipDialog.Builder(this)
+                            .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
+                            .setTipWord("正在加载")
+                            .create();
+                    tipDialog.show();
+                    okgo();
+                }
                 break;
             case R.id.textView156:
                 Intent intent2 = new Intent(login.this, forget_password.class);
@@ -127,15 +129,6 @@ public class login extends AppCompatActivity {
                 intent4.putExtra("about", 0);
                 startActivity(intent4);
                 overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
-                break;
-            case R.id.imageView132:
-                type = 2;
-                break;
-            case R.id.imageView133:
-                type = 3;
-                break;
-            case R.id.imageView134:
-                type = 4;
                 break;
         }
     }

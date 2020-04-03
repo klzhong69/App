@@ -1,12 +1,17 @@
 package com.example.hz52.app;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Rect;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -28,7 +33,8 @@ public class startup_page extends AppCompatActivity {
     private CountDownTimer countDownTimer;
     public static int height;
     public static int cardheight;
-
+    private String TAG = "MQTT";
+    public static String intername = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,12 +69,42 @@ public class startup_page extends AppCompatActivity {
         int top = outSize.top;
         int right = outSize.right;
         int bottom = outSize.bottom;
-        cardheight = bottom-height-200;
-
-
+        cardheight = bottom-height-dip2px(this,80);
 
         System.out.println("系统栏高度"+height);
-        System.out.println("left"+left+"/"+"top"+top+"/"+"right"+right+"/"+"bottom"+bottom);
+        isConnectIsNormal();
+    }
+
+    /** 判断网络是否连接 */
+    public boolean isConnectIsNormal() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) this.getApplicationContext()
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo info = connectivityManager.getActiveNetworkInfo();
+        if (info != null && info.isAvailable()) {
+            String name = info.getTypeName();
+            intername= name;
+            return true;
+        } else {
+            Toast.makeText(startup_page.this,  " 无网络连接", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+    }
+
+    /**
+     * 根据手机的分辨率从 dp 的单位 转成为 px(像素)
+     */
+    public static int dip2px(Context context, float dpValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        System.out.println("dpi"+scale);
+        return (int) (dpValue * scale + 0.5f);
+    }
+
+    /**
+     * 根据手机的分辨率从 px(像素) 的单位 转成为 dp
+     */
+    public static int px2dip(Context context, float pxValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (pxValue / scale + 0.5f);
     }
 
     @OnClick({R.id.imageViewi3, R.id.textView188, R.id.textView189})

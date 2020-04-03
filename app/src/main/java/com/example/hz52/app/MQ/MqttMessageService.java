@@ -10,6 +10,7 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 
 import com.example.hz52.app.Entity.MyApp;
+import com.example.hz52.app.Find;
 import com.example.hz52.app.MainActivity;
 import com.example.hz52.app.Sqlentity.Chat;
 import com.example.hz52.app.chat;
@@ -225,7 +226,7 @@ public class MqttMessageService extends Service {
                 return Observable.just(mess.getData());
             }
         });
-        observable4.subscribe(find_make.observer);
+        observable4.subscribe(Find.observer);
     }
 
     /**
@@ -346,6 +347,7 @@ public class MqttMessageService extends Service {
                 @Override
                 public void onSuccess(IMqttToken asyncActionToken) {
                     Log.i(TAG, "MQTT退订消息成功：" + subTopic);
+
                 }
 
                 @Override

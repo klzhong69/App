@@ -136,17 +136,15 @@ public class List extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.list_leaderboard, container, false);
         unbinder = ButterKnife.bind(this, view);
-        window = getActivity().getWindow();
+        window = Objects.requireNonNull(getActivity()).getWindow();
         SharedPreferences sp = Objects.requireNonNull(getContext()).getSharedPreferences("User", Context.MODE_PRIVATE);
         userid = sp.getString("userid", "");
         context = getContext();
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            window.setStatusBarColor(Color.TRANSPARENT);
-            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-        }
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.setStatusBarColor(Color.TRANSPARENT);
+        window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
 
         View decor = window.getDecorView();
         int ui = decor.getSystemUiVisibility();
@@ -187,6 +185,7 @@ public class List extends Fragment {
         });
 
         refreshLayout.autoRefresh();
+
         observer = new Observer<JsonArray>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -194,9 +193,52 @@ public class List extends Fragment {
             }
 
             @Override
-            public void onNext(JsonArray integer) {
+            public void onNext(JsonArray jsonArray) {
+                try {
+                    if (rankListCategory == 1) {
+                        textView93.setText("财富值");
+                        textView92.setText("财富值");
+                        textView94.setText("财富值");
+                    } else if (rankListCategory == 2) {
+                        textView93.setText("魅力值");
+                        textView92.setText("魅力值");
+                        textView94.setText("魅力值");
+                    }
 
-                initData(integer);
+                    Glide.with(Objects.requireNonNull(getContext())).load(jsonArray.get(0).getAsJsonObject().get("avatarUrl").getAsString()).into(imageView87);
+                    textView104.setText(jsonArray.get(0).getAsJsonObject().get("nickname").getAsString());
+                    textView105.setText(jsonArray.get(0).getAsJsonObject().get("count").getAsString());
+                    Glide.with(Objects.requireNonNull(getContext())).load(jsonArray.get(1).getAsJsonObject().get("avatarUrl").getAsString()).into(imageView28);
+                    textView102.setText(jsonArray.get(1).getAsJsonObject().get("nickname").getAsString());
+                    textView103.setText(jsonArray.get(1).getAsJsonObject().get("count").getAsString());
+                    Glide.with(Objects.requireNonNull(getContext())).load(jsonArray.get(2).getAsJsonObject().get("avatarUrl").getAsString()).into(imageView88);
+                    textView106.setText(jsonArray.get(2).getAsJsonObject().get("nickname").getAsString());
+                    textView107.setText(jsonArray.get(2).getAsJsonObject().get("count").getAsString());
+
+                    for (int i = 0; i < jsonArray.size(); i++) {
+                        if (jsonArray.get(i).getAsJsonObject().get("uniqueId").getAsLong() == Long.parseLong(userid)) {
+                            if(i>9){
+                                textView114.setText("距离上榜");
+                            }else if(i==0){
+                                textView114.setText("");
+                            }else{
+                                textView114.setText("距离上一名");
+                            }
+                            textView67.setText(i + 1 + "");
+                            Glide.with(Objects.requireNonNull(getContext())).load(jsonArray.get(i).getAsJsonObject().get("avatarUrl").getAsString()).into(imageView21);
+                            textView66.setText(jsonArray.get(i).getAsJsonObject().get("nickname").getAsString());
+                            textView68.setText(jsonArray.get(i).getAsJsonObject().get("count").getAsString());
+                            if (i == 0) {
+                                textView113.setText("");
+                            } else {
+                                Long lon = jsonArray.get(i - 1).getAsJsonObject().get("count").getAsLong() - jsonArray.get(i).getAsJsonObject().get("count").getAsLong();
+                                textView113.setText(lon + "");
+                            }
+
+                        }
+
+                    }
+                } catch (Exception ignored) {}
 
             }
 
@@ -212,62 +254,6 @@ public class List extends Fragment {
         };
 
         return view;
-    }
-
-    private void initData(JsonArray jsonArray) {
-        try {
-            if (rankListCategory == 1) {
-                textView93.setText("财富值");
-                textView92.setText("财富值");
-                textView94.setText("财富值");
-            } else if (rankListCategory == 2) {
-                textView93.setText("魅力值");
-                textView92.setText("魅力值");
-                textView94.setText("魅力值");
-            }
-            for (int i = 0; i < jsonArray.size(); i++) {
-                if (i == 0) {
-                    Glide.with(this).load(jsonArray.get(i).getAsJsonObject().get("avatarUrl").getAsString()).into(imageView87);
-                    textView104.setText(jsonArray.get(i).getAsJsonObject().get("nickname").getAsString());
-                    textView105.setText(jsonArray.get(i).getAsJsonObject().get("count").getAsString());
-
-                } else if (i == 1) {
-                    Glide.with(this).load(jsonArray.get(i).getAsJsonObject().get("avatarUrl").getAsString()).into(imageView28);
-                    textView102.setText(jsonArray.get(i).getAsJsonObject().get("nickname").getAsString());
-                    textView103.setText(jsonArray.get(i).getAsJsonObject().get("count").getAsString());
-
-                } else if (i == 2) {
-                    Glide.with(this).load(jsonArray.get(i).getAsJsonObject().get("avatarUrl").getAsString()).into(imageView88);
-                    textView106.setText(jsonArray.get(i).getAsJsonObject().get("nickname").getAsString());
-                    textView107.setText(jsonArray.get(i).getAsJsonObject().get("count").getAsString());
-
-                }
-
-                if (jsonArray.get(i).getAsJsonObject().get("uniqueId").getAsLong() == Long.parseLong(userid)) {
-                    if(i>9){
-                        textView114.setText("距离上榜");
-                    }else{
-                        textView114.setText("距离上一名");
-                    }
-                    textView67.setText(i + 1 + "");
-                    Glide.with(this).load(jsonArray.get(i).getAsJsonObject().get("avatarUrl").getAsString()).into(imageView21);
-                    textView66.setText(jsonArray.get(i).getAsJsonObject().get("nickname").getAsString());
-                    textView68.setText(jsonArray.get(i).getAsJsonObject().get("count").getAsString());
-                    if (i == 0) {
-                        textView113.setText(0 + "");
-                    } else {
-                        Long lon = jsonArray.get(i - 1).getAsJsonObject().get("count").getAsLong() - jsonArray.get(i).getAsJsonObject().get("count").getAsLong();
-                        textView113.setText(lon + "");
-                    }
-
-                }
-
-            }
-        } catch (Exception e) {
-
-        }
-
-
     }
 
     @Override

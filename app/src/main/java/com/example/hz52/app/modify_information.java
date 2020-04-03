@@ -218,8 +218,11 @@ public class modify_information extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fold:
-                this.finish();
-                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+
+                    finish();
+                    overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+
+
                 break;
             case R.id.subtitle:
                 okgo();
@@ -424,18 +427,19 @@ public class modify_information extends AppCompatActivity {
                             if (!AccessKeyId.equals("")) {
                                 OSSSet.OSSClient(modify_information.this, AccessKeyId, AccessKeySecret, SecurityToken, region, bucket);
                                 if (type == 0) {
-                                    name = "avatar" + ".jpg";
-                                    String upload = OSSSet.Upload(bucket, phone + "/" + name, picturePath);
+                                    String upload = OSSSet.Upload(bucket, phone + "/" + "avatar.jpg", picturePath);
                                     if (upload.equals("UploadSuccess")) {
-                                        avatarUrl = "http://hertz52-user.oss-cn-shenzhen.aliyuncs.com/" + phone + "/" + name;
+                                        avatarUrl = "http://hertz52-user.oss-cn-shenzhen.aliyuncs.com/" + phone + "/" + "avatar.jpg";
+
                                     }
+                                    bool=true;
                                 } else {
                                     name = "photo" + mData.size() + ".jpg";
                                     String upload = OSSSet.Upload(bucket, phone + "/" + name, picturePath);
                                     if (upload.equals("UploadSuccess")) {
-                                        System.out.println(upload);
+                                        addPhoto("http://hertz52-user.oss-cn-shenzhen.aliyuncs.com/" + phone + "/" + name);
                                     }
-                                    addPhoto("http://hertz52-user.oss-cn-shenzhen.aliyuncs.com/" + phone + "/" + name);
+
                                 }
                             }
 
@@ -468,7 +472,6 @@ public class modify_information extends AppCompatActivity {
                             Modify modify = new Modify(id, url, "1");
                             mData.add(mData.size() - 1, modify);
                             mAdapters.notifyDataSetChanged();
-
                             tipDialog.dismiss();
                             Toast.makeText(modify_information.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
                         } else {
@@ -510,7 +513,10 @@ public class modify_information extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        finish();
-        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+
+            finish();
+            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+
+
     }
 }

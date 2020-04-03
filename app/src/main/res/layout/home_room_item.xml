@@ -2,196 +2,45 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <com.qmuiteam.qmui.widget.QMUIRadiusImageView
-            android:id="@+id/imageViewi1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/View2"
-            android:layout_alignTop="@+id/View1"
-            android:layout_alignEnd="@+id/View2"
-            android:layout_alignBottom="@+id/View3"
-            android:layout_marginStart="@dimen/dp_m_20"
-            android:layout_marginTop="@dimen/dp_m_20"
-            android:layout_marginEnd="@dimen/dp_m_20"
-            android:layout_marginBottom="0dp"
-            android:src="@color/qmui_config_color_white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:qmui_border_width="0dp"
-            app:qmui_corner_radius="@dimen/dp_30" />
-
-
-        <RelativeLayout
-            android:id="@+id/View1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="@dimen/dp_20"
-            android:layout_marginTop="@dimen/dp_20"
-            android:layout_marginEnd="@dimen/dp_20">
-
-            <TextView
-                android:id="@+id/textViewi1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:text="《点歌》生命歌手集"
-                android:textColor="#000000"
-                android:textSize="@dimen/sp_25" />
-
-            <TextView
-                android:id="@+id/textViewi2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_above="@+id/textViewi7"
-                android:layout_alignParentEnd="true"
-                android:layout_marginBottom="@dimen/dp_10"
-                android:text="ID2456889"
-                android:textSize="@dimen/sp_20" />
-
-            <TextView
-                android:id="@+id/textViewi3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/textViewi1"
-                android:layout_alignStart="@+id/textViewi1"
-                android:layout_marginStart="0dp"
-                android:layout_marginTop="@dimen/dp_10"
-                android:text="爱乐粉丝团"
-                android:textSize="@dimen/sp_20" />
-
-            <TextView
-                android:id="@+id/textViewi4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/textViewi1"
-                android:layout_marginStart="@dimen/dp_20"
-                android:layout_marginTop="@dimen/dp_10"
-                android:layout_toEndOf="@+id/textViewi3"
-                android:background="@drawable/label"
-                android:gravity="center"
-                android:paddingStart="@dimen/dp_10"
-                android:paddingTop="@dimen/dp_5"
-                android:paddingEnd="@dimen/dp_10"
-                android:paddingBottom="@dimen/dp_5"
-                android:text="热门"
-                android:textColor="#ffffff"
-                android:textSize="@dimen/sp_14" />
-
-            <TextView
-                android:id="@+id/textViewi5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/textViewi4"
-                android:layout_alignBottom="@+id/textViewi4"
-                android:layout_marginStart="@dimen/dp_10"
-                android:layout_toEndOf="@+id/textViewi4"
-                android:background="@drawable/label"
-                android:gravity="center"
-                android:paddingStart="@dimen/dp_10"
-                android:paddingTop="@dimen/dp_5"
-                android:paddingEnd="@dimen/dp_10"
-                android:paddingBottom="@dimen/dp_5"
-                android:text="CV"
-                android:textColor="#ffffff"
-                android:textSize="@dimen/sp_14" />
-
-            <TextView
-                android:id="@+id/textViewi6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/textViewi5"
-                android:layout_alignBottom="@+id/textViewi5"
-                android:layout_marginStart="@dimen/dp_10"
-                android:layout_toEndOf="@+id/textViewi5"
-                android:background="@drawable/label"
-                android:gravity="center"
-                android:paddingStart="@dimen/dp_10"
-                android:paddingTop="@dimen/dp_5"
-                android:paddingEnd="@dimen/dp_10"
-                android:paddingBottom="@dimen/dp_5"
-                android:text="德国"
-                android:textColor="#ffffff"
-                android:textSize="@dimen/sp_14" />
-
-            <ImageView
-                android:id="@+id/imageViewi2"
-                android:layout_width="@dimen/dp_15"
-                android:layout_height="@dimen/dp_15"
-                android:layout_alignTop="@+id/textViewi7"
-                android:layout_alignBottom="@+id/textViewi7"
-                android:layout_marginTop="0dp"
-                android:layout_marginEnd="@dimen/dp_5"
-                android:layout_marginBottom="0dp"
-                android:layout_toStartOf="@+id/textViewi8"
-                app:srcCompat="@drawable/henter" />
-
-            <TextView
-                android:id="@+id/textViewi7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/textViewi4"
-                android:layout_alignParentEnd="true"
-                android:layout_marginBottom="-1dp"
-                android:text="2345"
-                android:textSize="@dimen/sp_18" />
-
-            <TextView
-                android:id="@+id/textViewi8"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/textViewi7"
-                android:layout_alignBottom="@+id/textViewi7"
-                android:layout_marginEnd="@dimen/dp_10"
-                android:layout_toStartOf="@+id/textViewi7"
-                android:text="在线"
-                android:textSize="@dimen/sp_18" />
-
-        </RelativeLayout>
+    android:layout_height="match_parent"
+    android:clickable="true"
+    android:focusable="true"
+    android:layout_marginStart="@dimen/dp_20"
+    android:layout_marginEnd="@dimen/dp_20"
+    android:layout_marginTop="@dimen/dp_20"
+    android:layout_marginBottom="@dimen/dp_20">
 
         <RelativeLayout
             android:id="@+id/View2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/View1"
-            android:layout_marginStart="@dimen/dp_20"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="@dimen/dp_20">
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true">
 
             <com.qmuiteam.qmui.widget.QMUIRadiusImageView
                 android:id="@+id/imageViewi3"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_600"
+                android:layout_height="match_parent"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
-                android:layout_marginTop="0dp"
+                android:layout_alignParentBottom="true"
                 android:scaleType="centerInside"
-                android:src="@drawable/s1"
+                android:src="@drawable/mg"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:qmui_border_width="0dp"
-                app:qmui_corner_radius="@dimen/dp_20" />
+                app:layout_constraintStart_toStartOf="parent" />
 
             <com.qmuiteam.qmui.widget.QMUIRadiusImageView
                 android:id="@+id/imageViewi4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignStart="@+id/imageViewi5"
-                android:layout_alignTop="@+id/imageViewi5"
                 android:layout_alignEnd="@+id/textViewi11"
                 android:layout_alignBottom="@+id/imageViewi5"
-                android:layout_marginStart="@dimen/dp_m_5"
-                android:layout_marginTop="@dimen/dp_m_5"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="@dimen/dp_20"
+                android:layout_marginTop="@dimen/dp_20"
                 android:layout_marginEnd="@dimen/dp_m_20"
                 android:layout_marginBottom="@dimen/dp_m_5"
                 android:src="#44000000"
@@ -230,10 +79,10 @@
                 android:id="@+id/imageViewi6"
                 android:layout_width="@dimen/dp_120"
                 android:layout_height="@dimen/dp_40"
-                android:layout_alignStart="@+id/imageViewi3"
-                android:layout_alignBottom="@+id/imageViewi3"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
                 android:layout_marginStart="@dimen/dp_20"
-                android:layout_marginBottom="@dimen/dp_10"
+                android:layout_marginBottom="@dimen/dp_60"
                 android:src="#44000000"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -267,45 +116,4 @@
 
         </RelativeLayout>
 
-        <RelativeLayout
-            android:id="@+id/View3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/View2"
-            android:layout_alignStart="@+id/View2"
-            android:layout_alignEnd="@+id/View2"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="13dp"
-            android:layout_marginEnd="0dp">
-
-            <TextView
-                android:id="@+id/textViewi9"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="@dimen/dp_200"
-                android:text="==《而福利社区点歌台》=="
-                android:textColor="#000000"
-                android:textSize="@dimen/sp_20" />
-
-            <TextView
-                android:id="@+id/textViewi10"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/textViewi9"
-                android:layout_alignStart="@+id/textViewi9"
-                android:layout_alignParentEnd="true"
-                android:layout_marginTop="@dimen/dp_10"
-                android:layout_marginEnd="@dimen/dp_20"
-                android:layout_marginBottom="@dimen/dp_20"
-                android:paddingBottom="@dimen/dp_20"
-                android:text="我做了这么多改变，只为了我心中不变"
-                android:textColor="#0a0a0a"
-                android:textSize="@dimen/sp_18" />
-
-
-        </RelativeLayout>
-    </RelativeLayout>
 </androidx.cardview.widget.CardView>

@@ -20,7 +20,7 @@
     <SearchView
         android:id="@+id/search_view"
         android:layout_width="match_parent"
-        android:layout_height="34dp"
+        android:layout_height="@dimen/dp_40"
         android:layout_alignTop="@+id/imageView37"
         android:layout_alignBottom="@+id/imageView37"
         android:layout_alignParentEnd="true"

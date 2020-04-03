@@ -80,8 +80,8 @@ public class MusicModel {
                                 }*/
                                 Mymusic apk1 = new Mymusic(1L,"歌曲1","03:52","1","","https://momeak.oss-cn-shenzhen.aliyuncs.com/baidu.mp3");
                                 mArrayList.add(apk1);
-                                Mymusic apk2 = new Mymusic(2L,"歌曲2","04.25","1","","https://momeak.oss-cn-shenzhen.aliyuncs.com/music.mp3");
-                                mArrayList.add(apk2);
+                                //Mymusic apk2 = new Mymusic(2L,"歌曲2","04.25","1","","https://momeak.oss-cn-shenzhen.aliyuncs.com/music.mp3");
+                                //mArrayList.add(apk2);
 
                                 List<Music> musics = mMusicDao.queryAll();
                                 System.out.println("测试"+musics.size());
@@ -99,7 +99,6 @@ public class MusicModel {
                                         mArray.add(mArrayList.get(i));
                                     }
                                 }
-                                System.out.println("测试"+musics.size()+"/"+mArrayList.size());
                                 if (mArray.size() > 0) {
                                     showMessagePositiveDialog(context);
                                 }
@@ -216,8 +215,9 @@ public class MusicModel {
                     .folder(Objects.requireNonNull(context.getExternalFilesDir(DIRECTORY_MUSIC)).getPath())
                     .register(new LogDownloadListener())
                     .start();
-            mAdapter.notifyDataSetChanged();
+
         }
+        mAdapter.notifyDataSetChanged();
     }
 
 

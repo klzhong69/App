@@ -150,7 +150,7 @@ public class my_set extends AppCompatActivity {
         int mCurrentDialogStyle = R.style.QMUI_Dialog;
         new QMUIDialog.MessageDialogBuilder(this)
                 .setTitle("提示")
-                .setMessage("清除缓存包括：图片、视频")
+                .setMessage("清除缓存包括：图片、音乐")
                 .addAction("取消", new QMUIDialogAction.ActionListener() {
                     @Override
                     public void onClick(QMUIDialog dialog, int index) {

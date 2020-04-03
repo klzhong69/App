@@ -21,27 +21,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.core.widget.NestedScrollView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_above="@+id/relativeLayout11"
-            android:layout_below="@+id/include"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="0dp"
-            android:layout_marginEnd="0dp"
-            android:layout_marginBottom="0dp"
-            android:fillViewport="true"
-            app:layout_constraintBottom_toTopOf="@+id/relativeLayout11"
-            app:layout_constraintTop_toBottomOf="@+id/include">
-
-            <me.leefeng.lfrecyclerview.LFRecyclerView
-                android:id="@+id/recycler15"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </androidx.core.widget.NestedScrollView>
-
 
         <RelativeLayout
             android:id="@+id/relativeLayout11"

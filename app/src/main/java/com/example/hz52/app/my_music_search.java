@@ -2,9 +2,12 @@ package com.example.hz52.app;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Rect;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.TypedValue;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -15,6 +18,8 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.hz52.app.Adapter.FindListAdapter;
+import com.example.hz52.app.Adapter.FindmakeAdapter;
 import com.example.hz52.app.Adapter.MusicViewAdapter;
 import com.example.hz52.app.Entity.MyApp;
 import com.example.hz52.app.Entity.Mymusic;
@@ -32,19 +37,22 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import me.leefeng.lfrecyclerview.LFRecyclerView;
+import me.leefeng.lfrecyclerview.OnItemClickListener;
 
 
-public class my_music_search extends AppCompatActivity {
+public class my_music_search extends AppCompatActivity implements OnItemClickListener, LFRecyclerView.LFRecyclerViewListener, LFRecyclerView.LFRecyclerViewScrollChange{
 
     @BindView(R.id.imageView37)
     ImageView imageView37;
     @BindView(R.id.search_view)
     SearchView searchView;
     @BindView(R.id.recycler3)
-    RecyclerView recycler3;
+    LFRecyclerView recycler3;
     private ArrayList<Mymusic> mArrayList;
     private String queryTexts;
     private QMUITipDialog tipDialog;
+    private boolean isKeyUp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,46 +60,21 @@ public class my_music_search extends AppCompatActivity {
         setContentView(R.layout.activity_my_music_search);
         ButterKnife.bind(this);
 
-
-
         initData();
-
-
-
-
     }
 
     private void init() {
-
-        //适配器
-        MusicViewAdapter mAdapter = new MusicViewAdapter(this, mArrayList);
-        //设置适配器adapter
-        recycler3.setAdapter(mAdapter);
-
-        /*LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-        mListView.setLayoutManager(mLinearLayoutManager);*/
-
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this) {
-            @Override
-            public boolean canScrollVertically() {
-                return false;
-            }
-        };
-        recycler3.setLayoutManager(layoutManager);
+        recycler3.setLoadMore(false);//设置为可上拉加载,默认false,调用这个方法false可以去掉底部的“加载更多”
+        recycler3.setRefresh(false);// 设置为可下拉刷新,默认true
+        recycler3.setAutoLoadMore(true);//设置滑动到底部自动加载,默认false
+        recycler3.setOnItemClickListener(this);// 条目点击,点击和长按监听
+        recycler3.setLFRecyclerViewListener(this);//下拉刷新上拉加载监听
+        recycler3.setScrollChangeListener(this);//滑动监听
         recycler3.setItemAnimator(new DefaultItemAnimator());
 
-        mAdapter.setOnItemClickListener(new MusicViewAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                Toast.makeText(my_music_search.this, position + " click", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onItemLongClick(View view, int position) {
-
-                Toast.makeText(my_music_search.this, position + " Long click", Toast.LENGTH_SHORT).show();
-            }
-        });
+        MusicViewAdapter mAdapter = new MusicViewAdapter(this, mArrayList);
+            //设置适配器adapter
+        recycler3.setAdapter(mAdapter);
 
         /**
          * 既然是动画，就会有时间，我们把动画执行时间变大一点来看一看效果
@@ -100,7 +83,6 @@ public class my_music_search extends AppCompatActivity {
         defaultItemAnimator.setAddDuration(200);
         defaultItemAnimator.setRemoveDuration(200);
         recycler3.setItemAnimator(defaultItemAnimator);
-
     }
 
     private void initData() {
@@ -133,6 +115,7 @@ public class my_music_search extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextSubmit(String queryText) {
+                searchView.clearFocus();
                 //点击搜索
                 okgo(queryText);
                 tipDialog = new QMUITipDialog.Builder(my_music_search.this)
@@ -175,8 +158,8 @@ public class my_music_search extends AppCompatActivity {
                                 String id = music.get(i).getAsJsonObject().get("id").getAsString();
                             }*/
 
-                            for (int i = 0; i < 10; i++) {
-                                Mymusic i1 = new Mymusic((long) i, "星坠-天空的幻想-林晓夜", "03.00", "0", "0%", "");
+                            for (int i = 0; i < 20; i++) {
+                                Mymusic i1 = new Mymusic((long) i, "星坠-天空的幻想-林晓夜", "03.00", "-1", "0%", "");
                                 mArrayList.add(i1);
                             }
                             java.util.List<Music> musics = mMusicDao.queryAll();
@@ -184,7 +167,7 @@ public class my_music_search extends AppCompatActivity {
                                 for (int j = 0; j < musics.size(); j++) {
 
                                     if (musics.get(j).getId().toString().equals(mArrayList.get(i).getId().toString())) {
-                                        mArrayList.get(i).setType("-1");
+                                        mArrayList.get(i).setType("-2");
                                         mArrayList.get(i).setUrl(musics.get(j).getFile());
                                     }
                                 }
@@ -210,5 +193,30 @@ public class my_music_search extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         this.finish();overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+    }
+
+    @Override
+    public void onRefresh() {
+
+    }
+
+    @Override
+    public void onLoadMore() {
+
+    }
+
+    @Override
+    public void onRecyclerViewScrollChange(View view, int i, int i1) {
+
+    }
+
+    @Override
+    public void onClick(int i) {
+
+    }
+
+    @Override
+    public void onLongClick(int i) {
+
     }
 }

@@ -146,6 +146,7 @@ public class My extends Fragment {
     private String username;
     private String roomid;
     private String slogin;
+    private String login;
 
 
     @Nullable
@@ -154,23 +155,17 @@ public class My extends Fragment {
         View view = inflater.inflate(R.layout.my_home, container, false);
         unbinder = ButterKnife.bind(this, view);
         textView88.setText("未认证");
-        SharedPreferences sp = Objects.requireNonNull(getContext()).getSharedPreferences("User", Context.MODE_PRIVATE);
-        username = sp.getString("nickname", "");
-        textView92.setText(sp.getString("nickname", ""));
-        Glide.with(My.this).load(sp.getString("avatarUrl", "")).into(imageView28);
-        textView93.setText("ID " + sp.getString("userid", ""));
-        textView94.setText("关注 " + sp.getString("followCount", ""));
-        textView95.setText("粉丝 " + sp.getString("fansCount", ""));
-        okgos();
+
+
+
+
 
         context = getContext();
         Window window = Objects.requireNonNull(getActivity()).getWindow();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            window.setStatusBarColor(Color.TRANSPARENT);
-            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-        }
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.setStatusBarColor(Color.TRANSPARENT);
+        window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
 
         View decor = window.getDecorView();
         int ui = decor.getSystemUiVisibility();
@@ -182,36 +177,6 @@ public class My extends Fragment {
         para1 = view2.getLayoutParams();
         para1.height = startup_page.height;
         view2.setLayoutParams(para1);
-
-
-
-
-        try {
-
-            userid = sp.getString("userid", "");
-
-            if (!userid.equals("")) {
-                imageView36.setVisibility(View.GONE);
-                textView11.setVisibility(View.GONE);
-                textView75.setVisibility(View.GONE);
-                textView92.setVisibility(View.VISIBLE);
-                textView93.setVisibility(View.VISIBLE);
-                textView94.setVisibility(View.VISIBLE);
-                textView95.setVisibility(View.VISIBLE);
-                imageView37.setVisibility(View.VISIBLE);
-            } else {
-                imageView36.setVisibility(View.VISIBLE);
-                textView11.setVisibility(View.VISIBLE);
-                textView75.setVisibility(View.VISIBLE);
-                textView92.setVisibility(View.GONE);
-                textView93.setVisibility(View.GONE);
-                textView94.setVisibility(View.GONE);
-                textView95.setVisibility(View.GONE);
-                imageView37.setVisibility(View.GONE);
-            }
-
-        } catch (Exception ignored) {
-        }
 
         return view;
     }
@@ -233,6 +198,45 @@ public class My extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        SharedPreferences sp = Objects.requireNonNull(getContext()).getSharedPreferences("User", Context.MODE_PRIVATE);
+        login = sp.getString("login", "");
+        try {
+            if (login.equals("true")) {
+                imageView36.setVisibility(View.GONE);
+                textView11.setVisibility(View.GONE);
+                textView75.setVisibility(View.GONE);
+                textView92.setVisibility(View.VISIBLE);
+                textView93.setVisibility(View.VISIBLE);
+                textView94.setVisibility(View.VISIBLE);
+                textView95.setVisibility(View.VISIBLE);
+                imageView37.setVisibility(View.VISIBLE);
+                userid = sp.getString("userid", "");
+                username = sp.getString("nickname", "");
+                textView92.setText(sp.getString("nickname", ""));
+                Glide.with(My.this).load(sp.getString("avatarUrl", "")).into(imageView28);
+                textView93.setText("ID " + sp.getString("userid", ""));
+                textView94.setText("关注 " + sp.getString("followCount", ""));
+                textView95.setText("粉丝 " + sp.getString("fansCount", ""));
+                okgos();
+            } else {
+                imageView36.setVisibility(View.VISIBLE);
+                textView11.setVisibility(View.VISIBLE);
+                textView75.setVisibility(View.VISIBLE);
+                textView92.setVisibility(View.GONE);
+                textView93.setVisibility(View.GONE);
+                textView94.setVisibility(View.GONE);
+                textView95.setVisibility(View.GONE);
+                imageView37.setVisibility(View.GONE);
+                Glide.with(My.this).load(R.drawable.nologin).into(imageView28);
+            }
+
+        } catch (Exception ignored) {
+        }
     }
 
     @Override
@@ -316,7 +320,7 @@ public class My extends Fragment {
             case R.id.textView94:
             case R.id.textView95:
             case R.id.imageView37:
-                if (!userid.equals("")) {
+                if(login.equals("true")){
                     Intent intent2 = new Intent(getContext(), modify_information.class);
                     startActivity(intent2);
                     Objects.requireNonNull(getActivity()).overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
@@ -353,13 +357,20 @@ public class My extends Fragment {
                 break;
             case R.id.imageView73:
             case R.id.textView84:
-                Intent intent7 = new Intent(getContext(), chatroom.class);
-                intent7.putExtra(Constant.ACTION_KEY_CROLE, Constants.CLIENT_ROLE_AUDIENCE);
-                intent7.putExtra(Constant.ACTION_KEY_ROOM_MODE, Constant.ChatRoomGamingHighQuality);
-                intent7.putExtra(Constant.ACTION_KEY_ROOM_ID, userid);
-                intent7.putExtra(Constant.ACTION_KEY_TITLE_NAME, username + "的房间");
-                startActivity(intent7);
-                Objects.requireNonNull(getActivity()).overridePendingTransition(R.anim.scale_in_center, R.anim.scale_out_center);
+                if (slogin.equals("true")) {
+                    Intent intent7 = new Intent(getContext(), chatroom.class);
+                    intent7.putExtra(Constant.ACTION_KEY_CROLE, Constants.CLIENT_ROLE_AUDIENCE);
+                    intent7.putExtra(Constant.ACTION_KEY_ROOM_MODE, Constant.ChatRoomGamingHighQuality);
+                    intent7.putExtra(Constant.ACTION_KEY_ROOM_ID, userid);
+                    intent7.putExtra(Constant.ACTION_KEY_TITLE_NAME, username + "的房间");
+                    startActivity(intent7);
+                    Objects.requireNonNull(getActivity()).overridePendingTransition(R.animator.anim_bottom_in, R.animator.anim_bottom_out);
+                } else {
+                    Intent intent14 = new Intent(getContext(), login.class);
+                    intent14.putExtra("type", 0);
+                    startActivity(intent14);
+                    Objects.requireNonNull(getActivity()).overridePendingTransition(R.animator.anim_bottom_in, R.animator.anim_bottom_out);
+                }
                 break;
             case R.id.imageView74:
             case R.id.textView85:

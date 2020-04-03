@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -21,6 +23,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
@@ -104,7 +107,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
     private boolean isNeedCheck = true;
     public static Observer<Integer> observer;
     public static Observer<Integer> observers;
-    private ArrayList<FragmentTouchListener> mFragmentTouchListeners = new ArrayList<>();
     private Map<String, String> map = new HashMap<String, String>();
     private int sum = 0;
     private String userid;
@@ -138,7 +140,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
             overridePendingTransition(R.animator.anim_bottom_in, R.animator.anim_bottom_out);
         }
         setDefaultFragment();
-
 
     }
 
@@ -195,31 +196,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
     }
 
 
-    public void registerFragmentTouchListener(FragmentTouchListener listener) {
-        mFragmentTouchListeners.add(listener);
-    }
-
-
-    public void unRegisterFragmentTouchListener(FragmentTouchListener listener) {
-        mFragmentTouchListeners.remove(listener);
-    }
-
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent event) {
-        for (FragmentTouchListener listener : mFragmentTouchListeners) {
-            if (sum == 0) {
-                listener.onTouchEvent(event);
-            }
-
-        }
-
-        return super.dispatchTouchEvent(event);
-    }
-
-    public interface FragmentTouchListener {
-
-        boolean onTouchEvent(MotionEvent event);
-    }
 
 
     /**
@@ -234,13 +210,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
         transaction.commit();
         setBadgeNum(num);
 
-    }
-
-
-    protected void onDestroy() {
-        super.onDestroy();
-        MqttMessageService.unsubscribeToTopic("room/1001");
-        MqttMessageService.destroy();
     }
 
     private void showAppFloat() {
@@ -396,9 +365,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
     public void onResume() {
         super.onResume();
 
-        if(!isIgnoringBatteryOptimizations()){
+        /*if(!isIgnoringBatteryOptimizations()){
             requestIgnoreBatteryOptimizations();
-        }
+        }*/
         if (isNeedCheck) {
             checkPermissions(needPermissions);
         }
@@ -544,9 +513,23 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
     }
 
     /**
+     * 主动申请浮窗权限
+     */
+    private void requestPermission() {
+        PermissionUtils.requestPermission(this, new OnPermissionResult() {
+            @Override
+            public void permissionResult(boolean b) {
+                showAppFloat();
+                System.out.println("状态：" + EasyFloat.appFloatIsShow("testFloat"));
+            }
+        });
+    }
+
+
+   /**
      * 判断应用是否在后台白名单
      */
-    @RequiresApi(api = Build.VERSION_CODES.M)
+    /*@RequiresApi(api = Build.VERSION_CODES.M)
     private boolean isIgnoringBatteryOptimizations() {
         boolean isIgnoring = false;
         PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
@@ -554,12 +537,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
             isIgnoring = powerManager.isIgnoringBatteryOptimizations(getPackageName());
         }
         return isIgnoring;
-    }
+    }*/
 
     /**
      * 申请加入后台白名单
      */
-    @RequiresApi(api = Build.VERSION_CODES.M)
+   /* @RequiresApi(api = Build.VERSION_CODES.M)
     public void requestIgnoreBatteryOptimizations() {
         try {
             Intent intent = new Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
@@ -568,20 +551,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
 
-    /**
-     * 主动申请浮窗权限
-     */
-    private void requestPermission() {
-        PermissionUtils.requestPermission(this, new OnPermissionResult() {
-            @Override
-            public void permissionResult(boolean b) {
-                System.out.println("状态：" + EasyFloat.appFloatIsShow("testFloat"));
-            }
-        });
-    }
+
 
     /**
      * 检查权限
@@ -598,9 +571,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
             ActivityCompat.requestPermissions(this,
                     needRequestPermissonList.toArray(new String[needRequestPermissonList.size()]),
                     PERMISSION_REQUESTED);
-        }
-        if (!PermissionUtils.checkPermission(this)) {
-            requestPermission();
         }
 
     }

@@ -54,9 +54,8 @@ public class MusicViewAdapter extends RecyclerView.Adapter {
         ((MusicViewAdapter.DemoViewHolder) holder).name.setText(entity.getName());
         ((MusicViewAdapter.DemoViewHolder) holder).time.setText(entity.getTime());
        if(entity.getType().equals("0")){
-           Glide.with(mContext).load(R.drawable.dower).into(((DemoViewHolder)holder).type);
-           ((MusicViewAdapter.DemoViewHolder) holder).txt.setVisibility(View.GONE);
-           ((DemoViewHolder) holder).type.setVisibility(View.VISIBLE);
+           ((MusicViewAdapter.DemoViewHolder) holder).type.setVisibility(View.GONE);
+           ((MusicViewAdapter.DemoViewHolder) holder).txt.setVisibility(View.VISIBLE);
         }else if(entity.getType().equals("1")){
            ((MusicViewAdapter.DemoViewHolder) holder).txt.setVisibility(View.GONE);
            ((MusicViewAdapter.DemoViewHolder) holder).type.setVisibility(View.VISIBLE);
@@ -66,6 +65,11 @@ public class MusicViewAdapter extends RecyclerView.Adapter {
            ((MusicViewAdapter.DemoViewHolder) holder).type.setVisibility(View.VISIBLE);
            Glide.with(mContext).load(R.drawable.stop).into(((DemoViewHolder)holder).type);
        }else if(entity.getType().equals("-1")){
+           Glide.with(mContext).load(R.drawable.dower).into(((DemoViewHolder)holder).type);
+           ((MusicViewAdapter.DemoViewHolder) holder).txt.setVisibility(View.GONE);
+           ((DemoViewHolder) holder).type.setVisibility(View.VISIBLE);
+
+       }else if(entity.getType().equals("-2")){
            Glide.with(mContext).load(R.drawable.dowers).into(((DemoViewHolder)holder).type);
            ((MusicViewAdapter.DemoViewHolder) holder).txt.setVisibility(View.GONE);
            ((DemoViewHolder) holder).type.setVisibility(View.VISIBLE);

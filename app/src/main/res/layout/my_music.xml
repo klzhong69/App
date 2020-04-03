@@ -57,13 +57,13 @@
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="@dimen/dp_20"
             android:gravity="center_vertical"
-            android:text="80%"
+            android:text=""
             android:textColor="#8a8a8a"
             android:textSize="@dimen/sp_18" />
 
         <ImageView
             android:id="@+id/imageView67"
-            android:layout_width="@dimen/dp_30"
+            android:layout_width="@dimen/dp_40"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
