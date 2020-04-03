@@ -126,41 +126,41 @@ public class my_wallet extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fold:
-                this.finish();overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                this.finish();
                 break;
             case R.id.subtitle:
                 Intent intent = new Intent(my_wallet.this, operation_record.class);
                 startActivity(intent);
-                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                
                 break;
             case R.id.imageView35:
             case R.id.textView10:
                 Intent intent1 = new Intent(my_wallet.this, my_gold.class);
                 startActivity(intent1);
-                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                
                 break;
             case R.id.imageView36:
             case R.id.textView11:
                 Intent intent2 = new Intent(my_wallet.this, withdraw.class);
                 startActivity(intent2);
-                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                
                 break;
             case R.id.imageView17:
                 Intent intent3 = new Intent(my_wallet.this, my_gold.class);
                 intent3.putExtra("gold",gold);
                 startActivity(intent3);
-                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                
                 break;
             case R.id.imageView18:
                 Intent intent4 = new Intent(my_wallet.this, my_diamond.class);
                 intent4.putExtra("diamond",diamond);
                 startActivity(intent4);
-                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                
                 break;
             case R.id.imageView19:
                 Intent intent5 = new Intent(my_wallet.this, my_package.class);
                 startActivity(intent5);
-                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                
                 break;
         }
     }
@@ -169,6 +169,6 @@ public class my_wallet extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        this.finish();overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+        this.finish();
     }
 }

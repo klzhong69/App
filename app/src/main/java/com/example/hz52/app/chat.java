@@ -188,7 +188,12 @@ public class chat extends AppCompatActivity {
                     Chats i1 = new Chats(avatarUrl, txt, time, 2);
                     ChatModel.Add(recycler, i1);
                     editText.setText("");
-                    send(userid, avatarUrl, nickname, sendid, txt, convers);
+                    if (MqttMessageService.bool) {
+                        send(userid, avatarUrl, nickname, sendid, txt, convers);
+                    } else {
+                        Toast.makeText(chat.this, " 通讯未连接，无法发送信息，正在重试，请稍后", Toast.LENGTH_SHORT).show();
+                    }
+
 
                 } else {
                     Toast.makeText(chat.this, "请输入发送内容", Toast.LENGTH_SHORT).show();
@@ -196,7 +201,7 @@ public class chat extends AppCompatActivity {
 
                 break;
             case R.id.fold:
-                this.finish();overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                this.finish();
                 break;
         }
     }
@@ -302,6 +307,6 @@ public class chat extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        this.finish();overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+        this.finish();
     }
 }

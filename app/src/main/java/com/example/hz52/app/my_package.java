@@ -210,7 +210,7 @@ public class my_package extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.fold:
                 this.finish();
-                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                
                 break;
             case R.id.title:
                 title.setText("我的包裹");
@@ -283,6 +283,6 @@ public class my_package extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         this.finish();
-        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+        
     }
 }

@@ -61,12 +61,12 @@ public class system_information extends AppCompatActivity {
 
     @OnClick(R.id.fold)
     public void onViewClicked() {
-        this.finish();overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);;
+        this.finish();;
     }
 
     @Override
     public void onBackPressed() {
-        this.finish();overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+        this.finish();
     }
 
 

@@ -100,12 +100,12 @@ public class account extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.fold:
                 this.finish();
-                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+
                 break;
             case R.id.subtitle:
                 Intent intent2 = new Intent(account.this, add_account.class);
                 startActivity(intent2);
-                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+
                 break;
         }
     }
@@ -113,6 +113,6 @@ public class account extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         this.finish();
-        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+
     }
 }

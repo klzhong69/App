@@ -45,26 +45,16 @@ public class MqttMessageService extends Service {
     private static MqttConnectOptions mqttConnectOptions;
     private static MqttAndroidClient mqttAndroidClient;
     public static final String TAG = "MqttMessageService";
-    private static boolean bool = false;
+    public static boolean bool = false;
     private static int sum;
-    private static MyApp application;
-
-
-    public static void create(Context context) {
-        application = ((MyApp) context.getApplicationContext());
-        //初始化mqtt配置
-        initMqtt(context);
-        //连接mqtt
-        connectMqtt();
-
-    }
-
+    private static MyApp application ;
 
     /**
      * mqtt初始化
      */
     public static void initMqtt(Context context) {
         try {
+            application = ((MyApp) context.getApplicationContext());
             SharedPreferences sp = context.getSharedPreferences("User", Context.MODE_PRIVATE);
             String userid = sp.getString("userid", "");
             String token = sp.getString("token", "");
@@ -80,15 +70,19 @@ public class MqttMessageService extends Service {
                 @Override
                 public void connectComplete(boolean reconnect, String serverURI) {
                     if (reconnect) {
+                        bool = true;
                         Log.i(TAG, "MQTT重新连接成功！serverURI:" + serverURI);
                     } else {
+                        bool = true;
                         Log.i(TAG, "MQTT连接成功！serverURI:" + serverURI);
+
                     }
                     subscribeAllTopics();
                 }
 
                 @Override
                 public void connectionLost(Throwable cause) {
+                    bool = false;
                     Log.i(TAG, "MQTT连接断开！" + cause.getCause());
                 }
 
@@ -257,6 +251,7 @@ public class MqttMessageService extends Service {
 
                 @Override
                 public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                    bool = false;
                     Log.e(TAG, "MQTT连接失败！！！！" + exception.getCause());
                     new Thread(new Runnable() {
                         @Override
@@ -300,7 +295,7 @@ public class MqttMessageService extends Service {
                 @Override
                 public void onSuccess(IMqttToken asyncActionToken) {
                     Log.i(TAG, "MQTT订阅消息成功：" + subTopic);
-                    bool = true;
+
                 }
 
                 @Override
@@ -370,6 +365,7 @@ public class MqttMessageService extends Service {
     public static void destroy() {
         Log.e(TAG, "关闭MQTT");
         sum = 0;
+        bool = false;
         //断开mqtt连接
         try {
             if (mqttAndroidClient != null && mqttAndroidClient.isConnected()) {

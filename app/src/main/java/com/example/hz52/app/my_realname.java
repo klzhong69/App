@@ -48,12 +48,12 @@ public class my_realname extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fold:
-                this.finish();overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                this.finish();
                 break;
             case R.id.but:
                 Intent intent2 = new Intent(my_realname.this, my_realname_name.class);
                 startActivity(intent2);
-                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                
                 break;
         }
     }
@@ -62,6 +62,6 @@ public class my_realname extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        this.finish();overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+        this.finish();
     }
 }

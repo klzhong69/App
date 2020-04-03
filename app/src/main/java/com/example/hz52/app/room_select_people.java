@@ -68,7 +68,7 @@ public class room_select_people extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fold:
-                this.finish();overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                this.finish();
                 break;
             case R.id.title:
                 break;
@@ -237,6 +237,6 @@ public class room_select_people extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        this.finish();overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+        this.finish();
     }
 }

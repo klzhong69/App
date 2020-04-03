@@ -80,7 +80,7 @@ public class my_change_photo extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fold:
-                this.finish();overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                this.finish();
                 break;
             case R.id.but:
                 if(editText4.getText().equals("")){
@@ -92,7 +92,7 @@ public class my_change_photo extends AppCompatActivity {
                             Intent intent2 = new Intent(my_change_photo.this, my_change_photo.class);
                             intent2.putExtra("butnum",true);
                             startActivity(intent2);
-                            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                            
                         }
                     }else{
                         Toast.makeText(my_change_photo.this, "请输入验证码", Toast.LENGTH_SHORT).show();
@@ -144,6 +144,6 @@ public class my_change_photo extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        this.finish();overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+        this.finish();
     }
 }

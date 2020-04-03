@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.net.http.HttpResponseCache;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextPaint;
@@ -51,6 +52,7 @@ import com.example.hz52.app.Model.MessFriendsModel;
 import com.example.hz52.app.Model.MessModel;
 import com.example.hz52.app.Model.PaimaiModel;
 import com.example.hz52.app.Sqlentity.Conver;
+import com.example.hz52.app.cofig.Constant;
 import com.example.hz52.app.cofig.DateUtil;
 import com.example.hz52.app.cofig.KeyboardStateObserver;
 import com.example.hz52.app.dao.mConverDao;
@@ -80,7 +82,6 @@ import com.qmuiteam.qmui.widget.popup.QMUIPopups;
 import com.qmuiteam.qmui.widget.popup.QMUIQuickAction;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 import com.skyfishjy.library.RippleBackground;
-import com.wildma.pictureselector.Constant;
 
 import org.greenrobot.greendao.annotation.NotNull;
 
@@ -103,6 +104,8 @@ import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
+
+import static com.example.hz52.app.gen.MusicDao.Properties.File;
 
 public class chatroom extends AppCompatActivity {
 
@@ -414,7 +417,7 @@ public class chatroom extends AppCompatActivity {
     private String conver;
     private Long sendid;
     private String sendname;
-    public static boolean bool = false;
+    public static boolean bools = false;
     public static Observer<Integer> observersvga;
     public static Observer<JsonObject> obserpaimai;
     private SVGAParser parser;
@@ -541,6 +544,7 @@ public class chatroom extends AppCompatActivity {
             });
         }
     };
+    private SVGAImageView animationView = null;
 
 
     private int getUserIndex(Long uid) {
@@ -593,8 +597,8 @@ public class chatroom extends AppCompatActivity {
         ChatRoomModel.initrecycler(context, recyclerview);
         ChatRoomModel.initData();
         ChatRoomModel.initrecyclers(context, gridview);
-        ChatRoomModel.okgoall(context,recyclerc7, Long.valueOf(mChannelId),0);
-        ChatRoomModel.okgoall(context,recyclerc3, Long.valueOf(mChannelId),1);
+        ChatRoomModel.okgoall(context, recyclerc7, Long.valueOf(mChannelId), 0);
+        ChatRoomModel.okgoall(context, recyclerc3, Long.valueOf(mChannelId), 1);
         relativeLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
@@ -661,7 +665,12 @@ public class chatroom extends AppCompatActivity {
             textView123.setText(mTitleName);
             textView121.setText("ID " + mChannelId);
         }
-        MqttMessageService.subscribeToTopic("room/"+mChannelId);
+        if (MqttMessageService.bool) {
+            MqttMessageService.subscribeToTopic("room/" + mChannelId);
+        } else {
+            Toast.makeText(chatroom.this, " 通讯未连接，无法接收信息，正在重试，请稍后", Toast.LENGTH_SHORT).show();
+        }
+
         SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
         userid = sp.getString("userid", "");
         avatarUrl = sp.getString("avatarUrl", "");
@@ -730,7 +739,6 @@ public class chatroom extends AppCompatActivity {
     }
 
 
-
     @Override
     protected void onPause() {
         super.onPause();
@@ -759,7 +767,7 @@ public class chatroom extends AppCompatActivity {
                                             quickAction.dismiss();
                                             Intent intent2 = new Intent(chatroom.this, room_set.class);
                                             startActivity(intent2);
-                                            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                                            
                                         } else {
                                             Toast.makeText(chatroom.this, "您没有此权限", Toast.LENGTH_SHORT).show();
                                         }
@@ -774,7 +782,7 @@ public class chatroom extends AppCompatActivity {
                                         quickAction.dismiss();
                                         Intent intent2 = new Intent(chatroom.this, my_music.class);
                                         startActivity(intent2);
-                                        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                                        
                                     }
                                 }
                         ))
@@ -793,7 +801,7 @@ public class chatroom extends AppCompatActivity {
                 if (bIsBroadCaster) {
                     textViewc7t.setVisibility(View.GONE);
                     // mRtcEngine.startAudioMixing("/assets/baidu.mp3",false,false,1);
-                }else{
+                } else {
                     textViewc7t.setVisibility(View.VISIBLE);
                 }
                 break;
@@ -811,46 +819,49 @@ public class chatroom extends AppCompatActivity {
             case R.id.textView124:
                 Intent intent2 = new Intent(chatroom.this, room_online.class);
                 startActivity(intent2);
-                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                
                 break;
 
             case R.id.imageView98:
                 Observable<Integer> observable = Observable.defer(new Callable<ObservableSource<? extends Integer>>() {
                     @Override
                     public ObservableSource<? extends Integer> call() throws Exception {
-                        return Observable.just(0, 2);
+                        return Observable.just(1, 2);
                     }
                 });
                 observable.subscribe(observersvga);
                 break;
 
             case R.id.textViewc7t:
+                if (MqttMessageService.bool) {
+                    if (bools) {
+                        MqttMessageService.publishMessage("room/" + mChannelId, paimaitype(userid, avatarUrl, nickname, gender, "1"));
+                        ChatRoomModel.okgodel(context, Long.valueOf(mChannelId), Long.valueOf(userid));
 
-                if (bool) {
-                    MqttMessageService.publishMessage("room/" + mChannelId, paimaitype( userid, avatarUrl, nickname, gender,"1"));
-                    ChatRoomModel.okgodel(context,Long.valueOf(mChannelId),Long.valueOf(userid));
-
-                } else {
-                    MqttMessageService.publishMessage("room/" + mChannelId, paimaitype(userid, avatarUrl, nickname, gender,"0"));
-                    ChatRoomModel.okgo(context,Long.valueOf(mChannelId));
+                    } else {
+                        MqttMessageService.publishMessage("room/" + mChannelId, paimaitype(userid, avatarUrl, nickname, gender, "0"));
+                        ChatRoomModel.okgo(context, Long.valueOf(mChannelId));
+                    }
                 }
-
                 break;
 
             case R.id.textViewc3s:
                 for (int i = 0; i < HoldpeopleAdapter.states.size(); i++) {
                     if (HoldpeopleAdapter.states.get(i)) {
-                        boolean isuserself = false;
-                        if(HoldpeopleAdapter.mEntityList.get(i).getId().equals(userid)){
-                            isuserself = true;
-                        }
-                        Roomhead roomhead = new Roomhead(HoldpeopleAdapter.mEntityList.get(i).getUserima(), HoldpeopleAdapter.mEntityList.get(i).getName(), "", "", Long.valueOf(HoldpeopleAdapter.mEntityList.get(i).getId()), 0, false, isuserself);
-                        ChatRoomModel.showBroadCast(mRtcEngine, Long.valueOf(HoldpeopleAdapter.mEntityList.get(i).getId()), position, roomhead);
+                        if (MqttMessageService.bool) {
+                            boolean isuserself = false;
+                            if (HoldpeopleAdapter.mEntityList.get(i).getId().equals(userid)) {
+                                isuserself = true;
+                            }
+                            Roomhead roomhead = new Roomhead(HoldpeopleAdapter.mEntityList.get(i).getUserima(), HoldpeopleAdapter.mEntityList.get(i).getName(), "", "", Long.valueOf(HoldpeopleAdapter.mEntityList.get(i).getId()), 0, false, isuserself);
+                            ChatRoomModel.showBroadCast(mRtcEngine, Long.valueOf(HoldpeopleAdapter.mEntityList.get(i).getId()), position, roomhead);
 
-                        MqttMessageService.publishMessage("room/" + mChannelId, paimaitype(HoldpeopleAdapter.mEntityList.get(i).getId(), HoldpeopleAdapter.mEntityList.get(i).getUserima(), HoldpeopleAdapter.mEntityList.get(i).getName(), HoldpeopleAdapter.mEntityList.get(i).getGrade(),"1"));
-                        ChatRoomModel.okgodel(context,Long.valueOf(mChannelId),Long.valueOf(HoldpeopleAdapter.mEntityList.get(i).getId()));
-                        component3.setVisibility(View.GONE);
-                        bIsBroadCaster = true;
+                            MqttMessageService.publishMessage("room/" + mChannelId, paimaitype(HoldpeopleAdapter.mEntityList.get(i).getId(), HoldpeopleAdapter.mEntityList.get(i).getUserima(), HoldpeopleAdapter.mEntityList.get(i).getName(), HoldpeopleAdapter.mEntityList.get(i).getGrade(), "1"));
+                            ChatRoomModel.okgodel(context, Long.valueOf(mChannelId), Long.valueOf(HoldpeopleAdapter.mEntityList.get(i).getId()));
+                            component3.setVisibility(View.GONE);
+                            bIsBroadCaster = true;
+                        }
+
                     }
                 }
                 break;
@@ -881,9 +892,9 @@ public class chatroom extends AppCompatActivity {
                 component10.setVisibility(View.GONE);
                 break;
             case R.id.butc6:
-                Roomtxt entity = new Roomtxt(editTextc6.getText().toString(), "周润发", "https://momeak.oss-cn-shenzhen.aliyuncs.com/l3.png", "","1");
+                Roomtxt entity = new Roomtxt(editTextc6.getText().toString(), "周润发", "https://momeak.oss-cn-shenzhen.aliyuncs.com/l3.png", "", "1");
                 ChatRoomModel.Add(recyclerview, entity);
-                Roomtxt entity1 = new Roomtxt("", "", "", "---为了更好的体验请大家文明用语---","0");
+                Roomtxt entity1 = new Roomtxt("", "", "", "---为了更好的体验请大家文明用语---", "0");
                 ChatRoomModel.Add(recyclerview, entity1);
                 editTextc6.setText("");
                /* Observable.just(1, 2)
@@ -999,7 +1010,7 @@ public class chatroom extends AppCompatActivity {
         }
     }
 
-    private String paimaitype(String userid,String avatarUrl,String nickname,String gender,String type){
+    private String paimaitype(String userid, String avatarUrl, String nickname, String gender, String type) {
         Long data = System.currentTimeMillis() / 1000;
         Gson gson = new Gson();
         Map<String, String> map = new HashMap<String, String>();
@@ -1034,7 +1045,7 @@ public class chatroom extends AppCompatActivity {
                     @Override
                     public void onClick(QMUIDialog dialog, int index) {
                         dialog.dismiss();
-                        ChatRoomModel.showAudience(mRtcEngine, dex,0L);
+                        ChatRoomModel.showAudience(mRtcEngine, dex, 0L);
                     }
                 })
                 .create(mCurrentDialogStyle).show();
@@ -1042,7 +1053,9 @@ public class chatroom extends AppCompatActivity {
 
     protected void onDestroy() {
         super.onDestroy();
-        MqttMessageService.unsubscribeToTopic("room/"+mChannelId);
+        if (MqttMessageService.bool) {
+            MqttMessageService.unsubscribeToTopic("room/" + mChannelId);
+        }
         if (mRtcEngine != null) {
             mRtcEngine.leaveChannel();
         }
@@ -1067,7 +1080,7 @@ public class chatroom extends AppCompatActivity {
                 switch (integer) {
                     case 0:
                         finish();
-                        overridePendingTransition(R.anim.scale_in_center, R.anim.scale_out_center);
+                        overridePendingTransition(R.anim.anim_bottom_in, R.anim.anim_bottom_out);
                         break;
                     case 1:
                         break;
@@ -1085,7 +1098,7 @@ public class chatroom extends AppCompatActivity {
                         break;
                     case 7:
                         textViewc7t.setText("取消排麦");
-                        bool = true;
+                        bools = true;
                         break;
                     case 8:
                         component8.setVisibility(View.VISIBLE);
@@ -1134,17 +1147,17 @@ public class chatroom extends AppCompatActivity {
                 if (view.get("type").getAsString().equals("1")) {
                     int i = PaimaiModel.get(view.get("userid").getAsString());
                     PaimaiModel.Remove(i);
-                    if(view.get("userid").getAsString().equals(userid)){
+                    if (view.get("userid").getAsString().equals(userid)) {
                         textViewc7t.setText("申请排麦");
-                        bool = false;
+                        bools = false;
                     }
                     textViewc7s.setText(PaimaiModel.mArrayList.size() + "人");
-                } else if (view.get("type").getAsString().equals("0")){
+                } else if (view.get("type").getAsString().equals("0")) {
                     Holdpeople i1 = new Holdpeople(view.get("userid").getAsString(), view.get("avatarUrl").getAsString(), view.get("nickname").getAsString(), view.get("gender").getAsString(), "0");
                     PaimaiModel.Add(i1);
-                    if(view.get("userid").getAsString().equals(userid)){
+                    if (view.get("userid").getAsString().equals(userid)) {
                         textViewc7t.setText("取消排麦");
-                        bool = true;
+                        bools = true;
                     }
                     textViewc7s.setText(PaimaiModel.mArrayList.size() + "人");
                 }
@@ -1292,25 +1305,24 @@ public class chatroom extends AppCompatActivity {
         observersvga = new Observer<Integer>() {
             @Override
             public void onSubscribe(Disposable d) {
-
             }
 
             @Override
             public void onNext(Integer integer) {
                 svga.setVisibility(View.VISIBLE);
+
                 switch (integer) {
                     case 0:
                         loadAnimation(svga1, 0, "https://github.com/yyued/SVGA-Samples/blob/master/posche.svga?raw=true", "", "", "", "");
                         break;
                     case 1:
-                        loadAnimation(svga2, 1, "https://github.com/yyued/SVGA-Samples/blob/master/kingset.svga?raw=true", "https://momeak.oss-cn-shenzhen.aliyuncs.com/h2.jpg", "99", "", "");
+                        loadAnimations(svga2, 1, "kingsets.svga", "https://momeak.oss-cn-shenzhen.aliyuncs.com/h2.jpg", "99", "", "");
                         break;
                     case 2:
-                        loadAnimation(svga3, 1, "https://github.com/yyued/SVGA-Samples/blob/master/kingset.svga?raw=true", "https://momeak.oss-cn-shenzhen.aliyuncs.com/h2.jpg", "99", "Pony send Kitty flowers.", "banner");
+                        loadAnimations(svga3, 1, "kingsets.svga", "https://momeak.oss-cn-shenzhen.aliyuncs.com/h3.jpg", "99", "Pony send Kitty flowers.", "banner");
                         break;
 
                 }
-
             }
 
             @Override
@@ -1369,9 +1381,9 @@ public class chatroom extends AppCompatActivity {
                     case 3:
                         break;
                     case 4:
-                        bIsBroadCaster=false;
+                        bIsBroadCaster = false;
                         textViewc7t.setText("申请排麦");
-                        bool = false;
+                        bools = false;
                         showMessagePositiveDialog(position);
                         break;
                 }
@@ -1448,9 +1460,6 @@ public class chatroom extends AppCompatActivity {
         builder.addItem("悬浮窗模式");
         builder.build().show();
     }
-
-
-
 
 
     /**
@@ -1546,6 +1555,58 @@ public class chatroom extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * 加载svga
+     */
+    private void loadAnimations(SVGAImageView svga, int type, String samples, String ima, String imaforkey, String txt, String txtforkey) {
+        // new URL needs try catch.
+        parser = new SVGAParser(this);
+
+        switch (type) {
+            case 0:
+                parser.decodeFromAssets(samples, new SVGAParser.ParseCompletion() {
+                    @Override
+                    public void onComplete(@NotNull SVGAVideoEntity videoItem) {
+                        SVGADrawable drawable = new SVGADrawable(videoItem);
+                        svga.setImageDrawable(drawable);
+                        svga.startAnimation();
+                    }
+
+                    @Override
+                    public void onError() {
+
+                    }
+                });
+                break;
+            case 1:
+                parser.decodeFromAssets(samples, new SVGAParser.ParseCompletion() {
+                    @Override
+                    public void onComplete(@NotNull SVGAVideoEntity videoItem) {
+                        SVGADynamicEntity dynamicEntity = new SVGADynamicEntity();
+
+                        if (!ima.equals("")) {
+                            dynamicEntity.setDynamicImage(ima, imaforkey); // Here is the KEY implementation.
+                            TextPaint textPaint = new TextPaint();
+                            textPaint.setColor(Color.WHITE);
+                            textPaint.setTextSize(28);
+                            dynamicEntity.setDynamicText(txt, textPaint, txtforkey);
+
+                        }
+                        SVGADrawable drawable = new SVGADrawable(videoItem, dynamicEntity);
+                        svga.setImageDrawable(drawable);
+                        svga.startAnimation();
+                    }
+
+                    @Override
+                    public void onError() {
+
+                    }
+                });
+                break;
+        }
+
     }
 }
 

@@ -71,6 +71,7 @@ public class my_set extends AppCompatActivity {
     ImageView imageView132;
     @BindView(R.id.but)
     QMUIRoundButton but;
+    private String slogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,20 +80,27 @@ public class my_set extends AppCompatActivity {
         ButterKnife.bind(this);
         title.setText("设置");
         subtitle.setText("");
+        SharedPreferences sp = this.getSharedPreferences("User", Context.MODE_PRIVATE);
+        slogin = sp.getString("login", "");
+        if(slogin.equals("true")){
+            but.setText("退出登录");
+        }else{
+            but.setText("登陆");
+        }
     }
 
     @OnClick({R.id.fold, R.id.imageView119, R.id.textView137, R.id.imageView120, R.id.imageView121, R.id.textView138, R.id.imageView122, R.id.imageView123, R.id.textView139, R.id.imageView124, R.id.imageView125, R.id.textView140, R.id.imageView126, R.id.imageView127, R.id.textView141, R.id.imageView128, R.id.imageView129, R.id.textView142, R.id.imageView130, R.id.imageView131, R.id.textView143, R.id.imageView132, R.id.but})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fold:
-                this.finish();overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                this.finish();
                 break;
             case R.id.imageView119:
             case R.id.textView137:
             case R.id.imageView120:
                 Intent intent1 = new Intent(my_set.this, my_change_pass.class);
                 startActivity(intent1);
-                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                
                 break;
             case R.id.imageView121:
             case R.id.textView138:
@@ -100,28 +108,28 @@ public class my_set extends AppCompatActivity {
                 Intent intent2 = new Intent(my_set.this, my_change_photo.class);
                 intent2.putExtra("butnum",false);
                 startActivity(intent2);
-                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                
                 break;
             case R.id.imageView123:
             case R.id.textView139:
             case R.id.imageView124:
                 Intent intent3 = new Intent(my_set.this, my_push.class);
                 startActivity(intent3);
-                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                
                 break;
             case R.id.imageView125:
             case R.id.textView140:
             case R.id.imageView126:
                 Intent intent4 = new Intent(my_set.this, my_feedback.class);
                 startActivity(intent4);
-                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                
                 break;
             case R.id.imageView127:
             case R.id.textView141:
             case R.id.imageView128:
                 Intent intent5 = new Intent(my_set.this, my_switch.class);
                 startActivity(intent5);
-                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                
                 break;
             case R.id.imageView129:
             case R.id.textView142:
@@ -133,7 +141,7 @@ public class my_set extends AppCompatActivity {
             case R.id.imageView132:
                 Intent intent6 = new Intent(my_set.this, my_about.class);
                 startActivity(intent6);
-                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                
                 break;
             case R.id.but:
                 SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
@@ -141,7 +149,7 @@ public class my_set extends AppCompatActivity {
                 Intent intent7 = new Intent(my_set.this, MainActivity.class);
                 intent7.putExtra("id",4);
                 startActivity(intent7);
-                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                
                 break;
         }
     }
@@ -171,6 +179,6 @@ public class my_set extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        this.finish();overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+        this.finish();
     }
 }

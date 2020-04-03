@@ -65,7 +65,7 @@ dependencies {
 
     implementation 'com.google.code.gson:gson:2.8.6'//Gson
 
-    implementation 'com.github.yyued:SVGAPlayer-Android:2.5.2'//SVGA
+    implementation 'com.github.yyued:SVGAPlayer-Android:2.5.3'//SVGA
 
     implementation 'com.scwang.smart:refresh-layout-kernel:2.0.0-alpha-1'      //核心必须依赖
     implementation 'com.scwang.smart:refresh-header-classics:2.0.0-alpha-1'    //经典刷新头
@@ -95,7 +95,7 @@ dependencies {
 
     implementation 'com.aliyun.dpa:oss-android-sdk:2.9.2'//oss
 
-    implementation project(path: ':pictureselector')//选择系统相册
+    implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.5.1'//图片选择器
 
     implementation 'org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.1.0'//MQTT
     implementation 'org.eclipse.paho:org.eclipse.paho.android.service:1.1.1'

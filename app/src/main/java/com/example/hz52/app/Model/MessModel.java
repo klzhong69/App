@@ -76,7 +76,6 @@ public class MessModel {
                     intent2.putExtra("sendid", mArrayList.get(position).getUserid());
                     intent2.putExtra("sendname", mArrayList.get(position).getName());
                     context.startActivity(intent2);
-                    fragmentActivity.overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
                 } else {
                     Observable<Integer> observable = Observable.defer(new Callable<ObservableSource<? extends Integer>>() {
                         @Override

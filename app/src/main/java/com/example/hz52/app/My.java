@@ -21,14 +21,15 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.hz52.app.Entity.MyApp;
+import com.example.hz52.app.cofig.Constant;
 import com.example.hz52.app.cofig.Preview;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
-import com.wildma.pictureselector.Constant;
 
 import java.util.Objects;
 
@@ -147,6 +148,7 @@ public class My extends Fragment {
     private String roomid;
     private String slogin;
     private String login;
+    private SharedPreferences sp;
 
 
     @Nullable
@@ -155,10 +157,6 @@ public class My extends Fragment {
         View view = inflater.inflate(R.layout.my_home, container, false);
         unbinder = ButterKnife.bind(this, view);
         textView88.setText("未认证");
-
-
-
-
 
         context = getContext();
         Window window = Objects.requireNonNull(getActivity()).getWindow();
@@ -177,6 +175,15 @@ public class My extends Fragment {
         para1 = view2.getLayoutParams();
         para1.height = startup_page.height;
         view2.setLayoutParams(para1);
+
+        sp = Objects.requireNonNull(getContext()).getSharedPreferences("User", Context.MODE_PRIVATE);
+        login = sp.getString("login", "");
+        userid = sp.getString("userid", "");
+        textView93.setText("ID " + sp.getString("userid", ""));
+        username = sp.getString("nickname", "");
+        textView92.setText(sp.getString("nickname", ""));
+        textView94.setText("关注 " + sp.getString("followCount", ""));
+        textView95.setText("粉丝 " + sp.getString("fansCount", ""));
 
         return view;
     }
@@ -203,8 +210,6 @@ public class My extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        SharedPreferences sp = Objects.requireNonNull(getContext()).getSharedPreferences("User", Context.MODE_PRIVATE);
-        login = sp.getString("login", "");
         try {
             if (login.equals("true")) {
                 imageView36.setVisibility(View.GONE);
@@ -215,13 +220,7 @@ public class My extends Fragment {
                 textView94.setVisibility(View.VISIBLE);
                 textView95.setVisibility(View.VISIBLE);
                 imageView37.setVisibility(View.VISIBLE);
-                userid = sp.getString("userid", "");
-                username = sp.getString("nickname", "");
-                textView92.setText(sp.getString("nickname", ""));
-                Glide.with(My.this).load(sp.getString("avatarUrl", "")).into(imageView28);
-                textView93.setText("ID " + sp.getString("userid", ""));
-                textView94.setText("关注 " + sp.getString("followCount", ""));
-                textView95.setText("粉丝 " + sp.getString("fansCount", ""));
+                Glide.with(My.this).load(sp.getString("avatarUrl", "")).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE).into(imageView28);
                 okgos();
             } else {
                 imageView36.setVisibility(View.VISIBLE);
@@ -246,8 +245,6 @@ public class My extends Fragment {
 
     private void okgos() {
         MyApp application = ((MyApp) getContext().getApplicationContext());
-        SharedPreferences sp = getContext().getSharedPreferences("User", Context.MODE_PRIVATE);
-        String userid = sp.getString("userid", "");
         String token = sp.getString("token", "");
         OkGo.<String>post(application.getUrl() + "/app/user/getUserPersonal?token=" + token)
                 .params("userId", userid)
@@ -278,7 +275,6 @@ public class My extends Fragment {
                                 sp.edit().putString("fansCount", fansCount).apply();
 
                                 textView92.setText(nickname);
-                                Glide.with(My.this).load(avatarUrl).into(imageView28);
                                 textView94.setText("关注 " + followCount);
                                 textView95.setText("粉丝 " + fansCount);
                                 textView76.setText(musicCount);
@@ -311,7 +307,7 @@ public class My extends Fragment {
                 Intent intent1 = new Intent(getContext(), login.class);
                 intent1.putExtra("type", 0);
                 startActivity(intent1);
-                Objects.requireNonNull(getActivity()).overridePendingTransition(R.animator.anim_bottom_in, R.animator.anim_bottom_out);
+                Objects.requireNonNull(getActivity()).overridePendingTransition(R.anim.anim_bottom_in, R.anim.anim_bottom_out);
                 break;
             case R.id.recycler18:
             case R.id.imageView28:
@@ -323,7 +319,6 @@ public class My extends Fragment {
                 if(login.equals("true")){
                     Intent intent2 = new Intent(getContext(), modify_information.class);
                     startActivity(intent2);
-                    Objects.requireNonNull(getActivity()).overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                 }
                 //认证
                 break;
@@ -335,25 +330,24 @@ public class My extends Fragment {
             case R.id.imageView81:
                 Intent intent3 = new Intent(getContext(), my_music.class);
                 startActivity(intent3);
-                Objects.requireNonNull(getActivity()).overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                 break;
             case R.id.textView78:
             case R.id.textView79:
                 Intent intent4 = new Intent(getContext(), my_package.class);
                 startActivity(intent4);
-                Objects.requireNonNull(getActivity()).overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+
                 break;
             case R.id.textView80:
             case R.id.textView81:
                 Intent intent5 = new Intent(getContext(), my_favorite.class);
                 startActivity(intent5);
-                Objects.requireNonNull(getActivity()).overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+
                 break;
             case R.id.textView82:
             case R.id.textView83:
                 Intent intent6 = new Intent(getContext(), my_footprint.class);
                 startActivity(intent6);
-                Objects.requireNonNull(getActivity()).overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+
                 break;
             case R.id.imageView73:
             case R.id.textView84:
@@ -364,12 +358,12 @@ public class My extends Fragment {
                     intent7.putExtra(Constant.ACTION_KEY_ROOM_ID, userid);
                     intent7.putExtra(Constant.ACTION_KEY_TITLE_NAME, username + "的房间");
                     startActivity(intent7);
-                    Objects.requireNonNull(getActivity()).overridePendingTransition(R.animator.anim_bottom_in, R.animator.anim_bottom_out);
+                    Objects.requireNonNull(getActivity()).overridePendingTransition(R.anim.anim_bottom_in, R.anim.anim_bottom_out);
                 } else {
                     Intent intent14 = new Intent(getContext(), login.class);
                     intent14.putExtra("type", 0);
                     startActivity(intent14);
-                    Objects.requireNonNull(getActivity()).overridePendingTransition(R.animator.anim_bottom_in, R.animator.anim_bottom_out);
+                    Objects.requireNonNull(getActivity()).overridePendingTransition(R.anim.anim_bottom_in, R.anim.anim_bottom_out);
                 }
                 break;
             case R.id.imageView74:
@@ -377,7 +371,7 @@ public class My extends Fragment {
                 Intent intent8 = new Intent(getContext(), homepage.class);
                 intent8.putExtra("id", Long.parseLong(userid));
                 startActivity(intent8);
-                Objects.requireNonNull(getActivity()).overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+
                 break;
             case R.id.imageView41:
             case R.id.imageView76:
@@ -385,7 +379,7 @@ public class My extends Fragment {
             case R.id.imageView77:
                 Intent intent9 = new Intent(getContext(), my_wallet.class);
                 startActivity(intent9);
-                Objects.requireNonNull(getActivity()).overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+
                 break;
             case R.id.imageView44:
             case R.id.imageView82:
@@ -393,7 +387,7 @@ public class My extends Fragment {
             case R.id.imageView83:
                 Intent intent12 = new Intent(getContext(), my_grade.class);
                 startActivity(intent12);
-                Objects.requireNonNull(getActivity()).overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+
                 break;
             case R.id.imageView45:
             case R.id.imageView84:
@@ -401,7 +395,7 @@ public class My extends Fragment {
             case R.id.imageView85:
                 Intent intent13 = new Intent(getContext(), my_realname.class);
                 startActivity(intent13);
-                Objects.requireNonNull(getActivity()).overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+
                 break;
         }
     }

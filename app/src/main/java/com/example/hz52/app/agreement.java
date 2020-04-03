@@ -110,16 +110,6 @@ public class agreement extends AppCompatActivity {
     };
 
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (mWebView.canGoBack() && event.getKeyCode() ==
-                KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            mWebView.goBack();
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
-    }
-
-    @Override
     protected void onDestroy() {
         if (mWebView != null) {
             mWebView.clearHistory();
@@ -155,7 +145,7 @@ public class agreement extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fold:
-                this.finish();overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                this.finish();
                 break;
             case R.id.web_view:
                 break;
@@ -164,7 +154,10 @@ public class agreement extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        this.finish();overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+        if (mWebView.canGoBack()) {
+            mWebView.goBack();
+        }
+        this.finish();
     }
 }
 

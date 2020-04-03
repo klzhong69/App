@@ -102,7 +102,7 @@ public class login extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.fold:
                 this.finish();
-                overridePendingTransition(R.animator.anim_bottom_in, R.animator.anim_bottom_out);
+                overridePendingTransition(R.anim.anim_bottom_in, R.anim.anim_bottom_out);
                 break;
             case R.id.but:
                 if(isConnectIsNormal()) {
@@ -117,18 +117,15 @@ public class login extends AppCompatActivity {
             case R.id.textView156:
                 Intent intent2 = new Intent(login.this, forget_password.class);
                 startActivity(intent2);
-                overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
                 break;
             case R.id.textView157:
                 Intent intent3 = new Intent(login.this, registered.class);
                 startActivity(intent3);
-                overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
                 break;
             case R.id.textView159:
                 Intent intent4 = new Intent(login.this, agreement.class);
                 intent4.putExtra("about", 0);
                 startActivity(intent4);
-                overridePendingTransition(R.animator.anim_right_in, R.animator.anim_left_out);
                 break;
         }
     }
@@ -194,12 +191,8 @@ public class login extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if(state == 1){
-            System.exit(0);
-        }else{
             this.finish();
-            overridePendingTransition(R.animator.anim_bottom_in, R.animator.anim_bottom_out);
-        }
+            overridePendingTransition(R.anim.anim_bottom_in, R.anim.anim_bottom_out);
 
     }
 }

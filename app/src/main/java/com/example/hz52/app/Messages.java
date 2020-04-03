@@ -164,12 +164,12 @@ public class Messages extends Fragment {
             case R.id.imageView78:
                 Intent intent2 = new Intent(getContext(), mess_friends.class);
                 startActivity(intent2);
-                Objects.requireNonNull(getActivity()).overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+
                 break;
             case R.id.rect_views:
                 Intent intent3 = new Intent(getContext(), system_information.class);
                 startActivity(intent3);
-                Objects.requireNonNull(getActivity()).overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+
                 break;
         }
     }

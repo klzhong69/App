@@ -109,7 +109,7 @@ public class search extends AppCompatActivity {
                         Intent intent3 = new Intent(search.this, family_search.class);
                         intent3.putExtra("searchtxt",mArrayList.get(position).getTxt());
                         startActivity(intent3);
-                        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                        
 
                     }
                 });
@@ -171,7 +171,7 @@ public class search extends AppCompatActivity {
                 Intent intent3 = new Intent(search.this, family_search.class);
                 intent3.putExtra("searchtxt",queryText);
                 startActivity(intent3);
-                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                
                 return true;
             }
         });
@@ -200,7 +200,7 @@ public class search extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.imageView37:
-                this.finish();overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                this.finish();
                 break;
             case R.id.textView178:
             case R.id.imageView147:
@@ -217,6 +217,6 @@ public class search extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        this.finish();overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+        this.finish();
     }
 }

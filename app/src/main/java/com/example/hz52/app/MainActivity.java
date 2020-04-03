@@ -59,6 +59,7 @@ import java.util.concurrent.Callable;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.agora.rtc.RtcEngine;
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.Observer;
@@ -112,6 +113,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
     private String userid;
     private String slogin;
     private int id = 0;
+    private boolean exit = false;
 
 
     @Override
@@ -131,14 +133,17 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
         SharedPreferences sp = this.getSharedPreferences("User", Context.MODE_PRIVATE);
         userid = sp.getString("userid", "");
         slogin = sp.getString("login", "");
+
         if (slogin.equals("true")) {
-            MqttMessageService.create(this);
-        } else {
+            MqttMessageService.initMqtt(this);
+            MqttMessageService.connectMqtt();
+        }else{
             Intent intent1 = new Intent(MainActivity.this, login.class);
             intent1.putExtra("type", 1);
             startActivity(intent1);
-            overridePendingTransition(R.animator.anim_bottom_in, R.animator.anim_bottom_out);
+            overridePendingTransition(R.anim.anim_bottom_in, R.anim.anim_bottom_out);
         }
+
         setDefaultFragment();
 
     }
@@ -228,7 +233,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
                                 EasyFloat.dismissAppFloat("testFloat");
                                 Intent intent = new Intent(MainActivity.this, chatroom.class);
                                 startActivity(intent);
-                                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                                
                             }
                         });
 
@@ -669,14 +674,25 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
         startActivity(intent);
     }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            this.finish();
-            return true;
+
+    protected void onDestroy() {
+        super.onDestroy();
+        if(MqttMessageService.bool){
+            MqttMessageService.destroy();
         }
-        return super.onKeyDown(keyCode, event);
+
+
     }
 
+    @Override
+    public void onBackPressed() {
+        if(exit){
+            this.finish();
+        }else{
+            exit = true;
+            Toast.makeText(MainActivity.this,  "再按一次退出", Toast.LENGTH_SHORT).show();
+        }
+
+    }
 }
 

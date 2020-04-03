@@ -57,7 +57,7 @@ public class my_about extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fold:
-                this.finish();overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                this.finish();
                 break;
             case R.id.imageView119:
             case R.id.textView137:
@@ -71,7 +71,7 @@ public class my_about extends AppCompatActivity {
                 Intent intent2 = new Intent(my_about.this, agreement.class);
                 intent2.putExtra("about",1);
                 startActivity(intent2);
-                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                
                 break;
             case R.id.imageView122:
             case R.id.textView139:
@@ -79,7 +79,7 @@ public class my_about extends AppCompatActivity {
                 Intent intent3 = new Intent(my_about.this, agreement.class);
                 intent3.putExtra("about",2);
                 startActivity(intent3);
-                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                
                 break;
 
         }
@@ -87,6 +87,6 @@ public class my_about extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        this.finish();overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+        this.finish();
     }
 }

@@ -22,10 +22,15 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.hz52.app.Adapter.ModifyViewAdapter;
 import com.example.hz52.app.Entity.Modify;
 import com.example.hz52.app.Entity.MyApp;
+import com.example.hz52.app.cofig.GlideEngine;
 import com.example.hz52.app.cofig.OSSSet;
 import com.example.hz52.app.cofig.Preview;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.luck.picture.lib.PictureSelector;
+import com.luck.picture.lib.config.PictureConfig;
+import com.luck.picture.lib.config.PictureMimeType;
+import com.luck.picture.lib.entity.LocalMedia;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
@@ -33,7 +38,6 @@ import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
-import com.wildma.pictureselector.PictureSelector;
 
 import java.util.ArrayList;
 
@@ -116,7 +120,7 @@ public class modify_information extends AppCompatActivity {
 
         textView35.setText(nickname);
         textView37.setText(signtureText);
-        Glide.with(modify_information.this).load(avatarUrl).into(imageView2);
+        Glide.with(modify_information.this).load(avatarUrl).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE).into(imageView2);
 
     }
 
@@ -169,9 +173,20 @@ public class modify_information extends AppCompatActivity {
                 int del = mData.size() - 1;
                 if (position == del) {
                     in = 1;
-                    PictureSelector
-                            .create(modify_information.this, PictureSelector.SELECT_REQUEST_CODE)
-                            .selectPicture(true, 200, 200, 1, 1);
+                    PictureSelector.create(modify_information.this)
+                            .openGallery(PictureMimeType.ofImage())
+                            .isCamera(true)// 是否显示拍照按钮
+                            .enableCrop(true)// 是否裁剪
+                            .compress(true)// 是否压缩
+                            .freeStyleCropEnabled(true)// 裁剪框是否可拖拽
+                            .showCropFrame(true)// 是否显示裁剪矩形边框 圆形裁剪时建议设为false
+                            .showCropGrid(true)// 是否显示裁剪矩形网格 圆形裁剪时建议设为false
+                            .withAspectRatio(1,1)
+                            .rotateEnabled(true) // 裁剪是否可旋转图片
+                            .scaleEnabled(true)// 裁剪是否可放大缩小图片
+                            .selectionMode(PictureConfig.SINGLE)
+                            .loadImageEngine(GlideEngine.createGlideEngine())
+                            .forResult(PictureConfig.CHOOSE_REQUEST);
                 } else {
                     Toast.makeText(modify_information.this, "第" + mData.get(position).getId(), Toast.LENGTH_SHORT).show();
                 }
@@ -218,20 +233,31 @@ public class modify_information extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fold:
-
+                if(bool){
+                    showMessagePositiveDialog();
+                }else{
                     finish();
-                    overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
-
-
+                }
                 break;
             case R.id.subtitle:
                 okgo();
                 break;
             case R.id.imageView2:
                 in = 0;
-                PictureSelector
-                        .create(modify_information.this, PictureSelector.SELECT_REQUEST_CODE)
-                        .selectPicture(true, 400, 400, 1, 1);
+                PictureSelector.create(modify_information.this)
+                        .openGallery(PictureMimeType.ofImage())
+                        .isCamera(true)// 是否显示拍照按钮
+                        .enableCrop(true)// 是否裁剪
+                        .compress(true)// 是否压缩
+                        .freeStyleCropEnabled(true)// 裁剪框是否可拖拽
+                        .showCropFrame(false)// 是否显示裁剪矩形边框 圆形裁剪时建议设为false
+                        .showCropGrid(false)// 是否显示裁剪矩形网格 圆形裁剪时建议设为false
+                        .circleDimmedLayer(true)// 是否圆形裁剪
+                        .rotateEnabled(true) // 裁剪是否可旋转图片
+                        .scaleEnabled(true)// 裁剪是否可放大缩小图片
+                        .selectionMode(PictureConfig.SINGLE)
+                        .loadImageEngine(GlideEngine.createGlideEngine())
+                        .forResult(PictureConfig.CHOOSE_REQUEST);
                 break;
             case R.id.textView35:
                 showEditTextDialog();
@@ -239,6 +265,55 @@ public class modify_information extends AppCompatActivity {
             case R.id.textView37:
                 showEditTextDialogs();
                 break;
+        }
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == PictureConfig.CHOOSE_REQUEST) {// 图片选择结果回调
+                if (PictureSelector.obtainMultipleResult(data).get(0).isCompressed()) {
+                    picturePath = PictureSelector.obtainMultipleResult(data).get(0).getCompressPath();
+                    Observable.just(in)
+                            .subscribe(new Observer<Integer>() {
+                                @Override
+                                public void onSubscribe(Disposable d) {
+                                }
+
+                                @Override
+                                public void onNext(Integer integer) {
+                                    switch (integer) {
+                                        case 0:
+                                            Glide.with(modify_information.this).load(picturePath).into(imageView2);
+                                            okgoima(0);
+                                            break;
+                                        case 1:
+                                            tipDialog = new QMUITipDialog.Builder(modify_information.this)
+                                                    .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
+                                                    .setTipWord("正在加载")
+                                                    .create();
+                                            tipDialog.show();
+                                            okgoima(1);
+                                            break;
+                                    }
+                                }
+
+                                @Override
+                                public void onError(Throwable e) {
+
+                                }
+
+                                @Override
+                                public void onComplete() {
+
+                                }
+                            });
+                }
+
+
+            }
         }
     }
 
@@ -256,9 +331,7 @@ public class modify_information extends AppCompatActivity {
                     @Override
                     public void onClick(QMUIDialog dialog, int index) {
                         dialog.dismiss();
-                        System.out.println("这里");
                         finish();
-                        overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
                     }
                 })
                 .create(mCurrentDialogStyle).show();
@@ -340,7 +413,6 @@ public class modify_information extends AppCompatActivity {
                             sp.edit().putString("signtureText", textView37.getText().toString()).apply();
                             sp.edit().putString("avatarUrl", avatarUrl).apply();
                             finish();
-                            overridePendingTransition(R.animator.anim_left_in, R.animator.anim_right_out);
 
                         } else {
                             Toast.makeText(modify_information.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
@@ -349,60 +421,6 @@ public class modify_information extends AppCompatActivity {
                     }
                 });
 
-    }
-
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        /*结果回调*/
-        if (requestCode == PictureSelector.SELECT_REQUEST_CODE) {
-            if (data != null) {
-                picturePath = data.getStringExtra(PictureSelector.PICTURE_PATH);
-                // imageView2.setImageBitmap(BitmapFactory.decodeFile(picturePath));
-
-                Observable.just(in)
-                        .subscribe(new Observer<Integer>() {
-                            @Override
-                            public void onSubscribe(Disposable d) {
-
-                            }
-
-                            @Override
-                            public void onNext(Integer integer) {
-                                switch (integer) {
-                                    case 0:
-                                        RequestOptions requestOptions = RequestOptions
-                                                .circleCropTransform()
-                                                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                                                .skipMemoryCache(true);
-                                        Glide.with(modify_information.this).load(picturePath).apply(requestOptions).into(imageView2);
-                                        okgoima(0);
-                                        break;
-                                    case 1:
-                                        tipDialog = new QMUITipDialog.Builder(modify_information.this)
-                                                .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
-                                                .setTipWord("正在加载")
-                                                .create();
-                                        tipDialog.show();
-                                        okgoima(1);
-                                        break;
-                                }
-                            }
-
-                            @Override
-                            public void onError(Throwable e) {
-
-                            }
-
-                            @Override
-                            public void onComplete() {
-
-                            }
-                        });
-
-            }
-        }
     }
 
     //上传图片到oss
@@ -430,7 +448,6 @@ public class modify_information extends AppCompatActivity {
                                     String upload = OSSSet.Upload(bucket, phone + "/" + "avatar.jpg", picturePath);
                                     if (upload.equals("UploadSuccess")) {
                                         avatarUrl = "http://hertz52-user.oss-cn-shenzhen.aliyuncs.com/" + phone + "/" + "avatar.jpg";
-
                                     }
                                     bool=true;
                                 } else {
@@ -510,13 +527,13 @@ public class modify_information extends AppCompatActivity {
 
     }
 
+
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-
+        if(bool){
+            showMessagePositiveDialog();
+        }else{
             finish();
-            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
-
-
+        }
     }
 }

@@ -113,7 +113,7 @@ public class my_change_pass extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fold:
-                this.finish();overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                this.finish();
                 break;
             case R.id.imageView25:
                 break;
@@ -157,7 +157,7 @@ public class my_change_pass extends AppCompatActivity {
                             Intent intent1 = new Intent(my_change_pass.this, login.class);
                             intent1.putExtra("type",0);
                             startActivity(intent1);
-                            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                            
                             Toast.makeText(my_change_pass.this, prexiew.getMsg()+"", Toast.LENGTH_SHORT).show();
 
 
@@ -172,6 +172,6 @@ public class my_change_pass extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        this.finish();overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+        this.finish();
     }
 }

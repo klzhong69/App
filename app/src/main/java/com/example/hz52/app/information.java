@@ -163,14 +163,14 @@ public class information extends AppCompatActivity {
                             Toast.makeText(information.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
                             Intent intent2 = new Intent(information.this, login.class);
                             startActivity(intent2);
-                            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                            
                         } else if (prexiew.getCode() == 40000) {
                             Toast.makeText(information.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
                         } else if (prexiew.getCode() == 40004) {
                             Toast.makeText(information.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
                             Intent intent2 = new Intent(information.this, registered.class);
                             startActivity(intent2);
-                            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                            
                         }
 
 

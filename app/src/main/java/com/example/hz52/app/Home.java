@@ -30,6 +30,7 @@ import com.bumptech.glide.Glide;
 import com.example.hz52.app.Entity.Homes;
 import com.example.hz52.app.Entity.MyApp;
 import com.example.hz52.app.Model.MessModel;
+import com.example.hz52.app.cofig.Constant;
 import com.example.hz52.app.cofig.Preview;
 import com.example.hz52.app.cofig.TanTanCallback;
 import com.google.gson.Gson;
@@ -42,7 +43,6 @@ import com.mcxtzhang.commonadapter.rv.OnItemClickListener;
 import com.mcxtzhang.commonadapter.rv.ViewHolder;
 import com.mcxtzhang.layoutmanager.swipecard.CardConfig;
 import com.mcxtzhang.layoutmanager.swipecard.OverLayCardLayoutManager;
-import com.wildma.pictureselector.Constant;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -170,13 +170,13 @@ public class Home extends Fragment {
                                     intent.putExtra(Constant.ACTION_KEY_ROOM_ID, mDatas.get(position).getId());
                                     intent.putExtra(Constant.ACTION_KEY_TITLE_NAME, mDatas.get(position).getRoomname());
                                     startActivity(intent);
-                                    Objects.requireNonNull(getActivity()).overridePendingTransition(R.animator.anim_bottom_in, R.animator.anim_bottom_out);
+                                    Objects.requireNonNull(getActivity()).overridePendingTransition(R.anim.anim_bottom_in, R.anim.anim_bottom_out);
                                 }
                             } else {
                                 Intent intent1 = new Intent(getContext(), login.class);
                                 intent1.putExtra("type", 0);
                                 startActivity(intent1);
-                                Objects.requireNonNull(getActivity()).overridePendingTransition(R.animator.anim_bottom_in, R.animator.anim_bottom_out);
+                                Objects.requireNonNull(getActivity()).overridePendingTransition(R.anim.anim_bottom_in, R.anim.anim_bottom_out);
                             }
                         }
                     });
@@ -282,7 +282,6 @@ public class Home extends Fragment {
             case R.id.imageView149:
                 Intent intent2 = new Intent(getContext(), search.class);
                 startActivity(intent2);
-                Objects.requireNonNull(getActivity()).overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                 break;
         }
     }

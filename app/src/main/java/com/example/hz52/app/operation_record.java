@@ -97,7 +97,7 @@ public class operation_record extends AppCompatActivity {
 
     @OnClick(R.id.fold)
     public void onViewClicked() {
-        this.finish();overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+        this.finish();
     }
 
 
@@ -133,6 +133,6 @@ public class operation_record extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        this.finish();overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+        this.finish();
     }
 }

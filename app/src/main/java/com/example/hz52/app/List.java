@@ -286,7 +286,6 @@ public class List extends Fragment {
                 Intent intent8 = new Intent(getContext(), homepage.class);
                 intent8.putExtra("id", 695294941L);
                 startActivity(intent8);
-                Objects.requireNonNull(getActivity()).overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                 break;
             case R.id.textView108:
                 rankListCategory = 1;

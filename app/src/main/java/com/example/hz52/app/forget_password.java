@@ -76,7 +76,7 @@ public class forget_password extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fold:
-                this.finish();overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                this.finish();
                 break;
             case R.id.textView150:
                 okgos();
@@ -108,7 +108,7 @@ public class forget_password extends AppCompatActivity {
                             Toast.makeText(forget_password.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
                             Intent intent2 = new Intent(forget_password.this, login.class);
                             startActivity(intent2);
-                            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                            
                         } else {
                             Toast.makeText(forget_password.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
                         }
@@ -149,6 +149,6 @@ public class forget_password extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        this.finish();overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+        this.finish();
     }
 }

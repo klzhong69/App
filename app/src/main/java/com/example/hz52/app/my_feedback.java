@@ -17,17 +17,21 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.hz52.app.Entity.MyApp;
 import com.example.hz52.app.cofig.DateUtil;
+import com.example.hz52.app.cofig.GlideEngine;
 import com.example.hz52.app.cofig.OSSSet;
 import com.example.hz52.app.cofig.Preview;
 import com.google.gson.Gson;
+import com.luck.picture.lib.PictureSelector;
+import com.luck.picture.lib.config.PictureConfig;
+import com.luck.picture.lib.config.PictureMimeType;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
-import com.wildma.pictureselector.PictureSelector;
 
+import java.util.Arrays;
 import java.util.HashMap;
 
 import butterknife.BindView;
@@ -97,13 +101,11 @@ public class my_feedback extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fold:
-                this.finish();overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                this.finish();
                 break;
             case R.id.imageView113:
                 in = 0;
-                PictureSelector
-                        .create(my_feedback.this, PictureSelector.SELECT_REQUEST_CODE)
-                        .selectPicture(true, 400, 400, 1, 1);
+                picture();
                 break;
             case R.id.but:
                 if (!editText.getText().toString().equals("")) {
@@ -123,34 +125,101 @@ public class my_feedback extends AppCompatActivity {
                 break;
             case R.id.imageView8:
                 in = 1;
-                PictureSelector
-                        .create(my_feedback.this, PictureSelector.SELECT_REQUEST_CODE)
-                        .selectPicture(true, 400, 400, 1, 1);
+                picture();
                 break;
             case R.id.imageView9:
                 in = 2;
-                PictureSelector
-                        .create(my_feedback.this, PictureSelector.SELECT_REQUEST_CODE)
-                        .selectPicture(true, 400, 400, 1, 1);
+                picture();
                 break;
             case R.id.imageView14:
                 in = 3;
-                PictureSelector
-                        .create(my_feedback.this, PictureSelector.SELECT_REQUEST_CODE)
-                        .selectPicture(true, 400, 400, 1, 1);
+                picture();
                 break;
             case R.id.imageView15:
                 in = 4;
-                PictureSelector
-                        .create(my_feedback.this, PictureSelector.SELECT_REQUEST_CODE)
-                        .selectPicture(true, 400, 400, 1, 1);
+                picture();
                 break;
         }
     }
 
+    private void picture(){
+        PictureSelector.create(my_feedback.this)
+                .openGallery(PictureMimeType.ofImage())
+                .isCamera(true)// 是否显示拍照按钮
+                .enableCrop(true)// 是否裁剪
+                .compress(true)// 是否压缩
+                .freeStyleCropEnabled(true)// 裁剪框是否可拖拽
+                .showCropFrame(true)// 是否显示裁剪矩形边框 圆形裁剪时建议设为false
+                .showCropGrid(true)// 是否显示裁剪矩形网格 圆形裁剪时建议设为false
+                .withAspectRatio(1,1)
+                .rotateEnabled(true) // 裁剪是否可旋转图片
+                .scaleEnabled(true)// 裁剪是否可放大缩小图片
+                .selectionMode(PictureConfig.SINGLE)
+                .loadImageEngine(GlideEngine.createGlideEngine())
+                .forResult(PictureConfig.CHOOSE_REQUEST);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == PictureConfig.CHOOSE_REQUEST) {// 图片选择结果回调
+                if (PictureSelector.obtainMultipleResult(data).get(0).isCompressed()) {
+                    picturePath = PictureSelector.obtainMultipleResult(data).get(0).getCompressPath();
+                    Observable.just(in)
+                            .subscribe(new Observer<Integer>() {
+                                @Override
+                                public void onSubscribe(Disposable d) {
+
+                                }
+
+                                @Override
+                                public void onNext(Integer integer) {
+                                    switch (integer) {
+                                        case 0:
+                                            Glide.with(my_feedback.this).load(picturePath).into(imageView113);
+                                            imageView8.setVisibility(View.VISIBLE);
+                                            break;
+                                        case 1:
+                                            Glide.with(my_feedback.this).load(picturePath).into(imageView8);
+                                            imageView9.setVisibility(View.VISIBLE);
+                                            break;
+                                        case 2:
+                                            Glide.with(my_feedback.this).load(picturePath).into(imageView9);
+                                            imageView14.setVisibility(View.VISIBLE);
+                                            break;
+                                        case 3:
+                                            Glide.with(my_feedback.this).load(picturePath).into(imageView14);
+                                            imageView15.setVisibility(View.VISIBLE);
+                                            break;
+                                        case 4:
+                                            Glide.with(my_feedback.this).load(picturePath).into(imageView15);
+                                            break;
+                                    }
+
+                                    okgoima();
+                                }
+
+                                @Override
+                                public void onError(Throwable e) {
+
+                                }
+
+                                @Override
+                                public void onComplete() {
+
+                                }
+                            });
+                }
+
+            }
+        }
+    }
+
+
     @Override
     public void onBackPressed() {
-        this.finish();overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+        this.finish();
     }
 
     private void okgo() {
@@ -169,7 +238,7 @@ public class my_feedback extends AppCompatActivity {
                     .params("userId", userid)
                     .params("phone", editText.getText().toString())
                     .params("question", editText3.getText().toString())
-                    .params("pictures", map.toString())
+                    .params("pictures", Arrays.toString(pic))
                     .execute(new StringCallback() {
 
                         @Override
@@ -190,68 +259,6 @@ public class my_feedback extends AppCompatActivity {
 
                         }
                     });
-        }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        /*结果回调*/
-        if (requestCode == PictureSelector.SELECT_REQUEST_CODE) {
-            if (data != null) {
-                picturePath = data.getStringExtra(PictureSelector.PICTURE_PATH);
-                // imageView2.setImageBitmap(BitmapFactory.decodeFile(picturePath));
-
-                Observable.just(in)
-                        .subscribe(new Observer<Integer>() {
-                            @Override
-                            public void onSubscribe(Disposable d) {
-
-                            }
-
-                            @Override
-                            public void onNext(Integer integer) {
-                                RequestOptions requestOptions = RequestOptions
-                                        .circleCropTransform()
-                                        .diskCacheStrategy(DiskCacheStrategy.NONE)
-                                        .skipMemoryCache(true);
-                                switch (integer) {
-                                    case 0:
-                                        Glide.with(my_feedback.this).load(picturePath).apply(requestOptions).into(imageView113);
-                                        imageView8.setVisibility(View.VISIBLE);
-                                        break;
-                                    case 1:
-                                        Glide.with(my_feedback.this).load(picturePath).apply(requestOptions).into(imageView8);
-                                        imageView9.setVisibility(View.VISIBLE);
-                                        break;
-                                    case 2:
-                                        Glide.with(my_feedback.this).load(picturePath).apply(requestOptions).into(imageView9);
-                                        imageView14.setVisibility(View.VISIBLE);
-                                        break;
-                                    case 3:
-                                        Glide.with(my_feedback.this).load(picturePath).apply(requestOptions).into(imageView14);
-                                        imageView15.setVisibility(View.VISIBLE);
-                                        break;
-                                    case 4:
-                                        Glide.with(my_feedback.this).load(picturePath).apply(requestOptions).into(imageView15);
-                                        break;
-                                }
-
-                                okgoima();
-                            }
-
-                            @Override
-                            public void onError(Throwable e) {
-
-                            }
-
-                            @Override
-                            public void onComplete() {
-
-                            }
-                        });
-
-            }
         }
     }
 

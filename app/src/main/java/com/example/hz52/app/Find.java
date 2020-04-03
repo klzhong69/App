@@ -128,7 +128,6 @@ public class Find extends Fragment implements OnItemClickListener, LFRecyclerVie
 
         okgo(0, 0);
         initData();
-
         init();
 
         return view;
@@ -401,7 +400,6 @@ public class Find extends Fragment implements OnItemClickListener, LFRecyclerVie
             case R.id.imageView18:
                 Intent intent2 = new Intent(getContext(), find_make.class);
                 startActivity(intent2);
-                Objects.requireNonNull(getActivity()).overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                 break;
         }
     }

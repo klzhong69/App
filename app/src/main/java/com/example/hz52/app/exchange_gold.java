@@ -70,7 +70,7 @@ public class exchange_gold extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fold:
-                this.finish();overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                this.finish();
                 break;
             case R.id.but:
                 okgo();
@@ -99,7 +99,7 @@ public class exchange_gold extends AppCompatActivity {
                             Toast.makeText(exchange_gold.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
                             Intent intent2 = new Intent(exchange_gold.this, my_wallet.class);
                             startActivity(intent2);
-                            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                            
                             onBackPressed();
 
                         } else  {
@@ -113,6 +113,6 @@ public class exchange_gold extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        this.finish();overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+        this.finish();
     }
 }

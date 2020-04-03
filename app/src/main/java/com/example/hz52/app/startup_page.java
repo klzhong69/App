@@ -2,6 +2,7 @@ package com.example.hz52.app;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Rect;
 import android.net.ConnectivityManager;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.hz52.app.MQ.MqttMessageService;
 import com.example.hz52.app.cofig.Initialization;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 
@@ -35,6 +37,8 @@ public class startup_page extends AppCompatActivity {
     public static int cardheight;
     private String TAG = "MQTT";
     public static String intername = "";
+    private String slogin;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +57,7 @@ public class startup_page extends AppCompatActivity {
                 Intent intent  =  new Intent(startup_page.this,MainActivity.class);
                 intent.putExtra("id", 0);
                 startActivity(intent);
-                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                overridePendingTransition(R.anim.anim_tran_in, R.anim.anim_tran_out);
                 finish();
 
             }
@@ -73,6 +77,9 @@ public class startup_page extends AppCompatActivity {
 
         System.out.println("系统栏高度"+height);
         isConnectIsNormal();
+
+        SharedPreferences sp = this.getSharedPreferences("User", Context.MODE_PRIVATE);
+        slogin = sp.getString("login", "");
     }
 
     /** 判断网络是否连接 */

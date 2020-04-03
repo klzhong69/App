@@ -55,17 +55,17 @@ public class my_music extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fold:
-                this.finish();overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                this.finish();
                 break;
             case R.id.subtitle:
                 Intent intent1 = new Intent(my_music.this, scan_code.class);
                 startActivity(intent1);
-                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                
                 break;
             case R.id.imageView141:
                 Intent intent2 = new Intent(my_music.this, my_music_search.class);
                 startActivity(intent2);
-                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                
                 break;
         }
     }
@@ -135,7 +135,6 @@ public class my_music extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         this.finish();
-        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
     }
 
 }
