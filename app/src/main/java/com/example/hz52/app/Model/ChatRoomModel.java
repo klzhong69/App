@@ -39,7 +39,7 @@ public class ChatRoomModel {
 
     private static ArrayList<Roomtxt> mEntityList = new ArrayList<Roomtxt>();
     public static ArrayList<Roomhead> mUserList;
-    private static RoomtxtAdapter mAdapter;
+    public static RoomtxtAdapter mAdapter;
     public static RoomheadAdapter mAdapters;
     public static GridLayoutManager mLayoutManager;
     public static JsonArray users;
@@ -89,8 +89,8 @@ public class ChatRoomModel {
          * 既然是动画，就会有时间，我们把动画执行时间变大一点来看一看效果
          */
         DefaultItemAnimator defaultItemAnimator = new DefaultItemAnimator();
-        defaultItemAnimator.setAddDuration(200);
-        defaultItemAnimator.setRemoveDuration(200);
+        defaultItemAnimator.setAddDuration(600);
+        defaultItemAnimator.setRemoveDuration(600);
         mRecyclerView.setItemAnimator(defaultItemAnimator);
 
 
@@ -236,9 +236,8 @@ public class ChatRoomModel {
         return -1;
     }
 
-    public static void Add(RecyclerView mRecyclerView,Roomtxt entity){
+    public static void Add(Roomtxt entity){
         mAdapter.addData(mEntityList.size(), entity);
-        mRecyclerView.smoothScrollToPosition(mEntityList.size());
     }
 
     public static void okgo(Context context,Long roomid) {

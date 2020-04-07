@@ -7,12 +7,10 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Color;
-import android.net.http.HttpResponseCache;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextPaint;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -43,6 +41,7 @@ import com.example.hz52.app.Entity.Mess;
 import com.example.hz52.app.Entity.MyApp;
 import com.example.hz52.app.Entity.Roomhead;
 import com.example.hz52.app.Entity.Roomtxt;
+import com.example.hz52.app.Entity.Svga;
 import com.example.hz52.app.MQ.MqttMessageService;
 import com.example.hz52.app.Model.ChatModel;
 import com.example.hz52.app.Model.ChatRoomModel;
@@ -55,18 +54,12 @@ import com.example.hz52.app.Sqlentity.Conver;
 import com.example.hz52.app.cofig.Constant;
 import com.example.hz52.app.cofig.DateUtil;
 import com.example.hz52.app.cofig.KeyboardStateObserver;
+import com.example.hz52.app.cofig.SvgaUtils;
 import com.example.hz52.app.dao.mConverDao;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.lzf.easyfloat.EasyFloat;
-import com.lzf.easyfloat.anim.AppFloatDefaultAnimator;
-import com.lzf.easyfloat.anim.DefaultAnimator;
-import com.lzf.easyfloat.enums.ShowPattern;
-import com.lzf.easyfloat.enums.SidePattern;
-import com.lzf.easyfloat.interfaces.OnInvokeView;
-import com.lzf.easyfloat.interfaces.OnPermissionResult;
-import com.lzf.easyfloat.permission.PermissionUtils;
+import com.opensource.svgaplayer.SVGACallback;
 import com.opensource.svgaplayer.SVGADrawable;
 import com.opensource.svgaplayer.SVGADynamicEntity;
 import com.opensource.svgaplayer.SVGAImageView;
@@ -105,8 +98,6 @@ import io.reactivex.ObservableSource;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
-import static com.example.hz52.app.gen.MusicDao.Properties.File;
-
 public class chatroom extends AppCompatActivity {
 
     @BindView(R.id.imageView4)
@@ -137,8 +128,6 @@ public class chatroom extends AppCompatActivity {
     RecyclerView gridview;
     @BindView(R.id.recyclerview)
     RecyclerView recyclerview;
-    @BindView(R.id.relativeLayout)
-    NestedScrollView relativeLayout;
     @BindView(R.id.textView19)
     TextView textView19;
     @BindView(R.id.imageView96)
@@ -407,6 +396,10 @@ public class chatroom extends AppCompatActivity {
     RelativeLayout relativeLayout6;
     @BindView(R.id.component6)
     RelativeLayout component6;
+    @BindView(R.id.relativeLayout)
+    NestedScrollView relativeLayout;
+    @BindView(R.id.relativeLayout11)
+    RelativeLayout relativeLayout11;
 
 
     private chatroom context;
@@ -424,6 +417,7 @@ public class chatroom extends AppCompatActivity {
     private static final int PERMISSION_REQ_ID_RECORD_AUDIO = 22;
     private RtcEngine mRtcEngine;
     private int mRoomMode;
+    private int der = 0;
     private String mChannelId;
     private String mTitleName;
     private String userid;
@@ -544,8 +538,6 @@ public class chatroom extends AppCompatActivity {
             });
         }
     };
-    private SVGAImageView animationView = null;
-
 
     private int getUserIndex(Long uid) {
 
@@ -599,6 +591,7 @@ public class chatroom extends AppCompatActivity {
         ChatRoomModel.initrecyclers(context, gridview);
         ChatRoomModel.okgoall(context, recyclerc7, Long.valueOf(mChannelId), 0);
         ChatRoomModel.okgoall(context, recyclerc3, Long.valueOf(mChannelId), 1);
+
         relativeLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
@@ -610,7 +603,7 @@ public class chatroom extends AppCompatActivity {
             }
         });
 
-
+        SvgaUtils.initAnimator(context,svga1);
     }
 
 
@@ -767,7 +760,7 @@ public class chatroom extends AppCompatActivity {
                                             quickAction.dismiss();
                                             Intent intent2 = new Intent(chatroom.this, room_set.class);
                                             startActivity(intent2);
-                                            
+
                                         } else {
                                             Toast.makeText(chatroom.this, "您没有此权限", Toast.LENGTH_SHORT).show();
                                         }
@@ -782,7 +775,7 @@ public class chatroom extends AppCompatActivity {
                                         quickAction.dismiss();
                                         Intent intent2 = new Intent(chatroom.this, my_music.class);
                                         startActivity(intent2);
-                                        
+
                                     }
                                 }
                         ))
@@ -806,7 +799,11 @@ public class chatroom extends AppCompatActivity {
                 }
                 break;
             case R.id.imageView104:
-                component6.setVisibility(View.VISIBLE);
+                der++;
+                Roomtxt entity = new Roomtxt(der + "", "周润发", "https://momeak.oss-cn-shenzhen.aliyuncs.com/l3.png", "", "1");
+                ChatRoomModel.Add(entity);
+
+                //component6.setVisibility(View.VISIBLE);
                 break;
             case R.id.imageView105:
                 component4.setVisibility(View.VISIBLE);
@@ -819,14 +816,15 @@ public class chatroom extends AppCompatActivity {
             case R.id.textView124:
                 Intent intent2 = new Intent(chatroom.this, room_online.class);
                 startActivity(intent2);
-                
+
                 break;
 
             case R.id.imageView98:
+                der++;
                 Observable<Integer> observable = Observable.defer(new Callable<ObservableSource<? extends Integer>>() {
                     @Override
                     public ObservableSource<? extends Integer> call() throws Exception {
-                        return Observable.just(1, 2);
+                        return Observable.just(der);
                     }
                 });
                 observable.subscribe(observersvga);
@@ -892,10 +890,10 @@ public class chatroom extends AppCompatActivity {
                 component10.setVisibility(View.GONE);
                 break;
             case R.id.butc6:
-                Roomtxt entity = new Roomtxt(editTextc6.getText().toString(), "周润发", "https://momeak.oss-cn-shenzhen.aliyuncs.com/l3.png", "", "1");
-                ChatRoomModel.Add(recyclerview, entity);
-                Roomtxt entity1 = new Roomtxt("", "", "", "---为了更好的体验请大家文明用语---", "0");
-                ChatRoomModel.Add(recyclerview, entity1);
+                Roomtxt entity2 = new Roomtxt(editTextc6.getText().toString(), "周润发", "https://momeak.oss-cn-shenzhen.aliyuncs.com/l3.png", "", "1");
+                ChatRoomModel.Add(entity2);
+                Roomtxt entity3 = new Roomtxt("", "", "", "---为了更好的体验请大家文明用语---", "0");
+                ChatRoomModel.Add(entity3);
                 editTextc6.setText("");
                /* Observable.just(1, 2)
                         .subscribe(new Observer<Integer>() {
@@ -1309,20 +1307,13 @@ public class chatroom extends AppCompatActivity {
 
             @Override
             public void onNext(Integer integer) {
-                svga.setVisibility(View.VISIBLE);
-
-                switch (integer) {
-                    case 0:
-                        loadAnimation(svga1, 0, "https://github.com/yyued/SVGA-Samples/blob/master/posche.svga?raw=true", "", "", "", "");
-                        break;
-                    case 1:
-                        loadAnimations(svga2, 1, "kingsets.svga", "https://momeak.oss-cn-shenzhen.aliyuncs.com/h2.jpg", "99", "", "");
-                        break;
-                    case 2:
-                        loadAnimations(svga3, 1, "kingsets.svga", "https://momeak.oss-cn-shenzhen.aliyuncs.com/h3.jpg", "99", "Pony send Kitty flowers.", "banner");
-                        break;
-
+                Svga svga;
+                if(integer==1){
+                     svga = new Svga("kingsets.svga","https://momeak.oss-cn-shenzhen.aliyuncs.com/h2.jpg", "99", "", "");
+                }else{
+                    svga = new Svga("kingsets.svga","https://momeak.oss-cn-shenzhen.aliyuncs.com/h2.jpg", "99", "Pony send Kitty flowers.", "banner");
                 }
+                SvgaUtils.startAnimator(svga,svga1);
             }
 
             @Override
@@ -1498,114 +1489,6 @@ public class chatroom extends AppCompatActivity {
                     }
                 }).build().show();
 
-
-    }
-
-
-    /**
-     * 加载svga
-     */
-    private void loadAnimation(SVGAImageView svga, int type, String url, String ima, String imaforkey, String txt, String txtforkey) {
-        // new URL needs try catch.
-        parser = new SVGAParser(this);
-        try {
-            switch (type) {
-                case 0:
-                    parser.decodeFromURL(new URL(url), new SVGAParser.ParseCompletion() {
-                        @Override
-                        public void onComplete(@NotNull SVGAVideoEntity videoItem) {
-                            SVGADrawable drawable = new SVGADrawable(videoItem);
-                            svga.setImageDrawable(drawable);
-                            svga.startAnimation();
-                        }
-
-                        @Override
-                        public void onError() {
-
-                        }
-                    });
-                    break;
-                case 1:
-                    parser.decodeFromURL(new URL(url), new SVGAParser.ParseCompletion() {
-                        @Override
-                        public void onComplete(@NotNull SVGAVideoEntity videoItem) {
-                            SVGADynamicEntity dynamicEntity = new SVGADynamicEntity();
-
-                            if (!ima.equals("")) {
-                                dynamicEntity.setDynamicImage(ima, imaforkey); // Here is the KEY implementation.
-                                TextPaint textPaint = new TextPaint();
-                                textPaint.setColor(Color.WHITE);
-                                textPaint.setTextSize(28);
-                                dynamicEntity.setDynamicText(txt, textPaint, txtforkey);
-
-                            }
-                            SVGADrawable drawable = new SVGADrawable(videoItem, dynamicEntity);
-                            svga.setImageDrawable(drawable);
-                            svga.startAnimation();
-                        }
-
-                        @Override
-                        public void onError() {
-
-                        }
-                    });
-                    break;
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * 加载svga
-     */
-    private void loadAnimations(SVGAImageView svga, int type, String samples, String ima, String imaforkey, String txt, String txtforkey) {
-        // new URL needs try catch.
-        parser = new SVGAParser(this);
-
-        switch (type) {
-            case 0:
-                parser.decodeFromAssets(samples, new SVGAParser.ParseCompletion() {
-                    @Override
-                    public void onComplete(@NotNull SVGAVideoEntity videoItem) {
-                        SVGADrawable drawable = new SVGADrawable(videoItem);
-                        svga.setImageDrawable(drawable);
-                        svga.startAnimation();
-                    }
-
-                    @Override
-                    public void onError() {
-
-                    }
-                });
-                break;
-            case 1:
-                parser.decodeFromAssets(samples, new SVGAParser.ParseCompletion() {
-                    @Override
-                    public void onComplete(@NotNull SVGAVideoEntity videoItem) {
-                        SVGADynamicEntity dynamicEntity = new SVGADynamicEntity();
-
-                        if (!ima.equals("")) {
-                            dynamicEntity.setDynamicImage(ima, imaforkey); // Here is the KEY implementation.
-                            TextPaint textPaint = new TextPaint();
-                            textPaint.setColor(Color.WHITE);
-                            textPaint.setTextSize(28);
-                            dynamicEntity.setDynamicText(txt, textPaint, txtforkey);
-
-                        }
-                        SVGADrawable drawable = new SVGADrawable(videoItem, dynamicEntity);
-                        svga.setImageDrawable(drawable);
-                        svga.startAnimation();
-                    }
-
-                    @Override
-                    public void onError() {
-
-                    }
-                });
-                break;
-        }
 
     }
 }
