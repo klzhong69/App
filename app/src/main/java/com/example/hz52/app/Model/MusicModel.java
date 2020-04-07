@@ -28,6 +28,7 @@ import com.lzy.okserver.OkDownload;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
+import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.ywl5320.libmusic.WlMusic;
 
 import java.io.File;
@@ -49,12 +50,12 @@ public class MusicModel {
     private static LinearLayoutManager layoutManager;
     private static int mCurrentDialogStyle = com.qmuiteam.qmui.R.style.QMUI_Dialog;
  private static int post = -1;
+    private static QMUITipDialog tipDialog;
 
     public static void initData(Context context, RecyclerView recycler) {
 
         mArrayList = new ArrayList<Mymusic>();
         mArray = new ArrayList<Mymusic>();
-
 
         MyApp application = ((MyApp) context.getApplicationContext());
         SharedPreferences sp = context.getSharedPreferences("User", Context.MODE_PRIVATE);
@@ -80,8 +81,8 @@ public class MusicModel {
                                 }*/
                                 Mymusic apk1 = new Mymusic(1L,"歌曲1","03:52","1","","https://momeak.oss-cn-shenzhen.aliyuncs.com/baidu.mp3");
                                 mArrayList.add(apk1);
-                                //Mymusic apk2 = new Mymusic(2L,"歌曲2","04.25","1","","https://momeak.oss-cn-shenzhen.aliyuncs.com/music.mp3");
-                                //mArrayList.add(apk2);
+                                Mymusic apk2 = new Mymusic(2L,"歌曲2","04.25","1","","https://momeak.oss-cn-shenzhen.aliyuncs.com/music.mp3");
+                                mArrayList.add(apk2);
 
                                 List<Music> musics = mMusicDao.queryAll();
                                 System.out.println("测试"+musics.size());
@@ -95,7 +96,7 @@ public class MusicModel {
                                         }
                                     }
                                     if (a == 0) {
-                                        mArrayList.get(i).setType("0");
+                                        mArrayList.get(i).setType("-1");
                                         mArray.add(mArrayList.get(i));
                                     }
                                 }
@@ -213,11 +214,11 @@ public class MusicModel {
             OkDownload.request(apk.getId().toString(), request)
                     .save()
                     .folder(Objects.requireNonNull(context.getExternalFilesDir(DIRECTORY_MUSIC)).getPath())
-                    .register(new LogDownloadListener())
+                    .register(new LogDownloadListener(apk,context))
                     .start();
 
         }
-        mAdapter.notifyDataSetChanged();
+
     }
 
 

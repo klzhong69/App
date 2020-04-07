@@ -1,5 +1,7 @@
 package com.example.hz52.app.cofig;
 
+import android.content.Context;
+
 import com.example.hz52.app.Entity.Mymusic;
 import com.example.hz52.app.Model.MusicModel;
 import com.example.hz52.app.Sqlentity.Music;
@@ -7,6 +9,7 @@ import com.example.hz52.app.dao.mMusicDao;
 import com.example.hz52.app.my_music;
 import com.lzy.okgo.model.Progress;
 import com.lzy.okserver.download.DownloadListener;
+import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 
 import java.io.File;
 import java.util.concurrent.Callable;
@@ -16,15 +19,22 @@ import io.reactivex.ObservableSource;
 
 public class LogDownloadListener extends DownloadListener {
 
+    private final QMUITipDialog tipDialog;
     private Mymusic music;
 
-    public LogDownloadListener() {
+    public LogDownloadListener(Mymusic apk, Context context) {
         super("LogDownloadListener");
+        music=apk;
+        tipDialog = new QMUITipDialog.Builder(context)
+                .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
+                .setTipWord("正在下载，请稍后")
+                .create();
     }
 
     @Override
     public void onStart(Progress progress) {
         System.out.println("onStart: " + progress);
+        tipDialog.show();
     }
 
     @Override
@@ -48,11 +58,13 @@ public class LogDownloadListener extends DownloadListener {
         mMusicDao.insert(mu);
 
         for(int i=0;i<MusicModel.mArrayList.size();i++){
-            if(MusicModel.mArrayList.get(i).getId().toString().equals(progress.tag)){
+            if(MusicModel.mArrayList.get(i).getId().toString().equals(music.getId().toString())){
                 MusicModel.mArrayList.get(i).setType("1");
+                MusicModel.mAdapter.notifyItemChanged(i);
             }
         }
         System.out.println("onFinish: " + progress);
+        tipDialog.dismiss();
     }
 
     @Override
