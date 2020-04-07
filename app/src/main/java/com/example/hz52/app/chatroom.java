@@ -396,8 +396,6 @@ public class chatroom extends AppCompatActivity {
     RelativeLayout relativeLayout6;
     @BindView(R.id.component6)
     RelativeLayout component6;
-    @BindView(R.id.relativeLayout)
-    NestedScrollView relativeLayout;
     @BindView(R.id.relativeLayout11)
     RelativeLayout relativeLayout11;
 
@@ -592,18 +590,7 @@ public class chatroom extends AppCompatActivity {
         ChatRoomModel.okgoall(context, recyclerc7, Long.valueOf(mChannelId), 0);
         ChatRoomModel.okgoall(context, recyclerc3, Long.valueOf(mChannelId), 1);
 
-        relativeLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                relativeLayout.post(new Runnable() {
-                    public void run() {
-                        relativeLayout.fullScroll(View.FOCUS_DOWN);
-                    }
-                });
-            }
-        });
-
-        SvgaUtils.initAnimator(context,svga1);
+        SvgaUtils.initAnimator(context,svga1,svga2,svga3);
     }
 
 
@@ -801,8 +788,9 @@ public class chatroom extends AppCompatActivity {
             case R.id.imageView104:
                 der++;
                 Roomtxt entity = new Roomtxt(der + "", "周润发", "https://momeak.oss-cn-shenzhen.aliyuncs.com/l3.png", "", "1");
-                ChatRoomModel.Add(entity);
-
+                ChatRoomModel.Add(entity,recyclerview);
+                Roomtxt entity1 = new Roomtxt("", "", "", "---为了更好的体验请大家文明用语---", "0");
+                ChatRoomModel.Add(entity1,recyclerview);
                 //component6.setVisibility(View.VISIBLE);
                 break;
             case R.id.imageView105:
@@ -891,9 +879,9 @@ public class chatroom extends AppCompatActivity {
                 break;
             case R.id.butc6:
                 Roomtxt entity2 = new Roomtxt(editTextc6.getText().toString(), "周润发", "https://momeak.oss-cn-shenzhen.aliyuncs.com/l3.png", "", "1");
-                ChatRoomModel.Add(entity2);
+                ChatRoomModel.Add(entity2,recyclerview);
                 Roomtxt entity3 = new Roomtxt("", "", "", "---为了更好的体验请大家文明用语---", "0");
-                ChatRoomModel.Add(entity3);
+                ChatRoomModel.Add(entity3,recyclerview);
                 editTextc6.setText("");
                /* Observable.just(1, 2)
                         .subscribe(new Observer<Integer>() {
@@ -935,14 +923,14 @@ public class chatroom extends AppCompatActivity {
                 MessFriendsModel.initData(context, 1, recyclerc2);
                 break;
             case R.id.textViewc2d:
-                MessFriendsModel.initData(context, 2, recyclerc2);
+                MessFriendsModel.initData(context, 1, recyclerc2);
                 break;
             case R.id.textViewc2t:
                 textViewc2s.setVisibility(View.VISIBLE);
                 textViewc2d.setVisibility(View.GONE);
                 textViewc2t.setVisibility(View.GONE);
                 textViewc2f.setVisibility(View.VISIBLE);
-                MessFriendsModel.initData(context, 1, recyclerc2);
+                MessFriendsModel.initData(context, 2, recyclerc2);
                 break;
             case R.id.textViewc2f:
                 MessFriendsModel.initData(context, 2, recyclerc2);
@@ -1308,12 +1296,12 @@ public class chatroom extends AppCompatActivity {
             @Override
             public void onNext(Integer integer) {
                 Svga svga;
-                if(integer==1){
-                     svga = new Svga("kingsets.svga","https://momeak.oss-cn-shenzhen.aliyuncs.com/h2.jpg", "99", "", "");
+                if(integer%2==0){
+                     svga = new Svga("kingsets.svga","https://momeak.oss-cn-shenzhen.aliyuncs.com/h2.jpg", "99", "", "","1");
                 }else{
-                    svga = new Svga("kingsets.svga","https://momeak.oss-cn-shenzhen.aliyuncs.com/h2.jpg", "99", "Pony send Kitty flowers.", "banner");
+                    svga = new Svga("kingsets.svga","https://momeak.oss-cn-shenzhen.aliyuncs.com/h2.jpg", "99", "Pony send Kitty flowers.", "banner","2");
                 }
-                SvgaUtils.startAnimator(svga,svga1);
+                SvgaUtils.startAnimator(svga);
             }
 
             @Override

@@ -34,7 +34,7 @@ public class TanTanCallback extends RenRenCallback {
     public TanTanCallback(RecyclerView rv, RecyclerView.Adapter adapter, List datas) {
         //this(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT, rv, adapter, datas);
         super(rv, adapter, datas);
-        mHorizontalDeviation = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, mRv.getContext().getResources().getDisplayMetrics());
+        mHorizontalDeviation = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50, mRv.getContext().getResources().getDisplayMetrics());
     }
 
     public TanTanCallback(int dragDirs, int swipeDirs, RecyclerView rv, RecyclerView.Adapter adapter, List datas) {

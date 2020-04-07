@@ -221,7 +221,7 @@ public class Find extends Fragment implements OnItemClickListener, LFRecyclerVie
 
         OkGo.<String>post(application.getUrl() + "/app/user/getBroadcast?token=" + token)
                 .params("page", page)
-                .params("pageSize", 10)
+                .params("pageSize", 20)
                 .execute(new StringCallback() {
 
                     @Override

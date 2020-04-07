@@ -8,112 +8,122 @@
     android:layout_marginStart="@dimen/dp_20"
     android:layout_marginEnd="@dimen/dp_20"
     android:layout_marginTop="@dimen/dp_20"
-    android:layout_marginBottom="@dimen/dp_20">
+    android:layout_marginBottom="@dimen/dp_20"
+    android:foreground="?android:attr/selectableItemBackground"
+    app:cardBackgroundColor="#00000000"
+    app:cardCornerRadius="@dimen/dp_20"
+    app:cardElevation="0dp"
+    app:cardMaxElevation="@dimen/dp_100">
 
-        <RelativeLayout
-            android:id="@+id/View2"
+    <RelativeLayout
+        android:id="@+id/View2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:background="#00000000">
+
+        <com.qmuiteam.qmui.widget.QMUIRadiusImageView
+            android:id="@+id/imageViewi3"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true">
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="@dimen/dp_40"
+            android:layout_marginBottom="@dimen/dp_40"
+            android:scaleType="centerInside"
+            android:src="@drawable/mg"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
-            <com.qmuiteam.qmui.widget.QMUIRadiusImageView
-                android:id="@+id/imageViewi3"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"
-                android:scaleType="centerInside"
-                android:src="@drawable/mg"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+        <com.qmuiteam.qmui.widget.QMUIRadiusImageView
+            android:id="@+id/imageViewi4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/imageViewi3"
+            android:layout_alignTop="@+id/imageViewi3"
+            android:layout_alignEnd="@+id/textViewi11"
+            android:layout_alignBottom="@+id/imageViewi5"
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_marginEnd="@dimen/dp_m_20"
+            android:layout_marginBottom="@dimen/dp_m_5"
+            android:src="#44000000"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:qmui_border_width="0dp"
+            app:qmui_corner_radius="@dimen/dp_35" />
 
-            <com.qmuiteam.qmui.widget.QMUIRadiusImageView
-                android:id="@+id/imageViewi4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignEnd="@+id/textViewi11"
-                android:layout_alignBottom="@+id/imageViewi5"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="@dimen/dp_20"
-                android:layout_marginTop="@dimen/dp_20"
-                android:layout_marginEnd="@dimen/dp_m_20"
-                android:layout_marginBottom="@dimen/dp_m_5"
-                android:src="#44000000"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:qmui_border_width="0dp"
-                app:qmui_corner_radius="@dimen/dp_35" />
+        <com.qmuiteam.qmui.widget.QMUIRadiusImageView
+            android:id="@+id/imageViewi5"
+            android:layout_width="@dimen/dp_60"
+            android:layout_height="@dimen/dp_60"
+            android:layout_alignStart="@+id/imageViewi3"
+            android:layout_alignTop="@+id/imageViewi3"
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_marginBottom="@dimen/dp_20"
+            android:src="@drawable/h4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:qmui_border_width="0dp"
+            app:qmui_corner_radius="@dimen/dp_50" />
 
-            <com.qmuiteam.qmui.widget.QMUIRadiusImageView
-                android:id="@+id/imageViewi5"
-                android:layout_width="@dimen/dp_60"
-                android:layout_height="@dimen/dp_60"
-                android:layout_alignStart="@+id/imageViewi3"
-                android:layout_alignTop="@+id/imageViewi3"
-                android:layout_marginStart="@dimen/dp_20"
-                android:layout_marginTop="@dimen/dp_20"
-                android:layout_marginBottom="@dimen/dp_20"
-                android:src="@drawable/h4"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:qmui_border_width="0dp"
-                app:qmui_corner_radius="@dimen/dp_50" />
+        <TextView
+            android:id="@+id/textViewi11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/imageViewi5"
+            android:layout_alignBottom="@+id/imageViewi5"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_toEndOf="@+id/imageViewi5"
+            android:gravity="center_vertical"
+            android:text="[芭比]uud小可爱"
+            android:textColor="#ffffff" />
 
-            <TextView
-                android:id="@+id/textViewi11"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/imageViewi5"
-                android:layout_alignBottom="@+id/imageViewi5"
-                android:layout_marginStart="@dimen/dp_10"
-                android:layout_toEndOf="@+id/imageViewi5"
-                android:gravity="center_vertical"
-                android:text="[芭比]uud小可爱"
-                android:textColor="#ffffff" />
+        <com.qmuiteam.qmui.widget.QMUIRadiusImageView
+            android:id="@+id/imageViewi6"
+            android:layout_width="@dimen/dp_120"
+            android:layout_height="@dimen/dp_40"
+            android:layout_alignStart="@+id/imageViewi3"
+            android:layout_alignBottom="@+id/imageViewi3"
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginBottom="@dimen/dp_20"
+            android:src="#44000000"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:qmui_border_width="0dp"
+            app:qmui_corner_radius="@dimen/dp_20" />
 
-            <com.qmuiteam.qmui.widget.QMUIRadiusImageView
-                android:id="@+id/imageViewi6"
-                android:layout_width="@dimen/dp_120"
-                android:layout_height="@dimen/dp_40"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginStart="@dimen/dp_20"
-                android:layout_marginBottom="@dimen/dp_60"
-                android:src="#44000000"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:qmui_border_width="0dp"
-                app:qmui_corner_radius="@dimen/dp_20" />
+        <ImageView
+            android:id="@+id/imageViewi7"
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30"
+            android:layout_alignStart="@+id/imageViewi6"
+            android:layout_alignTop="@+id/imageViewi6"
+            android:layout_alignBottom="@+id/imageViewi6"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginBottom="@dimen/dp_10"
+            app:srcCompat="@drawable/fangjian" />
 
-            <ImageView
-                android:id="@+id/imageViewi7"
-                android:layout_width="@dimen/dp_30"
-                android:layout_height="@dimen/dp_30"
-                android:layout_alignStart="@+id/imageViewi6"
-                android:layout_alignTop="@+id/imageViewi6"
-                android:layout_alignBottom="@+id/imageViewi6"
-                android:layout_marginStart="@dimen/dp_10"
-                android:layout_marginTop="@dimen/dp_10"
-                android:layout_marginBottom="@dimen/dp_10"
-                app:srcCompat="@drawable/fangjian" />
+        <TextView
+            android:id="@+id/textViewi12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/imageViewi6"
+            android:layout_alignBottom="@+id/imageViewi6"
+            android:layout_marginStart="@dimen/dp_5"
+            android:layout_toEndOf="@+id/imageViewi7"
+            android:gravity="center_vertical"
+            android:text="黄金房间"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/sp_16" />
 
-            <TextView
-                android:id="@+id/textViewi12"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/imageViewi6"
-                android:layout_alignBottom="@+id/imageViewi6"
-                android:layout_marginStart="@dimen/dp_5"
-                android:layout_toEndOf="@+id/imageViewi7"
-                android:gravity="center_vertical"
-                android:text="黄金房间"
-                android:textColor="#ffffff"
-                android:textSize="@dimen/sp_16" />
-
-        </RelativeLayout>
+    </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

@@ -56,6 +56,7 @@ public class ChatModel {
 
         }
         recycler13.scrollToPosition(mAdapter.getItemCount() - 1);
+
         recycler13.setLayoutManager(mLinearLayoutManager);
 
         recycler13.setItemAnimator(new DefaultItemAnimator());

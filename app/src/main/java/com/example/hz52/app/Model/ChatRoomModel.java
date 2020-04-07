@@ -43,6 +43,7 @@ public class ChatRoomModel {
     public static RoomheadAdapter mAdapters;
     public static GridLayoutManager mLayoutManager;
     public static JsonArray users;
+    private static LinearLayoutManager mLinearLayoutManager;
 
     public static void initData(){
         mUserList = new ArrayList<Roomhead>();
@@ -59,19 +60,16 @@ public class ChatRoomModel {
         //设置适配器adapter
         mRecyclerView.setAdapter(mAdapter);
 
-
-        //布局管理器
-        LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(context);
+        mLinearLayoutManager = new LinearLayoutManager(context);
         mLinearLayoutManager.setStackFromEnd(true);
         if (mAdapter.getItemCount() > 0) {
-            mLinearLayoutManager.scrollToPositionWithOffset(mAdapter.getItemCount() - 1, Integer.MIN_VALUE);
+            mLinearLayoutManager.scrollToPositionWithOffset(0, 0);
 
         }
-        mRecyclerView.scrollToPosition(mAdapter.getItemCount()-1);
+        mRecyclerView.scrollToPosition(0);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
 
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-
 
         mAdapter.setOnItemClickListener(new RoomtxtAdapter.OnItemClickListener() {
             @Override
@@ -89,14 +87,11 @@ public class ChatRoomModel {
          * 既然是动画，就会有时间，我们把动画执行时间变大一点来看一看效果
          */
         DefaultItemAnimator defaultItemAnimator = new DefaultItemAnimator();
-        defaultItemAnimator.setAddDuration(600);
-        defaultItemAnimator.setRemoveDuration(600);
+        defaultItemAnimator.setAddDuration(200);
+        defaultItemAnimator.setRemoveDuration(200);
         mRecyclerView.setItemAnimator(defaultItemAnimator);
 
-
     }
-
-
 
     public static void initrecyclers(Context context, RecyclerView mRecyclerView) {
         //创建适配器，将数据传递给适配器
@@ -107,7 +102,6 @@ public class ChatRoomModel {
         //多列布局
          mLayoutManager = new GridLayoutManager(context, 4);
         mRecyclerView.setLayoutManager(mLayoutManager);
-
 
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
@@ -236,8 +230,8 @@ public class ChatRoomModel {
         return -1;
     }
 
-    public static void Add(Roomtxt entity){
-        mAdapter.addData(mEntityList.size(), entity);
+    public static void Add(Roomtxt entity,RecyclerView mRecyclerView) {
+        mAdapter.addData(0, entity);
     }
 
     public static void okgo(Context context,Long roomid) {

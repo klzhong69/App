@@ -179,41 +179,35 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
+        android:overScrollMode="never"
+        android:fadingEdge="none"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView19" />
 
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/relativeLayout"
+    <RelativeLayout
+        android:id="@+id/relativeLayout12"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="@dimen/dp_20"
         app:layout_constraintBottom_toTopOf="@+id/relativeLayout3"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/gridview"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintTop_toBottomOf="@+id/gridview">
 
-        <RelativeLayout
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:overScrollMode="never"
+            android:fadingEdge="none"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="@dimen/dp_100" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginStart="0dp"
-                android:layout_marginEnd="@dimen/dp_100"
-                android:layout_marginBottom="0dp" />
-
-        </RelativeLayout>
-
-
-
-    </androidx.core.widget.NestedScrollView>
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/textView19"
@@ -268,9 +262,9 @@
         android:layout_width="@dimen/dp_60"
         android:layout_height="@dimen/dp_60"
         android:layout_marginEnd="@dimen/dp_40"
-        app:layout_constraintBottom_toBottomOf="@+id/relativeLayout"
+        app:layout_constraintBottom_toBottomOf="@+id/relativeLayout12"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/gridview"
+        app:layout_constraintTop_toBottomOf="@+id/gridview"
         app:layout_constraintVertical_bias="0.8"
         app:srcCompat="@drawable/l_zadan" />
 

@@ -27,7 +27,7 @@
             android:layout_marginTop="@dimen/dp_5"
             android:layout_marginEnd="@dimen/dp_m_20"
             android:layout_marginBottom="@dimen/dp_m_5"
-            android:src="@drawable/back2"
+            android:src="@color/app_color_grey"
             app:qmui_border_width="0dp"
             app:qmui_corner_radius="@dimen/dp_20" />
 
@@ -94,7 +94,7 @@
             android:layout_marginTop="@dimen/dp_5"
             android:layout_marginEnd="0dp"
             android:layout_marginBottom="@dimen/dp_m_5"
-            android:src="@drawable/back2"
+            android:src="@color/app_color_grey"
             app:qmui_border_width="0dp"
             app:qmui_corner_radius="@dimen/dp_20" />
 

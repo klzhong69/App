@@ -6,6 +6,7 @@ public class Svga {
     private String imaforkey;
     private String txt;
     private String txtforkey;
+    private String type;
 
     public String getName() {
         return name;
@@ -47,11 +48,20 @@ public class Svga {
         this.txtforkey = txtforkey;
     }
 
-    public Svga(String name, String ima, String imaforkey, String txt, String txtforkey) {
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public Svga(String name, String ima, String imaforkey, String txt, String txtforkey, String type) {
         this.name = name;
         this.ima = ima;
         this.imaforkey = imaforkey;
         this.txt = txt;
         this.txtforkey = txtforkey;
+        this.type = type;
     }
 }
