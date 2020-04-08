@@ -50,7 +50,7 @@ public class FamilyViewAdapter extends RecyclerView.Adapter {
         Familysea entity = mEntityList.get(position);
 
         ((FamilyViewAdapter.DemoViewHolder)holder).name.setText(entity.getName());
-        ((FamilyViewAdapter.DemoViewHolder)holder).id.setText(entity.getId());
+        ((FamilyViewAdapter.DemoViewHolder)holder).id.setText("ID "+entity.getId());
         if(entity.getType().equals("1")){
             ((DemoViewHolder)holder).type.setVisibility(View.GONE);
             ((DemoViewHolder)holder).like.setVisibility(View.GONE);

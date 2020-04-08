@@ -2,9 +2,19 @@ package com.example.hz52.app.Entity;
 
 public class Roomgift {
 
+    private String id;
     private String ima;
     private String giftname;
     private String num;
+    private String svgaUrl;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getIma() {
         return ima;
@@ -30,9 +40,19 @@ public class Roomgift {
         this.num = num;
     }
 
-    public Roomgift(String ima, String giftname, String num) {
+    public String getSvgaUrl() {
+        return svgaUrl;
+    }
+
+    public void setSvgaUrl(String svgaUrl) {
+        this.svgaUrl = svgaUrl;
+    }
+
+    public Roomgift(String id, String ima, String giftname, String num, String svgaUrl) {
+        this.id = id;
         this.ima = ima;
         this.giftname = giftname;
         this.num = num;
+        this.svgaUrl = svgaUrl;
     }
 }

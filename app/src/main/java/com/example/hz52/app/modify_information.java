@@ -488,7 +488,7 @@ public class modify_information extends AppCompatActivity {
                             int id = prexiew.getData().get("id").getAsInt();
                             Modify modify = new Modify(id, url, "1");
                             mData.add(mData.size() - 1, modify);
-                            mAdapters.notifyDataSetChanged();
+                            mAdapters.notifyItemChanged(mData.size() - 1);
                             tipDialog.dismiss();
                             Toast.makeText(modify_information.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
                         } else {

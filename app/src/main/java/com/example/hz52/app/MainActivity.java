@@ -39,10 +39,16 @@ import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.ashokvarma.bottomnavigation.TextBadgeItem;
 import com.example.hz52.app.Entity.MyApp;
+import com.example.hz52.app.Entity.Roomgift;
 import com.example.hz52.app.MQ.MqttMessageService;
 import com.example.hz52.app.Sqlentity.Conver;
+import com.example.hz52.app.Sqlentity.Gift;
 import com.example.hz52.app.cofig.Initialization;
+import com.example.hz52.app.cofig.OSSSet;
+import com.example.hz52.app.cofig.Preview;
 import com.example.hz52.app.dao.mConverDao;
+import com.example.hz52.app.dao.mGiftDao;
+import com.google.gson.Gson;
 import com.lzf.easyfloat.EasyFloat;
 import com.lzf.easyfloat.anim.AppFloatDefaultAnimator;
 import com.lzf.easyfloat.anim.DefaultAnimator;
@@ -51,10 +57,13 @@ import com.lzf.easyfloat.enums.SidePattern;
 import com.lzf.easyfloat.interfaces.OnInvokeView;
 import com.lzf.easyfloat.interfaces.OnPermissionResult;
 import com.lzf.easyfloat.permission.PermissionUtils;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.Callable;
 
 import butterknife.BindView;
@@ -64,6 +73,8 @@ import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
+
+import static android.os.Environment.DIRECTORY_DOWNLOADS;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationBar.OnTabSelectedListener {
 
@@ -503,6 +514,53 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
 
 
         };
+
+        if (startup_page.mArray.size() > 0) {
+            //okgodown();
+            System.out.println("数量"+startup_page.mArray.size());
+
+        }
+    }
+
+    private void okgodown() {
+        MyApp application = ((MyApp) this.getApplicationContext());
+        SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
+        String token = sp.getString("token", "");
+        OkGo.<String>post(application.getUrl() + "/app/alioss/getResourceToken?token=" + token)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(com.lzy.okgo.model.Response<String> response) {
+
+                        Gson gson = new Gson();
+                        Preview prexiew = gson.fromJson(response.body(), Preview.class);
+
+                        if (prexiew.getCode() == 0) {
+                            String AccessKeyId = prexiew.getData().get("AccessKeyId").getAsString();
+                            String AccessKeySecret = prexiew.getData().get("AccessKeySecret").getAsString();
+                            String SecurityToken = prexiew.getData().get("SecurityToken").getAsString();
+                            String region = prexiew.getData().get("region").getAsString();
+                            String bucket = prexiew.getData().get("bucket").getAsString();
+                            if (!AccessKeyId.equals("")) {
+                                OSSSet.OSSClient(MainActivity.this, AccessKeyId, AccessKeySecret, SecurityToken, region, bucket);
+                                for (Roomgift gift : startup_page.mArray) {
+                                    String succer = OSSSet.Download(Objects.requireNonNull(getExternalFilesDir(null)).getPath()+gift.getGiftname()+".svga", bucket, gift.getSvgaUrl());
+                                    if(succer.equals("Success")){
+                                        Gift mu = new Gift();
+                                        mu.setId(Long.valueOf(gift.getId()));
+                                        mu.setGiftName(gift.getGiftname());
+                                        mu.setPrice(gift.getNum());
+                                        mu.setSmallPicUrl(gift.getIma());
+                                        mGiftDao.insert(mu);
+                                    }
+                                }
+                            }
+
+                        } else {
+                            Toast.makeText(MainActivity.this, prexiew.getMsg() + "", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                });
 
     }
 

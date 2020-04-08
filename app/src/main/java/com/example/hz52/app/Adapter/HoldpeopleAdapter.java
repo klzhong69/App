@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.example.hz52.app.Entity.Holdpeople;
 import com.example.hz52.app.R;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -29,7 +30,7 @@ public class HoldpeopleAdapter extends RecyclerView.Adapter {
 
     public HoldpeopleAdapter(Context context, List<Holdpeople> entityList) {
         this.mContext = context;
-        this.mEntityList = entityList;
+        mEntityList = entityList;
     }
 
 
@@ -37,7 +38,7 @@ public class HoldpeopleAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.room_hold_people, parent, false);
-        return new HoldpeopleAdapter.DemoViewHolder(view);
+        return new DemoViewHolder(view);
     }
 
     public interface OnItemClickListener {
@@ -115,7 +116,7 @@ public class HoldpeopleAdapter extends RecyclerView.Adapter {
         return mEntityList.size();
     }
 
-    private class DemoViewHolder extends RecyclerView.ViewHolder {
+    private static class DemoViewHolder extends RecyclerView.ViewHolder {
 
         private TextView id;
         private ImageView userima;
@@ -123,7 +124,7 @@ public class HoldpeopleAdapter extends RecyclerView.Adapter {
         private ImageView grade;
         private RadioButton sum;
 
-        public DemoViewHolder(View itemView) {
+        DemoViewHolder(View itemView) {
             super(itemView);
             id = (TextView) itemView.findViewById(R.id.textView114);
             name = (TextView) itemView.findViewById(R.id.textView66);
@@ -136,13 +137,17 @@ public class HoldpeopleAdapter extends RecyclerView.Adapter {
 
 
     public void addData(int position, Holdpeople entity) {
+        System.out.println("数量"+position);
         mEntityList.add(position, entity);
         notifyItemInserted(position);
     }
 
     public void removeData(int position) {
-        mEntityList.remove(position);
-        notifyItemRemoved(position);
+        if(mEntityList.size()>0){
+            mEntityList.remove(position);
+            notifyItemRemoved(position);
+        }
+
     }
 
 }

@@ -28,7 +28,7 @@ public class GiftModel {
 
         for(int i=0;i<10;i++){
 
-            Roomgift i1 = new Roomgift("https://momeak.oss-cn-shenzhen.aliyuncs.com/h2.jpg", "玫瑰花", "10");
+            Roomgift i1 = new Roomgift(i+"","https://momeak.oss-cn-shenzhen.aliyuncs.com/h2.jpg", "玫瑰花", "10","");
             mData.add(i1);
         }
 
@@ -50,20 +50,17 @@ public class GiftModel {
         mAdapters.setOnItemClickListener(new RoomgiftAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-
-            }
-
-            @Override
-            public void onItemLongClick(View view, int position) {
                 Observable<Integer> observable = Observable.defer(new Callable<ObservableSource<? extends Integer>>() {
                     @Override
                     public ObservableSource<? extends Integer> call() throws Exception {
                         return Observable.just(position);
                     }
                 });
-                observable.subscribe(chatroom.observers);
+                observable.subscribe(chatroom.observersvga);
+            }
 
-
+            @Override
+            public void onItemLongClick(View view, int position) {
             }
         });
 

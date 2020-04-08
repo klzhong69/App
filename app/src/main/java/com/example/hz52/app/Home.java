@@ -204,7 +204,7 @@ public class Home extends Fragment {
                 .getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo info = connectivityManager.getActiveNetworkInfo();
         if (info != null && info.isAvailable()) {
-            String name = info.getTypeName();
+            String name = info.getTypeName();//网络类型
             return true;
         } else {
             Toast.makeText(getContext(),  " 无网络连接", Toast.LENGTH_SHORT).show();
@@ -214,7 +214,7 @@ public class Home extends Fragment {
 
     private void initData() {
         for (int i = in; i < count; i++) {
-            Homes i1 = new Homes("测试房间" + i, "695294941", "al.粉丝团", "热门", "CV", "德国", "1234", "https://momeak.oss-cn-shenzhen.aliyuncs.com/h4.jpg", "【芭比】uud小可爱", "2", "", "==《而福利社区点歌台》==", "我做了这么多改变，只为了我心中不变");
+            Homes i1 = new Homes("测试房间" + i, "226374470", "al.粉丝团", "热门", "CV", "德国", "1234", "https://momeak.oss-cn-shenzhen.aliyuncs.com/h4.jpg", "【芭比】uud小可爱", "2", "", "==《而福利社区点歌台》==", "我做了这么多改变，只为了我心中不变");
             mDatas.add(i1);
         }
         in = in + 10;

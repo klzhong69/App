@@ -70,6 +70,7 @@ import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
+import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.popup.QMUIPopup;
 import com.qmuiteam.qmui.widget.popup.QMUIPopups;
 import com.qmuiteam.qmui.widget.popup.QMUIQuickAction;
@@ -536,6 +537,7 @@ public class chatroom extends AppCompatActivity {
             });
         }
     };
+    private QMUITipDialog tipDialog;
 
     private int getUserIndex(Long uid) {
 
@@ -578,6 +580,11 @@ public class chatroom extends AppCompatActivity {
         para1 = view2.getLayoutParams();
         para1.height = height;
         view2.setLayoutParams(para1);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
 
         if (checkSelfPermission(Manifest.permission.RECORD_AUDIO, PERMISSION_REQ_ID_RECORD_AUDIO)) {
 
@@ -592,7 +599,6 @@ public class chatroom extends AppCompatActivity {
 
         SvgaUtils.initAnimator(context,svga1,svga2,svga3);
     }
-
 
     public boolean checkSelfPermission(String permission, int requestCode) {
 
@@ -1172,7 +1178,6 @@ public class chatroom extends AppCompatActivity {
 
             @Override
             public void onNext(Integer view) {
-                System.out.println("数量" + PaimaiModel.mArrayList.size());
                 position = view;
 
                 if (administrator || Anchor || host || ChatRoomModel.mUserList.get(position).getUid().toString().equals(userid)) {
@@ -1296,10 +1301,10 @@ public class chatroom extends AppCompatActivity {
             @Override
             public void onNext(Integer integer) {
                 Svga svga;
-                if(integer%2==0){
-                     svga = new Svga("kingsets.svga","https://momeak.oss-cn-shenzhen.aliyuncs.com/h2.jpg", "99", "", "","1");
+                if(integer % 2 == 0){
+                    svga = new Svga("ring.svga","", "", "", "","1");
                 }else{
-                    svga = new Svga("kingsets.svga","https://momeak.oss-cn-shenzhen.aliyuncs.com/h2.jpg", "99", "Pony send Kitty flowers.", "banner","2");
+                    svga = new Svga("kingset.svga","https://momeak.oss-cn-shenzhen.aliyuncs.com/h2.jpg", "99", "Pony send Kitty flowers.", "banner","2");
                 }
                 SvgaUtils.startAnimator(svga);
             }

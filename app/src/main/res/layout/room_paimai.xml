@@ -77,9 +77,8 @@
             android:id="@+id/recyclerc7"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true" />
+            android:overScrollMode="never"
+            android:fadingEdge="none" />
         </LinearLayout>
         </androidx.core.widget.NestedScrollView>
     </RelativeLayout>

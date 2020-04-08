@@ -1,6 +1,8 @@
 package com.example.hz52.app;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -15,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.hz52.app.Adapter.FamilyViewAdapter;
 import com.example.hz52.app.Entity.Familysea;
 import com.example.hz52.app.Entity.MyApp;
+import com.example.hz52.app.cofig.Constant;
 import com.example.hz52.app.cofig.Preview;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -24,10 +27,12 @@ import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.agora.rtc.Constants;
 
 public class family_search extends AppCompatActivity {
 
@@ -56,6 +61,7 @@ public class family_search extends AppCompatActivity {
     private JsonArray rooms = new JsonArray();
     private int a=0;
     private QMUITipDialog tipDialog;
+    private String login;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +82,8 @@ public class family_search extends AppCompatActivity {
                 .setTipWord("正在加载")
                 .create();
         tipDialog.show();
+        SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
+        login = sp.getString("login", "");
     }
 
     private void init() {
@@ -101,9 +109,26 @@ public class family_search extends AppCompatActivity {
             public void onItemClick(View view, int position) {
 
                 if(a==0){
-                    Toast.makeText(family_search.this, position + " room", Toast.LENGTH_SHORT).show();
+                    if (login.equals("true")) {
+                        Intent intent7 = new Intent(family_search.this, chatroom.class);
+                        intent7.putExtra(Constant.ACTION_KEY_CROLE, Constants.CLIENT_ROLE_AUDIENCE);
+                        intent7.putExtra(Constant.ACTION_KEY_ROOM_MODE, Constant.ChatRoomGamingHighQuality);
+                        intent7.putExtra(Constant.ACTION_KEY_ROOM_ID, mArrayList.get(position).getId());
+                        intent7.putExtra(Constant.ACTION_KEY_TITLE_NAME, mArrayList.get(position).getName());
+                        startActivity(intent7);
+                        overridePendingTransition(R.anim.anim_bottom_in, R.anim.anim_bottom_out);
+                    } else {
+                        Intent intent14 = new Intent(family_search.this, login.class);
+                        intent14.putExtra("type", 0);
+                        startActivity(intent14);
+                        overridePendingTransition(R.anim.anim_bottom_in, R.anim.anim_bottom_out);
+                    }
+
                 }else{
-                    Toast.makeText(family_search.this, position + " user", Toast.LENGTH_SHORT).show();
+                    Intent intent8 = new Intent(family_search.this, homepage.class);
+                    intent8.putExtra("id", Long.parseLong(mArrayList.get(position).getId()));
+                    startActivity(intent8);
+
                 }
             }
 
@@ -128,7 +153,7 @@ public class family_search extends AppCompatActivity {
         if(type == 0){
             if (rooms.size() > 0) {
                 for (int i = 0; i < rooms.size(); i++) {
-                    Familysea i2 = new Familysea(rooms.get(i).getAsJsonObject().get("roomName").getAsString(), "ID" + rooms.get(i).getAsJsonObject().get("uniqueId").getAsString(), a+"", rooms.get(i).getAsJsonObject().get("coverUrl").getAsString(), rooms.get(i).getAsJsonObject().get("collectCount").getAsString());
+                    Familysea i2 = new Familysea(rooms.get(i).getAsJsonObject().get("roomName").getAsString(), rooms.get(i).getAsJsonObject().get("uniqueId").getAsString(), a+"", rooms.get(i).getAsJsonObject().get("coverUrl").getAsString(), rooms.get(i).getAsJsonObject().get("collectCount").getAsString());
                     mArrayList.add(i2);
 
                 }
@@ -137,7 +162,7 @@ public class family_search extends AppCompatActivity {
         }else{
             if (users.size() > 0) {
                 for (int i = 0; i < users.size(); i++) {
-                    Familysea i1 = new Familysea(users.get(i).getAsJsonObject().get("nickname").getAsString(), "ID" + users.get(i).getAsJsonObject().get("uniqueId").getAsString(), a+"",  users.get(i).getAsJsonObject().get("avatarUrl").getAsString(), users.get(i).getAsJsonObject().get("fansCount").getAsString());
+                    Familysea i1 = new Familysea(users.get(i).getAsJsonObject().get("nickname").getAsString(), users.get(i).getAsJsonObject().get("uniqueId").getAsString(), a+"",  users.get(i).getAsJsonObject().get("avatarUrl").getAsString(), users.get(i).getAsJsonObject().get("fansCount").getAsString());
                     mArrayList.add(i1);
 
                 }

@@ -42,7 +42,7 @@
         android:layout_marginStart="@dimen/dp_20"
         android:layout_marginTop="@dimen/dp_10"
         android:layout_marginBottom="@dimen/dp_10"
-        android:src="@drawable/h3"
+        android:src="@drawable/giftback"
         app:qmui_border_width="0dp"
         app:qmui_corner_radius="@dimen/dp_50" />
 
@@ -71,6 +71,8 @@
         android:layout_alignParentEnd="true"
         android:layout_marginStart="@dimen/dp_10"
         android:layout_marginEnd="@dimen/dp_10"
+        android:overScrollMode="never"
+        android:fadingEdge="none"
         android:layout_toEndOf="@+id/imageViewc4s"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -141,6 +143,8 @@
             android:layout_below="@+id/textViewc4"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
+            android:overScrollMode="never"
+            android:fadingEdge="none"
             android:layout_marginTop="@dimen/dp_20"
             android:layout_marginBottom="@dimen/dp_10" />
 

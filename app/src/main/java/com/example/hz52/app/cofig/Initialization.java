@@ -13,6 +13,7 @@ public class Initialization {
     private static DaoSession daoSessioncaht;
     private static DaoSession daoSessionconver;
     private static DaoSession daoSessionmusic;
+    private static DaoSession daoSessiongift;
 
     /**
      * 配置数据库
@@ -36,13 +37,13 @@ public class Initialization {
      * 配置数据库
      */
     public static void setupDatabaseAccount(Context context) {
-        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(context, "Account.db", null);
+        DaoMaster.DevOpenHelper helper1 = new DaoMaster.DevOpenHelper(context, "Account.db", null);
         //获取可写数据库
-        SQLiteDatabase db = helper.getWritableDatabase();
+        SQLiteDatabase db1 = helper1.getWritableDatabase();
         //获取数据库对象
-        DaoMaster daoMaster = new DaoMaster(db);
+        DaoMaster daoMaster1 = new DaoMaster(db1);
         //获取Dao对象管理者
-        daoSessionaccount = daoMaster.newSession();
+        daoSessionaccount = daoMaster1.newSession();
     }
 
     public static DaoSession getDaoInstantAccount() {
@@ -54,13 +55,13 @@ public class Initialization {
      * 配置数据库
      */
     public static void setupDatabaseChat(Context context) {
-        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(context, "Chat.db", null);
+        DaoMaster.DevOpenHelper helper2 = new DaoMaster.DevOpenHelper(context, "Chat.db", null);
         //获取可写数据库
-        SQLiteDatabase db = helper.getWritableDatabase();
+        SQLiteDatabase db2 = helper2.getWritableDatabase();
         //获取数据库对象
-        DaoMaster daoMaster = new DaoMaster(db);
+        DaoMaster daoMaster2 = new DaoMaster(db2);
         //获取Dao对象管理者
-        daoSessioncaht = daoMaster.newSession();
+        daoSessioncaht = daoMaster2.newSession();
     }
 
     public static DaoSession getDaoInstantChat() {
@@ -72,13 +73,13 @@ public class Initialization {
      * 配置数据库
      */
     public static void setupDatabaseConver(Context context) {
-        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(context, "Conver.db", null);
+        DaoMaster.DevOpenHelper helper3 = new DaoMaster.DevOpenHelper(context, "Conver.db", null);
         //获取可写数据库
-        SQLiteDatabase db = helper.getWritableDatabase();
+        SQLiteDatabase db3 = helper3.getWritableDatabase();
         //获取数据库对象
-        DaoMaster daoMaster = new DaoMaster(db);
+        DaoMaster daoMaster3 = new DaoMaster(db3);
         //获取Dao对象管理者
-        daoSessionconver = daoMaster.newSession();
+        daoSessionconver = daoMaster3.newSession();
     }
 
     public static DaoSession getDaoInstantConver() {
@@ -90,16 +91,33 @@ public class Initialization {
      * 配置数据库
      */
     public static void setupDatabaseMusic(Context context) {
-        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(context, "Music.db", null);
+        DaoMaster.DevOpenHelper helper4 = new DaoMaster.DevOpenHelper(context, "Music.db", null);
         //获取可写数据库
-        SQLiteDatabase db = helper.getWritableDatabase();
+        SQLiteDatabase db4 = helper4.getWritableDatabase();
         //获取数据库对象
-        DaoMaster daoMaster = new DaoMaster(db);
+        DaoMaster daoMaster4 = new DaoMaster(db4);
         //获取Dao对象管理者
-        daoSessionmusic = daoMaster.newSession();
+        daoSessionmusic = daoMaster4.newSession();
     }
 
     public static DaoSession getDaoInstantMusic() {
         return daoSessionmusic;
+    }
+
+    /**
+     * 配置数据库
+     */
+    public static void setupDatabaseGift(Context context) {
+        DaoMaster.DevOpenHelper helper5 = new DaoMaster.DevOpenHelper(context, "Gift.db", null);
+        //获取可写数据库
+        SQLiteDatabase db5 = helper5.getWritableDatabase();
+        //获取数据库对象
+        DaoMaster daoMaster5 = new DaoMaster(db5);
+        //获取Dao对象管理者
+        daoSessiongift = daoMaster5.newSession();
+    }
+
+    public static DaoSession getDaoInstantGift() {
+        return daoSessiongift;
     }
 }

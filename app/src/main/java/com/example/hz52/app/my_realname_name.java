@@ -68,6 +68,8 @@ public class my_realname_name extends AppCompatActivity {
             case R.id.but:
                 if(!editText.getText().toString().equals("") && !editText4.getText().toString().equals("")){
                     Intent intent2 = new Intent(my_realname_name.this, my_realname_pic.class);
+                    intent2.putExtra("realname",editText.getText().toString());
+                    intent2.putExtra("idCardNumber",editText4.getText().toString());
                     startActivity(intent2);
                     
                 }else{

@@ -146,9 +146,9 @@ public class My extends Fragment {
     private Context context;
     private String username;
     private String roomid;
-    private String slogin;
     private String login;
     private SharedPreferences sp;
+    private String verified;
 
 
     @Nullable
@@ -179,6 +179,7 @@ public class My extends Fragment {
         sp = Objects.requireNonNull(getContext()).getSharedPreferences("User", Context.MODE_PRIVATE);
         login = sp.getString("login", "");
         userid = sp.getString("userid", "");
+        verified = sp.getString("verified", "");
         textView93.setText("ID " + sp.getString("userid", ""));
         username = sp.getString("nickname", "");
         textView92.setText(sp.getString("nickname", ""));
@@ -351,7 +352,7 @@ public class My extends Fragment {
                 break;
             case R.id.imageView73:
             case R.id.textView84:
-                if (slogin.equals("true")) {
+                if (login.equals("true")) {
                     Intent intent7 = new Intent(getContext(), chatroom.class);
                     intent7.putExtra(Constant.ACTION_KEY_CROLE, Constants.CLIENT_ROLE_AUDIENCE);
                     intent7.putExtra(Constant.ACTION_KEY_ROOM_MODE, Constant.ChatRoomGamingHighQuality);
@@ -393,8 +394,14 @@ public class My extends Fragment {
             case R.id.imageView84:
             case R.id.textView91:
             case R.id.imageView85:
-                Intent intent13 = new Intent(getContext(), my_realname.class);
-                startActivity(intent13);
+                if(verified.equals("true")){
+                    Intent intent13 = new Intent(getContext(), my_realnames.class);
+                    startActivity(intent13);
+                }else{
+                    Intent intent14 = new Intent(getContext(), my_realname.class);
+                    startActivity(intent14);
+                }
+
 
                 break;
         }

@@ -33,7 +33,6 @@ public class PaimaiModel {
     public static HoldpeopleAdapter mAdapters;
 
     public static void initData(JsonArray users) {
-        mArrayList= new ArrayList<Holdpeople>();
         try {
             for(int i=0;i<users.size();i++){
                 String userId = users.get(i).getAsJsonObject().get("userId").getAsString();
@@ -134,14 +133,22 @@ public class PaimaiModel {
 
     public static void Add(Holdpeople entity){
         mAdapter.addData(mArrayList.size(), entity);
-        mAdapters.addData(mArrayList.size(), entity);
         mAdapter.notifyItemChanged(mArrayList.size());
     }
 
     public static void Remove(int position){
         mAdapter.removeData(position);
-        mAdapters.removeData(position);
         mAdapter.notifyItemChanged(position);
+    }
+
+    public static void Adds(Holdpeople entity){
+        mAdapters.addData(mArrayList.size(), entity);
+        mAdapters.notifyItemChanged(mArrayList.size());
+    }
+
+    public static void Removes(int position){
+        mAdapters.removeData(position);
+        mAdapters.notifyItemChanged(position);
     }
 
     public static int get(String id){

@@ -8,6 +8,7 @@ import com.alibaba.sdk.android.oss.ClientException;
 import com.alibaba.sdk.android.oss.OSSClient;
 import com.alibaba.sdk.android.oss.ServiceException;
 import com.alibaba.sdk.android.oss.callback.OSSCompletedCallback;
+import com.alibaba.sdk.android.oss.callback.OSSProgressCallback;
 import com.alibaba.sdk.android.oss.common.OSSLog;
 import com.alibaba.sdk.android.oss.common.auth.OSSCredentialProvider;
 import com.alibaba.sdk.android.oss.common.auth.OSSStsTokenCredentialProvider;
@@ -17,6 +18,7 @@ import com.alibaba.sdk.android.oss.model.GetObjectResult;
 import com.alibaba.sdk.android.oss.model.PutObjectRequest;
 import com.alibaba.sdk.android.oss.model.PutObjectResult;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -77,39 +79,45 @@ public class OSSSet {
     }
 
 
-    public static void Download(String testBucket,String testObject){
+    public static String Download(String filePath,String testBucket,String testObject){
 
+        final String[] succer = {"Error"};
         // 构造下载文件请求
         GetObjectRequest get = new GetObjectRequest(testBucket, testObject);
 
-        OSSAsyncTask task = oss.asyncGetObject(get, new OSSCompletedCallback<GetObjectRequest, GetObjectResult>() {
+        oss.asyncGetObject(get, new OSSCompletedCallback<GetObjectRequest, GetObjectResult>() {
             @Override
             public void onSuccess(GetObjectRequest request, GetObjectResult result) {
-                // 请求成功
-
-                InputStream inputStream = result.getObjectContent();
-
-                byte[] buffer = new byte[2048];
-                int len;
-
-                try {
-                    while ((len = inputStream.read(buffer)) != -1) {
-                        // 处理下载的数据
-
-                        System.out.println(len+"");
+                //开始读取数据。
+                long length = result.getContentLength();
+                byte[] buffer = new byte[(int) length];
+                int readCount = 0;
+                while (readCount < length) {
+                    try{
+                        readCount += result.getObjectContent().read(buffer, readCount, (int) length - readCount);
+                    }catch (Exception e){
+                        OSSLog.logInfo(e.toString());
                     }
-                } catch (IOException e) {
-                    e.printStackTrace();
+                }
+                //将下载后的文件存放在指定的本地路径。
+                try {
+                    FileOutputStream fout = new FileOutputStream(filePath);
+                    fout.write(buffer);
+                    fout.close();
+                    succer[0] ="Success";
+                } catch (Exception e) {
+                    OSSLog.logInfo(e.toString());
                 }
 
             }
 
             @Override
-            public void onFailure(GetObjectRequest request, ClientException clientExcepion, ServiceException serviceException) {
+            public void onFailure(GetObjectRequest request, ClientException clientException,
+                                  ServiceException serviceException)  {
                 // 请求异常
-                if (clientExcepion != null) {
+                if (clientException != null) {
                     // 本地异常如网络异常等
-                    clientExcepion.printStackTrace();
+                    clientException.printStackTrace();
                 }
                 if (serviceException != null) {
                     // 服务异常
@@ -122,7 +130,7 @@ public class OSSSet {
         });
 
 
-
+        return succer[0];
 
     }
 

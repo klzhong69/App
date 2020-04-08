@@ -169,6 +169,8 @@
             android:layout_below="@+id/textViewc9a"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
+            android:overScrollMode="never"
+            android:fadingEdge="none"
             android:layout_marginTop="@dimen/dp_20"
             android:layout_marginBottom="@dimen/dp_10" />
 
